@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Provider {
+  provider_id Int @unique @default(autoincrement())
+  provider_email String @unique
+  provider_password String
+  provider_fname String  
+  provider_lname String
+  provider_phone String @unique
+  // service_id  Int
+  // booking_id Int
+  service Service[]
+  booking Booking[]
+
+}
+
+model Client {
+ client_id Int @unique @default(autoincrement())
+ client_email String @unique
+ client_password String
+ client_fname String
+ client_lname String
+ client_phone String @unique
+//  booking_id Int
+ booking Booking[]
+}
+
+
+model Booking {
+  booking_id Int @unique @default(autoincrement())
+  client_id Int
+  provider_id Int
+  service_id Int
+  service Service?
+  transaction_id String
+  booking_date DateTime
+  client Client @relation(fields: [client_id], references: [client_id])
+  provider Provider @relation(fields: [provider_id], references: [provider_id])
+
+  @@index([client_id])
+  @@index([provider_id])
+}
+
+model Service {
+  service_id Int @unique @default(autoincrement())
+  service_type String
+  payment_id String
+  booking_id Int @unique
+  booking Booking @relation(fields: [booking_id], references: [booking_id])
+  provider_id Int
+  provider Provider @relation(fields:[service_id], references: [provider_id])
+  booking_date DateTime 
+
+}
