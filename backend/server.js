@@ -3,11 +3,16 @@ import * as dotenv from "dotenv";
 import authRouter from "./routes/auth.js";
 
 dotenv.config();
-const app = express();
+export default function createServer() {
+  const app = express();
 
-app.use(express.json());
-app.use("/auth", authRouter);
+  app.use(express.json());
 
-app.listen(process.env.PORT, (request, response) => {
-  console.log(`Server listening on ${process.env.PORT}`);
-});
+  //Here is where you will add the authentication strategies
+  // app.use()
+
+  app.use("/auth", authRouter);
+
+
+  return app;
+}
