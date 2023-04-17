@@ -7,14 +7,20 @@ dotenv.config();
 export default function createServer() {
   const app = express();
 
+  app.use(cors())
+
   app.use(express.json());
 
   //Here is where you will add the authentication strategies
-  // app.use()
+  setupJWTStrategy(passport);
 
   app.use("/auth", authRouter);
 
   app.use("/service", serviceRoute);
+
+  app.use("/provider", providerRouter(passport));
+
+  app.use("/client", clientRouter(passport));
 
   return app;
 }
