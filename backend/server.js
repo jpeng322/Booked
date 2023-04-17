@@ -2,6 +2,7 @@ import express from "express";
 import * as dotenv from "dotenv";
 import authRouter from "./routes/auth.js";
 import serviceRoute from "./routes/service.js";
+import bookingRoute from "./routes/booking.js";
 
 dotenv.config();
 export default function createServer() {
@@ -18,9 +19,13 @@ export default function createServer() {
 
   app.use("/service", serviceRoute);
 
+
   app.use("/provider", providerRouter(passport));
 
   app.use("/client", clientRouter(passport));
+
+  app.use("/booking", bookingRoute());
+
 
   return app;
 }
