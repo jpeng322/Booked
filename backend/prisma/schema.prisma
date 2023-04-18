@@ -64,5 +64,6 @@ model Service {
   provider_id Int
   provider Provider @relation(fields:[service_id], references: [provider_id])
   booking_date DateTime 
+  payment_fee Int
 
 }
