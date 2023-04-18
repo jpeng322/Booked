@@ -44,9 +44,12 @@ model Booking {
   service_id Int
   service Service?
   transaction_id String
-  booking_date DateTime
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
   client Client @relation(fields: [client_id], references: [client_id])
   provider Provider @relation(fields: [provider_id], references: [provider_id])
+  //possibly need a time for booking
+  //bookTime DateTime
 
   @@index([client_id])
   @@index([provider_id])
