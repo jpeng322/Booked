@@ -8,8 +8,6 @@ dotenv.config();
 export default function createServer() {
   const app = express();
 
-  app.use(cors())
-
   app.use(express.json());
 
   //Here is where you will add the authentication strategies
@@ -19,11 +17,10 @@ export default function createServer() {
 
   app.use("/service", serviceRoute);
 
-  app.use("/booking", bookingRoute());
-
   app.use("/provider", providerRouter(passport));
 
   app.use("/client", clientRouter(passport));
+  app.use("/booking", bookingRoute());
 
   return app;
 }
