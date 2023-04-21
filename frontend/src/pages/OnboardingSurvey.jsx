@@ -15,7 +15,7 @@ const OnboardingSurvey = () => {
       </div>
       <div>
         <button onClick={() => navigate("/recommendations")}>Done</button>
-        <button onClick={() => navigate("/")}> Skip</button>
+        <button onClick={() => navigate("/profile")}> Skip</button>
       </div>
     </>
   );
