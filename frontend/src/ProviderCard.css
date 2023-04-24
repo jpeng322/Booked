@@ -1,0 +1,98 @@
+.image-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.image {
+  border: 1px solid black;
+  margin: 5px;
+}
+
+.btn {
+  margin-right: 35px;
+}
+.rating {
+  display: flex;
+  align-items: center;
+  margin-right: 35px;
+}
+
+.rating svg {
+  color: gold;
+  margin-right: 5px;
+}
+
+/* ================ */
+.provider-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  margin-bottom: 30px;
+ 
+}
+
+
+
+.image {
+  margin: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.numeric-rating {
+  margin-right: 15px;
+  font-weight: bold;
+
+}
+
+
+.justify-content-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.center-images {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-left {
+  text-align: left;
+  margin-left: 35px;
+}
+
+.business-location{
+  text-align: left;
+  margin-left: 85px;
+}
+.text-end {
+  text-align: right;
+  
+}
+
+.provider-logo {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  vertical-align: middle;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+.type-highlight,
+.skill-highlight {
+  display: inline-block;
+  border-radius: 9999px;
+  background-color: #aaa;
+  padding: 5px 10px;
+  margin-right: 10px;
+}
+

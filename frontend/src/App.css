@@ -1,3 +1,4 @@
+
 /* #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -16,15 +17,26 @@
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+
+/* Style for the container */
+.container {
+  padding-top: 20px;
+
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Style for the image */
+img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+/* Style for the name  */
+p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -49,4 +61,7 @@
   font-size: 25px;
   padding: 24px;
 }
+
+
+
 
