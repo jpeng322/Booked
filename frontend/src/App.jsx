@@ -1,24 +1,11 @@
 import { useState } from "react";
+
+import from "../src/pages/About"
 import "/src/App.css";
 import axios from "axios";
 import ProviderCard from "./pages/ProviderCard";
 import "./ProviderCard.css"; 
 import providers from "./providers";
-
-// const images = [
-//   'https://example.com/image1.jpg',
-//   'https://example.com/image2.jpg',
-//   'https://example.com/image3.jpg',
-//   'https://example.com/image4.jpg',
-//   'https://example.com/image5.jpg',
-// ];
-
-// const users = [
-//   { name: 'User 1', image: 'image1.jpg', rating: 4 },
-//   { name: 'User 2', image: 'image2.jpg', rating: 5 },
-//   { name: 'User 2', image: 'image2.jpg', rating: 5 },
-//   { name: 'User 2', image: 'image2.jpg', rating: 5 }
-// ];
 
 
 function App() {
@@ -76,8 +63,11 @@ function App() {
     // };
   // }
   return (
-    <div>
+
+    <div className="App">
+      {/* <About /> */}
      <ProviderCard providers={providers} />
+
     </div>
   );
 }
