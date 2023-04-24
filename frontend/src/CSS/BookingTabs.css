@@ -1,0 +1,249 @@
+.tab-container {
+  margin: 0px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.react-tabs__tab-panel,
+.react-tabs__tab-panel--selected {
+  /* border: 1px solid red !important; */
+  border-radius: 0.75rem;
+  /* padding: 2rem; */
+  background-color: #f1f1f1;
+  z-index: 2;
+}
+
+.react-tabs__tab-list {
+  /* border: 1px solid red; */
+  width: 100%;
+  margin: 0;
+  border: none;
+  display: flex;
+  padding: 1rem 1rem 0 1rem;
+  /* flex-shrink: 1; */
+  font-size: calc(0.75rem + 0.2vw);
+}
+
+.react-tabs__tab {
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem;
+  flex-grow: 1;
+  text-align: center;
+  padding: 0.75rem;
+}
+
+.react-tabs__tab--selected {
+  background-color: #f1f1f1;
+
+  border: none;
+}
+
+.react-tabs__tab-panel,
+.react-tabs__tab-panel--selected {
+  align-self: stretch;
+}
+
+.react-tabs__tab--selected::after {
+  display: none;
+}
+
+.completed-container {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(5px, 1fr));
+  grid-template-rows: 4rem 4rem 4rem;
+  grid-template-areas:
+    /* ". picture-container picture-container ." */
+    /* ". picture-container picture-container ." */
+    "picture-container  completed-type completed-description completed-description "
+    /* "picture-container completed-type completed-description completed-description " */
+    "completed-header due-header total-header status-header "
+    /* "picture-container completed-type completed-description completed-description completed-date completed-due completed-price completed-book" */
+    "completed-date completed-due completed-price completed-book";
+  /* "completed-date completed-due completed-price completed-book"; */
+}
+
+.completed-container > * {
+  /* border: 1px solid black; */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.completed-header {
+  grid-area: completed-header;
+  border-top: 1px solid black;
+}
+
+.due-header {
+  grid-area: due-header;
+  border-top: 1px solid black;
+}
+.total-header {
+  grid-area: total-header;
+  border-top: 1px solid black;
+}
+
+.status-header {
+  grid-area: status-header;
+  border-top: 1px solid black;
+}
+.picture-container {
+  grid-area: picture-container;
+}
+
+.completed-type {
+  grid-area: completed-type;
+}
+.completed-description {
+  grid-area: completed-description;
+}
+
+.completed-date {
+  grid-area: completed-date;
+  border-top: 1px solid black;
+}
+.completed-due {
+  grid-area: completed-due;
+  border-top: 1px solid black;
+}
+
+.completed-price {
+  grid-area: completed-price;
+  border-top: 1px solid black;
+}
+.completed-book {
+  grid-area: completed-book;
+  border-top: 1px solid black;
+}
+
+
+
+.completed-headers {
+  display: flex;
+  border-bottom: 2px solid black;
+  padding: 1rem;
+  font-size: calc(0.75rem + 0.2vw);
+}
+
+/* .completed-headers >* {
+  flex: 1;
+  text-align: center;
+} */
+.completed-information {
+  display: flex;
+  justify-content: center;
+  padding: 1rem ;
+  font-size: calc(0.75rem + 0.2vw);
+}
+
+.completed-information > *, .completed-headers >*  {
+  flex: 1;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid red; */
+}
+
+@media (min-width: 992px) {
+  .completed-container {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(5px, 1fr));
+    grid-template-rows: 4rem 4rem 4rem;
+    grid-template-areas:
+      ". . . . completed-header due-header total-header status-header "
+      "picture-container completed-type completed-description completed-description completed-date completed-due completed-price completed-book"
+      "picture-container completed-type completed-description completed-description completed-date completed-due completed-price completed-book";
+  }
+
+  .react-tabs__tab {
+    padding: 1rem;
+    /* border: 1px solid red; */
+  }
+  .react-tabs__tab-list {
+    width: 90%;
+  }
+
+  .completed-header {
+    grid-area: completed-header;
+    border-top: none;
+  }
+
+  .due-header {
+    grid-area: due-header;
+    border: none;
+  }
+  .total-header {
+    grid-area: total-header;
+    border: none;
+  }
+
+  .status-header {
+    grid-area: status-header;
+    border: none;
+  }
+  .picture-container {
+    grid-area: picture-container;
+    border-top: 1px solid black;
+  }
+
+  .completed-type {
+    grid-area: completed-type;
+    border-top: 1px solid black;
+  }
+  .completed-description {
+    grid-area: completed-description;
+    border-top: 1px solid black;
+  }
+
+  .completed-date {
+    grid-area: completed-date;
+    border-top: 1px solid black;
+  }
+  .completed-due {
+    grid-area: completed-due;
+    border-top: 1px solid black;
+  }
+
+  .completed-price {
+    grid-area: completed-price;
+    border-top: 1px solid black;
+  }
+
+  .completed-book {
+    grid-area: completed-book;
+    /* border-top: 1px solid black; */
+  }
+
+
+  .completed-headers {
+    display: flex;
+    border-bottom: 2px solid black;
+    padding: 1.5rem 2rem;
+    font-size: calc(0.75rem + 0.2vw);
+  }
+  
+
+  .completed-information {
+    display: flex;
+    justify-content: center;
+    padding: 2rem ;
+    font-size: calc(0.75rem + 0.2vw);
+  }
+  
+  .completed-information > *, .completed-headers >*  {
+    flex: 1;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid red;
+  }
+
+  
+}
+
+

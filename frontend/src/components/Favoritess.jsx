@@ -14,44 +14,81 @@ import {
 } from "react-bootstrap";
 import BookingsCard from "./BookingsCard";
 
+import "../CSS/Carousel.css";
+
 function FavoriteProviders() {
+  // const responsive = {
+  //   xxl: {
+  //     // the naming can be any, depends on you.
+  //     breakpoint: { max: 4000, min: 1600 },
+  //     items: 6,
+  //     slidesToSlide: 6,
+  //   },
+  //   xl: {
+  //     // the naming can be any, depends on you.
+  //     breakpoint: { max: 1600, min: 1300 },
+  //     items: 5,
+  //     slidesToSlide: 5,
+  //   },
+  //   lg: {
+  //     breakpoint: { max: 1300, min: 992 },
+  //     items: 4,
+  //     slidesToSlide: 4,
+  //   },
+  //   md: {
+  //     breakpoint: { max: 992, min: 768 },
+  //     items: 3,
+  //     slidesToSlide: 3,
+  //   },
+  //   sm: {
+  //     breakpoint: { max: 768, min: 576 },
+  //     items: 2,
+  //     slidesToSlide: 2,
+  //   },
+  //   xs: {
+  //     breakpoint: { max: 576, min: 0 },
+  //     items: 1,
+  //     slidesToSlide: 1,
+  //   },
+  // };
   const responsive = {
     xxl: {
       // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 1600 },
+      breakpoint: { max: 4000, min: 1950 },
       items: 6,
       slidesToSlide: 6,
     },
     xl: {
       // the naming can be any, depends on you.
-      breakpoint: { max: 1600, min: 1200 },
+      breakpoint: { max: 1950, min: 1625 },
       items: 5,
       slidesToSlide: 5,
     },
     lg: {
-      breakpoint: { max: 1200, min: 992 },
+      breakpoint: { max: 1625, min: 1300 },
       items: 4,
       slidesToSlide: 4,
     },
     md: {
-      breakpoint: { max: 992, min: 768 },
+      breakpoint: { max: 1300, min: 975 },
       items: 3,
       slidesToSlide: 3,
     },
     sm: {
-      breakpoint: { max: 768, min: 576 },
+      breakpoint: { max: 975, min: 650 },
       items: 2,
       slidesToSlide: 2,
     },
     xs: {
-      breakpoint: { max: 576, min: 0 },
+      breakpoint: { max: 650, min: 0 },
       items: 1,
       slidesToSlide: 1,
     },
   };
   return (
-    <div className="carousel-container">
-      <div className="w-full carousel-subcontainer">
+    <div className="carousel-container mt-4">
+      <div className="carousel-title ps-3 pe-3"> Favorite</div>
+      {/* <div className="w-full carousel-subcontainer"> */}
         <Carousel
           responsive={responsive}
           transitionDuration={500}
@@ -103,8 +140,8 @@ function FavoriteProviders() {
             <BookingsCard />
           </div>
         </Carousel>
-        <div className="carousel-container"></div>
-      </div>
+        {/* <div className="carousel-container"></div> */}
+      {/* </div> */}
     </div>
   );
 }

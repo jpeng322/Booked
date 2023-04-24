@@ -21,7 +21,9 @@
     "prisma": "^4.12.0"
   },
   "dependencies": {
-    "@prisma/client": "^4.12.0"
-
+    "@prisma/client": "^4.12.0",
+    "install": "^0.13.0",
+    "npm": "^9.6.5",
+    "react-tabs": "^6.0.1"
   }
 }
