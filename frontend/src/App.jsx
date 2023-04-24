@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import from "../src/pages/About"
+import About from "../src/pages/About"
 import "/src/App.css";
 import axios from "axios";
 import ProviderCard from "./pages/ProviderCard";
@@ -65,7 +65,7 @@ function App() {
   return (
 
     <div className="App">
-      {/* <About /> */}
+      <About />
      <ProviderCard providers={providers} />
 
     </div>
