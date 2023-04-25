@@ -17,10 +17,10 @@ p {
   text-align: center;
 }
 
-.image-container {
+/* .image-container {
   display: flex;
   flex-wrap: wrap;
-}
+} */
 
 .image {
   border: 1px solid black;
@@ -115,14 +115,19 @@ p {
   margin-right: 10px;
 }
 
+.image-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
 .image-container > * {
   flex: 1
 }
 
 .image-container img {
-  width: 100%;
+  /* max-width: 230px; */
+  /* width: 100%; */
+  /* max-width: 100px; */
 }
 
-/* .center-images > * {
-  width: 100%
-} */
