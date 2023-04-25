@@ -18,14 +18,14 @@ import OnboardingSurvey from "./pages/OnboardingSurvey";
 import Recommendations from "./pages/Recommendations";
 import Profile from "./pages/Profile";
 import CustomerAcc from "./pages/CustomerBookings";
-import FavoriteProviders from "./components/Favoritess";
+import FavoriteProviders from "./components/FavoritesComp";
 
 
 function App() {
   const [count, setCount] = useState(0);
 
   async function checkout() {
-    console.log("asdasd");
+
     try {
       const response = await axios({
         method: "post",
