@@ -87,7 +87,7 @@ function FavoriteProviders() {
   };
   return (
     <div className="carousel-container mt-4">
-      <div className="carousel-title ps-3 pe-3"> Favorite</div>
+      <h2 className="carousel-title"> Favorite</h2>
       {/* <div className="w-full carousel-subcontainer"> */}
         <Carousel
           responsive={responsive}

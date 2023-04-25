@@ -4,7 +4,6 @@ import { useState } from "react";
 import About from "../src/pages/About"
 import "/src/App.css";
 import ProviderCard from "./pages/ProviderCard";
-import "./ProviderCard.css"; 
 import providers from "./providers";
 
 import "./App.css";
