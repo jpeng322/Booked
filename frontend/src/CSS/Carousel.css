@@ -10,7 +10,7 @@
 
 .provider-pic {
   width: 3rem;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   border-radius: 50%;
 }
 
@@ -26,7 +26,6 @@
 .react-multi-carousel-list {
   /* display: flex; */
   position: static !important;
-  /* position: relative !important; */
 }
 .read-the-docs {
   color: #888;
@@ -36,7 +35,7 @@
 /* About page CSS */
 
 
-.custom-accordion .accordion-header button {
+/* .custom-accordion .accordion-header button {
   font-size: 25px;
   padding: 24px;
 }
@@ -57,12 +56,11 @@
 .react-calendar__month-view__days {
   display: flex;
   border: 1px solid blue;
-  /* gap: 1rem; */
 }
 
 h1 {
   margin: 1rem auto 4rem;
-}
+} */
 
 .product--image {
   width: 100%;
@@ -100,22 +98,29 @@ h1 {
 }
 
 .carousel-container {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   /* display: grid; */
   /* flex-direction: column;
   justify-content: center;
   align-items: center; */
   width: 100%;
+  position: relative;
+  padding: 2rem;
+}
+
+.carousel-title {
+    padding: 0rem 2rem;
+    /* font-size: calc(1rem + .25vw); */
 }
 
 .carousel-subcontainer {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   /* display: grid;  */
   flex-direction: column;
   justify-content: center;
   align-items: center;
   /* width: 100%; */
-  position: relative;
+  /* position: relative; */
 }
 .react-multi-carousel-track {
 }
@@ -127,6 +132,8 @@ h1 {
 
 .react-multi-carousel-list {
   display: flex;
+  /* justify-content: center; */
+  padding: 1rem 0rem;
   /* justify-content: center; */
 }
 .container-class {
@@ -168,14 +175,11 @@ h1 {
   /* align-self: center; */
   /* bottom: -40px !important;
   z-index: 2; */
-  width: 30%;
+  width: 80%;
   margin: 0 auto !important;
-  /* position: absolute;
-  bottom: 0; */
 }
 
 .react-multi-carousel-dot-list li {
-  border: 1px solid blue;
   border-color: none;
   color: white;
   display: flex;
@@ -211,11 +215,18 @@ h1 {
     /* display: flex; */
     /* justify-content: center; */
     margin: 2rem 1rem;
+    
   }
 
   .card {
     max-width: 380px !important;
   }
+
+  .react-multi-carousel-dot-list {
+    width: 50%;
+  }
+
+  
 }
 
 /* // Medium devices (tablets, 768px and up) */
@@ -224,19 +235,25 @@ h1 {
 
 /* // Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
+    
+  .react-multi-carousel-dot-list {
+    width: 40%;
+  }
 }
 
 /* // X-Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
   .react-multi-carousel-list {
-    margin: 2rem 4rem;
+  }
+  
+  .react-multi-carousel-dot-list {
+    width: 30%;
   }
 }
 
 /* // XX-Large devices (larger desktops, 1400px and up) */
 @media (min-width: 1400px) {
   .react-multi-carousel-list {
-    margin: 2rem 8rem !important;
   }
 
   .react-multi-carousel-dot-list li button {

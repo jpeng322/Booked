@@ -5,13 +5,15 @@ import Image from 'react-bootstrap/Image';
 import Row from 'react-bootstrap/Row';
 import { FaStar } from 'react-icons/fa';
 
+import "../CSS/ProviderCard.css"
 
 const ProviderCard = (props) => {
   return (
-    <Container>
-      <Row>
+    <Container fluid className="p-5">
+      <Row className="d-flex justify-content-center">
         {props.providers.map((provider, index) => (
-          <Col key={index}>
+          <Row>
+          <Col className="" key={index}>
             <div className="provider-card">
               <div>
                 <h3 className="text-left"><img src={props.logo} alt={props.name} className="provider-logo" />{provider.name}</h3>
@@ -24,14 +26,14 @@ const ProviderCard = (props) => {
                 </div>
               </div>
               <Row className="center-images">
-                <Col>
+                <Col className="image-container">
                   {provider.images.map((image, index) => (
                     <Image
                       key={index}
                       src={image}
                       thumbnail
                       className="image"
-                      style={{ width: 230, height: 180 }}
+                      // style={{ width: 230, height: 180 }}
                     />
                   ))}
                 </Col>
@@ -50,7 +52,8 @@ const ProviderCard = (props) => {
                 </Row>
              
             </div>
-          </Col>
+            </Col>
+            </Row>
         ))}
       </Row>
     </Container>
