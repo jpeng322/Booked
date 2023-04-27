@@ -1,17 +1,36 @@
+import { useState } from "react";
 import React from "react";
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
 import Row from 'react-bootstrap/Row';
+import Pagination from 'react-bootstrap/Pagination';
 import { FaStar } from 'react-icons/fa';
 
 import "../CSS/ProviderCard.css"
 
+
+
 const ProviderCard = (props) => {
+  const [activePage, setActivePage] = useState(1);
+  const itemsPerPage = 5;
+  const totalItems = props.providers.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const handleClick = (pageNumber) => {
+    setActivePage(pageNumber);
+  };
+
+  const providersToDisplay = props.providers.slice(
+    (activePage - 1) * itemsPerPage,
+    activePage * itemsPerPage
+  );
+  
+
   return (
     <Container fluid className="p-5">
       <Row className="d-flex justify-content-center">
-        {props.providers.map((provider, index) => (
+        {providersToDisplay.map((provider, index) => (
           <Row>
           <Col className="" key={index}>
             <div className="provider-card">
@@ -55,10 +74,29 @@ const ProviderCard = (props) => {
             </Col>
             </Row>
         ))}
+        <Row className="d-flex justify-content-center">
+          <Col>
+            <Pagination>
+              <Pagination.First onClick={() => handleClick(1)} disabled={activePage === 1} />
+              <Pagination.Prev onClick={() => handleClick(activePage - 1)} disabled={activePage === 1} />
+              {[...Array(totalPages)].map((_, index) => (
+                <Pagination.Item
+                  key={index}
+                  active={index + 1 === activePage}
+                  onClick={() => handleClick(index + 1)}
+                  disabled={activePage === providersToDisplay}
+                >
+                  {index + 1}
+                </Pagination.Item>
+              ))}
+              <Pagination.Next onClick={() => handleClick(activePage + 1)} disabled={activePage === totalPages} />
+              <Pagination.Last onClick={() => handleClick(totalPages)} disabled={activePage === totalPages} />
+            </Pagination>
+          </Col>
+        </Row>
       </Row>
     </Container>
   );
 };
 
 export default ProviderCard;
-
