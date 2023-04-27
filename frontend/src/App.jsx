@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-
-import About from "../src/pages/About"
+import About from "../src/pages/About";
 import "/src/App.css";
 import ProviderCard from "./pages/ProviderCard";
 import providers from "./providers";
@@ -20,12 +19,10 @@ import Profile from "./pages/Profile";
 import CustomerAcc from "./pages/CustomerBookings";
 import FavoriteProviders from "./components/FavoritesComp";
 
-
 function App() {
   const [count, setCount] = useState(0);
 
   async function checkout() {
-
     try {
       const response = await axios({
         method: "post",
@@ -48,80 +45,79 @@ function App() {
       console.log(e);
     }
   }
-    // () => {
-    //   fetch("http://localhost:3001/payment", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       items: [
-    //         { id: 1, quantity: 3 },
-    //         { id: 2, quantity: 1 },
-    //       ],
-    //     }),
-    //   })
-    //     .then((res) => {
-    //       console.log(res)
-    //       if (res.ok) return res.json();
-    //       return res.json().then((json) => Promise.reject(json));
-    //     })
-    //     .then(({ url }) => {
-    //       window.location = url;
-    //     })
-    //     .catch((e) => {
-    //       console.error(e.error);
-    //     });
-    // };
+  // () => {
+  //   fetch("http://localhost:3001/payment", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       items: [
+  //         { id: 1, quantity: 3 },
+  //         { id: 2, quantity: 1 },
+  //       ],
+  //     }),
+  //   })
+  //     .then((res) => {
+  //       console.log(res)
+  //       if (res.ok) return res.json();
+  //       return res.json().then((json) => Promise.reject(json));
+  //     })
+  //     .then(({ url }) => {
+  //       window.location = url;
+  //     })
+  //     .catch((e) => {
+  //       console.error(e.error);
+  //     });
+  // };
   // }
-    const router = createBrowserRouter([
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/signup",
-        element: <Signup />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/preferences",
-        element: <OnboardingSurvey />,
-      },
-      {
-        path: "/recommendations",
-        element: <Recommendations />,
-      },
-      {
-        path: "/profile",
-        element: <Profile />,
-      },
-      {
-        path: "/customerbookings",
-        element: <CustomerAcc />,
-      },
-      {
-        path: "/carousel",
-      element: <FavoriteProviders />
-    }, {
-    path: "/provider",
-    element: <ProviderCard providers={providers} />},
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Home />,
+    },
+    {
+      path: "/signup",
+      element: <Signup />,
+    },
+    {
+      path: "/login",
+      element: <Login />,
+    },
+    {
+      path: "/preferences",
+      element: <OnboardingSurvey />,
+    },
+    {
+      path: "/recommendations",
+      element: <Recommendations />,
+    },
+    {
+      path: "/profile",
+      element: <Profile />,
+    },
+    {
+      path: "/customerbookings",
+      element: <CustomerAcc />,
+    },
+    {
+      path: "/carousel",
+      element: <FavoriteProviders />,
+    },
+    {
+      path: "/provider",
+      element: <ProviderCard providers={providers} />,
+    },
     {
       path: "/about",
-      element: <About />},
-    
-    ]);
+      element: <About />,
+    },
+  ]);
   return (
     <div className="App">
-          <RouterProvider router={router} />
+      <RouterProvider router={router} />
     </div>
   );
-  }
-
-
-
+}
 
 export default App;

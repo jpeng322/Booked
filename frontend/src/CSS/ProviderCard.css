@@ -118,7 +118,7 @@ p {
 .image-container {
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: calc(.25rem + .75vw);
 }
 
 .image-container > * {
