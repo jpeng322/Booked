@@ -18,6 +18,7 @@ import Recommendations from "./pages/Recommendations";
 import Profile from "./pages/Profile";
 import CustomerAcc from "./pages/CustomerBookings";
 import FavoriteProviders from "./components/FavoritesComp";
+import ProviderPage from "./pages/ProviderPage"
 
 function App() {
   const [count, setCount] = useState(0);
@@ -111,6 +112,10 @@ function App() {
     {
       path: "/about",
       element: <About />,
+    },
+    {
+      path: "provider/profile",
+      element: <ProviderPage />,
     },
   ]);
   return (
