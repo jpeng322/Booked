@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Row, Col, Image } from 'react-bootstrap';
+import { Container, Row, Col, Carousel } from "react-bootstrap";
 import SubscriptionBox from './SubscriptionBox';
 
 const Home = () => {
@@ -69,15 +69,135 @@ const Home = () => {
       <div>
         <Container style={{ marginTop: "473px" }}>
           <Row>
-            <Col md={4}>
-              <Image src="https://via.placeholder.com/367x225" thumbnail />
-            </Col>
-            <Col md={4}>
-              <Image src="https://via.placeholder.com/367x225" thumbnail />
-            </Col>
-            <Col md={4}>
-              <Image src="https://via.placeholder.com/367x225" thumbnail />
-            </Col>
+          <Col md={4}>
+          <Carousel>
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src="https://via.placeholder.com/365x225"
+                alt="First slide"
+              />
+              <Carousel.Caption>
+                <h3>First slide label</h3>
+                <p>
+                  Nulla vitae elit libero, a pharetra augue mollis interdum.
+                </p>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src="https://via.placeholder.com/365x225"
+                alt="Second slide"
+              />
+
+              <Carousel.Caption>
+                <h3>Second slide label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src="https://via.placeholder.com/365x225"
+                alt="Third slide"
+              />
+
+              <Carousel.Caption>
+                <h3>Third slide label</h3>
+                <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </p>
+              </Carousel.Caption>
+            </Carousel.Item>
+          </Carousel>
+          </Col>
+          <Col md={4}>
+          <Carousel>
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src="https://via.placeholder.com/365x225"
+                alt="First slide"
+              />
+              <Carousel.Caption>
+                <h3>First slide label</h3>
+                <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </p>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src="https://via.placeholder.com/365x225"
+                alt="Second slide"
+              />
+
+              <Carousel.Caption>
+                <h3>Second slide label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src="https://via.placeholder.com/365x225"
+                alt="Third slide"
+              />
+
+              <Carousel.Caption>
+                <h3>Third slide label</h3>
+                <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </p>
+              </Carousel.Caption>
+            </Carousel.Item>
+          </Carousel>
+        </Col>
+        <Col md={4}>
+          <Carousel>
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src="https://via.placeholder.com/365x225"
+                alt="First slide"
+              />
+              <Carousel.Caption>
+                <h3>First slide label</h3>
+                <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </p>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src="https://via.placeholder.com/365x225"
+                alt="Second slide"
+              />
+
+              <Carousel.Caption>
+                <h3>Second slide label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src="https://via.placeholder.com/365x225"
+                alt="Third slide"
+              />
+
+              <Carousel.Caption>
+                <h3>Third slide label</h3>
+                <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </p>
+              </Carousel.Caption>
+            </Carousel.Item>
+          </Carousel>
+        </Col>
           </Row>
         </Container>
       </div>
