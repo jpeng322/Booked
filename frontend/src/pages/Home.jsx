@@ -63,8 +63,10 @@ const Home = () => {
         <h1>This is the home page.</h1>
         <div className="card"></div>
         <button onClick={checkout}>Checkout</button>
-        <button onClick={() => navigate("/signup")}>Signup</button>
-        <button onClick={() => navigate("/login")}>Login</button>
+        <button onClick={() => navigate("auth/signup")}>Signup</button>
+        <button onClick={() => navigate("auth/login")}>Login</button>
+        <button onClick={() => navigate("auth/loginClient")}>Client Login</button>
+        {/* <button onClick={() => navigate("/customeraccount")}>Customer Accunt Contact</button> */}
       </div>
       <div>
         <Container style={{ marginTop: "473px" }}>
