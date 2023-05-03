@@ -14,11 +14,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import LoginClient from "./pages/LoginClient";
 import OnboardingSurvey from "./pages/OnboardingSurvey";
 import Recommendations from "./pages/Recommendations";
 import Profile from "./pages/Profile";
 import CustomerAcc from "./pages/CustomerBookings";
 import FavoriteProviders from "./components/Favoritess";
+import { fetchLogin, fetchSignup } from "./api";
+import CustomerAccountContact from "./pages/CustomerAccountContact";
 
 
 function App() {
@@ -80,12 +83,54 @@ function App() {
         element: <Home />,
       },
       {
-        path: "/signup",
-        element: <Signup />,
+        path: "auth/loginClient",
+        element: <LoginClient />,
+        action: async ({ request }) => {
+          try {
+            const formData = await request.formData();
+            const email = formData.get("email");
+            const password = formData.get("password");
+            return await fetchLogin(email, password);
+
+          } catch (error) {
+            return error;
+          }
+        }
       },
       {
-        path: "/login",
+        path: "auth/signup",
+        element: <Signup />,
+        action: async ({ request }) => {
+          try {
+            const formData = Object.fromEntries(await request.formData());
+            const { email, password, firstName, lastName, phoneNumber } = formData
+            // console.log(email, password, firstName, lastName, phoneNumber);
+            return await fetchSignup(email, password, firstName, lastName, phoneNumber);
+          } catch (error) {
+            return error;
+          }
+        }
+      },
+      {
+        path: "auth/login",
         element: <Login />,
+        action: async ({ request }) => {
+          try {
+            const formData = await request.formData();
+            const email = formData.get("email");
+            const password = formData.get("password");
+            return await fetchLogin(email, password);
+
+          } catch (error) {
+            return error;
+          }
+          
+        }
+      },
+      {
+        path: "/customeraccount",
+        element: <CustomerAccountContact />,
+        
       },
       {
         path: "/preferences",
