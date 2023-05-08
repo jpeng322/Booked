@@ -13,12 +13,19 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import LoginClient from "./pages/LoginClient";
 import OnboardingSurvey from "./pages/OnboardingSurvey";
 import Recommendations from "./pages/Recommendations";
 import Profile from "./pages/Profile";
 import CustomerAcc from "./pages/CustomerBookings";
+
 import FavoriteProviders from "./components/FavoritesComp";
 import ProviderPage from "./pages/ProviderPage"
+
+
+import { fetchLogin, fetchSignup } from "./api";
+import CustomerAccountContact from "./pages/CustomerAccountContact";
+
 
 
 function App() {
@@ -74,43 +81,84 @@ function App() {
   //     });
   // };
   // }
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Home />,
-    },
-    {
-      path: "/signup",
-      element: <Signup />,
-    },
-    {
-      path: "/login",
-      element: <Login />,
-    },
-    {
-      path: "/preferences",
-      element: <OnboardingSurvey />,
-    },
-    {
-      path: "/recommendations",
-      element: <Recommendations />,
-    },
-    {
-      path: "/profile",
-      element: <Profile />,
-    },
-    {
-      path: "/customerbookings",
-      element: <CustomerAcc />,
-    },
-    {
-      path: "/carousel",
-      element: <FavoriteProviders />,
-    },
-    {
-      path: "/provider",
-      element: <ProviderCard providers={providers} />,
-    },
+
+    const router = createBrowserRouter([
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "auth/loginClient",
+        element: <LoginClient />,
+        action: async ({ request }) => {
+          try {
+            const formData = await request.formData();
+            const email = formData.get("email");
+            const password = formData.get("password");
+            return await fetchLogin(email, password);
+
+          } catch (error) {
+            return error;
+          }
+        }
+      },
+      {
+        path: "auth/signup",
+        element: <Signup />,
+        action: async ({ request }) => {
+          try {
+            const formData = Object.fromEntries(await request.formData());
+            const { email, password, firstName, lastName, phoneNumber } = formData
+            // console.log(email, password, firstName, lastName, phoneNumber);
+            return await fetchSignup(email, password, firstName, lastName, phoneNumber);
+          } catch (error) {
+            return error;
+          }
+        }
+      },
+      {
+        path: "auth/login",
+        element: <Login />,
+        action: async ({ request }) => {
+          try {
+            const formData = await request.formData();
+            const email = formData.get("email");
+            const password = formData.get("password");
+            return await fetchLogin(email, password);
+
+          } catch (error) {
+            return error;
+          }
+          
+        }
+      },
+      {
+        path: "/customeraccount",
+        element: <CustomerAccountContact />,
+        
+      },
+      {
+        path: "/preferences",
+        element: <OnboardingSurvey />,
+      },
+      {
+        path: "/recommendations",
+        element: <Recommendations />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/customerbookings",
+        element: <CustomerAcc />,
+      },
+      {
+        path: "/carousel",
+      element: <FavoriteProviders />
+    }, {
+    path: "/provider",
+    element: <ProviderCard providers={providers} />},
     {
       path: "/about",
       element: <About />,
