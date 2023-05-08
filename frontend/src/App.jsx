@@ -20,10 +20,12 @@ import CustomerAcc from "./pages/CustomerBookings";
 import FavoriteProviders from "./components/FavoritesComp";
 import ProviderPage from "./pages/ProviderPage"
 
+
 function App() {
   const [count, setCount] = useState(0);
 
   async function checkout() {
+
     try {
       const response = await axios({
         method: "post",

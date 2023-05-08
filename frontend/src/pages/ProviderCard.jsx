@@ -10,6 +10,7 @@ import { FaStar } from 'react-icons/fa';
 
 import "../CSS/ProviderCard.css"
 
+import avatar from "../images/avatar.png";
 const ProviderCard = (props) => {
   const [activePage, setActivePage] = useState(1);
   const itemsPerPage = 5;
