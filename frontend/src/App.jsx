@@ -147,7 +147,7 @@ function App() {
       },
       {
         path: "/profile",
-        element: <Profile />,
+        element: <Profile providers={providers} />,
       },
       {
         path: "/customerbookings",
@@ -164,7 +164,7 @@ function App() {
       element: <About />,
     },
     {
-      path: "provider/profile",
+      path: "/provider/profile",
       element: <ProviderPage />,
     },
   ]);

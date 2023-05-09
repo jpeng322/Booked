@@ -1,8 +1,133 @@
 const providers = [
     {
-      name: "Business Name",
+      name: "Business NameA",
+      location: "location/distance",
+      reviews: [
+        {
+          "id": 1,
+          "name": "John Doe",
+          "rating": 4.5,
+          "comment": "Lorem ipsum dolor sit amet."
+        },
+        {
+          "id": 2,
+          "name": "Jane Smith",
+          "rating": 5,
+          "comment": "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        },
+        {
+          "id": 3,
+          "name": "Alex Lee",
+          "rating": 5,
+          "comment": "Ut enim ad minim veniam."
+        }
+      ],
+      
+      images: [
+        "https://example.com/image1.jpg",
+        "https://example.com/image2.jpg",
+        "https://example.com/image3.jpg",
+        "https://example.com/image4.jpg",
+        "https://example.com/image5.jpg"
+      ], 
+      type: "business type", 
+      skill: "Skills",
+      label: 'Window cleaning (interior)', 
+      checked: true
+    },
+    {
+      name: "Business NameB",
       location: "location/distance",
       rating: 4.5,
+      
+      images: [
+        "https://example.com/image1.jpg",
+        "https://example.com/image2.jpg",
+        "https://example.com/image3.jpg",
+        "https://example.com/image4.jpg",
+        "https://example.com/image5.jpg"
+      ], 
+      type: "business type", 
+      skill: "Skills",
+      label: 'Fridge cleaning', 
+      checked: true
+    },
+    {
+      name: "Business NameA",
+      location: "location/distance",
+      "reviews": [
+        {
+          "id": 1,
+          "name": "John Doe",
+          "rating": 4.5,
+          "comment": "Lorem ipsum dolor sit amet."
+        },
+        {
+          "id": 2,
+          "name": "Jane Smith",
+          "rating": 3.2,
+          "comment": "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        },
+        {
+          "id": 3,
+          "name": "Alex Lee",
+          "rating": 5,
+          "comment": "Ut enim ad minim veniam."
+        }
+      ],
+      
+      images: [
+        "https://example.com/image1.jpg",
+        "https://example.com/image2.jpg",
+        "https://example.com/image3.jpg",
+        "https://example.com/image4.jpg",
+        "https://example.com/image5.jpg"
+      ], 
+      type: "business type", 
+      skill: "Skills",
+      label: 'Oven cleaning', 
+      checked: false
+    },
+    {
+      name: "Business NameC",
+      location: "location/distance",
+      rating: 4.5,
+      
+      images: [
+        "https://example.com/image1.jpg",
+        "https://example.com/image2.jpg",
+        "https://example.com/image3.jpg",
+        "https://example.com/image4.jpg",
+        "https://example.com/image5.jpg"
+      ], 
+      type: "business type", 
+      skill: "Skills",
+      label: 'Laundary', 
+      checked: false
+    },
+    {
+      name: "Business Name",
+      location: "location/distance",
+      "reviews": [
+        {
+          "id": 1,
+          "name": "John Doe",
+          "rating": 4.5,
+          "comment": "Lorem ipsum dolor sit amet."
+        },
+        {
+          "id": 2,
+          "name": "Jane Smith",
+          "rating": 3.2,
+          "comment": "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        },
+        {
+          "id": 3,
+          "name": "Alex Lee",
+          "rating": 5,
+          "comment": "Ut enim ad minim veniam."
+        }
+      ],
       
       images: [
         "https://example.com/image1.jpg",
@@ -15,7 +140,7 @@ const providers = [
       skill: "Skills"
     },
     {
-      name: "Business Name",
+      name: "Business NameD",
       location: "location/distance",
       rating: 4.8,
       type: "business type", 
@@ -28,12 +153,33 @@ const providers = [
         "https://example.com/image10.jpg"
       ], 
       type: "business type", 
-      skill: "Skills"
+      skill: "Skills",
+      label: 'Service 1', 
+      checked: true
     },
     {
-        name: "Business Name",
+        name: "Business NameE",
         location: "location/distance",
-        rating: 4.5,
+        "reviews": [
+          {
+            "id": 1,
+            "name": "John Doe",
+            "rating": 4.5,
+            "comment": "Lorem ipsum dolor sit amet."
+          },
+          {
+            "id": 2,
+            "name": "Jane Smith",
+            "rating": 3.2,
+            "comment": "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          },
+          {
+            "id": 3,
+            "name": "Alex Lee",
+            "rating": 5,
+            "comment": "Ut enim ad minim veniam."
+          }
+        ],
         
         images: [
           "https://example.com/image1.jpg",
@@ -46,7 +192,7 @@ const providers = [
         skill: "Skills"
       },
       {
-        name: "Business Name",
+        name: "Business NameF",
         location: "location/distance",
         rating: 4.8,
         type: "business type", 
@@ -62,9 +208,28 @@ const providers = [
         skill: "Skills"
       },
       {
-        name: "Business Name",
+        name: "Business NameG",
         location: "location/distance",
-        rating: 4.5,
+        "reviews": [
+          {
+            "id": 1,
+            "name": "John Doe",
+            "rating": 4.5,
+            "comment": "Lorem ipsum dolor sit amet."
+          },
+          {
+            "id": 2,
+            "name": "Jane Smith",
+            "rating": 3.2,
+            "comment": "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          },
+          {
+            "id": 3,
+            "name": "Alex Lee",
+            "rating": 5,
+            "comment": "Ut enim ad minim veniam."
+          }
+        ],
         
         images: [
           "https://example.com/image1.jpg",
@@ -77,9 +242,28 @@ const providers = [
         skill: "Skills"
       },
       {
-        name: "Business Name",
+        name: "Business NameH",
         location: "location/distance",
-        rating: 4.8,
+        "reviews": [
+          {
+            "id": 1,
+            "name": "John Doe",
+            "rating": 4.5,
+            "comment": "Lorem ipsum dolor sit amet."
+          },
+          {
+            "id": 2,
+            "name": "Jane Smith",
+            "rating": 3.2,
+            "comment": "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          },
+          {
+            "id": 3,
+            "name": "Alex Lee",
+            "rating": 5,
+            "comment": "Ut enim ad minim veniam."
+          }
+        ],
         type: "business type", 
         skill: "Skills",
         images: [
@@ -93,9 +277,28 @@ const providers = [
         skill: "Skills"
       },
       {
-        name: "Business Name",
+        name: "Business NameI",
         location: "location/distance",
-        rating: 4.5,
+        "reviews": [
+          {
+            "id": 1,
+            "name": "John Doe",
+            "rating": 4.5,
+            "comment": "Lorem ipsum dolor sit amet."
+          },
+          {
+            "id": 2,
+            "name": "Jane Smith",
+            "rating": 3.2,
+            "comment": "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          },
+          {
+            "id": 3,
+            "name": "Alex Lee",
+            "rating": 5,
+            "comment": "Ut enim ad minim veniam."
+          }
+        ],
         
         images: [
           "https://example.com/image1.jpg",
@@ -108,9 +311,28 @@ const providers = [
         skill: "Skills"
       },
       {
-        name: "Business Name",
+        name: "Business NameJ",
         location: "location/distance",
-        rating: 4.8,
+        "reviews": [
+          {
+            "id": 1,
+            "name": "John Doe",
+            "rating": 4.5,
+            "comment": "Lorem ipsum dolor sit amet."
+          },
+          {
+            "id": 2,
+            "name": "Jane Smith",
+            "rating": 3.2,
+            "comment": "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          },
+          {
+            "id": 3,
+            "name": "Alex Lee",
+            "rating": 5,
+            "comment": "Ut enim ad minim veniam."
+          }
+        ],
         type: "business type", 
         skill: "Skills",
         images: [
@@ -124,9 +346,28 @@ const providers = [
         skill: "Skills"
       },
       {
-        name: "Business Name",
+        name: "Business NameM",
         location: "location/distance",
-        rating: 4.5,
+        "reviews": [
+          {
+            "id": 1,
+            "name": "John Doe",
+            "rating": 4.5,
+            "comment": "Lorem ipsum dolor sit amet."
+          },
+          {
+            "id": 2,
+            "name": "Jane Smith",
+            "rating": 3.2,
+            "comment": "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          },
+          {
+            "id": 3,
+            "name": "Alex Lee",
+            "rating": 5,
+            "comment": "Ut enim ad minim veniam."
+          }
+        ],
         
         images: [
           "https://example.com/image1.jpg",
@@ -139,9 +380,28 @@ const providers = [
         skill: "Skills"
       },
       {
-        name: "Business Name",
+        name: "Business NameN",
         location: "location/distance",
-        rating: 4.8,
+        "reviews": [
+          {
+            "id": 1,
+            "name": "John Doe",
+            "rating": 4.5,
+            "comment": "Lorem ipsum dolor sit amet."
+          },
+          {
+            "id": 2,
+            "name": "Jane Smith",
+            "rating": 3.2,
+            "comment": "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          },
+          {
+            "id": 3,
+            "name": "Alex Lee",
+            "rating": 5,
+            "comment": "Ut enim ad minim veniam."
+          }
+        ],
         type: "business type", 
         skill: "Skills",
         images: [
@@ -155,9 +415,28 @@ const providers = [
         skill: "Skills"
       },
       {
-        name: "Business Name",
+        name: "Business NameO",
         location: "location/distance",
-        rating: 4.5,
+        "reviews": [
+          {
+            "id": 1,
+            "name": "John Doe",
+            "rating": 4.5,
+            "comment": "Lorem ipsum dolor sit amet."
+          },
+          {
+            "id": 2,
+            "name": "Jane Smith",
+            "rating": 3.2,
+            "comment": "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          },
+          {
+            "id": 3,
+            "name": "Alex Lee",
+            "rating": 5,
+            "comment": "Ut enim ad minim veniam."
+          }
+        ],
         
         images: [
           "https://example.com/image1.jpg",
@@ -170,9 +449,28 @@ const providers = [
         skill: "Skills"
       },
       {
-        name: "Business Name",
+        name: "Business NameP",
         location: "location/distance",
-        rating: 4.8,
+        "reviews": [
+          {
+            "id": 1,
+            "name": "John Doe",
+            "rating": 4.5,
+            "comment": "Lorem ipsum dolor sit amet."
+          },
+          {
+            "id": 2,
+            "name": "Jane Smith",
+            "rating": 3.2,
+            "comment": "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          },
+          {
+            "id": 3,
+            "name": "Alex Lee",
+            "rating": 5,
+            "comment": "Ut enim ad minim veniam."
+          }
+        ],
         type: "business type", 
         skill: "Skills",
         images: [
@@ -186,9 +484,28 @@ const providers = [
         skill: "Skills"
       },
       {
-          name: "Business Name",
+          name: "Business NameQ",
           location: "location/distance",
-          rating: 4.5,
+          "reviews": [
+            {
+              "id": 1,
+              "name": "John Doe",
+              "rating": 4.5,
+              "comment": "Lorem ipsum dolor sit amet."
+            },
+            {
+              "id": 2,
+              "name": "Jane Smith",
+              "rating": 3.2,
+              "comment": "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            },
+            {
+              "id": 3,
+              "name": "Alex Lee",
+              "rating": 5,
+              "comment": "Ut enim ad minim veniam."
+            }
+          ],
           
           images: [
             "https://example.com/image1.jpg",
@@ -201,9 +518,28 @@ const providers = [
           skill: "Skills"
         },
         {
-          name: "Business Name",
+          name: "Business NameR",
           location: "location/distance",
-          rating: 4.8,
+          "reviews": [
+            {
+              "id": 1,
+              "name": "John Doe",
+              "rating": 4.5,
+              "comment": "Lorem ipsum dolor sit amet."
+            },
+            {
+              "id": 2,
+              "name": "Jane Smith",
+              "rating": 3.2,
+              "comment": "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            },
+            {
+              "id": 3,
+              "name": "Alex Lee",
+              "rating": 5,
+              "comment": "Ut enim ad minim veniam."
+            }
+          ],
           type: "business type", 
           skill: "Skills",
           images: [
@@ -217,9 +553,28 @@ const providers = [
           skill: "Skills"
         },
         {
-          name: "Business Name",
+          name: "Business NameS",
           location: "location/distance",
-          rating: 4.5,
+          "reviews": [
+        {
+          "id": 1,
+          "name": "John Doe",
+          "rating": 4.5,
+          "comment": "Lorem ipsum dolor sit amet."
+        },
+        {
+          "id": 2,
+          "name": "Jane Smith",
+          "rating": 3.2,
+          "comment": "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        },
+        {
+          "id": 3,
+          "name": "Alex Lee",
+          "rating": 5,
+          "comment": "Ut enim ad minim veniam."
+        }
+      ],
           
           images: [
             "https://example.com/image1.jpg",
@@ -232,7 +587,7 @@ const providers = [
           skill: "Skills"
         },
         {
-          name: "Business Name",
+          name: "Business NameT",
           location: "location/distance",
           rating: 4.8,
           type: "business type", 
