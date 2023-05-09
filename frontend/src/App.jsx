@@ -131,36 +131,35 @@ function App() {
         } catch (error) {
           return error;
         }
+      }
+    },
+      {
+        path: "/customeraccount",
+        element: <CustomerAccountContact />,
+        
       },
-    },
-    {
-      path: "/customeraccount",
-      element: <CustomerAccountContact />,
-    },
-    {
-      path: "/preferences",
-      element: <OnboardingSurvey />,
-    },
-    {
-      path: "/recommendations",
-      element: <Recommendations />,
-    },
-    {
-      path: "/profile",
-      element: <Profile />,
-    },
-    {
-      path: "/customerbookings",
-      element: <CustomerAcc />,
-    },
-    {
-      path: "/carousel",
-      element: <FavoriteProviders />,
-    },
-    {
-      path: "/provider",
-      element: <ProviderCard providers={providers} />,
-    },
+      {
+        path: "/preferences",
+        element: <OnboardingSurvey />,
+      },
+      {
+        path: "/recommendations",
+        element: <Recommendations />,
+      },
+      {
+        path: "/profile",
+        element: <Profile providers={providers} />,
+      },
+      {
+        path: "/customerbookings",
+        element: <CustomerAcc />,
+      },
+      {
+        path: "/carousel",
+      element: <FavoriteProviders />
+    }, {
+    path: "/provider",
+    element: <ProviderCard providers={providers} />},
     {
       path: "/about",
       element: <About />,

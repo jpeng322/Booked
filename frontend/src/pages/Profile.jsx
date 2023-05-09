@@ -1,6 +1,20 @@
 import React from "react";
 import CalendarComp from "../components/CalendarComp";
 import axios from "axios"
+import ServiceSpecialties from "../components/ServiceSpecialities";
+import Reviews from "../components/Reviews"; 
+// import proreviews from "../components/previews.js"; 
+import ProviderPage from "./ProviderPage"
+
+const reviews = [
+  { stars: 4, content: "Great product!" },
+  { stars: 5, content: "Love it!" },
+  { stars: 2, content: "Not what I expected." },
+  { stars: 5, content: "Amazing!" },
+  { stars: 3, content: "It's okay." },
+];
+
+
 const Profile = () => {
   async function createService(e) {
     e.preventDefault();
@@ -35,8 +49,11 @@ const Profile = () => {
   return (
     <>
       <div>Welcome Back!</div>
-      <CalendarComp />
-      <button onClick={createService}>Create Service</button>
+      {/* <CalendarComp />
+      <button onClick={createService}>Create Service</button> */}
+      <ProviderPage />
+      <ServiceSpecialties />
+      <Reviews reviews={reviews}/>
     </>
   );
 };
