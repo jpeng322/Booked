@@ -2,16 +2,18 @@ import React from "react";
 import CalendarComp from "../components/CalendarComp";
 import axios from "axios"
 import ServiceSpecialties from "../components/ServiceSpecialities";
-import Reviews from "../components/Reviews"; 
+import Reviews from "../components/ReviewTab/Reviews"; 
+import ReviewsTabs from "../components/ReviewTab/ReviewTabs"; 
 // import proreviews from "../components/previews.js"; 
 import ProviderPage from "./ProviderPage"
 
 const reviews = [
-  { stars: 4, content: "Great product!" },
-  { stars: 5, content: "Love it!" },
-  { stars: 2, content: "Not what I expected." },
-  { stars: 5, content: "Amazing!" },
-  { stars: 3, content: "It's okay." },
+  { stars: 4, name: "Jay Z.", time: "1hr", comment: "I recently had Alex install my kitchen cabinets and I'm very impressed with his work. He arrived on time and got right to work, showing his professionalism from the start. He was able to efficiently install the cabinets without any issues, and the end result is fantastic. The cabinets look great and are securely mounted." },
+  { stars: 1.5, name: "Bey N.", time: "4hr", comment: "No no!" },
+  { stars: 5, name: "Brad P.", time: "7hr", comment: "Love it!" },
+  { stars: 2, name: "Justin B.", time: "12hr", comment: "Not what I expected." },
+  { stars: 5, name: "Dwayne J.", time: "5hr", comment: "Amazing!" },
+  { stars: 3, name: "Ryan K.", time: "2hr", comment: "It's okay." }
 ];
 
 
@@ -54,6 +56,7 @@ const Profile = () => {
       <ProviderPage />
       <ServiceSpecialties />
       <Reviews reviews={reviews}/>
+      <ReviewsTabs />
     </>
   );
 };
