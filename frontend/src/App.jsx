@@ -18,10 +18,10 @@ import OnboardingSurvey from "./pages/OnboardingSurvey";
 import Recommendations from "./pages/Recommendations";
 import Profile from "./pages/Profile";
 import CustomerAcc from "./pages/CustomerBookings";
+import ProviderBookings from "./pages/ProviderBookings";
 
 import FavoriteProviders from "./components/FavoritesComp";
-import ProviderPage from "./pages/ProviderPage"
-
+import ProviderPage from "./pages/ProviderPage";
 
 import { fetchLogin, fetchSignup } from "./api";
 import CustomerAccountContact from "./pages/CustomerAccountContact";
@@ -30,7 +30,6 @@ function App() {
   const [count, setCount] = useState(0);
 
   async function checkout() {
-
     try {
       const response = await axios({
         method: "post",
@@ -131,35 +130,36 @@ function App() {
         } catch (error) {
           return error;
         }
-      }
+      },
     },
-      {
-        path: "/customeraccount",
-        element: <CustomerAccountContact />,
-        
-      },
-      {
-        path: "/preferences",
-        element: <OnboardingSurvey />,
-      },
-      {
-        path: "/recommendations",
-        element: <Recommendations />,
-      },
-      {
-        path: "/profile",
-        element: <Profile providers={providers} />,
-      },
-      {
-        path: "/customerbookings",
-        element: <CustomerAcc />,
-      },
-      {
-        path: "/carousel",
-      element: <FavoriteProviders />
-    }, {
-    path: "/provider",
-    element: <ProviderCard providers={providers} />},
+    {
+      path: "/customeraccount",
+      element: <CustomerAccountContact />,
+    },
+    {
+      path: "/preferences",
+      element: <OnboardingSurvey />,
+    },
+    {
+      path: "/recommendations",
+      element: <Recommendations />,
+    },
+    {
+      path: "/profile",
+      element: <Profile providers={providers} />,
+    },
+    {
+      path: "/customerbookings",
+      element: <CustomerAcc />,
+    },
+    {
+      path: "/carousel",
+      element: <FavoriteProviders />,
+    },
+    {
+      path: "/provider",
+      element: <ProviderCard providers={providers} />,
+    },
     {
       path: "/about",
       element: <About />,
@@ -168,7 +168,10 @@ function App() {
       path: "/provider/profile",
       element: <ProviderPage />,
     },
-
+    {
+      path: "/provider/bookings",
+      element: <ProviderBookings />,
+    },
   ]);
   return (
     <div className="App">

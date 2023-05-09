@@ -118,11 +118,8 @@ p {
 .image-container {
   display: flex;
   justify-content: center;
-<<<<<<< HEAD
   gap: calc(.25rem + .75vw);
-=======
-  gap: 1rem;
->>>>>>> 45ce21d22597f1d6df3c39bee15ee7e80c2d22a3
+
 }
 
 .image-container > * {
@@ -135,10 +132,7 @@ p {
   /* max-width: 100px; */
 }
 
-<<<<<<< HEAD
-/* .center-images > * {
-  width: 100%
-} */
+
 
 .pagination {
   display: flex;
@@ -156,6 +150,3 @@ p {
   background-color: #007bff;
   border-color: #007bff;
 }
-
-=======
->>>>>>> 45ce21d22597f1d6df3c39bee15ee7e80c2d22a3
