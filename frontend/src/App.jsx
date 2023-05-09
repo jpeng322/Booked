@@ -164,7 +164,7 @@ function App() {
       element: <About />,
     },
     {
-      path: "provider/profile",
+      path: "/provider/profile",
       element: <ProviderPage />,
     },
   ]);

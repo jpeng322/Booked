@@ -4,6 +4,7 @@ import axios from "axios"
 import ServiceSpecialties from "../components/ServiceSpecialities";
 import Reviews from "../components/Reviews"; 
 // import proreviews from "../components/previews.js"; 
+import ProviderPage from "./ProviderPage"
 
 const reviews = [
   { stars: 4, content: "Great product!" },
@@ -48,8 +49,9 @@ const Profile = () => {
   return (
     <>
       <div>Welcome Back!</div>
-      <CalendarComp />
-      <button onClick={createService}>Create Service</button>
+      {/* <CalendarComp />
+      <button onClick={createService}>Create Service</button> */}
+      <ProviderPage />
       <ServiceSpecialties />
       <Reviews reviews={reviews}/>
     </>
