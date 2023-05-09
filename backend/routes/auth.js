@@ -34,7 +34,7 @@ router.post("/signup", async (request, response) => {
           provider_password: pHashedPassword,
           provider_fname: request.body.fname,
           provider_lname: request.body.lname,
-          provider_phone: request.body.phone,
+          provider_phone: request.body.number,
         },
       });
       const cHashedPassword = await argon2.hash(request.body.password);
@@ -44,7 +44,7 @@ router.post("/signup", async (request, response) => {
           client_password: cHashedPassword,
           client_fname: request.body.fname,
           client_lname: request.body.lname,
-          client_phone: request.body.phone,
+          client_phone: request.body.number,
         },
       });
       response.status(201).json({
@@ -75,36 +75,40 @@ router.post("/login", async (request, response) => {
     //     client_email: request.body.client,
     //   },
     // });
-    console.log(findProvider)
+    console.log(findProvider);
     try {
-      const verifiedPassword = await argon2.verify(findProvider.provider_password, request.body.password);
+      const verifiedPassword = await argon2.verify(
+        findProvider.provider_password,
+        request.body.password
+      );
 
       if (verifiedPassword) {
-          const token = jwt.sign({
+        const token = jwt.sign(
+          {
             Provider: {
-                provider_email: findProvider.provider_email,
-                provider_id: findProvider.provider_id
-              }
-          }, "showMeTheProvidersOrClients");
+              provider_email: findProvider.provider_email,
+              provider_id: findProvider.provider_id,
+            },
+          },
+          "showMeTheProvidersOrClients"
+        );
 
-          response.status(200).json({
-              success: true,
-              token
-          });
+        response.status(200).json({
+          success: true,
+          token,
+        });
       } else {
         response.status(401).json({
-              success: false,
-              message: "Incorrect email or password."
-          });
-        }
-      } catch (e) {
-        response.status(500).json({
-              success: false,
-              message: "Something went wrong"
-          });
-      };
-
-   
+          success: false,
+          message: "Incorrect email or password.",
+        });
+      }
+    } catch (e) {
+      response.status(500).json({
+        success: false,
+        message: "Something went wrong",
+      });
+    }
   } catch (e) {
     response.status(401).json({
       success: false,
