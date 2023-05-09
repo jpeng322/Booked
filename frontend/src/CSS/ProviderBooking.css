@@ -1,0 +1,53 @@
+.provider-booking-container {
+  /* box-sizing: border-box; */
+  /* border: 1px solid red !important */
+  /* min-height: 100vh; */
+}
+
+.rbc-calendar {
+  width: 80%;
+  max-height: 800px;
+  /* height: 1000px; */
+  /* border-radius: 1rem !important; */
+}
+
+.rbc-header {
+  padding: .5rem 0rem !important;
+}
+
+.rbc-month-view {
+  margin-top: 1rem;
+  border-radius: 1rem;
+}
+
+/* .rbc-row-bg>*:nth-child(1) {
+  border: 1px solid red;
+} */
+
+.rbc-month-row:last-of-type .rbc-day-bg:last-of-type {
+  /* border: 1px solid red; */
+  border-bottom-right-radius: 1rem;
+  border-right: 1px solid #ddd;
+}
+
+.rbc-event-content {
+  text-align: center;
+  
+  /* border: 1px solid red; */
+}
+.rbc-row-segment {
+  margin-top: .5rem;
+}
+.rbc-row-segment:has(.rbc-event) {
+  /* border: 1px solid red;
+  flex-basis: 0 !important; */
+  padding: 0rem 2%;
+}
+.provider-booking,
+.provider-booking-header {
+  flex: 1 1 0;
+}
+
+.provider-booking-container {
+  border: 1px solid black;
+}
