@@ -5,10 +5,11 @@ export default function setupJWTStrategy(passport) {
         new Strategy({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             secretOrKey: "showMeTheProvidersOrClients"
-        }, function(payload, done) {
+        }, function (payload, done) {
             try {
-                return done(null, payload.user);
+                return done(null, payload);
             } catch (e) {
+                console.log(e)
                 return done(e, null);
             }
         })

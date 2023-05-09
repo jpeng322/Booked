@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useActionData, useNavigate, useSubmit } from "react-router-dom";
@@ -8,10 +9,12 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 
+
 const Signup = () => {
   const submit = useSubmit();
   const actionData = useActionData();
   const navigate = useNavigate();
+
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   useEffect(() => {
@@ -146,7 +149,6 @@ const Signup = () => {
 
 
     </div>
-
 
 
     </>

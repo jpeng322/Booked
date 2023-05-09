@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-
-import About from "../src/pages/About"
+import About from "../src/pages/About";
 import "/src/App.css";
 import ProviderCard from "./pages/ProviderCard";
 import providers from "./providers";
@@ -19,16 +18,21 @@ import OnboardingSurvey from "./pages/OnboardingSurvey";
 import Recommendations from "./pages/Recommendations";
 import Profile from "./pages/Profile";
 import CustomerAcc from "./pages/CustomerBookings";
-import FavoriteProviders from "./components/Favoritess";
+
+import FavoriteProviders from "./components/FavoritesComp";
+import ProviderPage from "./pages/ProviderPage"
+
+
 import { fetchLogin, fetchSignup } from "./api";
 import CustomerAccountContact from "./pages/CustomerAccountContact";
+
 
 
 function App() {
   const [count, setCount] = useState(0);
 
   async function checkout() {
-    console.log("asdasd");
+
     try {
       const response = await axios({
         method: "post",
@@ -51,32 +55,33 @@ function App() {
       console.log(e);
     }
   }
-    // () => {
-    //   fetch("http://localhost:3001/payment", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       items: [
-    //         { id: 1, quantity: 3 },
-    //         { id: 2, quantity: 1 },
-    //       ],
-    //     }),
-    //   })
-    //     .then((res) => {
-    //       console.log(res)
-    //       if (res.ok) return res.json();
-    //       return res.json().then((json) => Promise.reject(json));
-    //     })
-    //     .then(({ url }) => {
-    //       window.location = url;
-    //     })
-    //     .catch((e) => {
-    //       console.error(e.error);
-    //     });
-    // };
+  // () => {
+  //   fetch("http://localhost:3001/payment", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       items: [
+  //         { id: 1, quantity: 3 },
+  //         { id: 2, quantity: 1 },
+  //       ],
+  //     }),
+  //   })
+  //     .then((res) => {
+  //       console.log(res)
+  //       if (res.ok) return res.json();
+  //       return res.json().then((json) => Promise.reject(json));
+  //     })
+  //     .then(({ url }) => {
+  //       window.location = url;
+  //     })
+  //     .catch((e) => {
+  //       console.error(e.error);
+  //     });
+  // };
   // }
+
     const router = createBrowserRouter([
       {
         path: "/",
@@ -156,17 +161,18 @@ function App() {
     element: <ProviderCard providers={providers} />},
     {
       path: "/about",
-      element: <About />},
-    
-    ]);
+      element: <About />,
+    },
+    {
+      path: "provider/profile",
+      element: <ProviderPage />,
+    },
+  ]);
   return (
     <div className="App">
-          <RouterProvider router={router} />
+      <RouterProvider router={router} />
     </div>
   );
-  }
-
-
-
+}
 
 export default App;
