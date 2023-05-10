@@ -1,22 +1,20 @@
 import React from "react";
 
 const OrderInfo = ({
-  image,
-  order_type,
+  service_type,
   order_desc,
-  order_date,
-  order_due,
-  total,
+ date_order,
+  cost,
   status,
+  provider_name,
 }) => {
   return (
     <div className="completed-information">
-      <div>{image}</div>
-      <div>{order_type}</div>
+      <div>{provider_name}</div>
+      <div>{service_type}</div>
       <div>{order_desc}</div>
-      <div>{order_date}</div>
-      <div>{order_due}</div>
-      <div>{total} </div>
+      <div>{date_order}</div>
+      <div>{cost}</div>
       {/* <button>BOOK AGAIN</button> */}
       <div>
         <button className="p-3">{status}</button>

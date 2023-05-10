@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import OrderInfo from "./OrderInfo";
 import Pagination from "react-bootstrap/Pagination";
 
@@ -24,8 +24,6 @@ const TabComp = ({ orders }) => {
   //   );
   // }
 
-
-
   const numberOfOrders = 3;
   const numberOfPages = Math.ceil(orders.length / numberOfOrders);
 
@@ -36,50 +34,51 @@ const TabComp = ({ orders }) => {
       : orders.slice(
           (pageNumber - 1) * numberOfOrders,
           pageNumber * numberOfOrders
-      );
-  
-      let items = [];
-      for (let number = 1; number <= numberOfPages; number++) {
-        items.push(
-          <Pagination.Item
-            onClick={(e) => {
-              // console.log(breeds)
-              setPageNumber(parseInt(e.target.textContent));
-            }}
-            key={number}
-            active={number === pageNumber}
-          >
-            {number}
-          </Pagination.Item>
         );
-      }
+
+  let items = [];
+  for (let number = 1; number <= numberOfPages; number++) {
+    items.push(
+      <Pagination.Item
+        onClick={(e) => {
+          // console.log(breeds)
+          setPageNumber(parseInt(e.target.textContent));
+        }}
+        key={number}
+        active={number === pageNumber}
+      >
+        {number}
+      </Pagination.Item>
+    );
+  }
 
   return (
     <div className="completed-containers">
       <div className="completed-headers ">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div>ORDER DATE </div>
-        <div>DUE ON </div>
-        <div>TOTAL </div>
+        <div>NAME</div>
+        <div>SERVICE TYPE</div>
+        <div>DESCRIPTION</div>
+        <div>SERVICE DATE </div>
+        <div>PRICE </div>
         <div>STATUS </div>
       </div>
       {/* <div className="completed-information"> */}
-      {currentOrders.map((order) => (
+      {currentOrders.map((booking) => (
         <OrderInfo
-          image={order.image}
-          order_type={order.order_type}
-          order_desc={order.order_desc}
-          order_date={order.order_date}
-          order_due={order.order_due}
-          total={order.total}
-          status={order.status}
+        key={booking.id}
+        provider_name={booking.provider_name}
+        service_type={booking.service_type}
+        order_desc={booking.order_desc}
+        date_order={booking.date_order}
+        cost={booking.cost}
+        status={booking.status}
         />
       ))}
-      {numberOfPages > 1 && <div className="pagination-container">
-        <Pagination>{items}</Pagination>
-      </div>}
+      {numberOfPages > 1 && (
+        <div className="pagination-container">
+          <Pagination>{items}</Pagination>
+        </div>
+      )}
     </div>
   );
 };

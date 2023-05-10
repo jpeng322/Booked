@@ -68,10 +68,12 @@ model Booking {
   provider Provider @relation(fields: [provider_id], references: [provider_id])
   //possibly need a time for booking
   //bookTime DateTime <-- the time the provider chose that was available / client chose for appointment ex. 3:30PM  or Fri Apr 21 2023 00:00:00 GMT-0400 (Eastern Daylight Time)
+  provider_name String
 client_name String
-project_type String
+service_type String
 date_order String
-date_due String
+order_desc String
+// date_due String
 cost String
 status String @default("pending")
 

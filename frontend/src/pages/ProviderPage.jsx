@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import axios from "axios";
 
 //styling
 import avatar from "../images/avatar.png";
@@ -29,7 +30,59 @@ const ProviderPage = () => {
       items: 1,
     },
   };
+
+  const submitRequest = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios({
+        method: "post",
+        url: "http://localhost:4000/booking",
+        data: {
+          client_name: values.client_name,
+          provider_name: values.provider_name,
+          service_type: values.service_type,
+          date_order: (new Date(startDate) + "")
+            .split(" ")
+            .splice(1, 3)
+            .join(" "),
+          message: values.message,
+          cost: values.cost,
+        
+        },
+      });
+
+      if (response) {
+        console.log(response);
+      } else {
+        throw Error("No response");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const [startDate, setStartDate] = useState(new Date());
+
+  const initialValues = {
+    client_name: "John",
+    provider_name: "GR Brothers Landscaping",
+    service_type: "",
+    date_order: new Date(startDate) + "",
+    cost: "150",
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value,
+    });
+  };
+  const [values, setValues] = useState(initialValues);
+  console.log(
+values
+  );
+
   return (
     <Container fluid className="provider-profile-container d-flex p-5">
       <div className="provider-information">
@@ -115,35 +168,50 @@ const ProviderPage = () => {
       </div>
 
       <Row className="provider-form-container">
-        <form className="provider-form">
+        <form onSubmit={submitRequest} className="provider-form">
           <div className="provider-pricing">
             <h2>$150</h2>
             <h3>Starting cost</h3>
           </div>
           <div className="provider-input-group">
             <label for="zip-code">Zip Code</label>
-            <input type="number" id="zip-code" name="zip-code" />
+            <input
+              type="number"
+              id="zip-code"
+              name="zip-code"
+              value={values.zip}
+              onChange={handleInputChange}
+            />
           </div>
           <div className="provider-input-group">
             <label for="scheduling">Service Date</label>
             <DatePicker
               selected={startDate}
-              onChange={(date) => setStartDate(date)}
+              onChange={(date) => setStartDate(new Date(date).split())}
             />
           </div>
           <div className="provider-input-group">
-            <label for="project">Service Type</label>
-            <input type="text" id="project" name="project" placeholder="What service would you like?" />
+            <label for="service_type">Service Type</label>
+            <input
+              type="text"
+              id="service_type"
+              name="service_type"
+              placeholder="What service would you like?"
+              value={values.service_type}
+              onChange={handleInputChange}
+            />
           </div>
           <div className="provider-input-group">
-            <label htmlFor="note">Message </label>
+            <label htmlFor="message">Message </label>
             <textarea
               className="p-3"
-              name="note"
-              id="note"
+              name="message"
+              id="message"
               cols="30"
               rows="4"
               placeholder="Any additional information that the provider needs to know? Ex. Anticipated duration of service, notice of pets, specific information needed to know for better service"
+              value={values.message}
+              onChange={handleInputChange}
             ></textarea>
           </div>
           {/* <div className="provider-input-group">
@@ -151,7 +219,9 @@ const ProviderPage = () => {
             <input type="number" id="hours" name="hours" />
           </div> */}
 
-          <button className="provider-form-button">Send Request</button>
+          <button type="submit" className="provider-form-button">
+            Send Request
+          </button>
           <p>
             Responds in about <span className="fw-bold">1 hour</span>
           </p>
