@@ -149,7 +149,7 @@ function App() {
       element: <Profile providers={providers} />,
     },
     {
-      path: "/customerbookings",
+      path: "/customer/bookings",
       element: <CustomerAcc />,
     },
     {

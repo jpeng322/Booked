@@ -2,20 +2,22 @@ import React from "react";
 
 import "../CSS/ProviderBooking.css";
 const ProviderBookingInfo = ({
-  order_type,
+  service_type,
   order_desc,
-  order_date,
   order_due,
-  total,
+  date_order,
+  cost,
   status,
+  client_name,
 }) => {
   return (
     <div className="provider-booking-container d-flex p-3">
-      <div className="provider-booking flex-grow-1">{order_type}</div>
+      <div className="provider-booking flex-grow-1">{client_name}</div>
+      <div className="provider-booking flex-grow-1">{service_type}</div>
       <div className="provider-booking  flex-grow-1">{order_desc}</div>
-      <div className="provider-booking  flex-grow-1">{order_date}</div>
-      <div className="provider-booking flex-grow-1">{order_due}</div>
-      <div className="provider-booking  flex-grow-1">{total}</div>
+      <div className="provider-booking  flex-grow-1">{date_order}</div>
+      {/* <div className="provider-booking flex-grow-1">{order_due}</div> */}
+      <div className="provider-booking  flex-grow-1">{cost}</div>
       <div className="provider-booking  flex-grow-1">{status}</div>
     </div>
   );

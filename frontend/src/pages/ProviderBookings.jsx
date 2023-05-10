@@ -30,9 +30,8 @@ const localizer = dateFnsLocalizer({
 });
 
 const ProviderBookings = () => {
-  const [value, onChange] = useState(new Date());
 
-  // const [bookings, setBookings] = useState([]);
+  const [bookings, setBookings] = useState([]);
   useEffect(() => {
     async function getBookings() {
       try {
@@ -54,7 +53,7 @@ const ProviderBookings = () => {
     getBookings();
   }, []);
 
-  const bookings = [
+  const bookings2 = [
     {
       name: "Kashanna",
       id: "32432432123123xcvcxa",
@@ -156,29 +155,11 @@ const ProviderBookings = () => {
     },
   ];
 
-  const newBookings = bookings.map((booking) => ({
-    title: booking.name,
-    status: booking.status,
-    start: new Date(booking.order_date),
-    end: new Date(booking.order_due),
-    color: "white",
-    colorEvento:
-      booking.status === "pending"
-        ? "grey"
-        : booking.status === "completed"
-        ? "#2f6437"
-        : booking.status === "active"
-        ? "#53b946"
-        : booking.status === "cancelled"
-        ? "#FF6D60"
-        : "#146C94",
-  }));
-
-  // const newBookings = bookings.map((booking) => ({
-  //   title: booking.client_name,
+  // const newBookings = bookings2.map((booking) => ({
+  //   title: booking.name,
   //   status: booking.status,
-  //   start: new Date(booking.date_order),
-  //   end: new Date(booking.date_due),
+  //   start: new Date(booking.order_date),
+  //   end: new Date(booking.order_due),
   //   color: "white",
   //   colorEvento:
   //     booking.status === "pending"
@@ -191,23 +172,26 @@ const ProviderBookings = () => {
   //       ? "#FF6D60"
   //       : "#146C94",
   // }));
+
+  const newBookings = bookings.map((booking) => ({
+    title: booking.client_name,
+    status: booking.status,
+    start: new Date(booking.date_order),
+    end: new Date(booking.date_order),
+    color: "white",
+    colorEvento:
+      booking.status === "pending"
+        ? "grey"
+        : booking.status === "completed"
+        ? "#2f6437"
+        : booking.status === "active"
+        ? "#53b946"
+        : booking.status === "cancelled"
+        ? "#FF6D60"
+        : "#146C94",
+  }));
   console.log(newBookings);
 
-  //   const newEvents1 = bookings.map((booking) => [
-  //     ["title", booking.name],
-  //     ["start", booking.order_date],
-  //     ["end", booking.order_due],
-  //   ]);
-  //   console.log(newEvents1);
-  //   const newEvents2 = newEvents1.map((bookingArr) => {
-  //     console.log([bookingArr]);
-
-  //     Object.fromEntries(new Map([bookingArr]));
-  //   });
-  //   console.log(newEvents2);
-
-  //   let newObj = Object.fromEntries(bookings.map((bookings) => bookings));
-  //   console.log(newObj);
   return (
     <Container
       fluid
@@ -232,8 +216,8 @@ const ProviderBookings = () => {
         <div className="provider-booking-header d-flex p-3">
           <div className="provider-booking-header">Name:</div>
           <div className="provider-booking-header">Service Type:</div>
-          <div className="provider-booking-header">Book Date:</div>
-          <div className="provider-booking-header">Due Date:</div>
+          <div className="provider-booking-header">Description:</div>
+          <div className="provider-booking-header">Service Date:</div>
           <div className="provider-booking-header">Price:</div>
           <div className="provider-booking-header">Status:</div>
         </div>
@@ -241,12 +225,13 @@ const ProviderBookings = () => {
         {bookings.map((booking) => (
           <ProviderBookingInfo
             key={booking.id}
-            image={booking.image}
-            order_type={booking.order_type}
+            client_name={booking.client_name}
+            // image={booking.image}
+            service_type={booking.service_type}
             order_desc={booking.order_desc}
-            order_date={booking.order_date}
-            order_due={booking.order_due}
-            total={booking.total}
+            date_order={booking.date_order}
+            // order_due={booking.order_due}
+            cost={booking.cost}
             status={booking.status}
           />
         ))}
