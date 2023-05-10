@@ -4,8 +4,8 @@ import axios from "axios"
 import ServiceSpecialties from "../components/ServiceSpecialities";
 import Reviews from "../components/ReviewTab/Reviews"; 
 import ReviewsTabs from "../components/ReviewTab/ReviewTabs"; 
-// import proreviews from "../components/previews.js"; 
-import ProviderPage from "./ProviderPage"
+import ProviderPage from "./ProviderPage";
+import BackgroundCheck from "../components/ReviewTab/Credentials"
 
 const reviews = [
   { stars: 4, name: "Jay Z.", time: "1hr", comment: "I recently had Alex install my kitchen cabinets and I'm very impressed with his work. He arrived on time and got right to work, showing his professionalism from the start. He was able to efficiently install the cabinets without any issues, and the end result is fantastic. The cabinets look great and are securely mounted." },
@@ -57,6 +57,8 @@ const Profile = () => {
       <ServiceSpecialties />
       <Reviews reviews={reviews}/>
       <ReviewsTabs />
+      <BackgroundCheck />
+      
     </>
   );
 };

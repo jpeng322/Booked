@@ -2,6 +2,13 @@ const providers = [
     {
       name: "Business NameA",
       location: "location/distance",
+      background : [
+        {
+          check: "yes",
+          mark: "✔",
+          company: "First Advantage"
+        }
+      ],
       reviews: [
         {
           "id": 1,

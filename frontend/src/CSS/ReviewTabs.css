@@ -1,58 +1,26 @@
-/* .reviews-tabs-container {
-  position: relative;
-  z-index: 1;
-  margin-top: 230px;
-}
-
-.reviews-tabs {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 20px;
-  background-color: #fff;
-}
-
-.reviews-tabs .nav-link {
-  color: #666;
-  font-weight: bold;
-}
-
-.reviews-tabs .nav-link.active {
-  color: #333;
-}
-
-.reviews-tab-content {
-  margin: 0 auto;
-  width: 80%;
-} */
-
 .btns{
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content:left;
+  align-items: left;
   height: 100vh;
   position: absolute;
-  width: 50%;
+  width: 80%;
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 150px;
   margin-bottom: 100px;
-  margin-left: 55px;
+  margin-left: 150px;
 }
 
 .reviews-container {
-  max-width: 600px;
+  max-width: 1200px;
   width: 100%;
 }
 
 .reviews-buttons {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   margin-bottom: 50px;
 }
 
@@ -100,11 +68,17 @@
 .name{
 /* float: left; */
 margin-top: 20px;
-margin-right: 520px;
+margin-right: 1100px;
 
 }
 
 .time{
   float: right; 
   margin-right: 20px;
+}
+
+.horizontal-line {
+  height: 1px;
+  background-color: black;
+  margin: 20px 0;
 }

@@ -70,6 +70,7 @@ const ReviewsTabs = () => {
                   4-5 
                   </Button>
               </ButtonGroup>
+              <div className="horizontal-line"></div>
               <div className="reviews-list">
                 
                   {filteredReviews.map((review, index) => (
@@ -94,6 +95,7 @@ const ReviewsTabs = () => {
                   </div>
                   ))}
               </div>
+              <div className="horizontal-line"></div>
           </div>
       </div>
     );
