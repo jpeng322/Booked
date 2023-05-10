@@ -30,6 +30,7 @@ export default function bookingRouter(passport) {
 
   //Get provider bookings
   router.get("/provider/:userId", async (request, response) => {
+    console.log("PROVIDER ROUTE HIT")
     try {
       const providerBooking = await prisma.booking.findMany({
         where: {
@@ -91,9 +92,15 @@ export default function bookingRouter(passport) {
         data: {
           client_id: request.body.client_id || 1,
           provider_id: request.body.provider_id || 1,
-          service_id: request.body.service_id || 1,
-          transaction_id: request.body.service || "To be determined",
+          // service_id: request.body.service_id || 1,
+          // transaction_id: request.body.service || "To be determined",
           //   booking_date: cre,
+          client_name: request.body.client_name,
+          project_type: request.body.project_type,
+          date_order: request.body.date_order,
+          date_due: request.body.date_due,
+          cost: request.body.cost,
+          status: request.body.status
         },
       });
 

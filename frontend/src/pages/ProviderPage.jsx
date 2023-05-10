@@ -125,21 +125,33 @@ const ProviderPage = () => {
             <input type="number" id="zip-code" name="zip-code" />
           </div>
           <div className="provider-input-group">
-            <label for="scheduling">Scheduling</label>
+            <label for="scheduling">Service Date</label>
             <DatePicker
               selected={startDate}
               onChange={(date) => setStartDate(date)}
             />
           </div>
           <div className="provider-input-group">
-            <label for="hours">Estimated Hours</label>
-            <input type="number" id="hours" name="hours" />
+            <label for="project">Service Type</label>
+            <input type="text" id="project" name="project" placeholder="What service would you like?" />
           </div>
           <div className="provider-input-group">
-            <label for="project">Project Type</label>
-            <input type="text" id="project" name="project" />
+            <label htmlFor="note">Message </label>
+            <textarea
+              className="p-3"
+              name="note"
+              id="note"
+              cols="30"
+              rows="4"
+              placeholder="Any additional information that the provider needs to know? Ex. Anticipated duration of service, notice of pets, specific information needed to know for better service"
+            ></textarea>
           </div>
-          <button className="provider-form-button">Check availability</button>
+          {/* <div className="provider-input-group">
+            <label for="hours">Estimated Hours</label>
+            <input type="number" id="hours" name="hours" />
+          </div> */}
+
+          <button className="provider-form-button">Send Request</button>
           <p>
             Responds in about <span className="fw-bold">1 hour</span>
           </p>
