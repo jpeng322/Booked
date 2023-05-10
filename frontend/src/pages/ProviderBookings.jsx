@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 // import "../../node_modules/react-calendar/dist/Calendar.css"
@@ -17,6 +17,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-datepicker/dist/react-datepicker.css";
 import enUS from "date-fns/locale/en-US";
 
+import axios from "axios";
 const locales = {
   "en-US": enUS,
 };
@@ -28,32 +29,30 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
-const events = [
-  {
-    title: "Big Meeting",
-    allDay: true,
-    start: new Date(2023, 6, 0),
-    end: new Date(2023, 6, 0),
-  },
-  {
-    title: "Vacation",
-    start: new Date(2023, 6, 7),
-    end: new Date(2023, 6, 10),
-  },
-  {
-    title: "Conference",
-    start: new Date(2023, 6, 20),
-    end: new Date(2023, 6, 23),
-  },
-  {
-    title: "Conferenceasdasdasd",
-    start: "June 3, 2023",
-    end: "June 3, 2023",
-  },
-];
-
 const ProviderBookings = () => {
   const [value, onChange] = useState(new Date());
+
+  // const [bookings, setBookings] = useState([]);
+  useEffect(() => {
+    async function getBookings() {
+      try {
+        const response = await axios({
+          method: "get",
+          url: "http://localhost:4000/booking/provider/1",
+        });
+
+        console.log(response);
+
+        if (response) {
+          setBookings(response.data.bookings);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    getBookings();
+  }, []);
 
   const bookings = [
     {
@@ -174,6 +173,24 @@ const ProviderBookings = () => {
         ? "#FF6D60"
         : "#146C94",
   }));
+
+  // const newBookings = bookings.map((booking) => ({
+  //   title: booking.client_name,
+  //   status: booking.status,
+  //   start: new Date(booking.date_order),
+  //   end: new Date(booking.date_due),
+  //   color: "white",
+  //   colorEvento:
+  //     booking.status === "pending"
+  //       ? "grey"
+  //       : booking.status === "completed"
+  //       ? "#2f6437"
+  //       : booking.status === "active"
+  //       ? "#53b946"
+  //       : booking.status === "cancelled"
+  //       ? "#FF6D60"
+  //       : "#146C94",
+  // }));
   console.log(newBookings);
 
   //   const newEvents1 = bookings.map((booking) => [
@@ -214,10 +231,10 @@ const ProviderBookings = () => {
       <div className="w-100 text-center">
         <div className="provider-booking-header d-flex p-3">
           <div className="provider-booking-header">Name:</div>
-          <div className="provider-booking-header">Job Type:</div>
+          <div className="provider-booking-header">Service Type:</div>
           <div className="provider-booking-header">Book Date:</div>
           <div className="provider-booking-header">Due Date:</div>
-          <div className="provider-booking-header">Earning:</div>
+          <div className="provider-booking-header">Price:</div>
           <div className="provider-booking-header">Status:</div>
         </div>
 
