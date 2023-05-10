@@ -37,19 +37,43 @@ model Client {
 }
 
 
+// model Booking {
+//   booking_id Int @unique @default(autoincrement())
+//   client_id Int
+//   provider_id Int
+//   service_id Int
+//   service Service?
+//   transaction_id String
+//   createdAt     DateTime            @default(now())
+//   updatedAt     DateTime            @updatedAt
+//   client Client @relation(fields: [client_id], references: [client_id])
+//   provider Provider @relation(fields: [provider_id], references: [provider_id])
+//   //possibly need a time for booking
+//   //bookTime DateTime <-- the time the provider chose that was available / client chose for appointment ex. 3:30PM  or Fri Apr 21 2023 00:00:00 GMT-0400 (Eastern Daylight Time)
+
+//   @@index([client_id])
+//   @@index([provider_id])
+// }
+
 model Booking {
   booking_id Int @unique @default(autoincrement())
   client_id Int
   provider_id Int
-  service_id Int
-  service Service?
-  transaction_id String
-  createdAt     DateTime            @default(now())
-  updatedAt     DateTime            @updatedAt
+  // service_id Int
+  // service Service?
+  // transaction_id String
+  // createdAt     DateTime            @default(now())
+  // updatedAt     DateTime            @updatedAt
   client Client @relation(fields: [client_id], references: [client_id])
   provider Provider @relation(fields: [provider_id], references: [provider_id])
   //possibly need a time for booking
   //bookTime DateTime <-- the time the provider chose that was available / client chose for appointment ex. 3:30PM  or Fri Apr 21 2023 00:00:00 GMT-0400 (Eastern Daylight Time)
+client_name String
+project_type String
+date_order String
+date_due String
+cost String
+status String @default("pending")
 
   @@index([client_id])
   @@index([provider_id])
@@ -60,7 +84,7 @@ model Service {
   service_type String
   payment_id String?
   booking_id Int @unique
-  booking Booking? @relation(fields: [booking_id], references: [booking_id])
+  // booking Booking? @relation(fields: [booking_id], references: [booking_id])
   provider_id Int
   provider Provider @relation(fields:[service_id], references: [provider_id])
   booking_date DateTime? 
