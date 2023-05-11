@@ -4,6 +4,7 @@ import BookingsCard from "../components/BookingsCard";
 import FavoriteProviders from "../components/FavoritesComp";
 import BookingsTabs from "../components/BookingTab/BookingsTabs";
 
+
 //css
 import "../CSS/CustomerBookings.css";
 const CustomerBookings = () => {
