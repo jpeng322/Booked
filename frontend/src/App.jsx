@@ -19,6 +19,7 @@ import Recommendations from "./pages/Recommendations";
 import Profile from "./pages/Profile";
 import CustomerAcc from "./pages/CustomerBookings";
 import ProviderBookings from "./pages/ProviderBookings";
+import { submitRequestForm  } from "./pages/ProviderPage";
 
 import FavoriteProviders from "./components/FavoritesComp";
 import ProviderPage from "./pages/ProviderPage";
@@ -169,7 +170,8 @@ function App() {
     {
       path: "/provider/profile",
       element: <ProviderPage />,
-    },
+      action: submitRequestForm 
+},
     {
       path: "/provider/bookings",
       element: <ProviderBookings />,
