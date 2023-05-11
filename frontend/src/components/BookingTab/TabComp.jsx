@@ -61,17 +61,19 @@ const TabComp = ({ orders }) => {
         <div>SERVICE DATE </div>
         <div>PRICE </div>
         <div>STATUS </div>
+        <div></div>
       </div>
       {/* <div className="completed-information"> */}
       {currentOrders.map((booking) => (
         <OrderInfo
-        key={booking.id}
-        provider_name={booking.provider_name}
-        service_type={booking.service_type}
-        order_desc={booking.order_desc}
-        date_order={booking.date_order}
-        cost={booking.cost}
-        status={booking.status}
+          key={booking.id}
+          provider_name={booking.provider_name}
+          service_type={booking.service_type}
+          order_desc={booking.order_desc}
+          date_order={booking.date_order}
+          cost={booking.cost}
+          status={booking.status}
+          id={booking.booking_id}
         />
       ))}
       {numberOfPages > 1 && (

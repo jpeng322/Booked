@@ -1,13 +1,16 @@
 import React, {useEffect, useState} from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import axios from "axios";
-import "react-tabs/style/react-tabs.css";
+import moment from "moment";
 
+import "react-tabs/style/react-tabs.css";
 import "../../CSS/BookingTabs.css";
+
 import TabComp from "./TabComp";
 const BookingsTabs = () => {
 
   const [bookings, setBookings] = useState([])
+  const dateNow = moment().format("L");
   useEffect(() => {
     async function getBookings() {
       try {
@@ -31,59 +34,11 @@ const BookingsTabs = () => {
 
   console.log(bookings)
 
-  // const bookings = [
-  //   {
-  //     image: "Picture",
-  //     order_type: "Basic Order",
-  //     order_desc: "Install rims",
-  //     order_date: "Dec 3, 2022",
-  //     order_due: "Dec 7, 2022",
-  //     total: "$500.00",
-  //     status: "completed",
-  //   },
-  //   {
-  //     image: "Active",
-  //     order_type: "Basic Order",
-  //     order_desc: "Install rims",
-  //     order_date: "Dec 3, 2022",
-  //     order_due: "Dec 7, 2022",
-  //     total: "$500.00",
-  //     status: "active",
-  //   },
-  //   {
-  //     image: "Scheduled",
-  //     order_type: "Basic Order",
-  //     order_desc: "Paint rims",
-  //     order_date: "Dec 123, 2022",
-  //     order_due: "Dec 755, 2022",
-  //     total: "$1500.00",
-  //     status: "scheduled",
-  //   },
-  //   {
-  //     image: "Cancelled",
-  //     order_type: "Basic Order",
-  //     order_desc: "Install rims",
-  //     order_date: "Dec 3, 2022",
-  //     order_due: "Dec 7, 2022",
-  //     total: "$500.00",
-  //     status: "cancelled",
-  //   },
-  //   {
-  //     image: "Scheduled",
-  //     order_type: "Basic Order",
-  //     order_desc: "Install rims",
-  //     order_date: "Dec 3, 2022",
-  //     order_due: "Dec 7, 2022",
-  //     total: "$500.00",
-  //     status: "scheduled",
-  //   },
-  // ];
-
   const completedOrders = bookings.filter(
     (booking) => booking.status === "completed"
   );
   const activeOrders = bookings.filter(
-    (booking) => booking.status === "active"
+    (booking) => booking.status === "scheduled" && booking.date_order === dateNow
   );
 
   const scheduledOrders = bookings.filter(

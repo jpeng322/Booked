@@ -48,15 +48,8 @@ export const submitRequestForm = async ({ request }) => {
     console.log(e);
   }
 
-  // send your post request
-
-  // if (submission.message.length < 10) {
-  //   return {error: 'Message must be over 10 chars long.'}
-  // }
-
-  // redirect the user
   return redirect("/provider/profile");
-  // return navigate("/provider/profile");
+
 };
 
 const ProviderPage = () => {
@@ -80,55 +73,6 @@ const ProviderPage = () => {
     },
   };
 
-  // const submitRequest = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios({
-  //       method: "post",
-  //       url: "http://localhost:4000/booking",
-  //       data: {
-  //         client_name: values.client_name,
-  //         provider_name: values.provider_name,
-  //         service_type: values.service_type,
-  //         date_order: (new Date(startDate) + "")
-  //           .split(" ")
-  //           .splice(1, 3)
-  //           .join(" "),
-  //         message: values.message,
-  //         cost: values.cost,
-
-  //       },
-  //     });
-
-  //     if (response) {
-  //       console.log(response);
-  //     } else {
-  //       throw Error("No response");
-  //     }
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
-  // const initialValues = {
-  //   client_name: "John",
-  //   provider_name: "GR Brothers Landscaping",
-  //   service_type: "",
-  //   date_order: new Date(startDate) + "",
-  //   cost: "150",
-  // };
-
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setValues({
-  //     ...values,
-  //     [name]: value,
-  //   });
-  // };
-  // const [values, setValues] = useState(initialValues);
-  //   console.log(
-  // values
-  //   );
 
   const [startDate, setStartDate] = useState(new Date());
 

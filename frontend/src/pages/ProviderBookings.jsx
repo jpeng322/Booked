@@ -16,6 +16,7 @@ import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-datepicker/dist/react-datepicker.css";
 import enUS from "date-fns/locale/en-US";
+import moment from 'moment'
 
 import axios from "axios";
 const locales = {
@@ -30,7 +31,6 @@ const localizer = dateFnsLocalizer({
 });
 
 const ProviderBookings = () => {
-
   const [bookings, setBookings] = useState([]);
   useEffect(() => {
     async function getBookings() {
@@ -53,127 +53,18 @@ const ProviderBookings = () => {
     getBookings();
   }, []);
 
-  const bookings2 = [
-    {
-      name: "Kashanna",
-      id: "32432432123123xcvcxa",
-      image: "Picture",
-      order_type: "Basic Order",
-      order_desc: "Install rims",
-      order_date: "June 5 2023",
-      order_due: "June 5 2023",
-      total: "$500.00",
-      status: "completed",
-    },
-    {
-      name: "Hiwot",
-      id: "324324321231231111",
-      image: "Active",
-      order_type: "Basic Order",
-      order_desc: "Install rims",
-      order_date: "June 1 2023",
-      order_due: "June 1 2023",
-      total: "$500.00",
-      status: "active",
-    },
-    {
-      name: "Jacky Peng",
-      id: "32213432432123123",
-      image: "Scheduled",
-      order_type: "Basic Order",
-      order_desc: "Paint rims",
-      order_date: "June 12 2023",
-      order_due: "June 15 2023",
-      total: "$1500.00",
-      status: "scheduled",
-    },
-    {
-      name: "Mei Huang",
-      id: "32432asdaswe",
-      image: "Cancelled",
-      order_type: "Basic Order",
-      order_desc: "Install rims",
-      order_date: "June 13 2023",
-      order_due: "June 13 2023",
-      total: "$500.00",
-      status: "cancelled",
-    },
-    {
-      name: "Mei Huang",
-      id: "32432asdaswe",
-      image: "Cancelled",
-      order_type: "Basic Order",
-      order_desc: "Install rims",
-      order_date: "June 13 2023",
-      order_due: "June 13 2023",
-      total: "$500.00",
-      status: "cancelled",
-    },
-    {
-      name: "Mei Huang",
-      id: "32432asdaswe",
-      image: "Cancelled",
-      order_type: "Basic Order",
-      order_desc: "Install rims",
-      order_date: "June 13 2023",
-      order_due: "June 13 2023",
-      total: "$500.00",
-      status: "cancelled",
-    },
-    {
-      name: "Mei Huang",
-      id: "32432asdaswe",
-      image: "Cancelled",
-      order_type: "Basic Order",
-      order_desc: "Install rims",
-      order_date: "June 13 2023",
-      order_due: "June 13 2023",
-      total: "$500.00",
-      status: "cancelled",
-    },
-    {
-      name: "John Smith",
-      id: "32432432",
-      image: "Scheduled",
-      order_type: "Basic Order",
-      order_desc: "Install rims",
-      order_date: "June 3 2023",
-      order_due: "June 7 2023",
-      total: "$500.00",
-      status: "scheduled",
-    },
-    {
-      name: "John Smithasdad",
-      id: "32432432",
-      image: "Scheduled",
-      order_type: "Basic Order",
-      order_desc: "Install rims",
-      order_date: "June 10 2023",
-      order_due: "June 10 2023",
-      total: "$500.00",
-      status: "pending",
-    },
-  ];
+  let today = new Date();
 
-  // const newBookings = bookings2.map((booking) => ({
-  //   title: booking.name,
-  //   status: booking.status,
-  //   start: new Date(booking.order_date),
-  //   end: new Date(booking.order_due),
-  //   color: "white",
-  //   colorEvento:
-  //     booking.status === "pending"
-  //       ? "grey"
-  //       : booking.status === "completed"
-  //       ? "#2f6437"
-  //       : booking.status === "active"
-  //       ? "#53b946"
-  //       : booking.status === "cancelled"
-  //       ? "#FF6D60"
-  //       : "#146C94",
-  // }));
-
-  const newBookings = bookings.map((booking) => ({
+  let date =
+    parseInt(today.getMonth() + 1) +
+    "/" +
+    today.getDate() +
+    "/" +
+    today.getFullYear();
+  
+const dateNow = moment().format('L')
+  
+  const bookingMakers = bookings.map((booking) => ({
     title: booking.client_name,
     status: booking.status,
     start: new Date(booking.date_order),
@@ -184,14 +75,16 @@ const ProviderBookings = () => {
         ? "grey"
         : booking.status === "completed"
         ? "#2f6437"
-        : booking.status === "active"
+        : booking.status === "scheduled" && booking.date_order === dateNow
         ? "#53b946"
         : booking.status === "cancelled"
         ? "#FF6D60"
         : "#146C94",
   }));
-  console.log(newBookings);
+ 
 
+  console.log(typeof moment().format('L'));
+  console.log(bookings);
   return (
     <Container
       fluid
@@ -199,7 +92,7 @@ const ProviderBookings = () => {
     >
       <Calendar
         localizer={localizer}
-        events={newBookings}
+        events={bookingMakers}
         startAccessor="start"
         endAccessor="end"
         style={{ height: 1000, margin: "50px" }}
@@ -220,10 +113,12 @@ const ProviderBookings = () => {
           <div className="provider-booking-header">Service Date:</div>
           <div className="provider-booking-header">Price:</div>
           <div className="provider-booking-header">Status:</div>
+          <div className="provider-booking-header"></div>
         </div>
 
         {bookings.map((booking) => (
           <ProviderBookingInfo
+            id={booking.booking_id}
             key={booking.id}
             client_name={booking.client_name}
             // image={booking.image}

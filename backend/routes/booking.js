@@ -30,7 +30,7 @@ export default function bookingRouter(passport) {
 
   //Get provider bookings
   router.get("/provider/:userId", async (request, response) => {
-    console.log("PROVIDER ROUTE HIT")
+    console.log("PROVIDER ROUTE HIT");
     try {
       const providerBooking = await prisma.booking.findMany({
         where: {
@@ -87,7 +87,7 @@ export default function bookingRouter(passport) {
 
   //Create a booking
   router.post("/", async (request, response) => {
-    console.log(request.body)
+    console.log(request.body);
     try {
       const createBooking = await prisma.booking.create({
         data: {
@@ -103,7 +103,7 @@ export default function bookingRouter(passport) {
           // date_due: request.body.date_due,
           order_desc: request.body.message,
           cost: request.body.cost,
-          status: request.body.status
+          status: request.body.status,
         },
       });
 
@@ -156,7 +156,39 @@ export default function bookingRouter(passport) {
     }
   });
 
+  router.put("/:bookingId", async (request, response) => {
+    console.log(request.body)
+    try {
+      const updateBooking = await prisma.booking.update({
+        where: {
+          booking_id: parseInt(request.params.bookingId),
+        },
+        data: {
+          status: request.body.status,
+        },
+      });
+
+      if (updateBooking) {
+        response.status(200).json({
+          success: true,
+          booking_info: updateBooking,
+          message: "Successfully updated!",
+        });
+      } else {
+        response.status(400).json({
+          success: false,
+          message: "Booking could not be updated.",
+        });
+      }
+    } catch (e) {
+      console.log(e);
+      response.status(400).json({
+        message: "Something went wrong",
+      });
+    }
+  });
+
   //Will make update route after having bookTime schema discussed
-    
+
   return router;
 }
