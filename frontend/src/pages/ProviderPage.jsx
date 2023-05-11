@@ -1,15 +1,64 @@
 import React, { useState } from "react";
-import { Container, Col, Row, Form, Button } from "react-bootstrap";
+import { Container, Col, Row, Button } from "react-bootstrap";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import axios from "axios";
-
+import { Form, redirect, useNavigate } from "react-router-dom";
 //styling
 import avatar from "../images/avatar.png";
 import "../CSS/ProviderProfile.css";
+
+export const submitRequestForm = async ({ request }) => {
+  // console.log(request)
+  const data = await request.formData();
+  console.log(data);
+
+  const submission = {
+    service_type: data.get("service_type"),
+    zip_code: data.get("zip_code"),
+    message: data.get("message"),
+    date: data.get("date"),
+  };
+
+  console.log(submission);
+
+  try {
+    const response = await axios({
+      method: "post",
+      url: "http://localhost:4000/booking",
+      data: {
+        client_name: "mei",
+        provider_name: "john",
+        service_type: submission.service_type,
+        date_order: submission.date,
+        message: submission.message,
+        cost: "150",
+      },
+    });
+
+    if (response) {
+      console.log(response);
+    } else {
+      throw Error("No response");
+    }
+  } catch (e) {
+    console.log(e);
+  }
+
+  // send your post request
+
+  // if (submission.message.length < 10) {
+  //   return {error: 'Message must be over 10 chars long.'}
+  // }
+
+  // redirect the user
+  return redirect("/provider/profile");
+  // return navigate("/provider/profile");
+};
+
 const ProviderPage = () => {
   const responsive = {
     superLargeDesktop: {
@@ -31,57 +80,57 @@ const ProviderPage = () => {
     },
   };
 
-  const submitRequest = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios({
-        method: "post",
-        url: "http://localhost:4000/booking",
-        data: {
-          client_name: values.client_name,
-          provider_name: values.provider_name,
-          service_type: values.service_type,
-          date_order: (new Date(startDate) + "")
-            .split(" ")
-            .splice(1, 3)
-            .join(" "),
-          message: values.message,
-          cost: values.cost,
-        
-        },
-      });
+  // const submitRequest = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axios({
+  //       method: "post",
+  //       url: "http://localhost:4000/booking",
+  //       data: {
+  //         client_name: values.client_name,
+  //         provider_name: values.provider_name,
+  //         service_type: values.service_type,
+  //         date_order: (new Date(startDate) + "")
+  //           .split(" ")
+  //           .splice(1, 3)
+  //           .join(" "),
+  //         message: values.message,
+  //         cost: values.cost,
 
-      if (response) {
-        console.log(response);
-      } else {
-        throw Error("No response");
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  //       },
+  //     });
+
+  //     if (response) {
+  //       console.log(response);
+  //     } else {
+  //       throw Error("No response");
+  //     }
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
+
+  // const initialValues = {
+  //   client_name: "John",
+  //   provider_name: "GR Brothers Landscaping",
+  //   service_type: "",
+  //   date_order: new Date(startDate) + "",
+  //   cost: "150",
+  // };
+
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setValues({
+  //     ...values,
+  //     [name]: value,
+  //   });
+  // };
+  // const [values, setValues] = useState(initialValues);
+  //   console.log(
+  // values
+  //   );
 
   const [startDate, setStartDate] = useState(new Date());
-
-  const initialValues = {
-    client_name: "John",
-    provider_name: "GR Brothers Landscaping",
-    service_type: "",
-    date_order: new Date(startDate) + "",
-    cost: "150",
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value,
-    });
-  };
-  const [values, setValues] = useState(initialValues);
-  console.log(
-values
-  );
 
   return (
     <Container fluid className="provider-profile-container d-flex p-5">
@@ -154,7 +203,7 @@ values
           </Carousel>
         </div>
 
-        <div className="provider-services">
+        {/* <div className="provider-services">
           <form action="/action_page.php">
             <input type="checkbox" name="vehicle1" value="Bike" />
             <label for="vehicle1"> I have a bike</label>
@@ -164,30 +213,36 @@ values
             <label for="vehicle3"> I have a boat</label>
             <input type="submit" value="Submit" />
           </form>
-        </div>
+        </div> */}
       </div>
 
       <Row className="provider-form-container">
-        <form onSubmit={submitRequest} className="provider-form">
+        <Form
+          method="post"
+          action="/provider/profile"
+          // onSubmit={submitRequest}
+          className="provider-form"
+        >
           <div className="provider-pricing">
             <h2>$150</h2>
             <h3>Starting cost</h3>
           </div>
           <div className="provider-input-group">
-            <label for="zip-code">Zip Code</label>
+            <label for="zip_code">Zip Code</label>
             <input
               type="number"
-              id="zip-code"
-              name="zip-code"
-              value={values.zip}
-              onChange={handleInputChange}
+              id="zip_code"
+              name="zip_code"
+              // value={values.zip}
+              // onChange={handleInputChange}
             />
           </div>
           <div className="provider-input-group">
             <label for="scheduling">Service Date</label>
             <DatePicker
               selected={startDate}
-              onChange={(date) => setStartDate(new Date(date).split())}
+              onChange={(date) => setStartDate(new Date(date))}
+              name="date"
             />
           </div>
           <div className="provider-input-group">
@@ -197,8 +252,8 @@ values
               id="service_type"
               name="service_type"
               placeholder="What service would you like?"
-              value={values.service_type}
-              onChange={handleInputChange}
+              // value={values.service_type}
+              // onChange={handleInputChange}
             />
           </div>
           <div className="provider-input-group">
@@ -210,8 +265,8 @@ values
               cols="30"
               rows="4"
               placeholder="Any additional information that the provider needs to know? Ex. Anticipated duration of service, notice of pets, specific information needed to know for better service"
-              value={values.message}
-              onChange={handleInputChange}
+              // value={values.message}
+              // onChange={handleInputChange}
             ></textarea>
           </div>
           {/* <div className="provider-input-group">
@@ -225,7 +280,7 @@ values
           <p>
             Responds in about <span className="fw-bold">1 hour</span>
           </p>
-        </form>
+        </Form>
       </Row>
     </Container>
   );
