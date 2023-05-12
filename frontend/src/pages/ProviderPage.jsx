@@ -28,7 +28,7 @@ export const submitRequestForm = async ({ request }) => {
   try {
     const response = await axios({
       method: "post",
-      url: "http://localhost:4000/booking",
+      url: `http://localhost:${import.meta.env.VITE_PORT}/booking`,
       data: {
         client_name: "mei",
         provider_name: "john",

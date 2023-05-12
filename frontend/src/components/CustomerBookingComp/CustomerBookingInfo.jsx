@@ -8,14 +8,14 @@ const OrderInfo = ({
   cost,
   status,
   provider_name,
-  id
+  id,
 }) => {
   async function requestResponse(providerResponse, id) {
     console.log(id);
     try {
       const response = await axios({
         method: "put",
-        url: `http://localhost:4000/booking/${id}`,
+        url: `http://localhost:${import.meta.env.VITE_PORT}/booking/${id}`,
         data: {
           status: providerResponse === "accept" ? "scheduled" : "cancelled",
         },
@@ -35,7 +35,13 @@ const OrderInfo = ({
       <div>{cost}</div>
 
       <div>{status}</div>
-      <div>{status === "scheduled" && <button onClick={() => requestResponse("cancelled", id)}>Cancel</button>}</div>
+      <div>
+        {status === "scheduled" && (
+          <button onClick={() => requestResponse("cancelled", id)}>
+            Cancel
+          </button>
+        )}
+      </div>
     </div>
   );
 };
