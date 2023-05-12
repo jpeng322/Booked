@@ -46,8 +46,9 @@ const ProviderBookingInfo = ({
       });
 
       if (response) {
-       const updateBookings = bookings.map((booking) => {
-          if (booking_booking_id === id) {
+        const updateBookings = bookings.map((booking) => {
+         console.log(booking)
+          if (booking.booking_id === id) {
             return {
               ...booking,
               status: updatedStatus,
