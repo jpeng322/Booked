@@ -11,6 +11,8 @@ const ProviderBookingInfo = ({
   status,
   client_name,
   id,
+  bookings,
+  setBookings,
 }) => {
   const dateNow = moment().format("L");
   // console.log("COMPARE", dateNow, moment().isAfter("02/11/2023", "day"))
@@ -28,19 +30,34 @@ const ProviderBookingInfo = ({
 
   async function requestResponse(providerResponse, id) {
     console.log(id);
+    const updatedStatus =
+      providerResponse === "completed"
+        ? "completed"
+        : providerResponse === "accept"
+        ? "scheduled"
+        : "cancelled";
     try {
       const response = await axios({
         method: "put",
         url: `http://localhost:4000/booking/${id}`,
         data: {
-          status:
-            providerResponse === "completed"
-              ? "completed"
-              : providerResponse === "accept"
-              ? "scheduled"
-              : "cancelled",
+          status: updatedStatus,
         },
       });
+
+      if (response) {
+       const updateBookings = bookings.map((booking) => {
+          if (booking_booking_id === id) {
+            return {
+              ...booking,
+              status: updatedStatus,
+            };
+          } else {
+            return booking;
+          }
+       });
+        setBookings(updateBookings)
+      }
       console.log(response);
     } catch (e) {
       console.log(e);
@@ -56,7 +73,9 @@ const ProviderBookingInfo = ({
       <div className="provider-booking  flex-grow-1">{cost}</div>
       <div className="provider-booking  flex-grow-1">
         {" "}
-        {status === "scheduled" && sameOrAfterDateNow(date_order) ? "active" : status}
+        {status === "scheduled" && sameOrAfterDateNow(date_order)
+          ? "active"
+          : status}
       </div>
       <div className="provider-booking  flex-grow-1">
         {status === "pending" && (
@@ -69,7 +88,7 @@ const ProviderBookingInfo = ({
             </button>
           </>
         )}
-        {status === "scheduled" && sameOrAfterDateNow(date_order)  && (
+        {status === "scheduled" && sameOrAfterDateNow(date_order) && (
           <button onClick={() => requestResponse("completed", id)}>
             Mark Complete
           </button>

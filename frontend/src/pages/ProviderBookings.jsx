@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "react-calendar/dist/Calendar.css";
 // import "../../node_modules/react-calendar/dist/Calendar.css"
 // import './Calender.scss';
-import { Container, Col, Row } from "react-bootstrap";
+import { Container, Col, Row, Pagination } from "react-bootstrap";
 
 import ProviderBookingInfo from "../components/ProviderBookingInfo";
 import "../CSS/ProviderBooking.css";
@@ -12,23 +12,29 @@ import format from "date-fns/format";
 import getDay from "date-fns/getDay";
 import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
-import { Calendar, dateFnsLocalizer } from "react-big-calendar";
+import {
+  Calendar,
+  dateFnsLocalizer,
+  momentLocalizer,
+} from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-datepicker/dist/react-datepicker.css";
 import enUS from "date-fns/locale/en-US";
-import moment from 'moment'
+import moment from "moment";
 
 import axios from "axios";
 const locales = {
   "en-US": enUS,
 };
-const localizer = dateFnsLocalizer({
-  format,
-  parse,
-  startOfWeek,
-  getDay,
-  locales,
-});
+
+const localizer = momentLocalizer(moment);
+// const localizer = dateFnsLocalizer({
+//   format,
+//   parse,
+//   startOfWeek,
+//   getDay,
+//   locales,
+// });
 
 const ProviderBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -53,6 +59,34 @@ const ProviderBookings = () => {
     getBookings();
   }, []);
 
+  const numberOfBookings = 10;
+  const numberOfPages = Math.ceil(bookings.length / numberOfBookings);
+
+  const [pageNumber, setPageNumber] = useState(1);
+  const currentBookings =
+    pageNumber === 1
+      ? bookings.slice(0, pageNumber * numberOfBookings)
+      : bookings.slice(
+          (pageNumber - 1) * numberOfBookings,
+          pageNumber * numberOfBookings
+        );
+
+  let items = [];
+  for (let number = 1; number <= numberOfPages; number++) {
+    items.push(
+      <Pagination.Item
+        onClick={(e) => {
+          // console.log(breeds)
+          setPageNumber(parseInt(e.target.textContent));
+        }}
+        key={number}
+        active={number === pageNumber}
+      >
+        {number}
+      </Pagination.Item>
+    );
+  }
+
   let today = new Date();
 
   let date =
@@ -61,9 +95,12 @@ const ProviderBookings = () => {
     today.getDate() +
     "/" +
     today.getFullYear();
-  
-const dateNow = moment().format('L')
-  
+
+  const dateNow = moment().format("L");
+
+  function sameOrAfterDateNow(date) {
+    return moment().isAfter(date) || moment().isSame(date, "day");
+  }
   const bookingMakers = bookings.map((booking) => ({
     title: booking.client_name,
     status: booking.status,
@@ -75,15 +112,15 @@ const dateNow = moment().format('L')
         ? "grey"
         : booking.status === "completed"
         ? "#2f6437"
-        : booking.status === "scheduled" && booking.date_order === dateNow
+        : booking.status === "scheduled" &&
+          sameOrAfterDateNow(booking.date_order)
         ? "#53b946"
         : booking.status === "cancelled"
         ? "#FF6D60"
         : "#146C94",
   }));
- 
 
-  console.log(typeof moment().format('L'));
+  console.log(typeof moment().format("L"));
   console.log(bookings);
   return (
     <Container
@@ -116,8 +153,10 @@ const dateNow = moment().format('L')
           <div className="provider-booking-header"></div>
         </div>
 
-        {bookings.map((booking) => (
+        {currentBookings.map((booking) => (
           <ProviderBookingInfo
+            bookings={bookings}
+            setBookings={setBookings}
             id={booking.booking_id}
             key={booking.id}
             client_name={booking.client_name}
@@ -130,6 +169,12 @@ const dateNow = moment().format('L')
             status={booking.status}
           />
         ))}
+
+        {numberOfPages > 1 && (
+          <div className="pagination-container">
+            <Pagination>{items}</Pagination>
+          </div>
+        )}
       </div>
     </Container>
   );
