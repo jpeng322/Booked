@@ -43,7 +43,9 @@ const ProviderBookings = () => {
       try {
         const response = await axios({
           method: "get",
-          url: "http://localhost:4000/booking/provider/1",
+          url: `http://localhost:${
+            import.meta.env.VITE_PORT
+          }/booking/provider/1`,
         });
 
         console.log(response);

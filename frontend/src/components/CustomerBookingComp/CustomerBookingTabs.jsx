@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import axios from "axios";
 import moment from "moment";
@@ -8,15 +8,14 @@ import "../../CSS/BookingTabs.css";
 
 import TabComp from "./CustomerTabComp";
 const BookingsTabs = () => {
-
-  const [bookings, setBookings] = useState([])
+  const [bookings, setBookings] = useState([]);
   const dateNow = moment().format("L");
   useEffect(() => {
     async function getBookings() {
       try {
         const response = await axios({
           method: "get",
-          url: "http://localhost:4000/booking/client/1",
+          url: `http://localhost:${import.meta.env.VITE_PORT}/booking/client/1`,
         });
 
         console.log(response);
@@ -32,17 +31,19 @@ const BookingsTabs = () => {
     getBookings();
   }, []);
 
-  console.log(bookings)
+  console.log(bookings);
 
   const completedOrders = bookings.filter(
     (booking) => booking.status === "completed"
   );
   const activeOrders = bookings.filter(
-    (booking) => booking.status === "scheduled" && booking.date_order === dateNow
+    (booking) =>
+      booking.status === "scheduled" && booking.date_order === dateNow
   );
 
   const scheduledOrders = bookings.filter(
-    (booking) => booking.status === "scheduled" && booking.date_order !== dateNow
+    (booking) =>
+      booking.status === "scheduled" && booking.date_order !== dateNow
   );
 
   const cancelledOrders = bookings.filter(

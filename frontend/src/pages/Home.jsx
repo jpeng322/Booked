@@ -11,7 +11,7 @@ const Home = () => {
     try {
       const response = await axios({
         method: "post",
-        url: "http://localhost:4000/payment",
+        url: `http://localhost:${import.meta.env.VITE_PORT}/payment`,
         headers: { "Content-Type": "application/json" },
         //data will equal to payment fee of service id instead of items
         data: {

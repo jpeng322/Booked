@@ -39,7 +39,7 @@ const ProviderBookingInfo = ({
     try {
       const response = await axios({
         method: "put",
-        url: `http://localhost:4000/booking/${id}`,
+        url: `http://localhost:${import.meta.env.VITE_PORT}/booking/${id}`,
         data: {
           status: updatedStatus,
         },
@@ -47,7 +47,7 @@ const ProviderBookingInfo = ({
 
       if (response) {
         const updateBookings = bookings.map((booking) => {
-         console.log(booking)
+          console.log(booking);
           if (booking.booking_id === id) {
             return {
               ...booking,
@@ -56,8 +56,8 @@ const ProviderBookingInfo = ({
           } else {
             return booking;
           }
-       });
-        setBookings(updateBookings)
+        });
+        setBookings(updateBookings);
       }
       console.log(response);
     } catch (e) {
