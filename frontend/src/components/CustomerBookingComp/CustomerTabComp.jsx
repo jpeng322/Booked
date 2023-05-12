@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import OrderInfo from "./OrderInfo";
+import OrderInfo from "./CustomerBookingInfo";
 import Pagination from "react-bootstrap/Pagination";
 
 const TabComp = ({ orders }) => {

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { Container, Col, Row } from "react-bootstrap";
 import BookingsCard from "../components/BookingsCard";
 import FavoriteProviders from "../components/FavoritesComp";
-import BookingsTabs from "../components/BookingTab/BookingsTabs";
+import BookingsTabs from "../components/CustomerBookingComp/CustomerBookingTabs";
 
 
 //css

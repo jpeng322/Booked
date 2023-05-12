@@ -6,7 +6,7 @@ import moment from "moment";
 import "react-tabs/style/react-tabs.css";
 import "../../CSS/BookingTabs.css";
 
-import TabComp from "./TabComp";
+import TabComp from "./CustomerTabComp";
 const BookingsTabs = () => {
 
   const [bookings, setBookings] = useState([])
@@ -42,7 +42,7 @@ const BookingsTabs = () => {
   );
 
   const scheduledOrders = bookings.filter(
-    (booking) => booking.status === "scheduled"
+    (booking) => booking.status === "scheduled" && booking.date_order !== dateNow
   );
 
   const cancelledOrders = bookings.filter(
