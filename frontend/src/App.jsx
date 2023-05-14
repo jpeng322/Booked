@@ -170,7 +170,8 @@ function App() {
     {
       path: "/provider/profile",
       element: <ProviderPage />,
-      action: submitRequestForm 
+      action: submitRequestForm,
+
 },
     {
       path: "/provider/bookings",
