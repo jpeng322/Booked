@@ -1,20 +1,30 @@
-import React, { useState } from "react";
-import { Container, Col, Row, Button } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Container, Col, Row, Button, Modal } from "react-bootstrap";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import axios from "axios";
-import { Form, redirect, useNavigate } from "react-router-dom";
+import {
+  Form,
+  redirect,
+  useActionData,
+  useNavigate,
+  useSubmit,
+} from "react-router-dom";
+
+//components
+import RequestFormModal from "../components/RequestFormModal";
 //styling
 import avatar from "../images/avatar.png";
 import "../CSS/ProviderProfile.css";
 
 export const submitRequestForm = async ({ request }) => {
-  // console.log(request)
+  // console.log("REQUEST FORM SUBMITED")
+
   const data = await request.formData();
-  console.log(data);
+  // console.log(data);
 
   const submission = {
     service_type: data.get("service_type"),
@@ -24,32 +34,33 @@ export const submitRequestForm = async ({ request }) => {
   };
 
   console.log(submission);
+  return submission;
+  // try {
+  //   const response = await axios({
+  //     method: "post",
+  //     url: `http://localhost:${import.meta.env.VITE_PORT}/booking`,
+  //     data: {
+  //       client_name: "mei",
+  //       provider_name: "john",
+  //       service_type: submission.service_type,
+  //       date_order: submission.date,
+  //       message: submission.message,
+  //       cost: "150",
+  //     },
+  //   });
 
-  try {
-    const response = await axios({
-      method: "post",
-      url: `http://localhost:${import.meta.env.VITE_PORT}/booking`,
-      data: {
-        client_name: "mei",
-        provider_name: "john",
-        service_type: submission.service_type,
-        date_order: submission.date,
-        message: submission.message,
-        cost: "150",
-      },
-    });
+  //   if (response) {
+  //     // setModalShow(true)
+  //     console.log(response);
+  //     return data;
+  //   } else {
+  //     throw Error("No response");
+  //   }
+  // } catch (e) {
+  //   console.log(e);
+  // }
 
-    if (response) {
-      console.log(response);
-    } else {
-      throw Error("No response");
-    }
-  } catch (e) {
-    console.log(e);
-  }
-
-  return redirect("/provider/profile");
-
+  // return redirect("/provider/profile");
 };
 
 const ProviderPage = () => {
@@ -73,8 +84,48 @@ const ProviderPage = () => {
     },
   };
 
-
+  const data = useActionData();
+  const [modalShow, setModalShow] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
+  const [formData, setFormData] = useState("");
+  let submit = useSubmit();
+  // function displayModal() {
+  //   console.log(data)
+  //   if (data) {
+  //     setModalShow(true)
+  //   }
+
+  // }
+  console.log(data);
+  // { data ? setModalShow(true) : setModalShow(false) }
+
+  async function sendFormData() {
+    // console.log("USEEFFECET CALLED");
+    try {
+      const response = await axios({
+        method: "post",
+        url: `http://localhost:${import.meta.env.VITE_PORT}/booking`,
+        data: {
+          client_name: "mei",
+          provider_name: "john",
+          service_type: data.service_type,
+          date_order: data.date,
+          message: data.message,
+          cost: "150",
+        },
+      });
+
+      if (response) {
+        setModalShow(true);
+        console.log(response);
+        // return data;
+      } else {
+        throw Error("No response");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   return (
     <Container fluid className="provider-profile-container d-flex p-5">
@@ -161,11 +212,21 @@ const ProviderPage = () => {
       </div>
 
       <Row className="provider-form-container">
-        <Form
+        {/* <Form  
           method="post"
           action="/provider/profile"
           // onSubmit={submitRequest}
           className="provider-form"
+          onChange={(event) => {
+            submit(event.currentTarget)}};
+        > */}
+        <Form
+          onChange={(event) => {
+            submit(event.currentTarget);
+          }}
+          className="provider-form"
+          method="post"
+          action="/provider/profile"
         >
           <div className="provider-pricing">
             <h2>$150</h2>
@@ -218,7 +279,12 @@ const ProviderPage = () => {
             <input type="number" id="hours" name="hours" />
           </div> */}
 
-          <button type="submit" className="provider-form-button">
+          <button
+            // type="submit"
+            // onClick={() => }
+            className="provider-form-button"
+            onClick={sendFormData}
+          >
             Send Request
           </button>
           <p>
@@ -226,6 +292,13 @@ const ProviderPage = () => {
           </p>
         </Form>
       </Row>
+      <RequestFormModal
+        formData={data}
+        show={modalShow}
+        onHide={() => {
+          setModalShow(false);
+        }}
+      />
     </Container>
   );
 };
