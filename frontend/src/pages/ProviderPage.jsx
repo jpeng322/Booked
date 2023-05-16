@@ -3,9 +3,12 @@ import { Container, Col, Row, Button, Modal } from "react-bootstrap";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import setHours from "date-fns/setHours";
+import setMinutes from "date-fns/setMinutes";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import axios from "axios";
+import dateFormat from "dateformat";
 import {
   Form,
   redirect,
@@ -21,46 +24,17 @@ import avatar from "../images/avatar.png";
 import "../CSS/ProviderProfile.css";
 
 export const submitRequestForm = async ({ request }) => {
-  // console.log("REQUEST FORM SUBMITED")
-
   const data = await request.formData();
-  // console.log(data);
 
   const submission = {
     service_type: data.get("service_type"),
     zip_code: data.get("zip_code"),
     message: data.get("message"),
-    date: data.get("date"),
+    start_date: data.get("start_date"),
+    end_date: data.get("end_date"),
   };
 
-  console.log(submission);
   return submission;
-  // try {
-  //   const response = await axios({
-  //     method: "post",
-  //     url: `http://localhost:${import.meta.env.VITE_PORT}/booking`,
-  //     data: {
-  //       client_name: "mei",
-  //       provider_name: "john",
-  //       service_type: submission.service_type,
-  //       date_order: submission.date,
-  //       message: submission.message,
-  //       cost: "150",
-  //     },
-  //   });
-
-  //   if (response) {
-  //     // setModalShow(true)
-  //     console.log(response);
-  //     return data;
-  //   } else {
-  //     throw Error("No response");
-  //   }
-  // } catch (e) {
-  //   console.log(e);
-  // }
-
-  // return redirect("/provider/profile");
 };
 
 const ProviderPage = () => {
@@ -84,23 +58,29 @@ const ProviderPage = () => {
     },
   };
 
-  const data = useActionData();
   const [modalShow, setModalShow] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
-  const [formData, setFormData] = useState("");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
+  useEffect(() => {
+    setEndDate(startDate);
+  }, [startDate]);
+
+  const filterPassedTime = (time) => {
+    const currentDate = new Date();
+    const selectedDate = new Date(time);
+
+    return currentDate.getTime() < selectedDate.getTime();
+  };
+
+  const filterBeforeDate = (date, initialDate) => {
+    const selectedStartDate = new Date(date);
+    return selectedStartDate > initialDate;
+  };
+
+  const data = useActionData();
   let submit = useSubmit();
-  // function displayModal() {
-  //   console.log(data)
-  //   if (data) {
-  //     setModalShow(true)
-  //   }
-
-  // }
-  console.log(data);
-  // { data ? setModalShow(true) : setModalShow(false) }
-
   async function sendFormData() {
-    // console.log("USEEFFECET CALLED");
     try {
       const response = await axios({
         method: "post",
@@ -109,7 +89,8 @@ const ProviderPage = () => {
           client_name: "mei",
           provider_name: "john",
           service_type: data.service_type,
-          date_order: data.date,
+          start_date: dateFormat(new Date(startDate), "mmmm d, yyyy h:MM TT"),
+          end_date: dateFormat(new Date(endDate), "mmmm d, yyyy h:MM TT"),
           message: data.message,
           cost: "150",
         },
@@ -117,7 +98,6 @@ const ProviderPage = () => {
 
       if (response) {
         setModalShow(true);
-        console.log(response);
         // return data;
       } else {
         throw Error("No response");
@@ -126,6 +106,8 @@ const ProviderPage = () => {
       console.log(e);
     }
   }
+
+  console.log(startDate, endDate);
 
   return (
     <Container fluid className="provider-profile-container d-flex p-5">
@@ -197,29 +179,9 @@ const ProviderPage = () => {
             <img src={avatar} alt="" />
           </Carousel>
         </div>
-
-        {/* <div className="provider-services">
-          <form action="/action_page.php">
-            <input type="checkbox" name="vehicle1" value="Bike" />
-            <label for="vehicle1"> I have a bike</label>
-            <input type="checkbox" name="vehicle2" value="Car" />
-            <label for="vehicle2"> I have a car</label>
-            <input type="checkbox" name="vehicle3" value="Boat" />
-            <label for="vehicle3"> I have a boat</label>
-            <input type="submit" value="Submit" />
-          </form>
-        </div> */}
       </div>
 
       <Row className="provider-form-container">
-        {/* <Form  
-          method="post"
-          action="/provider/profile"
-          // onSubmit={submitRequest}
-          className="provider-form"
-          onChange={(event) => {
-            submit(event.currentTarget)}};
-        > */}
         <Form
           onChange={(event) => {
             submit(event.currentTarget);
@@ -234,21 +196,37 @@ const ProviderPage = () => {
           </div>
           <div className="provider-input-group">
             <label for="zip_code">Zip Code</label>
-            <input
-              type="number"
-              id="zip_code"
-              name="zip_code"
-              // value={values.zip}
-              // onChange={handleInputChange}
-            />
+            <input type="number" id="zip_code" name="zip_code" />
           </div>
           <div className="provider-input-group">
             <label for="scheduling">Service Date</label>
+
             <DatePicker
               selected={startDate}
-              onChange={(date) => setStartDate(new Date(date))}
-              name="date"
+              onChange={(date) => setStartDate(date)}
+              showTimeSelect
+              filterDate={(date) => filterBeforeDate(date, new Date())}
+              filterTime={filterPassedTime}
+              dateFormat="MMMM d, yyyy h:mm aa"
+              name="start_date"
+              timeIntervals={60}
+              placeholderText="Please select a start date."
             />
+
+            {startDate && (
+              <DatePicker
+                selected={endDate}
+                onChange={(date) => setEndDate(date)}
+                showTimeSelect
+                filterDate={(date) => filterBeforeDate(date, new Date(startDate))}
+                // filterDate={isBeforeStartDate}
+                filterTime={filterPassedTime}
+                dateFormat="MMMM d, yyyy h:mm a"
+                name="end_date"
+                timeIntervals={60}
+                placeholderText="Please select an end date."
+              />
+            )}
           </div>
           <div className="provider-input-group">
             <label for="service_type">Service Type</label>
@@ -257,8 +235,6 @@ const ProviderPage = () => {
               id="service_type"
               name="service_type"
               placeholder="What service would you like?"
-              // value={values.service_type}
-              // onChange={handleInputChange}
             />
           </div>
           <div className="provider-input-group">
@@ -270,21 +246,9 @@ const ProviderPage = () => {
               cols="30"
               rows="4"
               placeholder="Any additional information that the provider needs to know? Ex. Anticipated duration of service, notice of pets, specific information needed to know for better service"
-              // value={values.message}
-              // onChange={handleInputChange}
             ></textarea>
           </div>
-          {/* <div className="provider-input-group">
-            <label for="hours">Estimated Hours</label>
-            <input type="number" id="hours" name="hours" />
-          </div> */}
-
-          <button
-            // type="submit"
-            // onClick={() => }
-            className="provider-form-button"
-            onClick={sendFormData}
-          >
+          <button className="provider-form-button" onClick={sendFormData}>
             Send Request
           </button>
           <p>

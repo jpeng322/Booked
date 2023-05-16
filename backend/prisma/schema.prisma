@@ -71,7 +71,8 @@ model Booking {
   provider_name String
 client_name String
 service_type String
-date_order String
+start_date String
+end_date String
 order_desc String
 // date_due String
 cost String

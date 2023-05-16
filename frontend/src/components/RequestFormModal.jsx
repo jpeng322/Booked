@@ -6,15 +6,8 @@ import "../CSS/RequestFormModal.css";
 
 import { CircleCheck, CircleCross } from "../assets/Icons";
 const RequestFormModal = (props) => {
-  console.log(props);
-
   const [cancelForm, setCancelForm] = useState(false);
   const [confirmedCancel, setConfirmedCancel] = useState(null);
-
-  // useEffect(() => {
-  //   setCancelForm(false);
-  //   setConfirmedCancel(null);
-  // }, []);
   return (
     <Modal
       {...props}
@@ -97,8 +90,12 @@ const RequestFormModal = (props) => {
                 <div>{props.formData && props.formData.service_type}</div>{" "}
               </div>
               <div className="d-flex form-info">
-                <div>Service Date:</div>
-                <div>{props.formData && props.formData.date}</div>
+                <div>Start Date:</div>
+                <div>{props.formData && props.formData.start_date}</div>
+              </div>
+              <div className="d-flex form-info">
+                <div>End Date:</div>
+                <div>{props.formData && props.formData.end_date}</div>
               </div>
               <div className="d-flex form-info">
                 <div>Zip:</div>

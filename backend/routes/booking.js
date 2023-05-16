@@ -104,6 +104,8 @@ export default function bookingRouter(passport) {
           order_desc: request.body.message,
           cost: request.body.cost,
           status: request.body.status,
+          start_date: request.body.start_date,
+          end_date: request.body.end_date,
         },
       });
 
