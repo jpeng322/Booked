@@ -27,6 +27,8 @@ import { fetchLogin, fetchSignup } from "./api";
 import CustomerAccountContact from "./pages/CustomerAccountContact";
 
 
+import NavComp from "./components/Navbar";
+import HeroComp from "./components/HeroComp";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -172,6 +174,7 @@ function App() {
     <div className="App">
       <RouterProvider router={router} />
     </div>
+    
   );
 }
 
