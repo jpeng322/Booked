@@ -28,13 +28,7 @@ const locales = {
 };
 
 const localizer = momentLocalizer(moment);
-// const localizer = dateFnsLocalizer({
-//   format,
-//   parse,
-//   startOfWeek,
-//   getDay,
-//   locales,
-// });
+
 
 const ProviderBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -106,8 +100,8 @@ const ProviderBookings = () => {
   const bookingMakers = bookings.map((booking) => ({
     title: booking.client_name,
     status: booking.status,
-    start: new Date(booking.date_order),
-    end: new Date(booking.date_order),
+    start: new Date(booking.start_date),
+    end: new Date(booking.end_date),
     color: "white",
     colorEvento:
       booking.status === "pending"
@@ -134,6 +128,7 @@ const ProviderBookings = () => {
         events={bookingMakers}
         startAccessor="start"
         endAccessor="end"
+        
         style={{ height: 1000, margin: "50px" }}
         eventPropGetter={(newBookings) => {
           const backgroundColor = newBookings.colorEvento
@@ -149,7 +144,8 @@ const ProviderBookings = () => {
           <div className="provider-booking-header">Name:</div>
           <div className="provider-booking-header">Service Type:</div>
           <div className="provider-booking-header">Description:</div>
-          <div className="provider-booking-header">Service Date:</div>
+          <div className="provider-booking-header">Start Date:</div>
+          <div className="provider-booking-header">End Date:</div>
           <div className="provider-booking-header">Price:</div>
           <div className="provider-booking-header">Status:</div>
           <div className="provider-booking-header"></div>
@@ -165,7 +161,8 @@ const ProviderBookings = () => {
             // image={booking.image}
             service_type={booking.service_type}
             order_desc={booking.order_desc}
-            date_order={booking.date_order}
+            start_date={booking.start_date}
+            end_date={booking.end_date}
             // order_due={booking.order_due}
             cost={booking.cost}
             status={booking.status}

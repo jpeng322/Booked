@@ -5,8 +5,8 @@ import moment from "moment";
 const ProviderBookingInfo = ({
   service_type,
   order_desc,
-  order_due,
-  date_order,
+  start_date,
+  end_date,
   cost,
   status,
   client_name,
@@ -17,7 +17,7 @@ const ProviderBookingInfo = ({
   const dateNow = moment().format("L");
   // console.log("COMPARE", dateNow, moment().isAfter("02/11/2023", "day"))
 
-  console.log(moment().isAfter("05/10/2023", "day"));
+  // console.log(moment().isAfter("05/10/2023", "day"));
 
   function beforeDateNow(date) {
     // console.log(moment().isAfter(date));
@@ -64,17 +64,20 @@ const ProviderBookingInfo = ({
       console.log(e);
     }
   }
+
+
   return (
     <div className="provider-booking-container d-flex p-3">
       <div className="provider-booking flex-grow-1">{client_name}</div>
       <div className="provider-booking flex-grow-1">{service_type}</div>
       <div className="provider-booking  flex-grow-1">{order_desc}</div>
-      <div className="provider-booking  flex-grow-1">{date_order}</div>
+      <div className="provider-booking  flex-grow-1">{start_date}</div>
+      <div className="provider-booking  flex-grow-1">{end_date}</div>
       {/* <div className="provider-booking flex-grow-1">{order_due}</div> */}
       <div className="provider-booking  flex-grow-1">{cost}</div>
       <div className="provider-booking  flex-grow-1">
         {" "}
-        {status === "scheduled" && sameOrAfterDateNow(date_order)
+        {status === "scheduled" && sameOrAfterDateNow(start_date)
           ? "active"
           : status}
       </div>
@@ -89,19 +92,19 @@ const ProviderBookingInfo = ({
             </button>
           </>
         )}
-        {status === "scheduled" && sameOrAfterDateNow(date_order) && (
+        {status === "scheduled" && sameOrAfterDateNow(start_date) && (
           <button onClick={() => requestResponse("completed", id)}>
             Mark Complete
           </button>
         )}
-        {status === "scheduled" && beforeDateNow(date_order) && (
+        {status === "scheduled" && beforeDateNow(start_date) && (
           <button onClick={() => requestResponse("decline", id)}>Cancel</button>
         )}
-        {status === "cancelled" && beforeDateNow(date_order) && (
+        {/* {status === "cancelled" && beforeDateNow(start_date) && (
           <button onClick={() => requestResponse("pending", id)}>
             Request Uncancel
           </button>
-        )}
+        )} */}
       </div>
     </div>
   );
