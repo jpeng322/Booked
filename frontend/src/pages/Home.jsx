@@ -1,6 +1,11 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, Routes, Route, BrowserRouter } from "react-router-dom";
+import NavComp from "../components/Navbar";
+import HeroComp from "../components/HeroComp";
+import OtherComp from "../components/OtherComp";
+import SearchBar from "../components/SearchBar";
+import FooterComp from "../components/FooterComp";
+import {Container} from "react-bootstrap"
 const Home = () => {
   async function checkout() {
     console.log("asdasd");
@@ -57,13 +62,21 @@ const Home = () => {
   return (
     <div>
       <div className="App">
-        <h1>This is the home page.</h1>
+        <NavComp />
+      
+        <HeroComp/>
+        <Container>
         <div className="card"></div>
         <button onClick={checkout}>Checkout</button>
         <button onClick={() => navigate("/signup")}>Signup</button>
         <button onClick={() => navigate("/login")}>Login</button>
+        </Container>
       </div>
-    </div>
+      <h4 className="text-center">Find what you are looking for</h4>
+      <SearchBar/>
+      <OtherComp/>
+      <FooterComp/>
+    </div>  
   );
 };
 

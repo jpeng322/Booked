@@ -20,6 +20,8 @@ import Profile from "./pages/Profile";
 import CustomerAcc from "./pages/CustomerBookings";
 import FavoriteProviders from "./components/Favoritess";
 
+import NavComp from "./components/Navbar";
+import HeroComp from "./components/HeroComp";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -118,6 +120,7 @@ function App() {
     <div className="App">
           <RouterProvider router={router} />
     </div>
+    
   );
   }
 
