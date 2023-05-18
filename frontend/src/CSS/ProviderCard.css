@@ -27,6 +27,12 @@ p {
   margin: 5px;
 }
 
+.image {
+  margin: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
 .btn {
   margin-right: 35px;
 }
@@ -49,14 +55,6 @@ p {
   padding: 20px;
   margin-bottom: 30px;
 
-}
-
-
-
-.image {
-  margin: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
 }
 
 .rating {
@@ -118,11 +116,7 @@ p {
 .image-container {
   display: flex;
   justify-content: center;
-<<<<<<< HEAD
-  gap: calc(.25rem + .75vw);
-=======
   gap: 1rem;
->>>>>>> 45ce21d22597f1d6df3c39bee15ee7e80c2d22a3
 }
 
 .image-container > * {
@@ -135,27 +129,8 @@ p {
   /* max-width: 100px; */
 }
 
-<<<<<<< HEAD
-/* .center-images > * {
-  width: 100%
-} */
-
 .pagination {
   display: flex;
   justify-content: center;
   margin-top: 20px;
 }
-
-
-.pagination .page-link:hover {
-  background-color: #007bff;
-  color: #fff;
-}
-
-.pagination .page-item.active .page-link {
-  background-color: #007bff;
-  border-color: #007bff;
-}
-
-=======
->>>>>>> 45ce21d22597f1d6df3c39bee15ee7e80c2d22a3
