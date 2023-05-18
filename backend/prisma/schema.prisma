@@ -37,23 +37,6 @@ model Client {
 }
 
 
-// model Booking {
-//   booking_id Int @unique @default(autoincrement())
-//   client_id Int
-//   provider_id Int
-//   service_id Int
-//   service Service?
-//   transaction_id String
-//   createdAt     DateTime            @default(now())
-//   updatedAt     DateTime            @updatedAt
-//   client Client @relation(fields: [client_id], references: [client_id])
-//   provider Provider @relation(fields: [provider_id], references: [provider_id])
-//   //possibly need a time for booking
-//   //bookTime DateTime <-- the time the provider chose that was available / client chose for appointment ex. 3:30PM  or Fri Apr 21 2023 00:00:00 GMT-0400 (Eastern Daylight Time)
-
-//   @@index([client_id])
-//   @@index([provider_id])
-// }
 
 model Booking {
   booking_id Int @unique @default(autoincrement())
