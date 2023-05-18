@@ -9,6 +9,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import axios from "axios";
 import dateFormat from "dateformat";
+import getDay from "date-fns/getDay";
 import {
   Form,
   redirect,
@@ -62,20 +63,19 @@ const ProviderPage = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  useEffect(() => {
-    setEndDate(startDate);
-  }, [startDate]);
+  // useEffect(() => {
+  //   setEndDate(startDate);
+  // }, [startDate]);
 
   const filterPassedTime = (time) => {
     const currentDate = new Date();
     const selectedDate = new Date(time);
-
     return currentDate.getTime() < selectedDate.getTime();
   };
 
   const filterBeforeDate = (date, initialDate) => {
     const selectedStartDate = new Date(date);
-    return selectedStartDate > initialDate;
+    return selectedStartDate.getTime() + 86400000 > initialDate.getTime();
   };
 
   const data = useActionData();
@@ -106,8 +106,6 @@ const ProviderPage = () => {
       console.log(e);
     }
   }
-
-  console.log(startDate, endDate);
 
   return (
     <Container fluid className="provider-profile-container d-flex p-5">
@@ -196,7 +194,12 @@ const ProviderPage = () => {
           </div>
           <div className="provider-input-group">
             <label for="zip_code">Zip Code</label>
-            <input type="number" id="zip_code" name="zip_code" />
+            <input
+              type="text"
+              placeholder="Zip Code"
+              title="Please enter a Zip Code"
+              pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$"
+            />
           </div>
           <div className="provider-input-group">
             <label for="scheduling">Service Date</label>
@@ -206,7 +209,8 @@ const ProviderPage = () => {
               onChange={(date) => setStartDate(date)}
               showTimeSelect
               filterDate={(date) => filterBeforeDate(date, new Date())}
-              filterTime={filterPassedTime}
+              filterTime={(time) => filterPassedTime(time, new Date())}
+              // filterTime={filterPassedTime}
               dateFormat="MMMM d, yyyy h:mm aa"
               name="start_date"
               timeIntervals={60}
@@ -218,9 +222,13 @@ const ProviderPage = () => {
                 selected={endDate}
                 onChange={(date) => setEndDate(date)}
                 showTimeSelect
-                filterDate={(date) => filterBeforeDate(date, new Date(startDate))}
-                // filterDate={isBeforeStartDate}
-                filterTime={filterPassedTime}
+                filterDate={(date) =>
+                  filterBeforeDate(date, new Date(startDate))
+                }
+                filterTime={(time) =>
+                  filterPassedTime(time, new Date(startDate))
+                }
+                // filterTime={filterPassedTime}
                 dateFormat="MMMM d, yyyy h:mm a"
                 name="end_date"
                 timeIntervals={60}
