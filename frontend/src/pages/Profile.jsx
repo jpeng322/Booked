@@ -1,5 +1,4 @@
 import React from "react";
-import CalendarComp from "../components/CalendarComp";
 import axios from "axios";
 import ServiceSpecialties from "../components/ServiceSpecialities";
 import Reviews from "../components/ReviewTab/Reviews";

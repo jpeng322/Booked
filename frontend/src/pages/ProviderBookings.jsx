@@ -97,6 +97,12 @@ const ProviderBookings = () => {
   function sameOrAfterDateNow(date) {
     return moment().isAfter(date) || moment().isSame(date, "day");
   }
+
+  // console.log(moment().isSame("May 18, 2023 11:00 AM", "day"))
+  console.log(moment().isAfter("May 19, 2023 11:00 AM", "day"))
+  function isDayOf(date) {
+    return moment().isSame(date, "day");
+  }
   const bookingMakers = bookings.map((booking) => ({
     title: booking.client_name,
     status: booking.status,
@@ -108,8 +114,9 @@ const ProviderBookings = () => {
         ? "grey"
         : booking.status === "completed"
         ? "#2f6437"
-        : booking.status === "scheduled" &&
-          sameOrAfterDateNow(booking.date_order)
+          : booking.status === "scheduled"
+            &&
+          sameOrAfterDateNow(booking.start_date)
         ? "#53b946"
         : booking.status === "cancelled"
         ? "#FF6D60"

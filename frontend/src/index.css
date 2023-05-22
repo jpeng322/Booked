@@ -1,4 +1,31 @@
-* {
+/* * {
   padding: 0;
   margin: 0;
+
 }
+
+:root {
+  --main-peach: #fae2c6;
+  --main-orange: #f6c58e;
+  --light-background: #f2f5f8;
+  --uniform-1: #263646;
+  --uniform-2: #476685;
+  --uniform-3: #6d8fb0;
+  --uniform-4: #afc2d4;
+  --uniform-5: #F2F5F8;
+  --brown-1: #B1660E;
+  --brown-2: #ED8C1D;
+  --brown-3: #F1A855;
+  --brown-4: #F6C58E;
+  --brown-5: #FAE2C6;
+  --landscaper-1: #5C6343;
+  --landscaper-2: #889263;
+  --landscaper-3: #9BA479;
+  --landscaper-4: #B6BD9E;
+  --landscaper-5: #E4E6DB;
+  --toolshop-1: #F3DD69;
+  --toolshop-2: #F6E46E;
+  --toolshop-3: #F9EDB4;
+  --toolshop-4: #FCF6D9;
+  --toolshop-5: #FDFBEC;
+} */

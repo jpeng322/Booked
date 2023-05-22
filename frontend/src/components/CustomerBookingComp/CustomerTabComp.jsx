@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import OrderInfo from "./CustomerBookingInfo";
 import Pagination from "react-bootstrap/Pagination";
 
+
 const TabComp = ({ orders }) => {
   const numberOfOrders = 3;
   const numberOfPages = Math.ceil(orders.length / numberOfOrders);
@@ -34,11 +35,12 @@ const TabComp = ({ orders }) => {
   return (
     <div className="completed-containers">
       <div className="completed-headers ">
-        <div>NAME</div>
-        <div>SERVICE TYPE</div>
-        <div>DESCRIPTION</div>
-        <div>SERVICE DATE </div>
-        <div>PRICE </div>
+        <div></div>
+        <div className="service-type-header"></div>
+        <div></div>
+        <div>ORDER DATE </div>
+        <div>DUE ON </div>
+        <div>TOTAL </div>
         <div>STATUS </div>
         <div></div>
       </div>
@@ -49,7 +51,8 @@ const TabComp = ({ orders }) => {
           provider_name={booking.provider_name}
           service_type={booking.service_type}
           order_desc={booking.order_desc}
-          date_order={booking.date_order}
+          start_date={booking.start_date}
+          end_date={booking.end_date}
           cost={booking.cost}
           status={booking.status}
           id={booking.booking_id}
