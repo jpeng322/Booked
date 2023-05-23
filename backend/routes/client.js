@@ -7,7 +7,7 @@ export default function clientRouter(passport){
 const router = express.Router();
 
 
-app.get('/', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const client = await prisma.client.findMany({
         where: {
@@ -62,7 +62,7 @@ async (req, res) => {
     };
 });
 
-app.get('/client/:id', async (req, res) => {
+router.get('/client/:id', async (req, res) => {
   const id = req.params;
 
   try {
@@ -88,7 +88,7 @@ app.get('/client/:id', async (req, res) => {
   }
 });
 
-app.post('/clients', passport.authenticate("jwt", { session: false }), 
+router.post('/clients', passport.authenticate("jwt", { session: false }), 
 async (req, res) => {
   
   try {
@@ -118,7 +118,7 @@ async (req, res) => {
   };
 });
 
-app.put('/client/:id', passport.authenticate("jwt", { session: false }), 
+router.put('/client/:id', passport.authenticate("jwt", { session: false }), 
 async (req, res) => {
 
   const id  = req.params.client_id;
@@ -165,7 +165,7 @@ async (req, res) => {
     };
 });
 
-app.delete('/clients/:id', passport.authenticate("jwt", { session: false }),
+router.delete('/clients/:id', passport.authenticate("jwt", { session: false }),
 
 async (req, res) => {
     

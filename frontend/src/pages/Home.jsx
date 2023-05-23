@@ -1,11 +1,14 @@
 import React from "react";
-import { useNavigate, Routes, Route, BrowserRouter } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Container, Row, Col, Carousel } from "react-bootstrap";
+import SubscriptionBox from "./SubscriptionBox";
+import Carouselandsub from "./Carouselandsubs.jsx";
+
 import NavComp from "../components/Navbar";
 import HeroComp from "../components/HeroComp";
 import OtherComp from "../components/OtherComp";
 import SearchBar from "../components/SearchBar";
 import FooterComp from "../components/FooterComp";
-import {Container} from "react-bootstrap"
 const Home = () => {
   async function checkout() {
     console.log("asdasd");
@@ -63,20 +66,19 @@ const Home = () => {
     <div>
       <div className="App">
         <NavComp />
-      
-        <HeroComp/>
-        <Container>
+
+        <HeroComp />
         <div className="card"></div>
         <button onClick={checkout}>Checkout</button>
-        <button onClick={() => navigate("/signup")}>Signup</button>
-        <button onClick={() => navigate("/login")}>Login</button>
-        </Container>
+        <button onClick={() => navigate("auth/signup")}>Signup</button>
+        <button onClick={() => navigate("auth/login")}>Login</button>
+        <button onClick={() => navigate("auth/loginClient")}>
+          Client Login
+        </button>
+        {/* <button onClick={() => navigate("/customeraccount")}>Customer Accunt Contact</button> */}
       </div>
-      <h4 className="text-center">Find what you are looking for</h4>
-      <SearchBar/>
-      <OtherComp/>
-      <FooterComp/>
-    </div>  
+      <Carouselandsub />
+    </div>
   );
 };
 

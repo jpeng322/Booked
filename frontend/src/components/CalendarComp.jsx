@@ -25,12 +25,12 @@ const CalendarComp = () => {
   useEffect(() => {
     const daysArray = document.querySelectorAll(".react-calendar__tile");
     for (let i = 0; i < daysArray.length; i++) {
-      console.log(daysArray[i])
+      // console.log(daysArray[i])
     }
     //hit API route that checks for bookings on that date findMany where provider = userId and dateTime = Wed Apr 19 2023 00:00:00 GMT-0400 (Eastern Daylight Time)
 
     // if response.status findMany length > 0, classList add green or an "available appointment color"
-    console.log(daysArray);
+    // console.log(daysArray);
   }, []);
   return (
     <>
