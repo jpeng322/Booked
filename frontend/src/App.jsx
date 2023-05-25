@@ -23,20 +23,29 @@ import ProviderBookings from "./pages/ProviderBookings";
 import { submitRequestForm } from "./pages/ProviderPage";
 import CustomerAccountContact from "./pages/CustomerAccountContact";
 import ProviderPage from "./pages/ProviderPage";
+import AccountSettings from "./pages/AccountSettings";
+
+//loaders
+import {
+  fetchLogin,
+  fetchSignup,
+  getBooking,
+  getProviderBookings,
+} from "./api";
 
 //components
 import ConfirmationPage from "./components/ConfirmationPage";
 import FavoriteProviders from "./components/FavoritesComp";
-
-
-//loaders
-import { fetchLogin, fetchSignup, getBooking, getProviderBookings } from "./api";
-
+import MyProfile from "./components/AccountSettings/MyProfile";
+import Notifications from "./components/AccountSettings/Notifications";
+import DeleteAccount from "./components/AccountSettings/DeleteAccount";
+import Wallet from "./components/AccountSettings/Wallet";
+import SignOut from "./components/AccountSettings/SignOut";
 
 function App() {
   const [count, setCount] = useState(0);
   const [formData, setFormData] = useState();
-  console.log(formData)
+  console.log(formData);
 
   async function checkout() {
     try {
@@ -181,15 +190,41 @@ function App() {
     {
       path: "/provider/bookings",
       element: <ProviderBookings />,
-      loader: getProviderBookings
+      loader: getProviderBookings,
     },
     {
       path: "/customer/confirmation/:booking_id",
       loader: ({ params }) => {
-        const booking_id = params.booking_id
-        return getBooking(booking_id)
+        const booking_id = params.booking_id;
+        return getBooking(booking_id);
       },
       element: <ConfirmationPage formData={formData} />,
+    },
+    {
+      path: "/settings",
+      element: <AccountSettings />,
+      children: [
+        {
+          path: "myprofile",
+          element: <MyProfile />,
+        },
+        {
+          path: "notifications",
+          element: <Notifications />,
+        },
+        {
+          path: "signout",
+          element: <SignOut />,
+        },
+        {
+          path: "delete_account",
+          element: <DeleteAccount />,
+        },
+        {
+          path: "wallet",
+          element: <Wallet />,
+        },
+      ],
     },
   ]);
   return (

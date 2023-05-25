@@ -287,13 +287,13 @@ const ProviderPage = ({ setFormData }) => {
           </p>
         </Form>
       </Row>
-      <RequestFormModal
+      {/* <RequestFormModal
         formData={data}
         show={modalShow}
         onHide={() => {
           setModalShow(false);
         }}
-      />
+      /> */}
     </Container>
   );
 };
