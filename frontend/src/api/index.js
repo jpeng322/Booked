@@ -28,7 +28,7 @@ export const fetchSignup = async (email, password, firstName, lastName, phoneNum
             password: password,
             fname: firstName,
             lname: lastName,
-            phone: phoneNumber,
+            number: phoneNumber,
         });
 
         return apiSignupData;

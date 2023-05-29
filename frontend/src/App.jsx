@@ -88,7 +88,7 @@ function App() {
         element: <Home />,
       },
       {
-        path: "auth/loginClient",
+        path: "clientlogin",
         element: <LoginClient />,
         action: async ({ request }) => {
           try {
@@ -117,7 +117,7 @@ function App() {
         }
       },
       {
-        path: "auth/login",
+        path: "provierlogin",
         element: <Login />,
         action: async ({ request }) => {
           try {
