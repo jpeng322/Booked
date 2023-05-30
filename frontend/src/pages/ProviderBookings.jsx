@@ -1,34 +1,20 @@
-import React, { useEffect, useState } from "react";
-// import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
-// import "../../node_modules/react-calendar/dist/Calendar.css"
-// import './Calender.scss';
+import React, { useEffect, useState, useRef } from "react";
 import { Container, Col, Row, Pagination } from "react-bootstrap";
-
 import ProviderBookingInfo from "../components/ProviderBookingInfo";
+import axios from "axios";
+import { useLoaderData } from "react-router-dom";
+//styling
 import "../CSS/ProviderBooking.css";
+import "react-calendar/dist/Calendar.css";
 
-import format from "date-fns/format";
-import getDay from "date-fns/getDay";
-import parse from "date-fns/parse";
-import startOfWeek from "date-fns/startOfWeek";
-import {
-  Calendar,
-  dateFnsLocalizer,
-  momentLocalizer,
-} from "react-big-calendar";
+import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-datepicker/dist/react-datepicker.css";
-import enUS from "date-fns/locale/en-US";
 import moment from "moment";
-
-import axios from "axios";
-const locales = {
-  "en-US": enUS,
-};
 
 const localizer = momentLocalizer(moment);
 
+<<<<<<< HEAD
 const events = [
   {
     title: "Big Meeting",
@@ -53,42 +39,40 @@ const events = [
   },
 ];
 
+=======
+>>>>>>> 9e32a49 (Updated confirmation page and cancel page modal, implemented hifi provider booking  page)
 const ProviderBookings = () => {
-  const [bookings, setBookings] = useState([]);
-  useEffect(() => {
-    async function getBookings() {
-      try {
-        const response = await axios({
-          method: "get",
-          url: `http://localhost:${
-            import.meta.env.VITE_PORT
-          }/booking/provider/1`,
-        });
+  const bookingData = useLoaderData();
+  const [bookings, setBookings] = useState(bookingData);
+  console.log("booking data", bookingData);
+  console.log("boooookings", bookings);
 
-        console.log(response);
+  const [filteredBookings, setFilteredBookings] = useState();
 
-        if (response) {
-          setBookings(response.data.bookings);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    }
-
-    getBookings();
-  }, []);
+  // const numberOfPending = useRef(bookingData.filter((booking) => booking.status === "pending").length)
+  // useEffect(() => {
+  //   count.numberOfPending = bookingData.filter((booking) => booking.status === "pending").length
+  // }, [bookings])
 
   const numberOfBookings = 10;
-  const numberOfPages = Math.ceil(bookings.length / numberOfBookings);
+  const numberOfPages = filteredBookings
+    ? Math.ceil(filteredBookings.length / numberOfBookings)
+    : Math.ceil(bookings.length / numberOfBookings);
 
   const [pageNumber, setPageNumber] = useState(1);
-  const currentBookings =
-    pageNumber === 1
-      ? bookings.slice(0, pageNumber * numberOfBookings)
-      : bookings.slice(
+  const currentBookings = filteredBookings
+    ? pageNumber === 1
+      ? filteredBookings.slice(0, pageNumber * numberOfBookings)
+      : filteredBookings.slice(
           (pageNumber - 1) * numberOfBookings,
           pageNumber * numberOfBookings
-        );
+        )
+    : pageNumber === 1
+    ? bookings.slice(0, pageNumber * numberOfBookings)
+    : bookings.slice(
+        (pageNumber - 1) * numberOfBookings,
+        pageNumber * numberOfBookings
+      );
 
   let items = [];
   for (let number = 1; number <= numberOfPages; number++) {
@@ -222,7 +206,7 @@ const ProviderBookings = () => {
   }
 
   // console.log(moment().isSame("May 18, 2023 11:00 AM", "day"))
-  console.log(moment().isAfter("May 19, 2023 11:00 AM", "day"))
+  console.log(moment().isAfter("May 19, 2023 11:00 AM", "day"));
   function isDayOf(date) {
     return moment().isSame(date, "day");
   }
@@ -234,21 +218,32 @@ const ProviderBookings = () => {
     color: "white",
     colorEvento:
       booking.status === "pending"
-        ? "grey"
+        ? // "grey"
+          "#F3DD69"
         : booking.status === "completed"
-        ? "#2f6437"
-          : booking.status === "scheduled"
-            &&
-          sameOrAfterDateNow(booking.start_date)
-        ? "#53b946"
-        : booking.status === "cancelled"
+        ? "#F6C58E"
+        : // "#2f6437"
+        // booking.status === "scheduled" && sameOrAfterDateNow(booking.start_date)
+        // ? "#53b946"
+        //     :
+        booking.status === "cancelled"
         ? "#FF6D60"
-        : "#146C94",
+        : "#AFC2D4",
+    // "#146C94",
   }));
   console.log(newBookings);
 
-  console.log(typeof moment().format("L"));
-  console.log(bookings);
+  function filterBooking(status) {
+    // setBookings(bookingData.filter((booking) => booking.status === status));
+    setFilteredBookings(
+      bookings.filter((booking) => booking.status === status)
+    );
+  }
+
+  const numberOfPending = bookingData.filter(
+    (booking) => booking.status === "pending"
+  ).length;
+
   return (
     <Container
       fluid
@@ -259,7 +254,6 @@ const ProviderBookings = () => {
         events={bookingMakers}
         startAccessor="start"
         endAccessor="end"
-        
         style={{ height: 1000, margin: "50px" }}
         eventPropGetter={(newBookings) => {
           const backgroundColor = newBookings.colorEvento
@@ -269,9 +263,38 @@ const ProviderBookings = () => {
           return { style: { backgroundColor, color } };
         }}
       />
+      <div className="provider-booking-filter">
+        <div
+          className="pending filter"
+          onClick={() => filterBooking("pending")}
+        >
+          Pending (
+          {bookings.filter((booking) => booking.status === "pending").length}
+          )
+        </div>
+        <div
+          className="upcoming filter"
+          onClick={() => filterBooking("scheduled")}
+        >
+          {" "}
+          Upcoming (
+          {bookings.filter((booking) => booking.status === "scheduled").length})
+        </div>
+        <div
+          className="completed filter"
+          onClick={() => filterBooking("completed")}
+        >
+          Completed (
+          {
+            bookings.filter((booking) => booking.status === "completed")
+              .length
+          }
+          )
+        </div>
+      </div>
       {/* <Calendar onChange={onChange} value={value} /> */}
       <div className="w-100 text-center">
-        <div className="provider-booking-header d-flex p-3">
+        <div className="provider-booking-header-container ">
           <div className="provider-booking-header">Name:</div>
           <div className="provider-booking-header">Job Type:</div>
           <div className="provider-booking-header">Book Date:</div>
@@ -280,24 +303,25 @@ const ProviderBookings = () => {
           <div className="provider-booking-header">Status:</div>
           <div className="provider-booking-header"></div>
         </div>
-
-        {currentBookings.map((booking) => (
-          <ProviderBookingInfo
-            bookings={bookings}
-            setBookings={setBookings}
-            id={booking.booking_id}
-            key={booking.id}
-            client_name={booking.client_name}
-            // image={booking.image}
-            service_type={booking.service_type}
-            order_desc={booking.order_desc}
-            start_date={booking.start_date}
-            end_date={booking.end_date}
-            // order_due={booking.order_due}
-            cost={booking.cost}
-            status={booking.status}
-          />
-        ))}
+        <div className="booking-info-container">
+          {currentBookings.map((booking) => (
+            <ProviderBookingInfo
+              bookings={bookings}
+              setBookings={setBookings}
+              id={booking.booking_id}
+              key={booking.id}
+              client_name={booking.client_name}
+              // image={booking.image}
+              service_type={booking.service_type}
+              order_desc={booking.order_desc}
+              start_date={booking.start_date}
+              end_date={booking.end_date}
+              // order_due={booking.order_due}
+              cost={booking.cost}
+              status={booking.status}
+            />
+          ))}
+        </div>
 
         {numberOfPages > 1 && (
           <div className="pagination-container">

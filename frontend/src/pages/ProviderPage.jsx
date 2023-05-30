@@ -38,10 +38,12 @@ export const submitRequestForm = async ({ request }) => {
     end_date: data.get("end_date"),
   };
 
+  // return redirect("/customer/confirmation");
+
   return submission;
 };
 
-const ProviderPage = () => {
+const ProviderPage = ({ setFormData }) => {
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -83,6 +85,7 @@ const ProviderPage = () => {
   };
 
   const data = useActionData();
+  console.log(data);
   let submit = useSubmit();
   async function sendFormData() {
     try {
@@ -118,9 +121,29 @@ const ProviderPage = () => {
 >>>>>>> 51a1eb8 (Add routes to customer/provider booking to create booking, update UI)
         },
       });
-
+      console.log(response);
       if (response) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        // window.open(`/customer/confirmation/${client_name}/${provider_name}/${start_date}/${end_date}}`,'_blank', 'rel=noopener noreferrer')
+        setFormData({
+          client_name: "mei",
+          provider_name: "john",
+          service_type: data.service_type,
+          start_date: dateFormat(new Date(startDate), "mmmm d, yyyy h:MM TT"),
+          end_date: dateFormat(new Date(endDate), "mmmm d, yyyy h:MM TT"),
+          message: data.message,
+          cost: "150",
+        });
+
+        const booking_id = response.data.booking_info.booking_id;
+        window.open(
+          `/customer/confirmation/${booking_id}`,
+          "_blank",
+          "rel=noopener noreferrer"
+        );
+>>>>>>> 9e32a49 (Updated confirmation page and cancel page modal, implemented hifi provider booking  page)
         setModalShow(true);
         // return data;
 =======
@@ -260,7 +283,7 @@ values
             />
           </div>
           <div className="provider-input-group">
-            <label for="scheduling">Service Date</label>
+            <label for="scheduling">Order Date</label>
 
             <DatePicker
               selected={startDate}
@@ -276,22 +299,25 @@ values
             />
 
             {startDate && (
-              <DatePicker
-                selected={endDate}
-                onChange={(date) => setEndDate(date)}
-                showTimeSelect
-                filterDate={(date) =>
-                  filterBeforeDate(date, new Date(startDate))
-                }
-                filterTime={(time) =>
-                  filterPassedTime(time, new Date(startDate))
-                }
-                // filterTime={filterPassedTime}
-                dateFormat="MMMM d, yyyy h:mm a"
-                name="end_date"
-                timeIntervals={60}
-                placeholderText="Please select an end date."
-              />
+              <>
+                <label for="scheduling">Due On</label>
+                <DatePicker
+                  selected={endDate}
+                  onChange={(date) => setEndDate(date)}
+                  showTimeSelect
+                  filterDate={(date) =>
+                    filterBeforeDate(date, new Date(startDate))
+                  }
+                  filterTime={(time) =>
+                    filterPassedTime(time, new Date(startDate))
+                  }
+                  // filterTime={filterPassedTime}
+                  dateFormat="MMMM d, yyyy h:mm a"
+                  name="end_date"
+                  timeIntervals={60}
+                  placeholderText="Please select an end date."
+                />
+              </>
             )}
           </div>
           <div className="provider-input-group">

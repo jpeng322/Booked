@@ -10,6 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+//pages
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
@@ -19,22 +20,29 @@ import Recommendations from "./pages/Recommendations";
 import Profile from "./pages/Profile";
 import CustomerAcc from "./pages/CustomerBookings";
 import ProviderBookings from "./pages/ProviderBookings";
-import { submitRequestForm  } from "./pages/ProviderPage";
-
-import FavoriteProviders from "./components/FavoritesComp";
+import { submitRequestForm } from "./pages/ProviderPage";
+import CustomerAccountContact from "./pages/CustomerAccountContact";
 import ProviderPage from "./pages/ProviderPage";
 
-import { fetchLogin, fetchSignup } from "./api";
-import CustomerAccountContact from "./pages/CustomerAccountContact";
+//components
+import ConfirmationPage from "./components/ConfirmationPage";
+import FavoriteProviders from "./components/FavoritesComp";
+
+
+//loaders
+import { fetchLogin, fetchSignup, getBooking, getProviderBookings } from "./api";
+
 
 function App() {
   const [count, setCount] = useState(0);
+  const [formData, setFormData] = useState();
+  console.log(formData)
 
   async function checkout() {
     try {
       const response = await axios({
         method: "post",
-        url:  `http://localhost:${import.meta.env.VITE_PORT}/payment`,
+        url: `http://localhost:${import.meta.env.VITE_PORT}/payment`,
         headers: { "Content-Type": "application/json" },
         //data will equal to payment fee of service id instead of items
         data: {
@@ -201,13 +209,21 @@ function App() {
     },
     {
       path: "/provider/profile",
-      element: <ProviderPage />,
+      element: <ProviderPage setFormData={setFormData} />,
       action: submitRequestForm,
-
-},
+    },
     {
       path: "/provider/bookings",
       element: <ProviderBookings />,
+      loader: getProviderBookings
+    },
+    {
+      path: "/customer/confirmation/:booking_id",
+      loader: ({ params }) => {
+        const booking_id = params.booking_id
+        return getBooking(booking_id)
+      },
+      element: <ConfirmationPage formData={formData} />,
     },
   ]);
   return (

@@ -52,22 +52,7 @@ const RequestFormModal = (props) => {
           </div>
         ) : (
           <>
-            {" "}
-            {/* {!confirmedCancel ? (
-              <div className="d-flex flex-column justify-content-center align-items-center gap-4">
-                <div>
-                  <CircleCheck />
-                </div>
-                <div>Your quote has been submitted.</div>
-              </div>
-            ) : (
-              <div className="d-flex flex-column justify-content-center align-items-center gap-4">
-                <div>
-                  <CircleCross />
-                </div>
-                <div>Your quote has been cancelled.</div>
-              </div>
-            )} */}
+
             <div className="d-flex flex-column justify-content-center align-items-center gap-4">
               <div>{!confirmedCancel ? <CircleCheck /> : <CircleCross />}</div>
               <div>
@@ -77,30 +62,9 @@ const RequestFormModal = (props) => {
               </div>
             </div>
             <div className="d-flex flex-column align-items-center ">
-              <div className="d-flex form-info gap">
-                {" "}
-                <div className="flex-1">To:</div>
-                <div className="flex-1">
-                  {props.formData && props.formData.zip_code}
-                </div>{" "}
-              </div>
-              <div className="d-flex form-info">
-                {" "}
-                <div>Service Type:</div>
-                <div>{props.formData && props.formData.service_type}</div>{" "}
-              </div>
-              <div className="d-flex form-info">
-                <div>Start Date:</div>
-                <div>{props.formData && props.formData.start_date}</div>
-              </div>
-              <div className="d-flex form-info">
-                <div>End Date:</div>
-                <div>{props.formData && props.formData.end_date}</div>
-              </div>
-              <div className="d-flex form-info">
-                <div>Zip:</div>
-                <div>{props.formData && props.formData.zip_code}</div>
-              </div>
+
+    
+
             </div>{" "}
           </>
         )}
