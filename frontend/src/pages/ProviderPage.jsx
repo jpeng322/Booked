@@ -193,6 +193,7 @@ const ProviderPage = () => {
             <h3>Starting cost</h3>
           </div>
           <div className="provider-input-group">
+<<<<<<< HEAD
             <label for="zip_code">Zip Code</label>
             <input
               type="text"
@@ -259,6 +260,39 @@ const ProviderPage = () => {
           <button className="provider-form-button" onClick={sendFormData}>
             Send Request
           </button>
+=======
+            <label for="zip-code">Zip Code</label>
+            <input type="number" id="zip-code" name="zip-code" />
+          </div>
+          <div className="provider-input-group">
+            <label for="scheduling">Service Date</label>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+            />
+          </div>
+          <div className="provider-input-group">
+            <label for="project">Service Type</label>
+            <input type="text" id="project" name="project" placeholder="What service would you like?" />
+          </div>
+          <div className="provider-input-group">
+            <label htmlFor="note">Message </label>
+            <textarea
+              className="p-3"
+              name="note"
+              id="note"
+              cols="30"
+              rows="4"
+              placeholder="Any additional information that the provider needs to know? Ex. Anticipated duration of service, notice of pets, specific information needed to know for better service"
+            ></textarea>
+          </div>
+          {/* <div className="provider-input-group">
+            <label for="hours">Estimated Hours</label>
+            <input type="number" id="hours" name="hours" />
+          </div> */}
+
+          <button className="provider-form-button">Send Request</button>
+>>>>>>> 192b98b (Edit form, styled calendar)
           <p>
             Responds in about <span className="fw-bold">1 hour</span>
           </p>

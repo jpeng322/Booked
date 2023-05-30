@@ -29,6 +29,29 @@ const locales = {
 
 const localizer = momentLocalizer(moment);
 
+const events = [
+  {
+    title: "Big Meeting",
+    allDay: true,
+    start: new Date(2023, 6, 0),
+    end: new Date(2023, 6, 0),
+  },
+  {
+    title: "Vacation",
+    start: new Date(2023, 6, 7),
+    end: new Date(2023, 6, 10),
+  },
+  {
+    title: "Conference",
+    start: new Date(2023, 6, 20),
+    end: new Date(2023, 6, 23),
+  },
+  {
+    title: "Conferenceasdasdasd",
+    start: "June 3, 2023",
+    end: "June 3, 2023",
+  },
+];
 
 const ProviderBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -92,7 +115,107 @@ const ProviderBookings = () => {
     "/" +
     today.getFullYear();
 
-  const dateNow = moment().format("L");
+  // const bookings = [
+  //   {
+  //     name: "Kashanna",
+  //     id: "32432432123123xcvcxa",
+  //     image: "Picture",
+  //     order_type: "Basic Order",
+  //     order_desc: "Install rims",
+  //     order_date: "June 5 2023",
+  //     order_due: "June 5 2023",
+  //     total: "$500.00",
+  //     status: "completed",
+  //   },
+  //   {
+  //     name: "Hiwot",
+  //     id: "324324321231231111",
+  //     image: "Active",
+  //     order_type: "Basic Order",
+  //     order_desc: "Install rims",
+  //     order_date: "June 1 2023",
+  //     order_due: "June 1 2023",
+  //     total: "$500.00",
+  //     status: "active",
+  //   },
+  //   {
+  //     name: "Jacky Peng",
+  //     id: "32213432432123123",
+  //     image: "Scheduled",
+  //     order_type: "Basic Order",
+  //     order_desc: "Paint rims",
+  //     order_date: "June 12 2023",
+  //     order_due: "June 15 2023",
+  //     total: "$1500.00",
+  //     status: "scheduled",
+  //   },
+  //   {
+  //     name: "Mei Huang",
+  //     id: "32432asdaswe",
+  //     image: "Cancelled",
+  //     order_type: "Basic Order",
+  //     order_desc: "Install rims",
+  //     order_date: "June 13 2023",
+  //     order_due: "June 13 2023",
+  //     total: "$500.00",
+  //     status: "cancelled",
+  //   },
+  //   {
+  //     name: "Mei Huang",
+  //     id: "32432asdaswe",
+  //     image: "Cancelled",
+  //     order_type: "Basic Order",
+  //     order_desc: "Install rims",
+  //     order_date: "June 13 2023",
+  //     order_due: "June 13 2023",
+  //     total: "$500.00",
+  //     status: "cancelled",
+  //   },
+  //   {
+  //     name: "Mei Huang",
+  //     id: "32432asdaswe",
+  //     image: "Cancelled",
+  //     order_type: "Basic Order",
+  //     order_desc: "Install rims",
+  //     order_date: "June 13 2023",
+  //     order_due: "June 13 2023",
+  //     total: "$500.00",
+  //     status: "cancelled",
+  //   },
+  //   {
+  //     name: "Mei Huang",
+  //     id: "32432asdaswe",
+  //     image: "Cancelled",
+  //     order_type: "Basic Order",
+  //     order_desc: "Install rims",
+  //     order_date: "June 13 2023",
+  //     order_due: "June 13 2023",
+  //     total: "$500.00",
+  //     status: "cancelled",
+  //   },
+  //   {
+  //     name: "John Smith",
+  //     id: "32432432",
+  //     image: "Scheduled",
+  //     order_type: "Basic Order",
+  //     order_desc: "Install rims",
+  //     order_date: "June 3 2023",
+  //     order_due: "June 7 2023",
+  //     total: "$500.00",
+  //     status: "scheduled",
+  //   },
+  //   {
+  //     name: "John Smithasdad",
+  //     id: "32432432",
+  //     image: "Scheduled",
+  //     order_type: "Basic Order",
+  //     order_desc: "Install rims",
+  //     order_date: "June 10 2023",
+  //     order_due: "June 10 2023",
+  //     total: "$500.00",
+  //     status: "pending",
+  //   },
+  // ];
 
   function sameOrAfterDateNow(date) {
     return moment().isAfter(date) || moment().isSame(date, "day");
@@ -115,6 +238,7 @@ const ProviderBookings = () => {
         ? "#FF6D60"
         : "#146C94",
   }));
+  console.log(newBookings);
 
   console.log(typeof moment().format("L"));
   console.log(bookings);
@@ -142,11 +266,10 @@ const ProviderBookings = () => {
       <div className="w-100 text-center">
         <div className="provider-booking-header d-flex p-3">
           <div className="provider-booking-header">Name:</div>
-          <div className="provider-booking-header">Service Type:</div>
-          <div className="provider-booking-header">Description:</div>
-          <div className="provider-booking-header">Start Date:</div>
-          <div className="provider-booking-header">End Date:</div>
-          <div className="provider-booking-header">Price:</div>
+          <div className="provider-booking-header">Job Type:</div>
+          <div className="provider-booking-header">Book Date:</div>
+          <div className="provider-booking-header">Due Date:</div>
+          <div className="provider-booking-header">Earning:</div>
           <div className="provider-booking-header">Status:</div>
           <div className="provider-booking-header"></div>
         </div>
