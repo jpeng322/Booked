@@ -141,6 +141,7 @@ function App() {
         element: <CustomerAccountContact />,
         
       },
+<<<<<<< HEAD
       {
         path: "/preferences",
         element: <OnboardingSurvey />,
@@ -163,6 +164,37 @@ function App() {
     }, {
     path: "/provider",
     element: <ProviderCard providers={providers} />},
+=======
+    },
+    {
+      path: "/customeraccount",
+      element: <CustomerAccountContact />,
+    },
+    {
+      path: "/preferences",
+      element: <OnboardingSurvey />,
+    },
+    {
+      path: "/recommendations",
+      element: <Recommendations />,
+    },
+    {
+      path: "/profile",
+      element: <Profile providers={providers} />,
+    },
+    {
+      path: "/customer/bookings",
+      element: <CustomerAcc />,
+    },
+    {
+      path: "/carousel",
+      element: <FavoriteProviders />,
+    },
+    {
+      path: "/provider",
+      element: <ProviderCard providers={providers} />,
+    },
+>>>>>>> 51a1eb8 (Add routes to customer/provider booking to create booking, update UI)
     {
       path: "/about",
       element: <About />,

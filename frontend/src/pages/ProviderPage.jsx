@@ -8,6 +8,7 @@ import setMinutes from "date-fns/setMinutes";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import axios from "axios";
+<<<<<<< HEAD
 import dateFormat from "dateformat";
 import getDay from "date-fns/getDay";
 import {
@@ -17,6 +18,8 @@ import {
   useNavigate,
   useSubmit,
 } from "react-router-dom";
+=======
+>>>>>>> 51a1eb8 (Add routes to customer/provider booking to create booking, update UI)
 
 //components
 import RequestFormModal from "../components/RequestFormModal";
@@ -59,6 +62,7 @@ const ProviderPage = () => {
     },
   };
 
+<<<<<<< HEAD
   const [modalShow, setModalShow] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -93,19 +97,68 @@ const ProviderPage = () => {
           end_date: dateFormat(new Date(endDate), "mmmm d, yyyy h:MM TT"),
           message: data.message,
           cost: "150",
+=======
+  const submitRequest = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios({
+        method: "post",
+        url: "http://localhost:4000/booking",
+        data: {
+          client_name: values.client_name,
+          provider_name: values.provider_name,
+          service_type: values.service_type,
+          date_order: (new Date(startDate) + "")
+            .split(" ")
+            .splice(1, 3)
+            .join(" "),
+          message: values.message,
+          cost: values.cost,
+        
+>>>>>>> 51a1eb8 (Add routes to customer/provider booking to create booking, update UI)
         },
       });
 
       if (response) {
+<<<<<<< HEAD
         setModalShow(true);
         // return data;
+=======
+        console.log(response);
+>>>>>>> 51a1eb8 (Add routes to customer/provider booking to create booking, update UI)
       } else {
         throw Error("No response");
       }
     } catch (e) {
       console.log(e);
     }
+<<<<<<< HEAD
   }
+=======
+  };
+
+  const [startDate, setStartDate] = useState(new Date());
+
+  const initialValues = {
+    client_name: "John",
+    provider_name: "GR Brothers Landscaping",
+    service_type: "",
+    date_order: new Date(startDate) + "",
+    cost: "150",
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value,
+    });
+  };
+  const [values, setValues] = useState(initialValues);
+  console.log(
+values
+  );
+>>>>>>> 51a1eb8 (Add routes to customer/provider booking to create booking, update UI)
 
   return (
     <Container fluid className="provider-profile-container d-flex p-5">
@@ -180,6 +233,7 @@ const ProviderPage = () => {
       </div>
 
       <Row className="provider-form-container">
+<<<<<<< HEAD
         <Form
           onChange={(event) => {
             submit(event.currentTarget);
@@ -188,6 +242,9 @@ const ProviderPage = () => {
           method="post"
           action="/provider/profile"
         >
+=======
+        <form onSubmit={submitRequest} className="provider-form">
+>>>>>>> 51a1eb8 (Add routes to customer/provider booking to create booking, update UI)
           <div className="provider-pricing">
             <h2>$150</h2>
             <h3>Starting cost</h3>
@@ -262,28 +319,43 @@ const ProviderPage = () => {
           </button>
 =======
             <label for="zip-code">Zip Code</label>
-            <input type="number" id="zip-code" name="zip-code" />
+            <input
+              type="number"
+              id="zip-code"
+              name="zip-code"
+              value={values.zip}
+              onChange={handleInputChange}
+            />
           </div>
           <div className="provider-input-group">
             <label for="scheduling">Service Date</label>
             <DatePicker
               selected={startDate}
-              onChange={(date) => setStartDate(date)}
+              onChange={(date) => setStartDate(new Date(date).split())}
             />
           </div>
           <div className="provider-input-group">
-            <label for="project">Service Type</label>
-            <input type="text" id="project" name="project" placeholder="What service would you like?" />
+            <label for="service_type">Service Type</label>
+            <input
+              type="text"
+              id="service_type"
+              name="service_type"
+              placeholder="What service would you like?"
+              value={values.service_type}
+              onChange={handleInputChange}
+            />
           </div>
           <div className="provider-input-group">
-            <label htmlFor="note">Message </label>
+            <label htmlFor="message">Message </label>
             <textarea
               className="p-3"
-              name="note"
-              id="note"
+              name="message"
+              id="message"
               cols="30"
               rows="4"
               placeholder="Any additional information that the provider needs to know? Ex. Anticipated duration of service, notice of pets, specific information needed to know for better service"
+              value={values.message}
+              onChange={handleInputChange}
             ></textarea>
           </div>
           {/* <div className="provider-input-group">
@@ -291,8 +363,14 @@ const ProviderPage = () => {
             <input type="number" id="hours" name="hours" />
           </div> */}
 
+<<<<<<< HEAD
           <button className="provider-form-button">Send Request</button>
 >>>>>>> 192b98b (Edit form, styled calendar)
+=======
+          <button type="submit" className="provider-form-button">
+            Send Request
+          </button>
+>>>>>>> 51a1eb8 (Add routes to customer/provider booking to create booking, update UI)
           <p>
             Responds in about <span className="fw-bold">1 hour</span>
           </p>

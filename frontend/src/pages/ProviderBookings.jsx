@@ -54,6 +54,10 @@ const events = [
 ];
 
 const ProviderBookings = () => {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 51a1eb8 (Add routes to customer/provider booking to create booking, update UI)
   const [bookings, setBookings] = useState([]);
   useEffect(() => {
     async function getBookings() {

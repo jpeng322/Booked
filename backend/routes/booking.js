@@ -91,7 +91,11 @@ export default function bookingRouter(passport) {
 
   //Create a booking
   router.post("/", async (request, response) => {
+<<<<<<< HEAD
     console.log(request.body);
+=======
+    console.log(request.body)
+>>>>>>> 51a1eb8 (Add routes to customer/provider booking to create booking, update UI)
     try {
       const createBooking = await prisma.booking.create({
         data: {
@@ -100,6 +104,7 @@ export default function bookingRouter(passport) {
           // service_id: request.body.service_id || 1,
           // transaction_id: request.body.service || "To be determined",
           //   booking_date: cre,
+<<<<<<< HEAD
 <<<<<<< HEAD
           provider_name: request.body.provider_name,
           client_name: request.body.client_name,
@@ -112,10 +117,14 @@ export default function bookingRouter(passport) {
           start_date: request.body.start_date,
           end_date: request.body.end_date,
 =======
+=======
+          provider_name: request.body.provider_name,
+>>>>>>> 51a1eb8 (Add routes to customer/provider booking to create booking, update UI)
           client_name: request.body.client_name,
-          project_type: request.body.project_type,
+          service_type: request.body.service_type,
           date_order: request.body.date_order,
-          date_due: request.body.date_due,
+          // date_due: request.body.date_due,
+          order_desc: request.body.message,
           cost: request.body.cost,
           status: request.body.status
 >>>>>>> 192b98b (Edit form, styled calendar)
