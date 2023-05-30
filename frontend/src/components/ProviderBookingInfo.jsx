@@ -1,5 +1,4 @@
 import React from "react";
-<<<<<<< HEAD
 import axios from "axios";
 import "../CSS/ProviderBooking.css";
 import moment from "moment";
@@ -106,28 +105,6 @@ const ProviderBookingInfo = ({
           </button>
         )} */}
       </div>
-=======
-
-import "../CSS/ProviderBooking.css";
-const ProviderBookingInfo = ({
-  service_type,
-  order_desc,
-  order_due,
-  date_order,
-  cost,
-  status,
-  client_name,
-}) => {
-  return (
-    <div className="provider-booking-container d-flex p-3">
-      <div className="provider-booking flex-grow-1">{client_name}</div>
-      <div className="provider-booking flex-grow-1">{service_type}</div>
-      <div className="provider-booking  flex-grow-1">{order_desc}</div>
-      <div className="provider-booking  flex-grow-1">{date_order}</div>
-      {/* <div className="provider-booking flex-grow-1">{order_due}</div> */}
-      <div className="provider-booking  flex-grow-1">{cost}</div>
-      <div className="provider-booking  flex-grow-1">{status}</div>
->>>>>>> fe8abd3 (Create provider booking)
     </div>
   );
 };

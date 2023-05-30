@@ -22,7 +22,6 @@ export const fetchLogin = async (email, password) => {
   }
 };
 
-<<<<<<< HEAD
 export const fetchSignup = async (email, password, firstName, lastName, phoneNumber) => {
     console.log(email, password, firstName, lastName, phoneNumber)
     try {
@@ -33,27 +32,6 @@ export const fetchSignup = async (email, password, firstName, lastName, phoneNum
             lname: lastName,
             number: phoneNumber,
         });
-=======
-export const fetchSignup = async (
-  email,
-  password,
-  firstName,
-  lastName,
-  phoneNumber
-) => {
-  console.log(email, password, firstName, lastName, phoneNumber);
-  try {
-    const apiSignupData = await axios.post(
-      `http://localhost:${import.meta.env.VITE_PORT}/auth/signup`,
-      {
-        email: email,
-        password: password,
-        fname: firstName,
-        lname: lastName,
-        phone: phoneNumber,
-      }
-    );
->>>>>>> 9e32a49 (Updated confirmation page and cancel page modal, implemented hifi provider booking  page)
 
     return apiSignupData;
   } catch (error) {

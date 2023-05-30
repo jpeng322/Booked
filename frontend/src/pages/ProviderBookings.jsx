@@ -14,7 +14,6 @@ import moment from "moment";
 
 const localizer = momentLocalizer(moment);
 
-<<<<<<< HEAD
 const events = [
   {
     title: "Big Meeting",
@@ -39,8 +38,6 @@ const events = [
   },
 ];
 
-=======
->>>>>>> 9e32a49 (Updated confirmation page and cancel page modal, implemented hifi provider booking  page)
 const ProviderBookings = () => {
   const bookingData = useLoaderData();
   const [bookings, setBookings] = useState(bookingData);
@@ -231,7 +228,7 @@ const ProviderBookings = () => {
         : "#AFC2D4",
     // "#146C94",
   }));
-  console.log(newBookings);
+  // console.log(newBookings);
 
   function filterBooking(status) {
     // setBookings(bookingData.filter((booking) => booking.status === status));
@@ -255,11 +252,11 @@ const ProviderBookings = () => {
         startAccessor="start"
         endAccessor="end"
         style={{ height: 1000, margin: "50px" }}
-        eventPropGetter={(newBookings) => {
-          const backgroundColor = newBookings.colorEvento
-            ? newBookings.colorEvento
+        eventPropGetter={(bookingMakers) => {
+          const backgroundColor = bookingMakers.colorEvento
+            ? bookingMakers.colorEvento
             : "blue";
-          const color = newBookings.color ? newBookings.color : "blue";
+          const color = bookingMakers.color ? bookingMakers.color : "blue";
           return { style: { backgroundColor, color } };
         }}
       />
