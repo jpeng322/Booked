@@ -1,4 +1,4 @@
-import react from "react";
+import react, { useState } from "react";
 import { useForm } from 'react-hook-form'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -7,16 +7,34 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 import { Image } from "react-bootstrap";
+import Modal from 'react-bootstrap/Modal';
+
 
 
 
 const CustomerAccountContact = () => {
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = (data) => {
         console.log(data)
     };
     console.log(errors);
 
+    //Modal
+
+
+
+
+
+    const style = {
+        formInput: {
+            border: '1px solid black',
+            backgroundColor: '#F2F5F8'
+        }
+    }
 
 
 
@@ -28,22 +46,31 @@ const CustomerAccountContact = () => {
             }}
         >
             <Container
-                className="col-lg-6 col-md-6 col-sm-12  mx-auto fw-bold"
+                className="col-lg-5 col-md-6 col-sm-12  mx-auto"
                 style={{
                     marginTop: '200px',
-                    marginBottom: '1rem'
+                    marginBottom: '1rem',
+
+                    // border: "1px solid black",
                 }}
             >
-                <h1 className="text-right">Contact</h1>
+                <h1
+                    style={{
+                        fontSize: '40px',
+                        fontWeight: '400'
+                    }}
+                >
+                    Contact
+                </h1>
 
             </Container>
 
             <Stack
-                className="col-lg-6 col-md-6 col-sm-12  mx-auto fw-bold rounded-2"
+                className="col-lg-5 col-md-6 col-sm-12  mx-auto fw-bold rounded-2"
                 direction="horizontal"
                 style={{
-                    backgroundColor: 'lightgrey',
-                    padding: '4rem',
+                    backgroundColor: '#F2F5F8',
+                    padding: '4rem 0rem 4rem 1rem',
                     // border: '1px solid black',
                 }}
             >
@@ -62,17 +89,61 @@ const CustomerAccountContact = () => {
                         alt="Circle image"
                         roundedCircle
                         style={{
-                            width: '100px',
-                            height: '100px',
+                            width: '150px',
+                            height: '150px',
+
                         }}
                     />
 
-                    <a
+                    <Button
+                        onClick={handleShow}
+                        className="col-8"
+                        type="submit"
+                        style={{
+                            marginLeft: '2rem',
+                            color: '#EFE9E5',
+                            backgroundColor: '#476685',
+                            padding: '10px',
+                            borderRadius: '10px'
+                        }}
+                    >
+                        Change/Remove
+                    </Button>
+
+                    {/* <a
                         href="#"
                         className="text-secondary text-decoration-none"
                         onClick={() => { }}>
                         upload/update photo
-                    </a>
+                    </a> */}
+
+                    <Modal show={show} onHide={handleClose} centered>
+                        <Modal.Header closeButton>
+                            <Modal.Title className="w-100 d-flex justify-content-center" >Profile Picture</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body className="d-flex justify-content-center">
+                            <Image
+                                src="https://dummyimage.com/640x360/eee/aaa"
+                                alt="Circle image"
+                                roundedCircle
+                                style={{
+                                    width: '150px',
+                                    height: '150px',
+
+                                }}
+                            />
+                        </Modal.Body>
+                        <Modal.Footer className="d-flex justify-content-evenly" >
+                            <Button className="col-4" style={{ backgroundColor: '#476685' }} onClick={handleClose}>
+                                Change
+                            </Button>
+                            <Button className="col-4" style={{ backgroundColor: '#476685' }} onClick={handleClose}>
+                                Remove
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+
+
                 </Stack>
 
                 <Container>
@@ -92,29 +163,29 @@ const CustomerAccountContact = () => {
                                     }}
                                 >
                                     <Form.Label>First Name</Form.Label>
-                                    <Form.Control type="text" placeholder="First Name" {...register("firstName", {})} />
+                                    <Form.Control style={style.formInput} type="text" placeholder="First Name" {...register("firstName", { required: true, })} />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" >
                                     <Form.Label>Last Name</Form.Label>
-                                    <Form.Control type="text" placeholder="Last Name" {...register("lastName",)} />
+                                    <Form.Control style={style.formInput} type="text" placeholder="Last Name" {...register("lastName", { required: true, })} />
                                 </Form.Group>
                             </Stack>
 
 
                             <Form.Group className="mb-3" >
                                 <Form.Label>Email</Form.Label>
-                                <Form.Control type="email" placeholder="Email" {...register("email", { required: true, maxLength: 80 })} />
+                                <Form.Control style={style.formInput} type="email" placeholder="Email" {...register("email", { required: true, maxLength: 80 })} />
                             </Form.Group>
 
                             <Form.Group className="mb-3" >
                                 <Form.Label>Phone Number</Form.Label>
-                                <Form.Control type="text" placeholder="Phone Number" {...register("phoneNumber", {})} />
+                                <Form.Control style={style.formInput} type="text" placeholder="Phone Number" {...register("phoneNumber", { required: true, })} />
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-5" >
                                 <Form.Label>Zip Code</Form.Label>
-                                <Form.Control type="text" placeholder="Zip Code" {...register("zipcode", {})} />
+                                <Form.Control style={style.formInput} type="text" placeholder="Zip Code" {...register("zipcode", { required: true, })} />
                             </Form.Group>
 
 
@@ -133,8 +204,15 @@ const CustomerAccountContact = () => {
                             >
                                 <Button
                                     className="col-5"
-                                    variant="primary"
                                     type="submit"
+                                    style={{
+                                        // marginLeft: '2rem',
+                                        color: 'black',
+                                        backgroundColor: 'transparent',
+                                        padding: '10px',
+                                        border: '1px solid black',
+                                        borderRadius: '10px'
+                                    }}
                                 >
                                     Cancel
                                 </Button>
@@ -143,6 +221,13 @@ const CustomerAccountContact = () => {
                                     className="col-5"
                                     variant="primary"
                                     type="submit"
+                                    style={{
+                                        marginLeft: '2rem',
+                                        color: '#EFE9E5',
+                                        backgroundColor: '#476685',
+                                        padding: '10px',
+                                        borderRadius: '10px'
+                                    }}
                                 >
                                     Save
                                 </Button>

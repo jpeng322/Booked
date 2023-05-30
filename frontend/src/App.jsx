@@ -79,6 +79,7 @@ function App() {
   //     });
   // };
   // }
+<<<<<<< HEAD
   const router = createBrowserRouter([
     {
       path: "/",
@@ -95,6 +96,27 @@ function App() {
           return await fetchLogin(email, password);
         } catch (error) {
           return error;
+=======
+
+    const router = createBrowserRouter([
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "clientlogin",
+        element: <LoginClient />,
+        action: async ({ request }) => {
+          try {
+            const formData = await request.formData();
+            const email = formData.get("email");
+            const password = formData.get("password");
+            return await fetchLogin(email, password);
+
+          } catch (error) {
+            return error;
+          }
+>>>>>>> 08e2953649c03479cfa3b309de4acd0924de60a8
         }
       },
     },
@@ -118,21 +140,23 @@ function App() {
           return error;
         }
       },
-    },
-    {
-      path: "auth/login",
-      element: <Login />,
-      action: async ({ request }) => {
-        try {
-          const formData = await request.formData();
-          const email = formData.get("email");
-          const password = formData.get("password");
-          return await fetchLogin(email, password);
-        } catch (error) {
-          return error;
+      {
+        path: "provierlogin",
+        element: <Login />,
+        action: async ({ request }) => {
+          try {
+            const formData = await request.formData();
+            const email = formData.get("email");
+            const password = formData.get("password");
+            return await fetchLogin(email, password);
+
+          } catch (error) {
+            return error;
+          }
+          
         }
       }
-    },
+    ,
       {
         path: "/customeraccount",
         element: <CustomerAccountContact />,
