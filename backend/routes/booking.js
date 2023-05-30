@@ -87,6 +87,7 @@ export default function bookingRouter(passport) {
 
   //Create a booking
   router.post("/", async (request, response) => {
+    console.log(request.body)
     try {
       const createBooking = await prisma.booking.create({
         data: {
@@ -95,10 +96,12 @@ export default function bookingRouter(passport) {
           // service_id: request.body.service_id || 1,
           // transaction_id: request.body.service || "To be determined",
           //   booking_date: cre,
+          provider_name: request.body.provider_name,
           client_name: request.body.client_name,
-          project_type: request.body.project_type,
+          service_type: request.body.service_type,
           date_order: request.body.date_order,
-          date_due: request.body.date_due,
+          // date_due: request.body.date_due,
+          order_desc: request.body.message,
           cost: request.body.cost,
           status: request.body.status
         },
