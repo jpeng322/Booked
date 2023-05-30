@@ -4,7 +4,8 @@ import React from "react";
 const OrderInfo = ({
   service_type,
   order_desc,
-  date_order,
+  start_date,
+  end_date,
   cost,
   status,
   provider_name,
@@ -28,13 +29,14 @@ const OrderInfo = ({
 
   return (
     <div className="completed-information">
-      <div>{provider_name}</div>
-      <div>{service_type}</div>
+      <div className="provider-image">{provider_name}</div>
+      <div className="service-type">{service_type}</div>
       <div>{order_desc}</div>
-      <div>{date_order}</div>
-      <div>{cost}</div>
+      <div>{start_date}</div>
+      <div>{end_date}</div>
+      <div>${cost}.00</div>
 
-      <div>{status}</div>
+      <div className="status">{status}</div>
       <div>
         {status === "scheduled" && (
           <button onClick={() => requestResponse("cancelled", id)}>

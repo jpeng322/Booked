@@ -66,9 +66,8 @@ const ProviderBookingInfo = ({
     }
   }
 
-
   return (
-    <div className="provider-booking-container d-flex p-3">
+    <div className={"provider-booking-container d-flex p-3 " + status}>
       <div className="provider-booking flex-grow-1">{client_name}</div>
       <div className="provider-booking flex-grow-1">{service_type}</div>
       <div className="provider-booking  flex-grow-1">{order_desc}</div>
