@@ -18,10 +18,10 @@ import OnboardingSurvey from "./pages/OnboardingSurvey";
 import Recommendations from "./pages/Recommendations";
 import Profile from "./pages/Profile";
 import CustomerAcc from "./pages/CustomerBookings";
+import ProviderBookings from "./pages/ProviderBookings";
 
 import FavoriteProviders from "./components/FavoritesComp";
-import ProviderPage from "./pages/ProviderPage"
-
+import ProviderPage from "./pages/ProviderPage";
 
 import { fetchLogin, fetchSignup } from "./api";
 import CustomerAccountContact from "./pages/CustomerAccountContact";
@@ -30,7 +30,6 @@ function App() {
   const [count, setCount] = useState(0);
 
   async function checkout() {
-
     try {
       const response = await axios({
         method: "post",
@@ -79,7 +78,6 @@ function App() {
   //     });
   // };
   // }
-<<<<<<< HEAD
   const router = createBrowserRouter([
     {
       path: "/",
@@ -96,27 +94,6 @@ function App() {
           return await fetchLogin(email, password);
         } catch (error) {
           return error;
-=======
-
-    const router = createBrowserRouter([
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "clientlogin",
-        element: <LoginClient />,
-        action: async ({ request }) => {
-          try {
-            const formData = await request.formData();
-            const email = formData.get("email");
-            const password = formData.get("password");
-            return await fetchLogin(email, password);
-
-          } catch (error) {
-            return error;
-          }
->>>>>>> 08e2953649c03479cfa3b309de4acd0924de60a8
         }
       },
     },
@@ -139,7 +116,8 @@ function App() {
         } catch (error) {
           return error;
         }
-      },
+      }
+    },
       {
         path: "provierlogin",
         element: <Login />,
@@ -192,7 +170,10 @@ function App() {
       path: "/provider/profile",
       element: <ProviderPage />,
     },
-
+    {
+      path: "/provider/bookings",
+      element: <ProviderBookings />,
+    },
   ]);
   return (
     <div className="App">
