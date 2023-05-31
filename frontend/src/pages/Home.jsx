@@ -65,11 +65,7 @@ const Home = () => {
   return (
     <div>
       <div className="App">
-        <NavComp />
-
-        <HeroComp />
-        <div className="card"></div>
-        <button onClick={checkout}>Checkout</button>
+      <button onClick={checkout}>Checkout</button>
         <button onClick={() => navigate("auth/signup")}>Signup</button>
 
         <button onClick={() => navigate("auth/login")}>Login</button>
@@ -81,9 +77,17 @@ const Home = () => {
         <button onClick={() => navigate("provierlogin")}>Login</button>
         <button onClick={() => navigate("clientlogin")}>Client Login</button>
         <button onClick={() => navigate("/customeraccount")}>Customer Accunt Contact</button>
+        <NavComp />
+
+        <HeroComp />
+        
+        <div style={{backgroundColor:'#F9EDB4'}}>
+          <SearchBar /> 
+          <Carouselandsub />
+        </div>
 
       </div>
-      <Carouselandsub />
+      
     </div>
   );
 };
