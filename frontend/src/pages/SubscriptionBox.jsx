@@ -21,7 +21,7 @@ const SubscriptionBox = () => {
             onChange={(event) => setEmail(event.target.value)}
             className="mr-2 border-0"
           />
-          <Button variant="primary" type="submit">
+          <Button style={{backgroundColor:"#87A96B", border:"#87A96B"}} variant="primary" type="submit">
             Subscribe
           </Button>
         </Form.Group>
