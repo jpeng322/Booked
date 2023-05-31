@@ -1,0 +1,57 @@
+.css-1hb7zxy-IndicatorsContainer {
+  border: 1px solid red !important;
+  display: none !important;
+}
+
+.css-1dimb5e-singleValue {
+  overflow: visible !important;
+  /* word-wrap: normal; */
+  overflow-wrap: break-word !important;
+  white-space: normal !important;
+}
+.css-13cymwt-control {
+  border: 1px solid black !important;
+  padding: 0.5rem !important;
+}
+
+.css-13cymwt-control:hover {
+  border: 1px solid black !important;
+  border-color: black !important;
+  padding: 0.5rem !important;
+}
+
+.css-t3ipsp-control:hover {
+  border-color: black !important;
+  box-shadow: none !important;
+  padding: 0.5rem !important;
+}
+
+.css-t3ipsp-control {
+  border-color: black !important;
+  box-shadow: none !important;
+  padding: 0.5rem !important;
+}
+
+.css-13cymwt-control, .css-13cymwt-control:hover, .css-t3ipsp-control:hover , .css-t3ipsp-control {
+    border-color: black !important;
+    box-shadow: none !important;
+    /* padding: 0.25rem .15rem !important; */
+    border-radius: 0 !important;
+
+}
+
+.css-1fdsijx-ValueContainer {
+
+}
+
+.css-1dimb5e-singleValue {
+    display: flex !important;
+    position: relative;
+
+}
+
+.css-qbdosj-Input input {
+    word-wrap: normal;
+    position: absolute;
+    top: 0;
+}

@@ -127,20 +127,15 @@ export default function bookingRouter(passport) {
         data: {
           client_id: request.body.client_id || 1,
           provider_id: request.body.provider_id || 1,
-          // service_id: request.body.service_id || 1,
-          // transaction_id: request.body.service || "To be determined",
-          //   booking_date: cre,
           provider_name: request.body.provider_name,
           client_name: request.body.client_name,
           service_type: request.body.service_type,
-          date_order: request.body.date_order,
-          // date_due: request.body.date_due,
           order_desc: request.body.message,
           cost: request.body.cost,
           status: request.body.status,
           start_date: request.body.start_date,
           end_date: request.body.end_date,
-
+          address: request.body.address,
           provider_name: request.body.provider_name,
 
         },

@@ -18,8 +18,16 @@ import {
   useSubmit,
 } from "react-router-dom";
 
+import {
+  geocodeByAddress,
+  geocodeByPlaceId,
+  getLatLng,
+} from 'react-places-autocomplete';
+
 //components
 import RequestFormModal from "../components/RequestFormModal";
+import GooglePlacesComp from "../components/GooglePlacesAutocomplete";
+
 //styling
 import avatar from "../images/avatar.png";
 import "../CSS/ProviderProfile.css";
@@ -64,7 +72,11 @@ const ProviderPage = ({ setFormData }) => {
   const [modalShow, setModalShow] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [address, setAddress] = useState("");
 
+  // useEffect(() => {
+  //   address === "" ? setAddress("") : setAddress(address.label);
+  // }, [address]);
   // useEffect(() => {
   //   setEndDate(startDate);
   // }, [startDate]);
@@ -81,7 +93,7 @@ const ProviderPage = ({ setFormData }) => {
   };
 
   const data = useActionData();
-  console.log(data);
+  console.log(address);
   let submit = useSubmit();
   async function sendFormData() {
     try {
@@ -96,6 +108,7 @@ const ProviderPage = ({ setFormData }) => {
           end_date: dateFormat(new Date(endDate), "mmmm d, yyyy h:MM TT"),
           message: data.message,
           cost: "150",
+          address: address.label
         },
       });
       console.log(response);
@@ -122,7 +135,6 @@ const ProviderPage = ({ setFormData }) => {
         // return data;
 
         console.log(response);
-
       } else {
         throw Error("No response");
       }
@@ -217,6 +229,10 @@ const ProviderPage = ({ setFormData }) => {
             <h3>Starting cost</h3>
           </div>
           <div className="provider-input-group">
+          <label for="address">Address</label>
+            <GooglePlacesComp address={address} setAddress={setAddress} />
+          </div>
+          {/* <div className="provider-input-group">
             <label for="zip_code">Zip Code</label>
             <input
               type="text"
@@ -224,7 +240,7 @@ const ProviderPage = ({ setFormData }) => {
               title="Please enter a Zip Code"
               pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$"
             />
-          </div>
+          </div> */}
           <div className="provider-input-group">
             <label for="scheduling">Order Date</label>
 
