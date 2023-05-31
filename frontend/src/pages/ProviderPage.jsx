@@ -100,7 +100,6 @@ const ProviderPage = ({ setFormData }) => {
       });
       console.log(response);
       if (response) {
-
         // window.open(`/customer/confirmation/${client_name}/${provider_name}/${start_date}/${end_date}}`,'_blank', 'rel=noopener noreferrer')
         setFormData({
           client_name: "mei",
@@ -287,9 +286,9 @@ const ProviderPage = ({ setFormData }) => {
           <button className="provider-form-button" onClick={sendFormData}>
             Send Request
           </button>
-          <button type="submit" className="provider-form-button">
+          {/* <button type="submit" className="provider-form-button">
             Send Request
-          </button>
+          </button> */}
 
           <p>
             Responds in about <span className="fw-bold">1 hour</span>

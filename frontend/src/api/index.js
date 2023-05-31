@@ -22,6 +22,7 @@ export const fetchLogin = async (email, password) => {
   }
 };
 
+<<<<<<< HEAD
 export const fetchSignup = async (email, password, firstName, lastName, phoneNumber) => {
     console.log(email, password, firstName, lastName, phoneNumber)
     try {
@@ -32,6 +33,27 @@ export const fetchSignup = async (email, password, firstName, lastName, phoneNum
             lname: lastName,
             number: phoneNumber,
         });
+=======
+export const fetchSignup = async (
+  email,
+  password,
+  firstName,
+  lastName,
+  phoneNumber
+) => {
+  console.log(email, password, firstName, lastName, phoneNumber);
+  try {
+    const apiSignupData = await axios.post(
+      `http://localhost:${import.meta.env.VITE_PORT}/auth/signup`,
+      {
+        email: email,
+        password: password,
+        fname: firstName,
+        lname: lastName,
+        phone: phoneNumber,
+      }
+    );
+>>>>>>> f54b4c581052d3a976efa0f55490c293bf84bfcf
 
     return apiSignupData;
   } catch (error) {

@@ -60,10 +60,14 @@ export default function bookingRouter(passport) {
   //Get provider bookings
   router.get("/provider/:userId", async (request, response) => {
 <<<<<<< HEAD
+<<<<<<< HEAD
     console.log("PROVIDER ROUTE HIT");
 =======
     console.log("PROVIDER ROUTE HIT")
 >>>>>>> 192b98b (Edit form, styled calendar)
+=======
+    console.log("PROVIDER ROUTE HIT");
+>>>>>>> f54b4c581052d3a976efa0f55490c293bf84bfcf
     try {
       const providerBooking = await prisma.booking.findMany({
         where: {
@@ -121,10 +125,14 @@ export default function bookingRouter(passport) {
   //Create a booking
   router.post("/", async (request, response) => {
 <<<<<<< HEAD
+<<<<<<< HEAD
     console.log(request.body);
 =======
     console.log(request.body)
 >>>>>>> 51a1eb8 (Add routes to customer/provider booking to create booking, update UI)
+=======
+    console.log(request.body);
+>>>>>>> f54b4c581052d3a976efa0f55490c293bf84bfcf
     try {
       const createBooking = await prisma.booking.create({
         data: {
@@ -135,6 +143,9 @@ export default function bookingRouter(passport) {
           //   booking_date: cre,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> f54b4c581052d3a976efa0f55490c293bf84bfcf
           provider_name: request.body.provider_name,
           client_name: request.body.client_name,
           service_type: request.body.service_type,
@@ -145,6 +156,7 @@ export default function bookingRouter(passport) {
           status: request.body.status,
           start_date: request.body.start_date,
           end_date: request.body.end_date,
+<<<<<<< HEAD
 =======
 =======
           provider_name: request.body.provider_name,
@@ -157,6 +169,8 @@ export default function bookingRouter(passport) {
           cost: request.body.cost,
           status: request.body.status
 >>>>>>> 192b98b (Edit form, styled calendar)
+=======
+>>>>>>> f54b4c581052d3a976efa0f55490c293bf84bfcf
         },
       });
 
