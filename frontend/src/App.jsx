@@ -10,6 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+//pages
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
@@ -18,27 +19,43 @@ import OnboardingSurvey from "./pages/OnboardingSurvey";
 import Recommendations from "./pages/Recommendations";
 import Profile from "./pages/Profile";
 import CustomerAcc from "./pages/CustomerBookings";
-
-import FavoriteProviders from "./components/FavoritesComp";
-import ProviderPage from "./pages/ProviderPage"
-
-
-import { fetchLogin, fetchSignup } from "./api";
+import ProviderBookings from "./pages/ProviderBookings";
+import { submitRequestForm } from "./pages/ProviderPage";
 import CustomerAccountContact from "./pages/CustomerAccountContact";
+import ProviderPage from "./pages/ProviderPage";
+import AccountSettings from "./pages/AccountSettings";
+
+//loaders
+import {
+  fetchLogin,
+  fetchSignup,
+  getBooking,
+  getProviderBookings,
+} from "./api";
 
 
 import NavComp from "./components/Navbar";
 import HeroComp from "./components/HeroComp";
 
+import ConfirmationPage from "./components/ConfirmationPage";
+import FavoriteProviders from "./components/FavoritesComp";
+import MyProfile from "./components/AccountSettings/MyProfile";
+import Notifications from "./components/AccountSettings/Notifications";
+import DeleteAccount from "./components/AccountSettings/DeleteAccount";
+import Wallet from "./components/AccountSettings/Wallet";
+import SignOut from "./components/AccountSettings/SignOut";
+
+
 function App() {
   const [count, setCount] = useState(0);
+  const [formData, setFormData] = useState();
+  console.log(formData);
 
   async function checkout() {
-
     try {
       const response = await axios({
         method: "post",
-        url: "http://localhost:4000/payment",
+        url: `http://localhost:${import.meta.env.VITE_PORT}/payment`,
         headers: { "Content-Type": "application/json" },
         //data will equal to payment fee of service id instead of items
         data: {
@@ -83,43 +100,48 @@ function App() {
   //     });
   // };
   // }
-
-    const router = createBrowserRouter([
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "auth/loginClient",
-        element: <LoginClient />,
-        action: async ({ request }) => {
-          try {
-            const formData = await request.formData();
-            const email = formData.get("email");
-            const password = formData.get("password");
-            return await fetchLogin(email, password);
-
-          } catch (error) {
-            return error;
-          }
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Home />,
+    },
+    {
+      path: "auth/loginClient",
+      element: <LoginClient />,
+      action: async ({ request }) => {
+        try {
+          const formData = await request.formData();
+          const email = formData.get("email");
+          const password = formData.get("password");
+          return await fetchLogin(email, password);
+        } catch (error) {
+          return error;
         }
       },
-      {
-        path: "auth/signup",
-        element: <Signup />,
-        action: async ({ request }) => {
-          try {
-            const formData = Object.fromEntries(await request.formData());
-            const { email, password, firstName, lastName, phoneNumber } = formData
-            // console.log(email, password, firstName, lastName, phoneNumber);
-            return await fetchSignup(email, password, firstName, lastName, phoneNumber);
-          } catch (error) {
-            return error;
-          }
+    },
+    {
+      path: "auth/signup",
+      element: <Signup />,
+      action: async ({ request }) => {
+        try {
+          const formData = Object.fromEntries(await request.formData());
+          const { email, password, firstName, lastName, phoneNumber } =
+            formData;
+          // console.log(email, password, firstName, lastName, phoneNumber);
+          return await fetchSignup(
+            email,
+            password,
+            firstName,
+            lastName,
+            phoneNumber
+          );
+        } catch (error) {
+          return error;
         }
-      },
+      }
+    },
       {
-        path: "auth/login",
+        path: "provierlogin",
         element: <Login />,
         action: async ({ request }) => {
           try {
@@ -133,7 +155,8 @@ function App() {
           }
           
         }
-      },
+      }
+    ,
       {
         path: "/customeraccount",
         element: <CustomerAccountContact />,
@@ -152,13 +175,14 @@ function App() {
         element: <Profile providers={providers} />,
       },
       {
-        path: "/customerbookings",
+        path: "/customer/bookings",
         element: <CustomerAcc />,
       },
       {
         path: "/carousel",
       element: <FavoriteProviders />
-    }, {
+    },
+    {
     path: "/provider",
     element: <ProviderCard providers={providers} />},
     {
@@ -167,7 +191,47 @@ function App() {
     },
     {
       path: "/provider/profile",
-      element: <ProviderPage />,
+      element: <ProviderPage setFormData={setFormData} />,
+      action: submitRequestForm,
+    },
+    {
+      path: "/provider/bookings",
+      element: <ProviderBookings />,
+      loader: getProviderBookings,
+    },
+    {
+      path: "/customer/confirmation/:booking_id",
+      loader: ({ params }) => {
+        const booking_id = params.booking_id;
+        return getBooking(booking_id);
+      },
+      element: <ConfirmationPage formData={formData} />,
+    },
+    {
+      path: "/settings",
+      element: <AccountSettings />,
+      children: [
+        {
+          path: "myprofile",
+          element: <MyProfile />,
+        },
+        {
+          path: "notifications",
+          element: <Notifications />,
+        },
+        {
+          path: "signout",
+          element: <SignOut />,
+        },
+        {
+          path: "delete_account",
+          element: <DeleteAccount />,
+        },
+        {
+          path: "wallet",
+          element: <Wallet />,
+        },
+      ],
     },
   ]);
   return (

@@ -15,7 +15,7 @@ const Home = () => {
     try {
       const response = await axios({
         method: "post",
-        url: "http://localhost:4000/payment",
+        url: `http://localhost:${import.meta.env.VITE_PORT}/payment`,
         headers: { "Content-Type": "application/json" },
         //data will equal to payment fee of service id instead of items
         data: {
@@ -71,11 +71,17 @@ const Home = () => {
         <div className="card"></div>
         <button onClick={checkout}>Checkout</button>
         <button onClick={() => navigate("auth/signup")}>Signup</button>
+
         <button onClick={() => navigate("auth/login")}>Login</button>
         <button onClick={() => navigate("auth/loginClient")}>
           Client Login
         </button>
         {/* <button onClick={() => navigate("/customeraccount")}>Customer Accunt Contact</button> */}
+
+        <button onClick={() => navigate("provierlogin")}>Login</button>
+        <button onClick={() => navigate("clientlogin")}>Client Login</button>
+        <button onClick={() => navigate("/customeraccount")}>Customer Accunt Contact</button>
+
       </div>
       <Carouselandsub />
     </div>

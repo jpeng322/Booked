@@ -10,7 +10,7 @@ const storeItems = new Map([
 ]);
 
 router.post("/", async (request, response) => {
-    console.log(request.body.items);
+  console.log(request.body.items);
   //request.body.payment_fee instead of storeItems
   try {
     const session = await stripe.checkout.sessions.create({
@@ -29,8 +29,8 @@ router.post("/", async (request, response) => {
           quantity: item.quantity,
         };
       }),
-      success_url: "http://localhost:4000/success.html",
-      cancel_url: "http://localhost:4000/",
+      success_url: `http://localhost:${import.meta.env.VITE_PORT}/success.html`,
+      cancel_url: `http://localhost:${import.meta.env.VITE_PORT}/`,
     });
     console.log(session.line_items);
     // const session = await stripe.checkout.sessions.create({

@@ -11,6 +11,8 @@ import Stack from 'react-bootstrap/Stack';
 
 
 const Signup = () => {
+
+  console.log(import.meta.env.VITE_PORT)
   const submit = useSubmit();
   const actionData = useActionData();
   const navigate = useNavigate();

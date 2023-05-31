@@ -28,8 +28,40 @@ export default function bookingRouter(passport) {
     }
   });
 
+  router.get("/:booking_id", async (request, response) => {
+
+    const booking_id = request.params.booking_id
+    try {
+      const foundBooking = await prisma.booking.findUnique({
+        where: {
+          booking_id: parseInt(booking_id)
+        },
+      });
+
+      if (foundBooking) {
+
+        response.status(200).json({
+          success: true,
+          booking: foundBooking,
+        });
+      } else {
+        response.status(400).json({
+          success: false,
+          message: "Booking not found.",
+        });
+      }
+    } catch (e) {
+      console.log(e);
+      response.status(400).json({
+        message: "Something went wrong.",
+      });
+    }
+  });
+
+
   //Get provider bookings
   router.get("/provider/:userId", async (request, response) => {
+
     try {
       const providerBooking = await prisma.booking.findMany({
         where: {
@@ -86,14 +118,31 @@ export default function bookingRouter(passport) {
 
   //Create a booking
   router.post("/", async (request, response) => {
+
+
+    console.log(request.body);
+
     try {
       const createBooking = await prisma.booking.create({
         data: {
           client_id: request.body.client_id || 1,
           provider_id: request.body.provider_id || 1,
-          service_id: request.body.service_id || 1,
-          transaction_id: request.body.service || "To be determined",
+          // service_id: request.body.service_id || 1,
+          // transaction_id: request.body.service || "To be determined",
           //   booking_date: cre,
+          provider_name: request.body.provider_name,
+          client_name: request.body.client_name,
+          service_type: request.body.service_type,
+          date_order: request.body.date_order,
+          // date_due: request.body.date_due,
+          order_desc: request.body.message,
+          cost: request.body.cost,
+          status: request.body.status,
+          start_date: request.body.start_date,
+          end_date: request.body.end_date,
+
+          provider_name: request.body.provider_name,
+
         },
       });
 
@@ -146,7 +195,71 @@ export default function bookingRouter(passport) {
     }
   });
 
+  router.put("/:bookingId", async (request, response) => {
+    console.log(request.body)
+    try {
+      const updateBooking = await prisma.booking.update({
+        where: {
+          booking_id: parseInt(request.params.bookingId),
+        },
+        data: {
+          status: request.body.status,
+        },
+      });
+
+      if (updateBooking) {
+        response.status(200).json({
+          success: true,
+          booking_info: updateBooking,
+          message: "Successfully updated!",
+        });
+      } else {
+        response.status(400).json({
+          success: false,
+          message: "Booking could not be updated.",
+        });
+      }
+    } catch (e) {
+      console.log(e);
+      response.status(400).json({
+        message: "Something went wrong",
+      });
+    }
+  });
+
+  router.get("/:bookingId", async (request, response) => {
+    console.log(request.body)
+    try {
+      const updateBooking = await prisma.booking.update({
+        where: {
+          booking_id: parseInt(request.params.bookingId),
+        },
+        data: {
+          status: request.body.status,
+        },
+      });
+
+      if (updateBooking) {
+        response.status(200).json({
+          success: true,
+          booking_info: updateBooking,
+          message: "Successfully updated!",
+        });
+      } else {
+        response.status(400).json({
+          success: false,
+          message: "Booking could not be updated.",
+        });
+      }
+    } catch (e) {
+      console.log(e);
+      response.status(400).json({
+        message: "Something went wrong",
+      });
+    }
+  });
+
   //Will make update route after having bookTime schema discussed
-    
+
   return router;
 }
