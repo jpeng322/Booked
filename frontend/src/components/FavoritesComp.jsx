@@ -61,8 +61,8 @@ function FavoriteProviders() {
     xl: {
       // the naming can be any, depends on you.
       breakpoint: { max: 1950, min: 1625 },
-      items: 5,
-      slidesToSlide: 5,
+      items: 4,
+      slidesToSlide: 4,
     },
     lg: {
       breakpoint: { max: 1625, min: 1300 },

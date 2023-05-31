@@ -1,0 +1,49 @@
+.modal-content {
+  /* min-width: 500px; */
+  /* width: clamp(300px, 500px, 50%);
+  height: clamp(300px, 500px, 50%); */
+
+  width: 500px;
+  height: 500px;
+  padding: 1rem;
+  font-size: 1.25rem;
+}
+
+.modal-header,
+.modal-footer {
+  border: none;
+}
+
+.modal-body svg {
+  width: 100px;
+  height: auto;
+  /* border: 1px solid red; */
+}
+
+.confirmationForm button {
+  /* border: 1px solid red; */
+  background: none;
+  /* padding: 1rem; */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.form-info {
+  /* border: 1px solid red; */
+  width: 90%;
+}
+
+.form-info > * {
+  /* border: 1px solid green; */
+  /* flex: 1; */
+}
+
+.form-info > *:nth-child(2) {
+  /* flex: 1 */
+  flex: auto;
+}
+
+.form-info > *:nth-child(1) {
+  width: 40%;
+}

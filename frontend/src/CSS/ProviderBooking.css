@@ -1,0 +1,117 @@
+.provider-booking-container {
+  /* box-sizing: border-box; */
+  /* border: 1px solid red !important */
+  /* min-height: 100vh; */
+}
+
+.rbc-calendar {
+  width: 60%;
+  max-height: 600px;
+  /* height: 1000px; */
+  /* border-radius: 1rem !important; */
+}
+
+.rbc-header {
+  padding: .5rem 0rem !important;
+}
+
+.rbc-month-view {
+  margin-top: 1rem;
+  border-radius: 1rem;
+}
+
+/* .rbc-row-bg>*:nth-child(1) {
+  border: 1px solid red;
+} */
+
+.rbc-month-row:last-of-type .rbc-day-bg:last-of-type {
+  /* border: 1px solid red; */
+  border-bottom-right-radius: 1rem;
+  border-right: 1px solid #ddd;
+}
+
+.rbc-event-content {
+  text-align: center;
+  
+  /* border: 1px solid red; */
+}
+.rbc-row-segment {
+  margin-top: .5rem;
+}
+.rbc-row-segment:has(.rbc-event) {
+  /* border: 1px solid red;
+  flex-basis: 0 !important; */
+  padding: 0rem 2%;
+}
+.provider-booking,
+.provider-booking-header {
+  flex: 1 1 0;
+}
+
+.provider-booking-container {
+  border-bottom: 1px solid #000000;
+}
+
+.provider-booking-header-container, .provider-booking-container {
+  display: flex;
+  padding: 1.5rem;
+}
+
+.provider-booking button {
+  border: none;
+  padding: .5rem 1rem;
+}
+
+.provider-booking {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scheduled, .upcoming{
+  /* background-color: #146C94; */
+  background-color: var(--uniform-4);
+}
+
+.completed {
+  /* background-color: #2f6437; */
+  background-color: var(--brown-4);
+}
+
+.active {
+  background-color: #53b946;
+}
+
+.cancelled {
+  background-color: #FF6D60;
+}
+
+.pending {
+  /* background-color: grey; */
+  background-color: var(--toolshop-1);
+}
+
+.provider-booking-filter {
+  display: flex;
+  width: 100%; 
+  justify-content: center;
+  align-items: center;
+  gap: 7rem;
+  cursor: pointer;
+}
+
+.filter {
+  width: 250px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.booking-info-container {
+  /* border: 1px solid red; */
+  /* border-radius: .6rem;
+  overflow: hidden;
+  border: none; */
+}

@@ -116,7 +116,8 @@ p {
 .image-container {
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: calc(.25rem + .75vw);
+
 }
 
 .image-container > * {
@@ -129,8 +130,21 @@ p {
   /* max-width: 100px; */
 }
 
+
+
 .pagination {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+}
+
+
+.pagination .page-link:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #007bff;
+  border-color: #007bff;
 }

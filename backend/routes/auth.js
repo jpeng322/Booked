@@ -34,7 +34,7 @@ router.post("/signup", async (request, response) => {
           provider_password: pHashedPassword,
           provider_fname: request.body.fname,
           provider_lname: request.body.lname,
-          provider_phone: request.body.number,
+          provider_phone: request.body.phone,
         },
       });
       const cHashedPassword = await argon2.hash(request.body.password);
@@ -44,7 +44,7 @@ router.post("/signup", async (request, response) => {
           client_password: cHashedPassword,
           client_fname: request.body.fname,
           client_lname: request.body.lname,
-          client_phone: request.body.number,
+          client_phone: request.body.phone,
         },
       });
       response.status(201).json({
