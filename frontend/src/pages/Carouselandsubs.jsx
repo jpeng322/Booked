@@ -141,7 +141,7 @@ const Carouselandsub = () => {
           <h1>Wanna be in the know about the Pros? <span style= {{color: "#87A96B"}}>Subscribe</span></h1>
         </Container> 
         <Container className="d-flex justify-content-center" style={{ padding: "10px" }}> 
-        <h6 style={{ fontWeight: 'bold' }}>Join  Our Email list by adding your email below</h6>
+        <h6 style={{ fontWeight: 'bold', color:'#5072A7' }}>Join  Our Email list by adding your email below</h6>
         </Container> 
        
         <SubscriptionBox />
