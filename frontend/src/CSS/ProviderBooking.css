@@ -150,10 +150,15 @@
   border: none;
   background-color: transparent;
   bottom: 0;
-  right: 0;
+  right: 6px;
   /* left: 50%; */
-  font-size: 0.75rem;
+  font-size: .8rem;
   font-weight: 500;
+  transition: .1s;
+}
+
+.show-button:hover {
+  color: #4d4444;
 }
 
 .provider-dropdown-info {
