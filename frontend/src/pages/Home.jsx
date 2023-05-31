@@ -1,11 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Carousel } from "react-bootstrap";
-import SubscriptionBox from './SubscriptionBox';
-import Carouselandsub from './Carouselandsubs.jsx'
+import SubscriptionBox from "./SubscriptionBox";
+import Carouselandsub from "./Carouselandsubs.jsx";
 
+import NavComp from "../components/Navbar";
+import HeroComp from "../components/HeroComp";
+import OtherComp from "../components/OtherComp";
+import SearchBar from "../components/SearchBar";
+import FooterComp from "../components/FooterComp";
 const Home = () => {
-
   async function checkout() {
     console.log("asdasd");
     try {
@@ -61,15 +65,25 @@ const Home = () => {
   return (
     <div>
       <div className="App">
-        <h1>This is the home page.</h1>
+        <NavComp />
+
+        <HeroComp />
         <div className="card"></div>
         <button onClick={checkout}>Checkout</button>
         <button onClick={() => navigate("auth/signup")}>Signup</button>
+
+        <button onClick={() => navigate("auth/login")}>Login</button>
+        <button onClick={() => navigate("auth/loginClient")}>
+          Client Login
+        </button>
+        {/* <button onClick={() => navigate("/customeraccount")}>Customer Accunt Contact</button> */}
+
         <button onClick={() => navigate("provierlogin")}>Login</button>
         <button onClick={() => navigate("clientlogin")}>Client Login</button>
         <button onClick={() => navigate("/customeraccount")}>Customer Accunt Contact</button>
+
       </div>
-    <Carouselandsub />
+      <Carouselandsub />
     </div>
   );
 };

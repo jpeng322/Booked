@@ -33,7 +33,10 @@ import {
   getProviderBookings,
 } from "./api";
 
-//components
+
+import NavComp from "./components/Navbar";
+import HeroComp from "./components/HeroComp";
+
 import ConfirmationPage from "./components/ConfirmationPage";
 import FavoriteProviders from "./components/FavoritesComp";
 import MyProfile from "./components/AccountSettings/MyProfile";
@@ -41,6 +44,7 @@ import Notifications from "./components/AccountSettings/Notifications";
 import DeleteAccount from "./components/AccountSettings/DeleteAccount";
 import Wallet from "./components/AccountSettings/Wallet";
 import SignOut from "./components/AccountSettings/SignOut";
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -234,6 +238,7 @@ function App() {
     <div className="App">
       <RouterProvider router={router} />
     </div>
+    
   );
 }
 
