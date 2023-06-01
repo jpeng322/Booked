@@ -237,25 +237,6 @@ const ProviderPage = ({ setFormData }) => {
             <h2>$150</h2>
             <h3>Starting cost</h3>
           </div>
-          <Autocomplete
-            apiKey={import.meta.env.VITE_GOOGLE_API}
-            onPlaceSelected={(place) => {
-              console.log(place);
-            }}
-          />
-          {/* <Autocomplete
-            apiKey={import.meta.env.VITE_GOOGLE_API}
-            style={{ width: "90%" }}
-            onPlaceSelected={(place) => {
-              console.log(place);
-            }}
-            options={{
-              types: ["geocode", "establishment"],
-
-              componentRestrictions: { country: "us" },
-            }}
-            defaultValue="Amsterdam"
-          /> */}
 
           <div className="provider-input-group">
             <label for="address">Address</label>
