@@ -41,6 +41,7 @@ import Notifications from "./components/AccountSettings/Notifications";
 import DeleteAccount from "./components/AccountSettings/DeleteAccount";
 import Wallet from "./components/AccountSettings/Wallet";
 import SignOut from "./components/AccountSettings/SignOut";
+import MapMarker from "./components/MapMarker";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -226,10 +227,14 @@ function App() {
         },
       ],
     },
+    {
+      path: "map",
+      element: <MapMarker />,
+    },
   ]);
   return (
     <div className="App">
-      <script src={`${import.meta.env.VITE_GOOGLE_URL}`}></script>
+      {/* <script src={`${import.meta.env.VITE_GOOGLE_URL}`}></script> */}
       <RouterProvider router={router} />
     </div>
   );
