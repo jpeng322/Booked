@@ -22,7 +22,7 @@ import {
   geocodeByAddress,
   geocodeByPlaceId,
   getLatLng,
-} from 'react-places-autocomplete';
+} from "react-places-autocomplete";
 
 //components
 import RequestFormModal from "../components/RequestFormModal";
@@ -31,6 +31,9 @@ import GooglePlacesComp from "../components/GooglePlacesAutocomplete";
 //styling
 import avatar from "../images/avatar.png";
 import "../CSS/ProviderProfile.css";
+
+import Autocomplete from "react-google-autocomplete";
+// import { geocodeByPlaceId } from 'react-google-places-autocomplete';
 
 export const submitRequestForm = async ({ request }) => {
   const data = await request.formData();
@@ -73,13 +76,19 @@ const ProviderPage = ({ setFormData }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [address, setAddress] = useState("");
+  console.log(address);
+  // useEffect(() => {
+  //   geocodeByPlaceId("ChIJ9V8ApDBFwokR0dW6ql0Pyoc")
+  //     //  .then((results) => console.log(results))
+  //     .then((results) => console.log(results))
+  //     .then((results) => getLatLng(results[0]))
+  //     .then(({ lat, lng }) => {
+  //       console.log("Successfully got latitude and longitude", { lat, lng });
+  //       return { lat, lng };
+  //     })
+  //     .catch((error) => console.error(error));
+  // }, []);
 
-  // useEffect(() => {
-  //   address === "" ? setAddress("") : setAddress(address.label);
-  // }, [address]);
-  // useEffect(() => {
-  //   setEndDate(startDate);
-  // }, [startDate]);
 
   const filterPassedTime = (time) => {
     const currentDate = new Date();
@@ -108,7 +117,7 @@ const ProviderPage = ({ setFormData }) => {
           end_date: dateFormat(new Date(endDate), "mmmm d, yyyy h:MM TT"),
           message: data.message,
           cost: "150",
-          address: address.label
+          address: address.label,
         },
       });
       console.log(response);
@@ -228,8 +237,28 @@ const ProviderPage = ({ setFormData }) => {
             <h2>$150</h2>
             <h3>Starting cost</h3>
           </div>
+          <Autocomplete
+            apiKey={import.meta.env.VITE_GOOGLE_API}
+            onPlaceSelected={(place) => {
+              console.log(place);
+            }}
+          />
+          {/* <Autocomplete
+            apiKey={import.meta.env.VITE_GOOGLE_API}
+            style={{ width: "90%" }}
+            onPlaceSelected={(place) => {
+              console.log(place);
+            }}
+            options={{
+              types: ["geocode", "establishment"],
+
+              componentRestrictions: { country: "us" },
+            }}
+            defaultValue="Amsterdam"
+          /> */}
+
           <div className="provider-input-group">
-          <label for="address">Address</label>
+            <label for="address">Address</label>
             <GooglePlacesComp address={address} setAddress={setAddress} />
           </div>
           {/* <div className="provider-input-group">
@@ -305,7 +334,6 @@ const ProviderPage = ({ setFormData }) => {
           {/* <button type="submit" className="provider-form-button">
             Send Request
           </button> */}
-
           <p>
             Responds in about <span className="fw-bold">1 hour</span>
           </p>
