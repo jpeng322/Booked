@@ -1,4 +1,4 @@
-.modal-content {
+.request-form-modal .modal-content {
   /* min-width: 500px; */
   /* width: clamp(300px, 500px, 50%);
   height: clamp(300px, 500px, 50%); */
@@ -9,18 +9,18 @@
   font-size: 1.25rem;
 }
 
-.modal-header,
-.modal-footer {
+.request-form-modal .modal-header,
+.request-form-modal .modal-footer {
   border: none;
 }
 
-.modal-body svg {
+.request-form-modal .modal-body svg {
   width: 100px;
   height: auto;
   /* border: 1px solid red; */
 }
 
-.confirmationForm button {
+.request-form-modal .confirmationForm button {
   /* border: 1px solid red; */
   background: none;
   /* padding: 1rem; */
@@ -29,21 +29,21 @@
   height: 50px;
 }
 
-.form-info {
+.request-form-modal .form-info {
   /* border: 1px solid red; */
   width: 90%;
 }
 
-.form-info > * {
+.request-form-modal .form-info > * {
   /* border: 1px solid green; */
   /* flex: 1; */
 }
 
-.form-info > *:nth-child(2) {
+.request-form-modal .form-info > *:nth-child(2) {
   /* flex: 1 */
   flex: auto;
 }
 
-.form-info > *:nth-child(1) {
+.request-form-modal .form-info > *:nth-child(1) {
   width: 40%;
 }

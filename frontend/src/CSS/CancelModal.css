@@ -1,29 +1,29 @@
-.modal-body {
-    gap: 3rem
+.cancel-modal .modal-body {
+  gap: 3rem;
 }
 
-.modal-body svg{ 
-fill: var(--brown-2)
+.cancel-modal .modal-body svg {
+  fill: var(--brown-2);
 }
 
-.modal-body button {
-    color: #FFF;
+.cancel-modal .modal-body button {
+  color: #fff;
 
-    border-radius: .6rem;
-    border: none;
-    padding: .75rem 1.5rem;
+  border-radius: 0.6rem;
+  border: none;
+  padding: 0.75rem 1.5rem;
 }
 
-.modal-body .not-cancelled {
-    background-color: var(--brown-2);
+.cancel-modal .modal-body .not-cancelled {
+  background-color: var(--brown-2);
 }
 
-.modal-body  .cancelled{
-    background-color: var(--uniform-2);
+.cancel-modal .modal-body .cancelled {
+  background-color: var(--uniform-2);
 }
 
-.modal-dialog {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.cancel-modal .modal-dialog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
