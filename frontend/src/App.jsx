@@ -47,7 +47,6 @@ import Wallet from "./components/AccountSettings/Wallet";
 import SignOut from "./components/AccountSettings/SignOut";
 import MapMarker from "./components/MapMarker";
 
-
 function App() {
   const [count, setCount] = useState(0);
   const [formData, setFormData] = useState();
