@@ -244,7 +244,7 @@ const ProviderBookings = () => {
   return (
     <Container
       fluid
-      className="provider-booking-container d-flex flex-column justify-content-center align-items-center border w-100  gap-5 p-5"
+      className="provider-booking-container d-flex flex-column justify-content-center align-items-center border w-100  gap-5"
     >
       <Calendar
         localizer={localizer}
@@ -290,13 +290,15 @@ const ProviderBookings = () => {
         </div>
       </div>
       {/* <Calendar onChange={onChange} value={value} /> */}
-      <div className="w-100 text-center">
+      <div className="provider-booking-rows w-100 text-center">
         <div className="provider-booking-header-container ">
           <div className="provider-booking-header">Name:</div>
+          <div className="provider-booking-header only-large">Address:</div>
           <div className="provider-booking-header">Job Type:</div>
-          <div className="provider-booking-header">Book Date:</div>
-          <div className="provider-booking-header">Due Date:</div>
-          <div className="provider-booking-header">Earning:</div>
+          <div className="provider-booking-header only-large">Description:</div>
+          <div className="provider-booking-header only-large">Book Date:</div>
+          <div className="provider-booking-header only-large">Due Date:</div>
+          <div className="provider-booking-header ">Earning:</div>
           <div className="provider-booking-header">Status:</div>
           <div className="provider-booking-header"></div>
         </div>
@@ -308,7 +310,7 @@ const ProviderBookings = () => {
               id={booking.booking_id}
               key={booking.id}
               client_name={booking.client_name}
-              // image={booking.image}
+              address={booking.address}
               service_type={booking.service_type}
               order_desc={booking.order_desc}
               start_date={booking.start_date}
