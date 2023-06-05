@@ -31,6 +31,7 @@ import {
   fetchSignup,
   getBooking,
   getProviderBookings,
+  getCoords
 } from "./api";
 
 
@@ -232,7 +233,11 @@ function App() {
       ],
     },
     {
-      path: "map",
+      path: "map/:address_id",
+      loader: ({ params }) => {
+        const address_id = params.address_id;
+        return getCoords(address_id);
+      },
       element: <MapMarker />,
     },
   ]);

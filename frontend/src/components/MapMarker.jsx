@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useMemo } from "react";
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
-
+import { useLoaderData } from "react-router-dom";
 import {
   geocodeByAddress,
   geocodeByPlaceId,
@@ -48,19 +48,26 @@ export default function MapMarker() {
 }
 
 function Map() {
-  const center = useMemo(() => ({ lat: 44, lng: -80 }), []);
-  const [code, setCode] = useState("");
-  const coords = useRef();
+  const placeId = useLoaderData();
 
+  const [code, setCode] = useState("");
+  const [lati, setLati] = useState();
+  const [long, setLong] = useState();
+  console.log(code);
+  const coords = useRef();
+  // const center = useMemo(() => ({ lat: 44 + , lng: -80 }), []);
+
+  let center;
   useEffect(() => {
-    geocodeByPlaceId("ChIJ9V8ApDBFwokR0dW6ql0Pyoc")
-      //  .then((results) => console.log(results))
-      // .then((results) => console.log(results))
+    geocodeByPlaceId(placeId)
       .then((results) => getLatLng(results[0]))
       .then(({ lat, lng }) => {
-           setCode({ lat, lng });
-        set;
-        console.log("Successfully got latitude and longitude", { lat, lng });
+        setLati(lat);
+        setLong(lng);
+        setCode({ lat, lng });
+        // center = { lat, lng };
+        // console.log(code.lat + 44 / 2);
+        // console.log("Successfully got latitude and longitude", { lat, lng });
         return { lat, lng };
       })
       .catch((error) => console.error(error));
@@ -70,22 +77,14 @@ function Map() {
     .then((results) => console.log(results))
     .catch((error) => console.error(error));
 
-  //     geocodeByAddress('Montevideo, Uruguay')
-  // .then(results => getLatLng(results[0]))
-  // .then(({ lat, lng }) =>
-  //   console.log('Successfully got latitude and longitude', { lat, lng })
-  // );
+  console.log({ lat: lati + 20, lng: long + 20 });
   return (
     <>
-      <GoogleMap
-        zoom={10}
-        center={center}
-        mapContainerClassName="map-container"
-      >
-        <MarkerF className="" position={center} />
+      <GoogleMap zoom={5} center={{ lat: code.lat + 20, lng: code.lng + 20 }} mapContainerClassName="map-container">
+        <MarkerF className="" position={code} />
         <MarkerF
           className=""
-          position={code}
+          position={{ lat: 44, lng: -80 }}
           options={{
             icon: "https://img.icons8.com/?size=1x&id=12229&format=png",
           }}
