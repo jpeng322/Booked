@@ -12,6 +12,7 @@ import {
 import { Outlet, Link, NavLink } from "react-router-dom";
 import SignoutModal from "../components/SignoutModal";
 import "../CSS/AccountSettings.css";
+import DeleteAccountModal from "../components/DeleteAccountModal";
 const AccountSettings = () => {
   const [showSignoutModal, setShowSignoutModal] = useState(false);
 
@@ -38,7 +39,6 @@ const AccountSettings = () => {
           <div className="account-settings-tabs">
             {" "}
             <SignoutModal
-              // formData={data}
               show={showSignoutModal}
               onHide={() => {
                 setShowSignoutModal(false);
@@ -46,16 +46,16 @@ const AccountSettings = () => {
             />
             {/* <NavLink to="/settings/signout">Sign Out</NavLink> */}
           </div>
-          <div className="account-settings-tabs">
+          <div className="account-settings-tabs ">
             {" "}
-            <NavLink to="/settings/delete_account">Delete Account</NavLink>
-            <SignoutModal
-              // formData={data}
+            {/* <NavLink to="/settings/delete_account"> */}{" "}
+            <DeleteAccountModal
               show={showSignoutModal}
               onHide={() => {
                 setShowSignoutModal(false);
               }}
             />
+            {/* </NavLink> */}
           </div>
         </div>
         <div className="account-settings-tab-content">

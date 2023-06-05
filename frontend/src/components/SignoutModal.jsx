@@ -29,7 +29,12 @@ export default function CancelModal() {
 
   return (
     <>
-      <Button variant="default" onClick={handleShow}>
+      <Button
+        style={{ width: "160px" }}
+        size="sm"
+        variant="outline-primary"
+        onClick={handleShow}
+      >
         Sign Out
       </Button>
 

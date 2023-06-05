@@ -83,7 +83,7 @@ const ProviderCard = (props) => {
                       <div className="skill-highlight">{provider.skill}</div>
                     </div>
                     <div className="justify-content-end">
-                      <button className="btn">View Profile</button>
+                      <button className="view-profile-btn">View Profile</button>
                     </div>
                   </Col>
                 </Row>

@@ -9,17 +9,17 @@ export default function providerRouter(passport) {
   router.get("/", async (req, res) => {
     try {
       const providers = await prisma.provider.findMany({
-        where: {
-          provider_id: req.provider.provider_id,
-        },
-        //choosing the fields wish to get back from the table
-        select: {
-          provider_id: true,
-          provider_fname: true,
-          provider_lname: true,
-          provider_phone: true,
-          provider_email: true,
-        },
+        // where: {
+        //   provider_id: req.provider.provider_id,
+        // },
+        // //choosing the fields wish to get back from the table
+        // select: {
+        //   provider_id: true,
+        //   provider_fname: true,
+        //   provider_lname: true,
+        //   provider_phone: true,
+        //   provider_email: true,
+        // },
       });
 
       if (providers) {
@@ -29,6 +29,7 @@ export default function providerRouter(passport) {
         });
       }
     } catch (e) {
+      console.log(e)
       res.status(500).json({
         success: false,
         message: "Failed to fetch providers",

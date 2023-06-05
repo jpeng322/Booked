@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 export default function DeleteAccountModal() {
-  const [signedOut, setSignedOut] = useState(false);
+  const [deleteMessage, setDeleteMessage] = useState("");
 
   const [show, setShow] = useState(false);
 
@@ -12,24 +13,36 @@ export default function DeleteAccountModal() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCounter((counter) => counter - 1);
-    }, 1000);
+  async function deleteAccount() {
+    try {
+      const response = await axios({
+        method: "delete",
+        url: `http://localhost:${import.meta.env.VITE_PORT}/auth/delete`,
+        data: {
+          userId: 3,
+        },
+      });
 
-    return () => clearInterval(intervalId);
-  }, [counter]);
-
-  function signout() {
-    setSignedOut(true);
-    setTimeout(() => {
-      navigate("/");
-    }, 3000);
+      if (response) {
+        console.log(response);
+        setDeleteMessage("asdsa");
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   return (
     <>
-      <Button variant="default" onClick={handleShow}>
+      <Button
+        style={{
+          width: "160px",
+        }}
+        variant="outline-danger"
+        size="sm"
+        // className="text-danger"
+        onClick={handleShow}
+      >
         Delete Account
       </Button>
 
@@ -42,25 +55,23 @@ export default function DeleteAccountModal() {
           closeButton
           className="d-flex align-items-center  border-bottom-0"
         ></Modal.Header>
-        <Modal.Body className="d-flex justify-content-center align-items-center pe-5 ps-5">
+        <Modal.Body className="d-flex justify-content-center align-items-center text-center pe-5 ps-5">
           {/* {signedOut ? (
             <div className="d-flex justify-content-center flex-column align-items-center">
               <h3>You have signed out!</h3>
               <p>Redirecting to home in {counter} seconds.</p>
             </div>
           ) : ( */}
-            <h3>Would you like to delete your account?</h3>
+          <h3>Would you like to delete your account?</h3>
           {/* )} */}
         </Modal.Body>
 
         <Modal.Footer className="d-flex justify-content-center align-items-center border-top-0 gap-3">
           {" "}
           <Button
+            variant="danger"
             className="d-flex justify-content-center align-items-center m-0 mb-4"
-            onClick={() => {
-              signout();
-              setCounter(3);
-            }}
+            onClick={deleteAccount}
           >
             Yes, delete my account.
           </Button>
