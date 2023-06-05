@@ -29,17 +29,15 @@ export default function bookingRouter(passport) {
   });
 
   router.get("/:booking_id", async (request, response) => {
-
-    const booking_id = request.params.booking_id
+    const booking_id = request.params.booking_id;
     try {
       const foundBooking = await prisma.booking.findUnique({
         where: {
-          booking_id: parseInt(booking_id)
+          booking_id: parseInt(booking_id),
         },
       });
 
       if (foundBooking) {
-
         response.status(200).json({
           success: true,
           booking: foundBooking,
@@ -58,10 +56,8 @@ export default function bookingRouter(passport) {
     }
   });
 
-
   //Get provider bookings
   router.get("/provider/:userId", async (request, response) => {
-
     try {
       const providerBooking = await prisma.booking.findMany({
         where: {
@@ -118,8 +114,6 @@ export default function bookingRouter(passport) {
 
   //Create a booking
   router.post("/", async (request, response) => {
-
-
     console.log(request.body);
 
     try {
@@ -136,8 +130,8 @@ export default function bookingRouter(passport) {
           start_date: request.body.start_date,
           end_date: request.body.end_date,
           address: request.body.address,
+          address_id: request.body.address_id,
           provider_name: request.body.provider_name,
-
         },
       });
 
@@ -191,7 +185,7 @@ export default function bookingRouter(passport) {
   });
 
   router.put("/:bookingId", async (request, response) => {
-    console.log(request.body)
+    console.log(request.body);
     try {
       const updateBooking = await prisma.booking.update({
         where: {
@@ -223,7 +217,7 @@ export default function bookingRouter(passport) {
   });
 
   router.get("/:bookingId", async (request, response) => {
-    console.log(request.body)
+    console.log(request.body);
     try {
       const updateBooking = await prisma.booking.update({
         where: {
