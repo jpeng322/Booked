@@ -1,11 +1,28 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 import { CircleCheck, CircleCross } from "../assets/Icons";
 
 import "../CSS/CancelModal.css";
 const CancelModal = (props) => {
   const [cancelStatus, setCancelStatus] = useState(false);
+
+  async function deleteBooking() {
+    try {
+      const response = await axios({
+        method: "delete",
+        url: `http://localhost:${import.meta.env.VITE_PORT}/booking/${props.booking_id}`,
+      });
+
+      if (response) {
+        setCancelStatus(true);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
   return (
     <Modal
       {...props}
@@ -21,13 +38,18 @@ const CancelModal = (props) => {
           <>
             <CircleCheck />
             <div>Your booking has been canceled.</div>
-            <button className="cancelled">Find other providers</button>
+            <Link to="/provider">
+              <button className="cancelled">Find other providers</button>
+            </Link>
           </>
         ) : (
           <>
             <CircleCross />
             <div>Are you sure you want to cancel?</div>
-            <button className="not-cancelled" onClick={() => setCancelStatus(true)}>Yes</button>
+
+            <button className="not-cancelled" onClick={() => deleteBooking()}>
+              Yes
+            </button>
           </>
         )}
       </Modal.Body>

@@ -14,62 +14,39 @@ import moment from "moment";
 
 const localizer = momentLocalizer(moment);
 
-const events = [
-  {
-    title: "Big Meeting",
-    allDay: true,
-    start: new Date(2023, 6, 0),
-    end: new Date(2023, 6, 0),
-  },
-  {
-    title: "Vacation",
-    start: new Date(2023, 6, 7),
-    end: new Date(2023, 6, 10),
-  },
-  {
-    title: "Conference",
-    start: new Date(2023, 6, 20),
-    end: new Date(2023, 6, 23),
-  },
-  {
-    title: "Conferenceasdasdasd",
-    start: "June 3, 2023",
-    end: "June 3, 2023",
-  },
-];
-
 const ProviderBookings = () => {
   const bookingData = useLoaderData();
+
   const [bookings, setBookings] = useState(bookingData);
-  console.log("booking data", bookingData);
-  console.log("boooookings", bookings);
+
+  const [pendingBookings, setPendingBookings] = useState(
+    bookings.filter((booking) => booking.status === "pending")
+  );
+  const [scheduledBookings, setScheduledBookings] = useState(
+    bookings.filter((booking) => booking.status === "scheduled")
+  );
+  const [completedBookings, setCompletedBookings] = useState(
+    bookings.filter((booking) => booking.status === "completed")
+  );
+
+  const [paginationBookings, setPaginationBookings] = useState(bookings);
+
+  const [bookingTab, setBookingTab] = useState("all");
 
   const [filteredBookings, setFilteredBookings] = useState();
-
-  // const numberOfPending = useRef(bookingData.filter((booking) => booking.status === "pending").length)
-  // useEffect(() => {
-  //   count.numberOfPending = bookingData.filter((booking) => booking.status === "pending").length
-  // }, [bookings])
+  console.log(paginationBookings, "PAGINATION BOOKINGS");
 
   const numberOfBookings = 10;
-  const numberOfPages = filteredBookings
-    ? Math.ceil(filteredBookings.length / numberOfBookings)
-    : Math.ceil(bookings.length / numberOfBookings);
+  const numberOfPages = Math.ceil(paginationBookings.length / numberOfBookings);
 
   const [pageNumber, setPageNumber] = useState(1);
-  const currentBookings = filteredBookings
-    ? pageNumber === 1
-      ? filteredBookings.slice(0, pageNumber * numberOfBookings)
-      : filteredBookings.slice(
+  const currentBookings =
+    pageNumber === 1
+      ? paginationBookings.slice(0, pageNumber * numberOfBookings)
+      : paginationBookings.slice(
           (pageNumber - 1) * numberOfBookings,
           pageNumber * numberOfBookings
-        )
-    : pageNumber === 1
-    ? bookings.slice(0, pageNumber * numberOfBookings)
-    : bookings.slice(
-        (pageNumber - 1) * numberOfBookings,
-        pageNumber * numberOfBookings
-      );
+        );
 
   let items = [];
   for (let number = 1; number <= numberOfPages; number++) {
@@ -87,6 +64,93 @@ const ProviderBookings = () => {
     );
   }
 
+  const numberOfPendingPages = Math.ceil(
+    pendingBookings.length / numberOfBookings
+  );
+
+  const [pendingPageNumber, setPendingPageNumber] = useState(1);
+  const currentPendingBookings =
+    pageNumber === 1
+      ? pendingBookings.slice(0, pageNumber * numberOfBookings)
+      : pendingBookings.slice(
+          (pageNumber - 1) * numberOfBookings,
+          pageNumber * numberOfBookings
+        );
+
+  let pendingItems = [];
+  for (let number = 1; number <= numberOfPendingPages; number++) {
+    pendingItems.push(
+      <Pagination.Item
+        onClick={(e) => {
+          // console.log(breeds)
+          setPendingPageNumber(parseInt(e.target.textContent));
+        }}
+        key={number}
+        active={number === pendingPageNumber}
+      >
+        {number}
+      </Pagination.Item>
+    );
+  }
+
+  const numberOfScheduledPages = Math.ceil(
+    scheduledBookings.length / numberOfBookings
+  );
+
+  const [scheduledPageNumber, setScheduledPageNumber] = useState(1);
+  const currentScheduledBookings =
+    pageNumber === 1
+      ? scheduledBookings.slice(0, pageNumber * numberOfBookings)
+      : scheduledBookings.slice(
+          (pageNumber - 1) * numberOfBookings,
+          pageNumber * numberOfBookings
+        );
+
+  let scheduledItems = [];
+  for (let number = 1; number <= numberOfScheduledPages; number++) {
+    scheduledItems.push(
+      <Pagination.Item
+        onClick={(e) => {
+          // console.log(breeds)
+          setScheduledPageNumber(parseInt(e.target.textContent));
+        }}
+        key={number}
+        active={number === scheduledPageNumber}
+      >
+        {number}
+      </Pagination.Item>
+    );
+  }
+
+  const numberOfCompletedPages = Math.ceil(
+    completedBookings.length / numberOfBookings
+  );
+
+  const [completedPageNumber, setCompletedPageNumber] = useState(1);
+  const currentCompletedBookings =
+    pageNumber === 1
+      ? completedBookings.slice(0, pageNumber * numberOfBookings)
+      : completedBookings.slice(
+          (pageNumber - 1) * numberOfBookings,
+          pageNumber * numberOfBookings
+        );
+
+  let completedItems = [];
+  for (let number = 1; number <= numberOfCompletedPages; number++) {
+    completedItems.push(
+      <Pagination.Item
+        onClick={(e) => {
+          // console.log(breeds)
+          setCompletedPageNumber(parseInt(e.target.textContent));
+        }}
+        key={number}
+        active={number === completedPageNumber}
+      >
+        {number}
+      </Pagination.Item>
+    );
+  }
+
   let today = new Date();
 
   let date =
@@ -96,114 +160,10 @@ const ProviderBookings = () => {
     "/" +
     today.getFullYear();
 
-  // const bookings = [
-  //   {
-  //     name: "Kashanna",
-  //     id: "32432432123123xcvcxa",
-  //     image: "Picture",
-  //     order_type: "Basic Order",
-  //     order_desc: "Install rims",
-  //     order_date: "June 5 2023",
-  //     order_due: "June 5 2023",
-  //     total: "$500.00",
-  //     status: "completed",
-  //   },
-  //   {
-  //     name: "Hiwot",
-  //     id: "324324321231231111",
-  //     image: "Active",
-  //     order_type: "Basic Order",
-  //     order_desc: "Install rims",
-  //     order_date: "June 1 2023",
-  //     order_due: "June 1 2023",
-  //     total: "$500.00",
-  //     status: "active",
-  //   },
-  //   {
-  //     name: "Jacky Peng",
-  //     id: "32213432432123123",
-  //     image: "Scheduled",
-  //     order_type: "Basic Order",
-  //     order_desc: "Paint rims",
-  //     order_date: "June 12 2023",
-  //     order_due: "June 15 2023",
-  //     total: "$1500.00",
-  //     status: "scheduled",
-  //   },
-  //   {
-  //     name: "Mei Huang",
-  //     id: "32432asdaswe",
-  //     image: "Cancelled",
-  //     order_type: "Basic Order",
-  //     order_desc: "Install rims",
-  //     order_date: "June 13 2023",
-  //     order_due: "June 13 2023",
-  //     total: "$500.00",
-  //     status: "cancelled",
-  //   },
-  //   {
-  //     name: "Mei Huang",
-  //     id: "32432asdaswe",
-  //     image: "Cancelled",
-  //     order_type: "Basic Order",
-  //     order_desc: "Install rims",
-  //     order_date: "June 13 2023",
-  //     order_due: "June 13 2023",
-  //     total: "$500.00",
-  //     status: "cancelled",
-  //   },
-  //   {
-  //     name: "Mei Huang",
-  //     id: "32432asdaswe",
-  //     image: "Cancelled",
-  //     order_type: "Basic Order",
-  //     order_desc: "Install rims",
-  //     order_date: "June 13 2023",
-  //     order_due: "June 13 2023",
-  //     total: "$500.00",
-  //     status: "cancelled",
-  //   },
-  //   {
-  //     name: "Mei Huang",
-  //     id: "32432asdaswe",
-  //     image: "Cancelled",
-  //     order_type: "Basic Order",
-  //     order_desc: "Install rims",
-  //     order_date: "June 13 2023",
-  //     order_due: "June 13 2023",
-  //     total: "$500.00",
-  //     status: "cancelled",
-  //   },
-  //   {
-  //     name: "John Smith",
-  //     id: "32432432",
-  //     image: "Scheduled",
-  //     order_type: "Basic Order",
-  //     order_desc: "Install rims",
-  //     order_date: "June 3 2023",
-  //     order_due: "June 7 2023",
-  //     total: "$500.00",
-  //     status: "scheduled",
-  //   },
-  //   {
-  //     name: "John Smithasdad",
-  //     id: "32432432",
-  //     image: "Scheduled",
-  //     order_type: "Basic Order",
-  //     order_desc: "Install rims",
-  //     order_date: "June 10 2023",
-  //     order_due: "June 10 2023",
-  //     total: "$500.00",
-  //     status: "pending",
-  //   },
-  // ];
-
   function sameOrAfterDateNow(date) {
     return moment().isAfter(date) || moment().isSame(date, "day");
   }
 
-  // console.log(moment().isSame("May 18, 2023 11:00 AM", "day"))
-  console.log(moment().isAfter("May 19, 2023 11:00 AM", "day"));
   function isDayOf(date) {
     return moment().isSame(date, "day");
   }
@@ -215,14 +175,11 @@ const ProviderBookings = () => {
     color: "white",
     colorEvento:
       booking.status === "pending"
-        ? // "grey"
+        ? 
           "#F3DD69"
         : booking.status === "completed"
         ? "#F6C58E"
-        : // "#2f6437"
-        // booking.status === "scheduled" && sameOrAfterDateNow(booking.start_date)
-        // ? "#53b946"
-        //     :
+        : 
         booking.status === "cancelled"
         ? "#FF6D60"
         : "#AFC2D4",
@@ -231,6 +188,7 @@ const ProviderBookings = () => {
   // console.log(newBookings);
 
   function filterBooking(status) {
+    console.log("FILTERED");
     // setBookings(bookingData.filter((booking) => booking.status === status));
     setFilteredBookings(
       bookings.filter((booking) => booking.status === status)
@@ -241,10 +199,11 @@ const ProviderBookings = () => {
     (booking) => booking.status === "pending"
   ).length;
 
+  console.log(filteredBookings);
   return (
     <Container
       fluid
-      className="provider-booking-container d-flex flex-column justify-content-center align-items-center border w-100  gap-5 p-5"
+      className="provider-booking-container d-flex flex-column justify-content-center align-items-center border w-100  gap-5"
     >
       <Calendar
         localizer={localizer}
@@ -263,15 +222,19 @@ const ProviderBookings = () => {
       <div className="provider-booking-filter">
         <div
           className="pending filter"
-          onClick={() => filterBooking("pending")}
+          // onClick={() => filterBooking("pending")}
+          onClick={() => {
+            setBookingTab("pending");
+            setPaginationBookings(pendingBookings);
+          }}
         >
           Pending (
-          {bookings.filter((booking) => booking.status === "pending").length}
-          )
+          {bookings.filter((booking) => booking.status === "pending").length})
         </div>
         <div
           className="upcoming filter"
-          onClick={() => filterBooking("scheduled")}
+          // onClick={() => filterBooking("scheduled")}
+          onClick={() => setBookingTab("scheduled")}
         >
           {" "}
           Upcoming (
@@ -279,52 +242,137 @@ const ProviderBookings = () => {
         </div>
         <div
           className="completed filter"
-          onClick={() => filterBooking("completed")}
+          // onClick={() => filterBooking("completed")}
+          onClick={() => setBookingTab("completed")}
         >
           Completed (
-          {
-            bookings.filter((booking) => booking.status === "completed")
-              .length
-          }
-          )
+          {bookings.filter((booking) => booking.status === "completed").length})
         </div>
       </div>
       {/* <Calendar onChange={onChange} value={value} /> */}
-      <div className="w-100 text-center">
+      <div className="provider-booking-rows w-100 text-center">
         <div className="provider-booking-header-container ">
           <div className="provider-booking-header">Name:</div>
+          <div className="provider-booking-header only-large">Address:</div>
           <div className="provider-booking-header">Job Type:</div>
-          <div className="provider-booking-header">Book Date:</div>
-          <div className="provider-booking-header">Due Date:</div>
-          <div className="provider-booking-header">Earning:</div>
+          <div className="provider-booking-header only-large">Description:</div>
+          <div className="provider-booking-header only-large">Book Date:</div>
+          <div className="provider-booking-header only-large">Due Date:</div>
+          <div className="provider-booking-header ">Earning:</div>
           <div className="provider-booking-header">Status:</div>
           <div className="provider-booking-header"></div>
         </div>
         <div className="booking-info-container">
-          {currentBookings.map((booking) => (
-            <ProviderBookingInfo
-              bookings={bookings}
-              setBookings={setBookings}
-              id={booking.booking_id}
-              key={booking.id}
-              client_name={booking.client_name}
-              // image={booking.image}
-              service_type={booking.service_type}
-              order_desc={booking.order_desc}
-              start_date={booking.start_date}
-              end_date={booking.end_date}
-              // order_due={booking.order_due}
-              cost={booking.cost}
-              status={booking.status}
-            />
-          ))}
-        </div>
+          {bookingTab === "all" &&
+            currentBookings.map((booking) => (
+              <ProviderBookingInfo
+                bookings={bookings}
+                setBookings={setBookings}
+                id={booking.booking_id}
+                key={booking.id}
+                client_name={booking.client_name}
+                address={booking.address}
+                address_id={booking.address_id}
+                service_type={booking.service_type}
+                order_desc={booking.order_desc}
+                start_date={booking.start_date}
+                end_date={booking.end_date}
+                // order_due={booking.order_due}
+                cost={booking.cost}
+                status={booking.status}
+                setPendingBookings={setPendingBookings}
+                setScheduledBookings={setScheduledBookings}
+                setCompletedBookings={setCompletedBookings}
+              />
+            ))}
 
-        {numberOfPages > 1 && (
-          <div className="pagination-container">
-            <Pagination>{items}</Pagination>
-          </div>
-        )}
+          {bookingTab === "pending" &&
+            currentPendingBookings.map((booking) => (
+              <ProviderBookingInfo
+                bookings={bookings}
+                setBookings={setBookings}
+                id={booking.booking_id}
+                key={booking.id}
+                client_name={booking.client_name}
+                address={booking.address}
+                address_id={booking.address_id}
+                service_type={booking.service_type}
+                order_desc={booking.order_desc}
+                start_date={booking.start_date}
+                end_date={booking.end_date}
+                // order_due={booking.order_due}
+                cost={booking.cost}
+                status={booking.status}
+                filterBooking={filterBooking}
+                setFilteredBookings={setFilteredBookings}
+                setPendingBookings={setPendingBookings}
+                setScheduledBookings={setScheduledBookings}
+                setCompletedBookings={setCompletedBookings}
+              />
+            ))}
+
+          {bookingTab === "scheduled" &&
+            currentScheduledBookings.map((booking) => (
+              <ProviderBookingInfo
+                bookings={bookings}
+                setBookings={setBookings}
+                id={booking.booking_id}
+                key={booking.id}
+                client_name={booking.client_name}
+                address={booking.address}
+                address_id={booking.address_id}
+                service_type={booking.service_type}
+                order_desc={booking.order_desc}
+                start_date={booking.start_date}
+                end_date={booking.end_date}
+                // order_due={booking.order_due}
+                cost={booking.cost}
+                status={booking.status}
+                filterBooking={filterBooking}
+                setFilteredBookings={setFilteredBookings}
+                setPendingBookings={setPendingBookings}
+                setScheduledBookings={setScheduledBookings}
+                setCompletedBookings={setCompletedBookings}
+              />
+            ))}
+
+          {bookingTab === "completed" &&
+            currentCompletedBookings.map((booking) => (
+              <ProviderBookingInfo
+                bookings={bookings}
+                setBookings={setBookings}
+                id={booking.booking_id}
+                key={booking.id}
+                client_name={booking.client_name}
+                address={booking.address}
+                address_id={booking.address_id}
+                service_type={booking.service_type}
+                order_desc={booking.order_desc}
+                start_date={booking.start_date}
+                end_date={booking.end_date}
+                // order_due={booking.order_due}
+                cost={booking.cost}
+                status={booking.status}
+                filterBooking={filterBooking}
+                setFilteredBookings={setFilteredBookings}
+                setPendingBookings={setPendingBookings}
+                setScheduledBookings={setScheduledBookings}
+                setCompletedBookings={setCompletedBookings}
+              />
+            ))}
+
+          {numberOfPages > 1 && (
+            <div className="pagination-container">
+              <Pagination>{items}</Pagination>
+            </div>
+          )}
+
+          {/* {numberOfPendingPages > 1 && (
+            <div className="pagination-container">
+              <Pagination>{pendingItems}</Pagination>
+            </div>
+          )} */}
+        </div>
       </div>
     </Container>
   );

@@ -18,11 +18,22 @@ import {
   useSubmit,
 } from "react-router-dom";
 
+import {
+  geocodeByAddress,
+  geocodeByPlaceId,
+  getLatLng,
+} from "react-places-autocomplete";
+
 //components
 import RequestFormModal from "../components/RequestFormModal";
+import GooglePlacesComp from "../components/GooglePlacesAutocomplete";
+
 //styling
 import avatar from "../images/avatar.png";
 import "../CSS/ProviderProfile.css";
+
+import Autocomplete from "react-google-autocomplete";
+// import { geocodeByPlaceId } from 'react-google-places-autocomplete';
 
 export const submitRequestForm = async ({ request }) => {
   const data = await request.formData();
@@ -64,10 +75,19 @@ const ProviderPage = ({ setFormData }) => {
   const [modalShow, setModalShow] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-
+  const [address, setAddress] = useState("");
+  console.log(address);
   // useEffect(() => {
-  //   setEndDate(startDate);
-  // }, [startDate]);
+  //   geocodeByPlaceId("ChIJ9V8ApDBFwokR0dW6ql0Pyoc")
+  //     //  .then((results) => console.log(results))
+  //     .then((results) => console.log(results))
+  //     .then((results) => getLatLng(results[0]))
+  //     .then(({ lat, lng }) => {
+  //       console.log("Successfully got latitude and longitude", { lat, lng });
+  //       return { lat, lng };
+  //     })
+  //     .catch((error) => console.error(error));
+  // }, []);
 
   const filterPassedTime = (time) => {
     const currentDate = new Date();
@@ -81,7 +101,7 @@ const ProviderPage = ({ setFormData }) => {
   };
 
   const data = useActionData();
-  console.log(data);
+  console.log(address);
   let submit = useSubmit();
   async function sendFormData() {
     try {
@@ -96,6 +116,8 @@ const ProviderPage = ({ setFormData }) => {
           end_date: dateFormat(new Date(endDate), "mmmm d, yyyy h:MM TT"),
           message: data.message,
           cost: "150",
+          address: address.label,
+          address_id: address.value.place_id,
         },
       });
       console.log(response);
@@ -122,7 +144,6 @@ const ProviderPage = ({ setFormData }) => {
         // return data;
 
         console.log(response);
-
       } else {
         throw Error("No response");
       }
@@ -216,7 +237,12 @@ const ProviderPage = ({ setFormData }) => {
             <h2>$150</h2>
             <h3>Starting cost</h3>
           </div>
+
           <div className="provider-input-group">
+            <label for="address">Address</label>
+            <GooglePlacesComp address={address} setAddress={setAddress} />
+          </div>
+          {/* <div className="provider-input-group">
             <label for="zip_code">Zip Code</label>
             <input
               type="text"
@@ -224,7 +250,7 @@ const ProviderPage = ({ setFormData }) => {
               title="Please enter a Zip Code"
               pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$"
             />
-          </div>
+          </div> */}
           <div className="provider-input-group">
             <label for="scheduling">Order Date</label>
 
@@ -289,7 +315,6 @@ const ProviderPage = ({ setFormData }) => {
           {/* <button type="submit" className="provider-form-button">
             Send Request
           </button> */}
-
           <p>
             Responds in about <span className="fw-bold">1 hour</span>
           </p>

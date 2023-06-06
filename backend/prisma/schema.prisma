@@ -37,7 +37,6 @@ model Client {
 }
 
 
-<<<<<<< HEAD
 // model Booking {
 //   booking_id Int @unique @default(autoincrement())
 //   client_id Int
@@ -55,51 +54,21 @@ model Client {
 //   @@index([client_id])
 //   @@index([provider_id])
 // }
-=======
->>>>>>> f54b4c581052d3a976efa0f55490c293bf84bfcf
 
 model Booking {
   booking_id Int @unique @default(autoincrement())
   client_id Int
   provider_id Int
-  // service_id Int
-  // service Service?
-  // transaction_id String
-  // createdAt     DateTime            @default(now())
-  // updatedAt     DateTime            @updatedAt
   client Client @relation(fields: [client_id], references: [client_id])
   provider Provider @relation(fields: [provider_id], references: [provider_id])
-  //possibly need a time for booking
-  //bookTime DateTime <-- the time the provider chose that was available / client chose for appointment ex. 3:30PM  or Fri Apr 21 2023 00:00:00 GMT-0400 (Eastern Daylight Time)
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> f54b4c581052d3a976efa0f55490c293bf84bfcf
   provider_name String
 client_name String
 service_type String
 start_date String
 end_date String
 order_desc String
-// date_due String
-<<<<<<< HEAD
-=======
-=======
-  provider_name String
->>>>>>> 51a1eb8 (Add routes to customer/provider booking to create booking, update UI)
-client_name String
-service_type String
-date_order String
-<<<<<<< HEAD
-date_due String
->>>>>>> 192b98b (Edit form, styled calendar)
-=======
-order_desc String
-// date_due String
->>>>>>> 51a1eb8 (Add routes to customer/provider booking to create booking, update UI)
-=======
->>>>>>> f54b4c581052d3a976efa0f55490c293bf84bfcf
+address String
+address_id String
 cost String
 status String @default("pending")
 
