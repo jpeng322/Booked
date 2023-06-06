@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
-export default function CancelModal() {
+export default function SignoutModal() {
   const [signedOut, setSignedOut] = useState(false);
   const [counter, setCounter] = useState(3);
   const [show, setShow] = useState(false);

@@ -2,8 +2,8 @@ export const CircleCheck = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
+      // width="16"
+      // height="16"
       fill="currentColor"
       class="bi bi-check-circle"
       viewBox="0 0 16 16"
@@ -18,8 +18,8 @@ export const CircleCross = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
+      // width="16"
+      // height="16"
       fill="currentColor"
       class="bi bi-x-circle"
       viewBox="0 0 16 16"

@@ -29,7 +29,7 @@ export default function providerRouter(passport) {
         });
       }
     } catch (e) {
-      console.log(e)
+      console.log(e);
       res.status(500).json({
         success: false,
         message: "Failed to fetch providers",
@@ -65,7 +65,7 @@ export default function providerRouter(passport) {
 
   // Get a specific provider by ID
   router.get("/providers/:id", async (req, res) => {
-    const id = req.params;
+    const id = req.params.id;
 
     try {
       const provider = await prisma.provider.findUnique({
@@ -85,6 +85,7 @@ export default function providerRouter(passport) {
         });
       }
     } catch (e) {
+      console.log(e);
       res.status(500).json({
         success: false,
         message: "Failed to fetch provider",
@@ -126,17 +127,19 @@ export default function providerRouter(passport) {
   // Update a provider by ID
   router.put(
     "/providers/:id",
-    passport.authenticate("jwt", { session: false }),
+    // passport.authenticate("jwt", { session: false }),
     async (req, res) => {
-      const id = req.params.provider_id;
+      const id = req.params.id;
+      console.log(req.body, req.params.id);
 
       try {
-        const provider = await prisma.pet.findUnique({
+        const provider = await prisma.provider.findUnique({
           where: {
-            id: parseInt(id),
-            provider_id: req.provider.provider_id,
+            // id: parseInt(id),
+            provider_id: parseInt(id),
           },
         });
+        console.log(provider);
 
         if (provider) {
           const updateProvider = await prisma.provider.update({
@@ -156,6 +159,7 @@ export default function providerRouter(passport) {
             res.status(200).json({
               success: true,
               message: "Provider information updated successfully",
+              updateProvider,
             });
           } else {
             res.status(500).json({
@@ -165,6 +169,7 @@ export default function providerRouter(passport) {
           }
         }
       } catch (error) {
+        console.log(error);
         res.status(500).json({
           success: false,
           message: "Failed to update provider",

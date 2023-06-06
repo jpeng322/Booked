@@ -4,6 +4,7 @@
 
 .cancel-modal .modal-body svg {
   fill: var(--brown-2);
+  width: 150px !important;
 }
 
 .cancel-modal .modal-body button {

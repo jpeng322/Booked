@@ -1,0 +1,25 @@
+.edit-input-div {
+  border: 1px solid red;
+
+  display: flex;
+  /* gap: 1rem; */
+}
+
+.edit-input-div > :nth-child(1) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid green; */
+  flex: 1;
+}
+
+.edit-input-div > :nth-child(2) {
+  /* border: 1px solid blue; */
+  flex: 1;
+}
+
+
+.edit-modal .modal-body svg {
+  fill: var(--brown-2);
+  width: 100px;
+}

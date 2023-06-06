@@ -51,7 +51,7 @@ export const submitRequestForm = async ({ request }) => {
   return submission;
 };
 
-const ProviderPage = ({ setFormData }) => {
+const ProviderPage = () => {
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -120,19 +120,8 @@ const ProviderPage = ({ setFormData }) => {
           address_id: address.value.place_id,
         },
       });
-      console.log(response);
-      if (response) {
-        // window.open(`/customer/confirmation/${client_name}/${provider_name}/${start_date}/${end_date}}`,'_blank', 'rel=noopener noreferrer')
-        setFormData({
-          client_name: "mei",
-          provider_name: "john",
-          service_type: data.service_type,
-          start_date: dateFormat(new Date(startDate), "mmmm d, yyyy h:MM TT"),
-          end_date: dateFormat(new Date(endDate), "mmmm d, yyyy h:MM TT"),
-          message: data.message,
-          cost: "150",
-        });
 
+      if (response) {
         const booking_id = response.data.booking_info.booking_id;
         window.open(
           `/customer/confirmation/${booking_id}`,
@@ -242,15 +231,7 @@ const ProviderPage = ({ setFormData }) => {
             <label for="address">Address</label>
             <GooglePlacesComp address={address} setAddress={setAddress} />
           </div>
-          {/* <div className="provider-input-group">
-            <label for="zip_code">Zip Code</label>
-            <input
-              type="text"
-              placeholder="Zip Code"
-              title="Please enter a Zip Code"
-              pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$"
-            />
-          </div> */}
+
           <div className="provider-input-group">
             <label for="scheduling">Order Date</label>
 
