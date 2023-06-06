@@ -12,7 +12,7 @@ const SubscriptionBox = () => {
 
   return (
     <div className="d-flex justify-content-center" style={{ marginBottom: '825px', padding: "20px" }}>
-      <Form onSubmit={handleSubmit} className="p-2 border rounded" style={{ width: '479px', height: '66px' }}>
+      <Form onSubmit={handleSubmit} className="p-2 border rounded" style={{ width: '550px', height: '66px', backgroundColor:'white', bordeColor:'black'}}>
         <Form.Group controlId="formEmail" className="d-flex align-items-center">
           <Form.Control
             type="email"
@@ -20,8 +20,9 @@ const SubscriptionBox = () => {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             className="mr-2 border-0"
+            style={{color:'#8F9779', 'font-size': '28px'}}
           />
-          <Button style={{backgroundColor:"#87A96B", border:"#87A96B"}} variant="primary" type="submit">
+          <Button style={{backgroundColor:"#8F9779", border:"#87A96B", 'font-size': '25px'}} variant="primary" type="submit">
             Subscribe
           </Button>
         </Form.Group>
