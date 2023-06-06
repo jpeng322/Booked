@@ -7,13 +7,14 @@ import Image from 'react-bootstrap/Image';
 import Row from 'react-bootstrap/Row';
 import Pagination from 'react-bootstrap/Pagination';
 import { FaStar } from 'react-icons/fa';
+import Button from 'react-bootstrap/Button';
 
 import "../CSS/ProviderCard.css"
 
 import avatar from "../images/avatar.png";
 const ProviderCard = (props) => {
   const [activePage, setActivePage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 4;
   const totalItems = props.providers.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -65,7 +66,7 @@ const ProviderCard = (props) => {
                       <div className="d-flex justify-content-center">
                         <Image
                           key={index}
-                          src={avatar}
+                          src={image}
                           thumbnail
                           className="image"
                           alt="no-image"
@@ -83,7 +84,9 @@ const ProviderCard = (props) => {
                       <div className="skill-highlight">{provider.skill}</div>
                     </div>
                     <div className="justify-content-end">
-                      <button className="view-profile-btn">View Profile</button>
+
+                      <Button className="viewprofile" variant="warning">View Profile</Button>{' '}
+
                     </div>
                   </Col>
                 </Row>
