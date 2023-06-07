@@ -1,4 +1,4 @@
-import express from "express";
+import express, { response } from "express";
 import prisma from "../db/index.js";
 
 
@@ -164,6 +164,44 @@ async (req, res) => {
         });
     };
 });
+
+//PUT only signed in Client user
+router.put('/services', async(request, response) => {
+  try {
+    const clientPreferredServices = await prisma.client.updateMany({
+      where: {
+        AND: [
+            {client_id: request.user.Client.client_id},
+            {client_email: request.user.Client.client_email},
+        ],
+        data: {
+          preferred_services: request.body.preferred_services,
+        },
+        
+      },
+    });
+
+    if(clientPreferredServices.count == 0){
+      response.status(404).json({
+        success: false,
+        message: "Client does not exist for this user"
+      });
+    }
+    else {
+      response.status(200).json({
+        success: true,
+      })
+    }
+
+  } catch (error) {
+    response.status(500).json({
+      success: false,
+      message: 'failed to edit client'
+    });
+  }
+});
+
+
 
 router.delete('/clients/:id', passport.authenticate("jwt", { session: false }),
 

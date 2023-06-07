@@ -15,7 +15,7 @@ import logo from '../images/logo.png'
 
 // This will be the Client login. For now it only logs in provider.
 
-const LoginClient = () => {
+const CustomerLogin = () => {
     const submit = useSubmit();
     const actionData = useActionData();
     const navigate = useNavigate();
@@ -33,7 +33,7 @@ const LoginClient = () => {
 
         submit(data, {
             method: "post",
-            action: "/auth/loginClient"
+            action: "/customer/login"
         });
     }
 
@@ -68,8 +68,6 @@ const LoginClient = () => {
 
     }
 
-
-    // console.log(actionData);
 
     return (
         <div
@@ -214,4 +212,4 @@ const LoginClient = () => {
     )
 }
 
-export default LoginClient
+export default CustomerLogin;

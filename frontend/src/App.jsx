@@ -9,12 +9,13 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createStore, StateMachineProvider } from 'little-state-machine';
 
 //pages
 import Home from "./pages/Home";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
-import LoginClient from "./pages/LoginClient";
+import CustomerSignup from "./pages/CustomerSignup";
+import ProviderLogin from "./pages/ProviderLogin";
+import CustomerLogin from "./pages/CustomerLogin";
 import OnboardingSurvey from "./pages/OnboardingSurvey";
 import Recommendations from "./pages/Recommendations";
 import Profile from "./pages/Profile";
@@ -48,11 +49,17 @@ import DeleteAccount from "./components/AccountSettings/DeleteAccount";
 import Wallet from "./components/AccountSettings/Wallet";
 import SignOut from "./components/AccountSettings/SignOut";
 import MapMarker from "./components/MapMarker";
+import CustomerOnboarding from "./pages/CustomerOnboarding";
+import ProviderAccountHero from "./pages/ProviderAccountHero";
+
 
 function App() {
   const [count, setCount] = useState(0);
   // const [formData, setFormData] = useState();
   // console.log(formData);
+
+  createStore({});
+
 
   async function checkout() {
     try {
@@ -109,8 +116,12 @@ function App() {
       element: <Home />,
     },
     {
-      path: "auth/loginClient",
-      element: <LoginClient />,
+      path: "/provider/signup",
+      element: <ProviderAccountHero />
+    },
+    {
+      path: "/customer/login",
+      element: <CustomerLogin />,
       action: async ({ request }) => {
         try {
           const formData = await request.formData();
@@ -123,43 +134,53 @@ function App() {
       },
     },
     {
-      path: "auth/signup",
-      element: <Signup />,
+      path: "/customer/signup",
+      element: <CustomerSignup />,
+
+    },
+    {
+      path: "/customer/onboarding",
+      element: <CustomerOnboarding />,
       action: async ({ request }) => {
         try {
           const formData = Object.fromEntries(await request.formData());
-          const { email, password, firstName, lastName, phoneNumber } =
+          const { email, password, firstName, lastName, phoneNumber, preferredServices } =
             formData;
-          // console.log(email, password, firstName, lastName, phoneNumber);
+          console.log(email, password, firstName, lastName, phoneNumber, preferredServices);
           return await fetchSignup(
             email,
             password,
             firstName,
             lastName,
-            phoneNumber
+            phoneNumber,
+            preferredServices 
           );
         } catch (error) {
           return error;
         }
-      },
+      }
     },
     {
-      path: "provierlogin",
-      element: <Login />,
+      path: "/provider/login",
+      element: <ProviderLogin />,
       action: async ({ request }) => {
         try {
           const formData = await request.formData();
           const email = formData.get("email");
           const password = formData.get("password");
           return await fetchLogin(email, password);
+
         } catch (error) {
           return error;
         }
-      },
-    },
+
+      }
+    }
+    ,
     {
       path: "/customeraccount",
       element: <CustomerAccountContact />,
+
     },
     {
       path: "/preferences",
@@ -179,11 +200,11 @@ function App() {
     },
     {
       path: "/carousel",
-      element: <FavoriteProviders />,
+      element: <FavoriteProviders />
     },
     {
       path: "/provider",
-      element: <ProviderCard providers={providers} />,
+      element: <ProviderCard providers={providers} />
     },
     {
       path: "/about",
@@ -253,11 +274,13 @@ function App() {
     },
   ]);
   return (
-    <div className="App">
-      {/* <script src={`${import.meta.env.VITE_GOOGLE_URL}`}></script> */}
-      <RouterProvider router={router} />
-    </div>
-    
+    <StateMachineProvider>
+      <div className="App">
+        <RouterProvider router={router} />
+      </div>
+    </StateMachineProvider>
+
+
   );
 }
 

@@ -14,7 +14,7 @@ import logo from '../images/logo.png'
 
 
 
-const Login = () => {
+const ProviderLogin = () => {
   const submit = useSubmit();
   const actionData = useActionData();
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const Login = () => {
 
     submit(data, {
       method: "post",
-      action: "/auth/login"
+      action: "/provider/login"
     });
   }
 
@@ -230,4 +230,4 @@ const Login = () => {
 }
 
 
-export default Login;
+export default ProviderLogin;
