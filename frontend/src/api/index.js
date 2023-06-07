@@ -103,3 +103,22 @@ export const getCoords = (address_id) => {
   return address_id;
   return latLng;
 };
+
+export const getProviderInfo = async (id = 6) => {
+  try {
+    const response = await axios({
+      method: "get",
+      url: `http://localhost:${
+        import.meta.env.VITE_PORT
+      }/provider/providers/${id}`,
+    });
+
+    if (response) {
+      console.log(response);
+      const data = response.data.provider
+      return data
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};

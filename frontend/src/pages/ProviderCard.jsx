@@ -84,7 +84,9 @@ const ProviderCard = (props) => {
                       <div className="skill-highlight">{provider.skill}</div>
                     </div>
                     <div className="justify-content-end">
+
                       <Button className="viewprofile" variant="warning">View Profile</Button>{' '}
+
                     </div>
                   </Col>
                 </Row>

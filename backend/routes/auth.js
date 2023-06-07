@@ -117,4 +117,41 @@ router.post("/login", async (request, response) => {
   }
 });
 
+router.delete("/delete", async (request, response) => {
+  console.log(request.body.userId);
+  try {
+    const deleteUserBookings = await prisma.booking.deleteMany({
+      where: {
+        provider_id: request.body.userId
+      }
+    })
+    const findDeleteUser = await prisma.provider.delete({
+      where: {
+        provider_id: request.body.userId,
+      },
+    });
+
+
+
+    console.log(findDeleteUser, deleteUserBookings)
+
+    if (findDeleteUser) {
+      response.status(200).json({
+        message: "User deleted!",
+        findDeleteUser,
+      });
+    } else {
+      response.status(404).json({
+        message: "User not found.",
+      });
+    }
+  } catch (e) {
+    console.log(e);
+    response.status(401).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+});
+
 export default router;

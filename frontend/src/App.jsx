@@ -21,6 +21,7 @@ import Profile from "./pages/Profile";
 import CustomerAcc from "./pages/CustomerBookings";
 import ProviderBookings from "./pages/ProviderBookings";
 import { submitRequestForm } from "./pages/ProviderPage";
+import { submitEditForm } from "./components/EditProfileModal";
 import CustomerAccountContact from "./pages/CustomerAccountContact";
 import ProviderPage from "./pages/ProviderPage";
 import AccountSettings from "./pages/AccountSettings";
@@ -31,7 +32,8 @@ import {
   fetchSignup,
   getBooking,
   getProviderBookings,
-  getCoords
+  getCoords,
+  getProviderInfo
 } from "./api";
 
 
@@ -49,8 +51,8 @@ import MapMarker from "./components/MapMarker";
 
 function App() {
   const [count, setCount] = useState(0);
-  const [formData, setFormData] = useState();
-  console.log(formData);
+  // const [formData, setFormData] = useState();
+  // console.log(formData);
 
   async function checkout() {
     try {
@@ -189,7 +191,7 @@ function App() {
     },
     {
       path: "/provider/profile",
-      element: <ProviderPage setFormData={setFormData} />,
+      element: <ProviderPage />,
       action: submitRequestForm,
     },
     {
@@ -210,8 +212,18 @@ function App() {
       element: <AccountSettings />,
       children: [
         {
-          path: "myprofile",
+          path: "myprofile/",
+          // path: "myprofile/:provider_id",
           element: <MyProfile />,
+          action: submitEditForm,
+          loader: () => {
+            // const provider_id = params.provider_id;
+            return getProviderInfo(6);
+          },
+          // loader: ({ params }) => {
+          //   const provider_id = params.provider_id;
+          //   return getProviderInfo(provider_id);
+          // },
         },
         {
           path: "notifications",
