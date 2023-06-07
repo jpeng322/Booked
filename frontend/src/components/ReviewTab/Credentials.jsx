@@ -5,7 +5,7 @@ import "../../CSS/Credentials.css"
 
 function BackgroundCheck() {
   const cred = providers
-  .filter(provider => provider.name === "Business NameA")
+  .filter(provider => provider.name === "GR's Auto Care")
   .reduce((result, provider) => {
     if (provider.background && provider.background.length > 0 && provider.background[0].check === "yes") {
       result.push({
