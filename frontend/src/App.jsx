@@ -113,7 +113,7 @@ function App() {
           element: <Home />,
         },
         {
-          path: "/settings",
+          path: "provider/settings",
           element: <AccountSettings />,
           children: [
             {
