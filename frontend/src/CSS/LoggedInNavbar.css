@@ -1,0 +1,34 @@
+.loggedin-nav {
+    background-color: var(--uniform-1);
+    /* color: #fff !important; */
+
+}
+
+.loggedin-nav a {
+    color: #fff ;
+    border-bottom: 2px solid var(--uniform-1);
+    border-bottom: 2px solid var(--uniform-1);
+}
+
+/* .loggedin-nav a:hover {
+    color: #fff ;
+    border-bottom: 2px solid var(--uniform-1);
+    border-bottom: 2px solid var(--toolshop-4);
+} */
+
+.loggedin-nav .active{
+    border-bottom: 2px solid var(--uniform-1);
+    border-bottom: 2px solid var(--toolshop-4);
+    background: none;
+    /* border: 1px solid green; */
+}
+
+
+.loggedin-nav .container-fluid {
+    /* border: 1px solid red; */
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    /* border: 1px solid red !important; */
+    padding: .5rem 5% !important;
+}

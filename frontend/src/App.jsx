@@ -104,6 +104,7 @@ function App() {
   // };
   // }
   const router = createBrowserRouter([
+  
     {
       path: "/",
       element: <Home />,
@@ -123,7 +124,7 @@ function App() {
       },
     },
     {
-      path: "auth/signup",
+      path: "auth/signup/client",
       element: <Signup />,
       action: async ({ request }) => {
         try {
@@ -131,13 +132,15 @@ function App() {
           const { email, password, firstName, lastName, phoneNumber } =
             formData;
           // console.log(email, password, firstName, lastName, phoneNumber);
-          return await fetchSignup(
+           fetchSignup(
             email,
             password,
             firstName,
             lastName,
             phoneNumber
           );
+
+          return apiSignUpData
         } catch (error) {
           return error;
         }
