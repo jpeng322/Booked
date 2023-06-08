@@ -119,8 +119,31 @@
 .wallet-card button {
   border-radius: 0.25rem;
   border: none;
-  padding: .5rem .75rem;
-  background-color: #D9D9D9;
+  padding: 0.5rem 0.75rem;
+  background-color: #d9d9d9;
   color: var(--uniform-1);
   font-weight: 600;
+}
+
+.notifications-container button,
+.notifications-container button:hover,
+.notifications-container button:active:focus {
+  background-color: transparent;
+  border: none;
+  color: black;
+  padding: 0;
+}
+.notifications-modal .modal-content {
+  padding: calc(1rem + 1vw);
+  padding: 2rem;
+  margin-top: 10rem;
+}
+.notifications-modal .modal-footer button:nth-child(1) {
+  background-color: var(--uniform-2);
+  border: none;
+}
+
+.notifications-modal .modal-footer button:nth-child(2) {
+  background-color: var(--brown-2);
+  border: none;
 }
