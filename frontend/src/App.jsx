@@ -185,6 +185,23 @@ function App() {
             }
           },
         },
+            {
+      path: "auth/signup/client",
+      element: <Signup />,
+      action: async ({ request }) => {
+        try {
+          const formData = Object.fromEntries(await request.formData());
+          const { email, password, firstName, lastName, phoneNumber } =
+            formData;
+          // console.log(email, password, firstName, lastName, phoneNumber);
+          fetchSignup(email, password, firstName, lastName, phoneNumber);
+
+          return apiSignUpData;
+        } catch (error) {
+          return error;
+        }
+      },
+    },
       ],
     },
     // {
@@ -206,23 +223,23 @@ function App() {
     //     }
     //   },
     // },
-    {
-      path: "auth/signup/client",
-      element: <Signup />,
-      action: async ({ request }) => {
-        try {
-          const formData = Object.fromEntries(await request.formData());
-          const { email, password, firstName, lastName, phoneNumber } =
-            formData;
-          // console.log(email, password, firstName, lastName, phoneNumber);
-          fetchSignup(email, password, firstName, lastName, phoneNumber);
+    // {
+    //   path: "auth/signup/client",
+    //   element: <Signup />,
+    //   action: async ({ request }) => {
+    //     try {
+    //       const formData = Object.fromEntries(await request.formData());
+    //       const { email, password, firstName, lastName, phoneNumber } =
+    //         formData;
+    //       // console.log(email, password, firstName, lastName, phoneNumber);
+    //       fetchSignup(email, password, firstName, lastName, phoneNumber);
 
-          return apiSignUpData;
-        } catch (error) {
-          return error;
-        }
-      },
-    },
+    //       return apiSignUpData;
+    //     } catch (error) {
+    //       return error;
+    //     }
+    //   },
+    // },
     // {
     //   path: "login/provider",
     //   element: <Login />,

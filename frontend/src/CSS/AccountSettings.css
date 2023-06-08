@@ -68,10 +68,11 @@
   border-radius: 0.6rem;
 }
 
-.notifications-container, .myprofile-container {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem
+.notifications-container,
+.myprofile-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 .myprofile-card {
   box-shadow: 0 5px 10px -5px;
@@ -84,9 +85,9 @@
 }
 
 .myprofile-edit {
-    position: absolute;
-    right: 2rem;
-    top: 2rem
+  position: absolute;
+  right: 2rem;
+  top: 2rem;
 }
 
 .myprofile-row {
@@ -102,4 +103,24 @@
 
 .myprofile-row-info {
   color: #476685;
+}
+
+.wallet-card {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  width: 100%;
+  box-shadow: 0 5px 10px -5px;
+  padding: 2.5rem 5%;
+  border-radius: 0.6rem;
+}
+
+.wallet-card button {
+  border-radius: 0.25rem;
+  border: none;
+  padding: .5rem .75rem;
+  background-color: #D9D9D9;
+  color: var(--uniform-1);
+  font-weight: 600;
 }
