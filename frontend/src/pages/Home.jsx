@@ -9,6 +9,7 @@ import HeroComp from "../components/HeroComp";
 import OtherComp from "../components/OtherComp";
 import SearchBar from "../components/SearchBar";
 import FooterComp from "../components/FooterComp";
+import LoggedInNavbar from "../components/LoggedInNavbar";
 const Home = () => {
   async function checkout() {
     console.log("asdasd");
@@ -65,8 +66,8 @@ const Home = () => {
   return (
     <div>
       <div className="App">
-      <button onClick={checkout}>Checkout</button>
-        <button onClick={() => navigate("auth/signup")}>Signup</button>
+        <button onClick={checkout}>Checkout</button>
+        <button onClick={() => navigate("auth/signup/client")}>Signup</button>
 
         <button onClick={() => navigate("auth/login")}>Login</button>
         <button onClick={() => navigate("auth/loginClient")}>
@@ -76,18 +77,19 @@ const Home = () => {
 
         <button onClick={() => navigate("provierlogin")}>Login</button>
         <button onClick={() => navigate("clientlogin")}>Client Login</button>
-        <button onClick={() => navigate("/customeraccount")}>Customer Accunt Contact</button>
+        <button onClick={() => navigate("/customeraccount")}>
+          Customer Accunt Contact
+        </button>
         <NavComp />
-
+        {/* <LoggedInNavbar /> */}
         <HeroComp />
-        
-        <div style={{backgroundColor:'#F9EDB4'}}>
-          <SearchBar /> 
+
+        <div style={{ backgroundColor: "#F9EDB4" }}>
+          <SearchBar />
+     
           <Carouselandsub />
         </div>
-
       </div>
-      
     </div>
   );
 };

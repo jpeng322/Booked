@@ -8,7 +8,7 @@ import {
 export const fetchLogin = async (email, password) => {
   try {
     const apiLoginData = await axios.post(
-      `http://localhost:${import.meta.env.VITE_PORT}/auth/login`,
+      `http://localhost:${import.meta.env.VITE_PORT}/auth/login/client`,
       {
         email: email,
         password: password,
@@ -19,6 +19,7 @@ export const fetchLogin = async (email, password) => {
 
     if (apiLoginData.status == 200 && apiLoginData.data.token) {
       localStorage.setItem("token", apiLoginData.data.token);
+      localStorage.setItem("userType", apiLoginData.data.type);
     }
 
     return apiLoginData;
@@ -37,7 +38,7 @@ export const fetchSignup = async (
   console.log(email, password, firstName, lastName, phoneNumber);
   try {
     const apiSignupData = await axios.post(
-      `http://localhost:${import.meta.env.VITE_PORT}/auth/signup`,
+      `http://localhost:${import.meta.env.VITE_PORT}/auth/signup/client`,
       {
         email: email,
         password: password,
@@ -115,8 +116,8 @@ export const getProviderInfo = async (id = 6) => {
 
     if (response) {
       console.log(response);
-      const data = response.data.provider
-      return data
+      const data = response.data.provider;
+      return data;
     }
   } catch (e) {
     console.log(e);

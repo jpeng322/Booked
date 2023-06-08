@@ -22,7 +22,7 @@ const Signup = () => {
   useEffect(() => {
     if(actionData && actionData.status == 201 && actionData.data.success == true){
       console.log("Success new user!")
-      navigate("/auth/login");
+      navigate("/auth/loginClient");
     }
   }, [actionData])
 
@@ -31,7 +31,7 @@ const Signup = () => {
 
     submit(data, {
       method: "post",
-      action: "/auth/signup"
+      action: "/auth/signup/client"
     });
   
   }
