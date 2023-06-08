@@ -33,9 +33,8 @@ import {
   getBooking,
   getProviderBookings,
   getCoords,
-  getProviderInfo
+  getProviderInfo,
 } from "./api";
-
 
 import NavComp from "./components/Navbar";
 import HeroComp from "./components/HeroComp";
@@ -48,6 +47,7 @@ import DeleteAccount from "./components/AccountSettings/DeleteAccount";
 import Wallet from "./components/AccountSettings/Wallet";
 import SignOut from "./components/AccountSettings/SignOut";
 import MapMarker from "./components/MapMarker";
+import Main from "./template/Main";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -104,25 +104,108 @@ function App() {
   // };
   // }
   const router = createBrowserRouter([
-  
     {
       path: "/",
-      element: <Home />,
+      element: <Main />,
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+        {
+          path: "/settings",
+          element: <AccountSettings />,
+          children: [
+            {
+              path: "myprofile/",
+              // path: "myprofile/:provider_id",
+              element: <MyProfile />,
+              action: submitEditForm,
+              loader: () => {
+                // const provider_id = params.provider_id;
+                return getProviderInfo(6);
+              },
+              // loader: ({ params }) => {
+              //   const provider_id = params.provider_id;
+              //   return getProviderInfo(provider_id);
+              // },
+            },
+            {
+              path: "notifications",
+              element: <Notifications />,
+            },
+            {
+              path: "signout",
+              element: <SignOut />,
+            },
+            {
+              path: "delete_account",
+              element: <DeleteAccount />,
+            },
+            {
+              path: "wallet",
+              element: <Wallet />,
+            },
+          ],
+        },
+        {
+          path: "/customer/bookings",
+          element: <CustomerAcc />,
+        },
+        {
+          path: "/provider/bookings",
+          element: <ProviderBookings />,
+          loader: getProviderBookings,
+        },
+        {
+          path: "login/provider",
+          element: <Login />,
+          action: async ({ request }) => {
+            try {
+              const formData = await request.formData();
+              const email = formData.get("email");
+              const password = formData.get("password");
+              return await fetchLogin(email, password);
+            } catch (error) {
+              return error;
+            }
+          },
+        },
+        {
+          path: "login/client",
+          element: <LoginClient />,
+          action: async ({ request }) => {
+            try {
+              const formData = await request.formData();
+              const email = formData.get("email");
+              const password = formData.get("password");
+              return await fetchLogin(email, password);
+            } catch (error) {
+              return error;
+            }
+          },
+        },
+      ],
     },
-    {
-      path: "auth/loginClient",
-      element: <LoginClient />,
-      action: async ({ request }) => {
-        try {
-          const formData = await request.formData();
-          const email = formData.get("email");
-          const password = formData.get("password");
-          return await fetchLogin(email, password);
-        } catch (error) {
-          return error;
-        }
-      },
-    },
+    // {
+    //   path: "/",
+    //   element: <Home />,
+    // },
+
+    // {
+    //   path: "login/client",
+    //   element: <LoginClient />,
+    //   action: async ({ request }) => {
+    //     try {
+    //       const formData = await request.formData();
+    //       const email = formData.get("email");
+    //       const password = formData.get("password");
+    //       return await fetchLogin(email, password);
+    //     } catch (error) {
+    //       return error;
+    //     }
+    //   },
+    // },
     {
       path: "auth/signup/client",
       element: <Signup />,
@@ -132,34 +215,28 @@ function App() {
           const { email, password, firstName, lastName, phoneNumber } =
             formData;
           // console.log(email, password, firstName, lastName, phoneNumber);
-           fetchSignup(
-            email,
-            password,
-            firstName,
-            lastName,
-            phoneNumber
-          );
+          fetchSignup(email, password, firstName, lastName, phoneNumber);
 
-          return apiSignUpData
+          return apiSignUpData;
         } catch (error) {
           return error;
         }
       },
     },
-    {
-      path: "provierlogin",
-      element: <Login />,
-      action: async ({ request }) => {
-        try {
-          const formData = await request.formData();
-          const email = formData.get("email");
-          const password = formData.get("password");
-          return await fetchLogin(email, password);
-        } catch (error) {
-          return error;
-        }
-      },
-    },
+    // {
+    //   path: "login/provider",
+    //   element: <Login />,
+    //   action: async ({ request }) => {
+    //     try {
+    //       const formData = await request.formData();
+    //       const email = formData.get("email");
+    //       const password = formData.get("password");
+    //       return await fetchLogin(email, password);
+    //     } catch (error) {
+    //       return error;
+    //     }
+    //   },
+    // },
     {
       path: "/customeraccount",
       element: <CustomerAccountContact />,
@@ -176,10 +253,10 @@ function App() {
       path: "/profile",
       element: <Profile providers={providers} />,
     },
-    {
-      path: "/customer/bookings",
-      element: <CustomerAcc />,
-    },
+    // {
+    //   path: "/customer/bookings",
+    //   element: <CustomerAcc />,
+    // },
     {
       path: "/carousel",
       element: <FavoriteProviders />,
@@ -197,11 +274,11 @@ function App() {
       element: <ProviderPage />,
       action: submitRequestForm,
     },
-    {
-      path: "/provider/bookings",
-      element: <ProviderBookings />,
-      loader: getProviderBookings,
-    },
+    // {
+    //   path: "/provider/bookings",
+    //   element: <ProviderBookings />,
+    //   loader: getProviderBookings,
+    // },
     {
       path: "/customer/confirmation/:booking_id",
       loader: ({ params }) => {
@@ -210,42 +287,42 @@ function App() {
       },
       element: <ConfirmationPage />,
     },
-    {
-      path: "/settings",
-      element: <AccountSettings />,
-      children: [
-        {
-          path: "myprofile/",
-          // path: "myprofile/:provider_id",
-          element: <MyProfile />,
-          action: submitEditForm,
-          loader: () => {
-            // const provider_id = params.provider_id;
-            return getProviderInfo(6);
-          },
-          // loader: ({ params }) => {
-          //   const provider_id = params.provider_id;
-          //   return getProviderInfo(provider_id);
-          // },
-        },
-        {
-          path: "notifications",
-          element: <Notifications />,
-        },
-        {
-          path: "signout",
-          element: <SignOut />,
-        },
-        {
-          path: "delete_account",
-          element: <DeleteAccount />,
-        },
-        {
-          path: "wallet",
-          element: <Wallet />,
-        },
-      ],
-    },
+    // {
+    //   path: "/settings",
+    //   element: <AccountSettings />,
+    //   children: [
+    //     {
+    //       path: "myprofile/",
+    //       // path: "myprofile/:provider_id",
+    //       element: <MyProfile />,
+    //       action: submitEditForm,
+    //       loader: () => {
+    //         // const provider_id = params.provider_id;
+    //         return getProviderInfo(6);
+    //       },
+    //       // loader: ({ params }) => {
+    //       //   const provider_id = params.provider_id;
+    //       //   return getProviderInfo(provider_id);
+    //       // },
+    //     },
+    //     {
+    //       path: "notifications",
+    //       element: <Notifications />,
+    //     },
+    //     {
+    //       path: "signout",
+    //       element: <SignOut />,
+    //     },
+    //     {
+    //       path: "delete_account",
+    //       element: <DeleteAccount />,
+    //     },
+    //     {
+    //       path: "wallet",
+    //       element: <Wallet />,
+    //     },
+    //   ],
+    // },
     {
       path: "map/:address_id",
       loader: ({ params }) => {
@@ -260,7 +337,6 @@ function App() {
       {/* <script src={`${import.meta.env.VITE_GOOGLE_URL}`}></script> */}
       <RouterProvider router={router} />
     </div>
-    
   );
 }
 

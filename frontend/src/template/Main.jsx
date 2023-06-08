@@ -5,7 +5,7 @@ const Main = () => {
   return (
     <>
       <NavComp />
-
+      <Outlet />
       <footer>This is the footer</footer>
     </>
   );

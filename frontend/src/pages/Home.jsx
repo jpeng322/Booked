@@ -70,23 +70,21 @@ const Home = () => {
         <button onClick={() => navigate("auth/signup/client")}>Signup</button>
 
         <button onClick={() => navigate("auth/login")}>Login</button>
-        <button onClick={() => navigate("auth/loginClient")}>
-          Client Login
-        </button>
+        <button onClick={() => navigate("login/client")}>Client Login</button>
         {/* <button onClick={() => navigate("/customeraccount")}>Customer Accunt Contact</button> */}
 
-        <button onClick={() => navigate("provierlogin")}>Login</button>
+        <button onClick={() => navigate("login/provider")}>Login</button>
         <button onClick={() => navigate("clientlogin")}>Client Login</button>
         <button onClick={() => navigate("/customeraccount")}>
           Customer Accunt Contact
         </button>
-        <NavComp />
+        {/* <NavComp /> */}
         {/* <LoggedInNavbar /> */}
         <HeroComp />
 
         <div style={{ backgroundColor: "#F9EDB4" }}>
           <SearchBar />
-     
+
           <Carouselandsub />
         </div>
       </div>
