@@ -136,11 +136,6 @@ top: -2px
   font-weight: 500;
 }
 
-.provider-booking:nth-child(9) {
-  /* border: 1px solid green !important;
-  flex-direction: row !important;  */
-}
-
 .provider-booking button {
   border: none;
   padding: 0.33rem 0.75rem;
@@ -164,7 +159,6 @@ top: -2px
 .decline-button:hover,
 .cancel-button:hover {
   color: #e93a2b;
-  /* background-color: #ff6d60; */
 }
 
 .provider-booking {
@@ -192,8 +186,6 @@ top: -2px
 
 .hidden {
   display: none;
-}
-.booking-info-container {
 }
 
 .show-button {
@@ -286,7 +278,6 @@ top: -2px
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* border: 1px solid red; */
     gap: calc(1rem + 2vw);
   }
 }
