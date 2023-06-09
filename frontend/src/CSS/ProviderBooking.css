@@ -1,4 +1,5 @@
 .provider-booking-container {
+  /* padding: 0 !important; */
 }
 .provider-booking-container > * {
   /* border: 1px solid red; */
@@ -37,10 +38,10 @@
 }
 
 .provider-booking-container .react-tabs {
-  width: min(100%, 1400px);
+  width: min(100%, 1700px);
   padding: 1rem;
 }
-.provider-booking-container  .react-tabs__tab-panel {
+.provider-booking-container .react-tabs__tab-panel {
   padding: 1rem;
 }
 
@@ -48,10 +49,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 1;
 }
 .provider-booking-container .react-tabs__tab-list {
   width: 100%;
   margin-bottom: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid red; */
+  gap: calc(1rem + 2vw);
 }
 .provider-booking-container .react-tabs__tab {
   border-radius: 0;
@@ -92,6 +99,11 @@
   flex: 1 1 0;
 }
 
+.provider-booking:nth-child(2),
+.provider-booking-header:nth-child(2) {
+  flex: 1.5 1 0;
+}
+
 .provider-booking-container {
   border-bottom: 1px solid #000000;
   position: relative;
@@ -101,12 +113,32 @@
   padding-inline: calc(1rem + 1vw);
 }
 
+.provider-booking-container .map-pin {
+  fill: rgba(211, 16, 16, 0.603);
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.provider-booking-container .map-pin:hover {
+position: relative;
+top: -2px
+}
+
+.provider-booking-container .map-pin circle {
+  fill: var(--uniform-5);
+}
+
 .provider-booking-header-container,
 .provider-booking-container {
   display: flex;
   padding: 1.5rem;
   text-transform: capitalize;
   font-weight: 500;
+}
+
+.provider-booking:nth-child(9) {
+  /* border: 1px solid green !important;
+  flex-direction: row !important;  */
 }
 
 .provider-booking button {
@@ -139,30 +171,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.scheduled,
-.upcoming {
-  /* background-color: #146C94; */
-  /* background-color: var(--uniform-4); */
-}
-
-.completed {
-  /* background-color: #2f6437; */
-  /* background-color: var(--brown-4); */
-}
-
-.active {
-  /* background-color: #53b946; */
-}
-
-.cancelled {
-  /* background-color: #ff6d60; */
-}
-
-.pending {
-  /* background-color: grey; */
-  /* background-color: var(--toolshop-1); */
 }
 
 .provider-booking-filter {
@@ -227,7 +235,7 @@
   }
 }
 
-@media screen and (min-width: 765px) {
+@media screen and (min-width: 1200px) {
   .show-button {
     display: none;
   }
@@ -241,5 +249,44 @@
 
   .provider-dropdown-info {
     display: none;
+  }
+
+  .provider-booking button {
+    border: none;
+    padding: 0.33rem 0.75rem;
+    border-radius: 0.25rem;
+    transition: 0.1s;
+    font-weight: 500;
+    min-width: 70px;
+    height: 2.5rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .provider-booking-rows {
+    padding: 0
+  }
+
+  .provider-booking-container .react-tabs {
+
+    padding: 0;
+  }
+  .provider-booking-container .react-tabs__tab-panel {
+    padding: 1rem 0rem;
+  }
+
+  .provider-booking-container {
+    padding: 1rem !important;
+  }
+
+  .provider-booking-container .react-tabs__tab-list {
+    width: 100%;
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid red; */
+    gap: calc(1rem + 2vw);
   }
 }
