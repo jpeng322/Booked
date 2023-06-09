@@ -177,9 +177,15 @@ const ProviderBookingInfo = ({
       </div>
       {showDropdown === "hidden" && (
         <div className="provider-dropdown-info">
-          <div>Description : {order_desc}</div>
-          <div>Book Date: {start_date}</div>
-          <div>Due Date: {end_date}</div>
+          <div>
+            <span className="fw-bold me-1">Description:</span> {order_desc}
+          </div>
+          <div>
+            <span className="fw-bold me-1">Book Date:</span> {start_date}
+          </div>
+          <div>
+            <span className="fw-bold me-1">Due Date:</span> {end_date}
+          </div>
           <div className="provider-booking d-flex gap-2 only-large">
             {status === "pending" && (
               <>
