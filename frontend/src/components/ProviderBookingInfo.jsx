@@ -19,6 +19,7 @@ const ProviderBookingInfo = ({
   setCompletedBookings,
   setScheduledBookings,
   setPendingBookings,
+  setCancelledBookings,
 }) => {
   const dateNow = moment().format("L");
 
