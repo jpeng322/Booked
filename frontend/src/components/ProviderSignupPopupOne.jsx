@@ -6,8 +6,9 @@ import Button from 'react-bootstrap/Button';
 import { useForm } from 'react-hook-form';
 import { useStateMachine } from 'little-state-machine';
 import updateSignupAction from '../updateSignupAction';
+import { IoIosClose } from "react-icons/io";
 
-function ProviderSignupPopupOne({ open, setOpenPopupTwo }) {
+function ProviderSignupPopupOne({ open, setOpenPopupOne, setOpenPopupTwo }) {
 
 
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -28,20 +29,37 @@ function ProviderSignupPopupOne({ open, setOpenPopupTwo }) {
             {
                 open === true ?
 
-                    <div style={{ 
+                    <div style={{
                         height: '500px',
                         position: 'fixed',
                         right: '0',
                         bottom: '0',
                         zIndex: 1000,
-                        // marginRight: '0'
-                     }}>
+                    }}>
+                        <Button
+                            onClick={() => setOpenPopupOne(false)}
+                            style={{
+                                position: "absolute",
+                                right: '12px',
+                                bottom: '28rem',
+                                fontSize: '23px',
+                                padding: '0px',
+                                backgroundColor: '#F6C58E',
+                                color: 'black'
+                            }}
+                        >
+                            <IoIosClose />
+                        </Button>
+                        {/* <p
+                        
+                        onClick={() => setOpenPopupOne(false)}
+                        >X</p> */}
                         <Col
                             style={{
                                 border: '1px solid black',
                                 backgroundImage: `url(${bgImg})`,
                                 backgroundPosition: 'center',
-                                backgroundSize: 'cover', // Changed from 'cover' to 'contain'
+                                backgroundSize: 'cover',
                                 backgroundRepeat: 'no-repeat',
                                 maxWidth: '500px',
                                 width: '100%',
@@ -54,11 +72,8 @@ function ProviderSignupPopupOne({ open, setOpenPopupTwo }) {
 
                         <Col
                             style={{
-                                // backgroundImage: `url(${bgImg})`,
                                 border: '1px solid black',
                                 backgroundColor: '#F6C58E',
-                                // backgroundSize: 'cover', // Changed from 'cover' to 'contain'
-                                // backgroundRepeat: 'no-repeat',
                                 maxWidth: '500px',
                                 width: '100%',
                                 height: '85%'

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
-import { useActionData, useNavigate, useSubmit } from 'react-router-dom'
+import { Link, useActionData, useNavigate, useSubmit } from 'react-router-dom'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -90,6 +90,7 @@ const ProviderLogin = () => {
           padding: '2rem 4rem 3rem 4rem',
           border: '2px solid #B1660E',
           marginTop: '120px',
+          boxShadow:  '-2px 2px 15px 0px rgba(0,0,0,0.7)'
 
         }}
       >
@@ -178,8 +179,8 @@ const ProviderLogin = () => {
                     paddingBottom: '2rem',
                   }}
                 >
-                  <a href="#" style={style.hypertextBottom} onClick={() => navigate("/auth/signup")}>
-                    join our network
+                  <a href="#" style={style.hypertextBottom} onClick={() => navigate("/Provider/signup")}>
+                    Join our network
                   </a>
                 </div>
 
@@ -205,7 +206,8 @@ const ProviderLogin = () => {
               <Col
                 className='d-flex justify-content-center '
               >
-                <a href='#' style={style.hypertextBottom}>Login as Customer</a>
+                <Link to={"/customer/login"} style={style.hypertextBottom}>Login as Customer</Link>
+                {/* <a href='#' style={style.hypertextBottom}>Login as Customer</a> */}
               </Col>
 
 
