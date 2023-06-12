@@ -32,6 +32,8 @@ const CustomerOnboarding = () => {
     }, [formCompleted])
 
     useEffect(() => {
+        console.log("ACTION DATA")
+        console.log(actionData)
 
         if (actionData && actionData.status == 201 && actionData.data.success == true) {
             console.log("Success new user!")
