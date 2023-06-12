@@ -60,21 +60,25 @@ export default function SignoutModal() {
 
         <Modal.Footer className="d-flex justify-content-center align-items-center border-top-0 gap-3">
           {" "}
-          <Button
-            className="d-flex justify-content-center align-items-center m-0 mb-4"
-            onClick={() => {
-              signout();
-              setCounter(3);
-            }}
-          >
-            Yes, Sign Out
-          </Button>
-          <Button
-            className="d-flex justify-content-center align-items-center m-0 mb-4"
-            variant="outline-primary"
-          >
-            Cancel
-          </Button>
+          {!signedOut && (
+            <>
+              <Button
+                className="d-flex justify-content-center align-items-center m-0 mb-4"
+                onClick={() => {
+                  signout();
+                  setCounter(3);
+                }}
+              >
+                Yes, Sign Out
+              </Button>
+              <Button
+                className="d-flex justify-content-center align-items-center m-0 mb-4"
+                variant="outline-primary"
+              >
+                Cancel
+              </Button>
+            </>
+          )}
         </Modal.Footer>
       </Modal>
     </>
