@@ -15,9 +15,12 @@ model Provider {
   provider_id       Int       @unique @default(autoincrement())
   provider_email    String    @unique
   provider_password String
-  provider_fname    String
-  provider_lname    String
-  provider_phone    String    @unique
+  provider_fname String?  
+  provider_lname String?
+  provider_phone String @unique
+  provider_payment_methods String?
+  provider_standing String?
+  provider_response String?
   preferred_services String? 
   profile_pic       String?
   profile_pic_id    String?
@@ -25,6 +28,7 @@ model Provider {
   // booking_id Int
   service           Service[]
   booking           Booking[]
+  serviceType ProviderToService[]
 }
 
 model Client {
@@ -72,4 +76,23 @@ model Service {
   provider     Provider  @relation(fields: [service_id], references: [provider_id])
   booking_date DateTime?
   payment_fee  Int
+}
+
+model ServiceType {
+  id Int @unique @default(autoincrement())
+  service_name String
+  price Float
+
+  provider ProviderToService[]
+}
+
+model ProviderToService {
+  serviceTypeId Int 
+  providerId Int
+
+  serviceType ServiceType @relation(fields: [serviceTypeId], references: [id])
+  provider Provider @relation(fields: [providerId], references: [provider_id])
+
+  @@id([serviceTypeId, providerId])
+  @@index([serviceTypeId, providerId])
 }

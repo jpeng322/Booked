@@ -93,6 +93,16 @@ export default function providerRouter(passport) {
     }
   });
 
+  router.put("/onboard/provider/:id", passport.authenticate("jwt", { session: false }) async (req, res) => {
+    try {
+      const updatedProvider = await prisma.provider.update({
+        where: {
+
+        }
+      })
+    }
+  })
+
   // Create a new provider
   router.post(
     "/providers",

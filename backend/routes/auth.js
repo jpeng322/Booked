@@ -5,64 +5,6 @@ import prisma from "../db/index.js";
 
 const router = express.Router();
 
-// router.post("/signup", async (request, response) => {
-//   console.log(request.body);
-//   try {
-//     const foundProvider = await prisma.provider.findFirst({
-//       where: {
-//         provider_email: request.body.email,
-//       },
-//     });
-
-//     const foundClient = await prisma.client.findFirst({
-//       where: {
-//         client_email: request.body.email,
-//       },
-//     });
-
-//     console.log(foundProvider, "provider", foundClient, "client");
-//     if (foundProvider || foundClient) {
-//       response.status(400).json({
-//         success: false,
-//         message: "User already exists.",
-//       });
-//     } else {
-//       const pHashedPassword = await argon2.hash(request.body.password);
-//       const newProvider = await prisma.provider.create({
-//         data: {
-//           provider_email: request.body.email,
-//           provider_password: pHashedPassword,
-//           provider_fname: request.body.fname,
-//           provider_lname: request.body.lname,
-//           provider_phone: request.body.phone,
-//         },
-//       });
-//       const cHashedPassword = await argon2.hash(request.body.password);
-//       const newClient = await prisma.client.create({
-//         data: {
-//           client_email: request.body.email,
-//           client_password: cHashedPassword,
-//           client_fname: request.body.fname,
-//           client_lname: request.body.lname,
-//           client_phone: request.body.phone,
-//         },
-//       });
-//       response.status(201).json({
-//         success: true,
-//         message: "Account successfully created!",
-//         newProvider,
-//         newClient,
-//       });
-//     }
-//   } catch (e) {
-//     console.log(e);
-//     response.status(400).json({
-//       success: false,
-//       message: "Something went wrong.",
-//     });
-//   }
-// });
-
 router.post("/signup/provider", async (request, response) => {
   console.log(request.body);
   try {
@@ -91,7 +33,7 @@ router.post("/signup/provider", async (request, response) => {
       response.status(201).json({
         success: true,
         message: "Provider account successfully created!",
-        newProvider
+        newProvider,
       });
     }
   } catch (e) {
@@ -125,13 +67,13 @@ router.post("/signup/client", async (request, response) => {
           client_fname: request.body.fname,
           client_lname: request.body.lname,
           client_phone: request.body.phone,
-          preferred_services: request.body.services, 
+          preferred_services: request.body.services,
         },
       });
       response.status(201).json({
         success: true,
         message: "Client account successfully created!",
-        newClient
+        newClient,
       });
     }
   } catch (e) {
@@ -225,7 +167,7 @@ router.post("/login/client", async (request, response) => {
         response.status(200).json({
           success: true,
           token,
-          type: "client"
+          type: "client",
         });
       } else {
         response.status(401).json({
@@ -234,7 +176,7 @@ router.post("/login/client", async (request, response) => {
         });
       }
     } catch (e) {
-      console.log(e)
+      console.log(e);
       response.status(500).json({
         success: false,
         message: "Something went wrong",
