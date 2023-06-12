@@ -111,6 +111,7 @@ function App() {
   // };
   // }
   const router = createBrowserRouter([
+  
     {
       path: "/",
       element: <Home />,
@@ -155,6 +156,8 @@ function App() {
             phoneNumber,
             preferredServices 
           );
+
+          return apiSignUpData
         } catch (error) {
           return error;
         }

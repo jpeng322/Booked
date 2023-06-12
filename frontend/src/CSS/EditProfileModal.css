@@ -1,6 +1,4 @@
 .edit-input-div {
-  border: 1px solid red;
-
   display: flex;
   /* gap: 1rem; */
 }
