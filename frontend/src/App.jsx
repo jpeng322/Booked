@@ -7,7 +7,6 @@ import providers from "./providers";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import axios from "axios";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { createStore, StateMachineProvider } from "little-state-machine";
 
@@ -26,6 +25,7 @@ import { submitEditForm } from "./components/EditProfileModal";
 import CustomerAccountContact from "./pages/CustomerAccountContact";
 import ProviderPage from "./pages/ProviderPage";
 import AccountSettings from "./pages/AccountSettings";
+import ProviderOnboarding from "./pages/Onboarding";
 
 //loaders
 import {
@@ -37,9 +37,12 @@ import {
   getProviderInfo,
 } from "./api";
 
+<<<<<<< HEAD
 import NavComp from "./components/Navbar";
 import HeroComp from "./components/HeroComp";
 
+=======
+>>>>>>> 9abdec7 (wip: onboarding)
 import ConfirmationPage from "./components/ConfirmationPage";
 import FavoriteProviders from "./components/FavoritesComp";
 import MyProfile from "./components/AccountSettings/MyProfile";
@@ -52,13 +55,150 @@ import Main from "./template/Main";
 import ProviderAccountHero from "./pages/ProviderAccountHero";
 import CustomerOnboarding from "./pages/CustomerOnboarding";
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "auth/loginClient",
+    element: <LoginClient />,
+    action: async ({ request }) => {
+      try {
+        const formData = await request.formData();
+        const email = formData.get("email");
+        const password = formData.get("password");
+        return await fetchLogin(email, password);
+      } catch (error) {
+        return error;
+      }
+    },
+  },
+  {
+    path: "auth/signup",
+    element: <Signup />,
+    action: async ({ request }) => {
+      try {
+        const formData = Object.fromEntries(await request.formData());
+        const { email, password, firstName, lastName, phoneNumber } = formData;
+        // console.log(email, password, firstName, lastName, phoneNumber);
+        return await fetchSignup(
+          email,
+          password,
+          firstName,
+          lastName,
+          phoneNumber
+        );
+      } catch (error) {
+        return error;
+      }
+    },
+  },
+  {
+    path: "provierlogin",
+    element: <Login />,
+    action: async ({ request }) => {
+      try {
+        const formData = await request.formData();
+        const email = formData.get("email");
+        const password = formData.get("password");
+        return await fetchLogin(email, password);
+      } catch (error) {
+        return error;
+      }
+    },
+  },
+  {
+    path: "onboarding",
+    element: <ProviderOnboarding />,
+  },
+  {
+    path: "/customeraccount",
+    element: <CustomerAccountContact />,
+  },
+  {
+    path: "/preferences",
+    element: <OnboardingSurvey />,
+  },
+  {
+    path: "/recommendations",
+    element: <Recommendations />,
+  },
+  {
+    path: "/profile",
+    element: <Profile providers={providers} />,
+  },
+  {
+    path: "/customer/bookings",
+    element: <CustomerAcc />,
+  },
+  {
+    path: "/carousel",
+    element: <FavoriteProviders />,
+  },
+  {
+    path: "/provider",
+    element: <ProviderCard providers={providers} />,
+  },
+  {
+    path: "/about",
+    element: <About />,
+  },
+  {
+    path: "/provider/profile",
+    element: <ProviderPage />,
+    action: submitRequestForm,
+  },
+  {
+    path: "/provider/bookings",
+    element: <ProviderBookings />,
+    loader: getProviderBookings,
+  },
+  {
+    path: "/customer/confirmation/:booking_id",
+    loader: ({ params }) => {
+      const booking_id = params.booking_id;
+      return getBooking(booking_id);
+    },
+    element: <ConfirmationPage />,
+  },
+  {
+    path: "/settings",
+    element: <AccountSettings />,
+    children: [
+      {
+        path: "myprofile",
+        element: <MyProfile />,
+      },
+      {
+        path: "notifications",
+        element: <Notifications />,
+      },
+      {
+        path: "signout",
+        element: <SignOut />,
+      },
+      {
+        path: "delete_account",
+        element: <DeleteAccount />,
+      },
+      {
+        path: "wallet",
+        element: <Wallet />,
+      },
+    ],
+  },
+]);
 
 function App() {
   const [count, setCount] = useState(0);
+<<<<<<< HEAD
   // const [formData, setFormData] = useState();
   // console.log(formData);
 
   createStore({});
+=======
+>>>>>>> 9abdec7 (wip: onboarding)
 
   async function checkout() {
     try {
@@ -109,6 +249,7 @@ function App() {
   //     });
   // };
   // }
+<<<<<<< HEAD
   const router = createBrowserRouter([
     {
       path: "/",
@@ -356,6 +497,12 @@ function App() {
         <RouterProvider router={router} />
       </div>
     </StateMachineProvider>
+=======
+  return (
+    <div className="App">
+      <RouterProvider router={router} />
+    </div>
+>>>>>>> 9abdec7 (wip: onboarding)
   );
 }
 
