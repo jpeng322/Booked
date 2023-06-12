@@ -72,14 +72,12 @@ const Home = () => {
         <button onClick={() => navigate("auth/login")}>Login</button>
         <button onClick={() => navigate("auth/loginClient")}>
           Client Login
-        </button>
+        </button> 
         {/* <button onClick={() => navigate("/customeraccount")}>Customer Accunt Contact</button> */}
 
-        <button onClick={() => navigate("provierlogin")}>Login</button>
-        <button onClick={() => navigate("clientlogin")}>Client Login</button>
-        <button onClick={() => navigate("/customeraccount")}>
-          Customer Accunt Contact
-        </button>
+        <button onClick={() => navigate("provider/login")}>Provider Login</button>
+        <button onClick={() => navigate("customer/login")}>Customer Login</button>
+        <button onClick={() => navigate("/customeraccount")}>Customer Accunt Contact</button>
         <NavComp />
         {/* <LoggedInNavbar /> */}
         <HeroComp />

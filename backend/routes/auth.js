@@ -124,7 +124,8 @@ router.post("/signup/client", async (request, response) => {
           client_password: cHashedPassword,
           client_fname: request.body.fname,
           client_lname: request.body.lname,
-          client_phone: request.body.number,
+          client_phone: request.body.phone,
+          preferred_services: request.body.services, 
         },
       });
       response.status(201).json({
