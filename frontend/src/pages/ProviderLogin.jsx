@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useActionData, useNavigate, useSubmit, Link } from "react-router-dom";
+import axios from "axios";
+import { Link, useActionData, useNavigate, useSubmit } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -11,9 +12,7 @@ import Image from "react-bootstrap/Image";
 import bgImg from "../images/login-background.png";
 import logo from "../images/logo.png";
 
-// This will be the Client login. For now it only logs in provider.
-
-const LoginClient = () => {
+const ProviderLogin = () => {
   const submit = useSubmit();
   const actionData = useActionData();
   const navigate = useNavigate();
@@ -29,7 +28,7 @@ const LoginClient = () => {
       actionData.status == 200 &&
       actionData.data.success == true
     ) {
-      console.log("welcome back CLIENT user");
+      console.log("welcome back PROVIDER user");
       navigate("/");
     }
   }, [actionData]);
@@ -39,13 +38,13 @@ const LoginClient = () => {
 
     submit(data, {
       method: "post",
-      action: "/login/client",
+      action: "/provider/login",
     });
   };
 
   const style = {
     label: {
-      color: "#263646",
+      color: "#B1660E",
       fontSize: "24px",
       // border: '1px solid black',
       marginBottom: "0",
@@ -57,19 +56,17 @@ const LoginClient = () => {
       borderRadius: "10px",
     },
     hypertext: {
-      color: "#263646",
+      color: "#476685",
       fontSize: "12px",
       textDecoration: "none",
     },
     hypertextBottom: {
-      color: "#263646",
+      color: "#476685",
       fontSize: "16px",
       textDecoration: "none",
       fontWeight: "500",
     },
   };
-
-  // console.log(actionData);
 
   return (
     <div
@@ -91,6 +88,7 @@ const LoginClient = () => {
           padding: "2rem 4rem 3rem 4rem",
           border: "2px solid #B1660E",
           marginTop: "120px",
+          boxShadow: "-2px 2px 15px 0px rgba(0,0,0,0.7)",
         }}
       >
         <Container
@@ -123,16 +121,19 @@ const LoginClient = () => {
             className="text-center fw-normal"
             style={{
               // border: '1px solid blue',
-              color: "#263646",
+              color: "#B1660E",
               fontSize: "38px",
             }}
           >
-            User Login
+            Provider Login
           </h1>
 
           <Row>
-            <Col>
-              <Form onSubmit={handleSubmit(onSubmit)}>
+            <Col
+            // lg={{ span: 4, offset: 4 }}
+            // md={{ span: 0, offset: 0 }}
+            >
+              <Form className="mb-2" onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label style={style.label}>Username</Form.Label>
                   <Form.Control
@@ -161,6 +162,8 @@ const LoginClient = () => {
                   gap={3}
                   className="col-lg-12 col-md-12 col-sm-10 justify-content-center mx-auto"
                   style={{
+                    // paddingRight: '2rem',
+                    // paddingLeft: '2rem',
                     paddingTop: "1rem",
                     paddingBottom: "1rem",
                     // border: '1px solid black',
@@ -185,9 +188,9 @@ const LoginClient = () => {
                   <a
                     href="#"
                     style={style.hypertextBottom}
-                    onClick={() => navigate("/auth/signup")}
+                    onClick={() => navigate("/Provider/signup")}
                   >
-                    Create an account
+                    Join our network
                   </a>
                 </div>
 
@@ -200,9 +203,9 @@ const LoginClient = () => {
                       margin: "20px 10px 20px 10px",
                       fontWeight: "400",
                       fontSize: "25px",
-                      color: "#F9EDB4",
+                      color: "#476685",
                       backgroundColor: "#F1A855",
-                      border: "2px solid #263646",
+                      border: "2px solid #B1660E",
                     }}
                   >
                     Login
@@ -211,10 +214,10 @@ const LoginClient = () => {
               </Form>
 
               <Col className="d-flex justify-content-center ">
-                {/* <a onClick={navigate("auth/login/provider")} style={style.hypertextBottom}>Login as Provider</a> */}
-                <Link to="/login/provider" style={style.hypertextBottom}>
-                  Login as Provider
+                <Link to={"/customer/login"} style={style.hypertextBottom}>
+                  Login as Customer
                 </Link>
+                {/* <a href='#' style={style.hypertextBottom}>Login as Customer</a> */}
               </Col>
             </Col>
           </Row>
@@ -224,4 +227,4 @@ const LoginClient = () => {
   );
 };
 
-export default LoginClient;
+export default ProviderLogin;

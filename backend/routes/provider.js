@@ -178,6 +178,47 @@ export default function providerRouter(passport) {
     }
   );
 
+
+
+  // router.put('/preferred-services', passport.authenticate("jwt", { session: false }), async (request, response) => {
+  //   console.log('THIS IS THE PROVIDER:', request.user.Provider)
+  //   try {
+  //     const providerPreferredServices = await prisma.provider.updateMany({
+  //       where: {
+  //         AND: [
+  //             {provider_id: request.user.Provider.provider_id},
+  //             {provider_email: request.user.Provider.provider_email},
+  //         ],
+  //       },
+
+  //       data: {
+  //         preferred_services: request.body.preferred_services,
+  //       },
+
+  //     });
+  
+  //     if(providerPreferredServices.count == 0){
+  //       response.status(404).json({
+  //         success: false,
+  //         message: "Provider does not exist for this user"
+  //       });
+  //     }
+  //     else {
+  //       response.status(200).json({
+  //         success: true,
+  //         providerPreferredServices
+  //       })
+  //     }
+  
+  //   } catch (error) {
+  //     response.status(500).json({
+  //       success: false,
+  //       message: 'failed to edit client'
+  //     });
+  //   }
+  // });
+
+
   // Delete a provider by ID
   router.delete(
     "/providers/:id",
