@@ -15,14 +15,15 @@ import {
   Stack,
   Table,
 } from "react-bootstrap";
-import { FaPlusCircle } from "react-icons/fa";
+import { FaPlusCircle, FaArrowLeft } from "react-icons/fa";
 import { applyOnboarding } from "../api";
-import { registerLocale } from "react-datepicker";
+import "../CSS/ProviderOnboarding.css";
 
 const Initial = () => {
   const { register } = useFormContext();
   return (
     <div>
+      <h1 className="text-center">Tell us more about your business</h1>
       <Form.Group className="mb-2">
         <Form.Label>What is your name?</Form.Label>
         <Stack direction="horizontal" gap={2}>
@@ -41,7 +42,8 @@ const Initial = () => {
         </Stack>
       </Form.Group>
       <Form.Group className="mb-2">
-        <ul className="list-style-none">
+        <Form.Label>Which best describes your needs? </Form.Label>
+        <ul>
           <li>
             <Form.Check
               type="radio"
@@ -80,8 +82,9 @@ const ResponseTime = () => {
   const { register } = useFormContext();
   return (
     <div>
+      <h1 className="text-center">What is your estimated response time?</h1>
       <Form.Group className="mb-2">
-        <ul className="list-style-none">
+        <ul>
           <li>
             <Form.Check
               type="radio"
@@ -140,8 +143,9 @@ const PaymentMethod = () => {
   const { register } = useFormContext();
   return (
     <div>
+      <h1 className="text-center">What payment methods do you accept?</h1>
       <Form.Group className="mb-2">
-        <ul className="list-style-none">
+        <ul>
           <li>
             <Form.Check
               type="checkbox"
@@ -204,11 +208,15 @@ const ServicesProvided = () => {
   });
   return (
     <>
-      <Table>
+      <Table borderless>
         <thead>
           <tr>
-            <th>List services that you provide</th>
-            <th>Price</th>
+            <th>
+              <h2 className="text-center">List services that you provide</h2>
+            </th>
+            <th>
+              <h2 className="text-center">Price</h2>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -240,12 +248,14 @@ const ServicesProvided = () => {
           ))}
           <tr>
             <td colSpan={2}>
-              <Button
-                variant="light"
-                onClick={() => append({ service: "", price: 0 })}
-              >
-                <FaPlusCircle />
-              </Button>
+              <div className="d-flex justify-content-center">
+                <Button
+                  variant="light"
+                  onClick={() => append({ service: "", price: 0 })}
+                >
+                  <FaPlusCircle />
+                </Button>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -258,6 +268,7 @@ const MoreInfo = () => {
   const { register } = useFormContext();
   return (
     <div>
+      <h1 className="text-center">Lastly, specify your information below</h1>
       <Form.Group className="mb-3">
         <Form.Label>What area do you primarily serve?</Form.Label>
         <Form.Control
@@ -321,59 +332,104 @@ const ProviderOnboarding = () => {
   };
 
   return (
-    <div>
+    <div className="pt-3 m-5">
       <Container fluid>
-        <Row>
-          <Col>
-            <div className="step-pill"></div>
-          </Col>
-          <Col></Col>
-          <Col></Col>
-          <Col></Col>
-          <Col></Col>
-        </Row>
-        <Row>
-          <Col>
-            <FormProvider {...methods}>
-              <Form onSubmit={methods.handleSubmit(submitProviderInfo)}>
-                {formStep == 1 && <Initial />}
-                {formStep == 2 && <ResponseTime />}
-                {formStep == 3 && <PaymentMethod />}
-                {formStep == 4 && <ServicesProvided />}
-                {formStep == 5 && <MoreInfo />}
-                <Row>
-                  <Col>
-                    {formStep > 1 && (
-                      <Button
-                        type="button"
-                        onClick={() =>
-                          setFormStep((prevState) => prevState - 1)
-                        }
-                      >
-                        Back
-                      </Button>
-                    )}
-                  </Col>
-                  <Col>
-                    {formStep <= 4 && (
-                      <Button
-                        type="button"
-                        onClick={() =>
-                          setFormStep((prevState) => prevState + 1)
-                        }
-                      >
-                        Next
-                      </Button>
-                    )}
-                    {formStep == 5 && (
-                      <Button type="submit">Create Account</Button>
-                    )}
-                  </Col>
-                </Row>
-              </Form>
-            </FormProvider>
-          </Col>
-        </Row>
+        <div className="mb-5">
+          <Row>
+            <Col>
+              <div
+                className={`step-pill ${
+                  formStep >= 1 ? "active-pill" : "not-active-pill"
+                }`}
+              ></div>
+            </Col>
+            <Col>
+              <div
+                className={`step-pill ${
+                  formStep >= 2 ? "active-pill" : "not-active-pill"
+                }`}
+              ></div>
+            </Col>
+            <Col>
+              <div
+                className={`step-pill ${
+                  formStep >= 3 ? "active-pill" : "not-active-pill"
+                }`}
+              ></div>
+            </Col>
+            <Col>
+              <div
+                className={`step-pill ${
+                  formStep >= 4 ? "active-pill" : "not-active-pill"
+                }`}
+              ></div>
+            </Col>
+            <Col>
+              <div
+                className={`step-pill ${
+                  formStep >= 5 ? "active-pill" : "not-active-pill"
+                }`}
+              ></div>
+            </Col>
+          </Row>
+        </div>
+        <div className="mx-auto">
+          <Row>
+            <Col>
+              <FormProvider {...methods}>
+                <Form onSubmit={methods.handleSubmit(submitProviderInfo)}>
+                  <div className="mx-auto onboarding-main-form mb-5">
+                    {formStep == 1 && <Initial />}
+                    {formStep == 2 && <ResponseTime />}
+                    {formStep == 3 && <PaymentMethod />}
+                    {formStep == 4 && <ServicesProvided />}
+                    {formStep == 5 && <MoreInfo />}
+                  </div>
+                  <Row>
+                    <Col md={6}>
+                      <div className="d-flex justify-content-start">
+                        {formStep > 1 && (
+                          <Button
+                            type="button"
+                            size="lg"
+                            onClick={() =>
+                              setFormStep((prevState) => prevState - 1)
+                            }
+                          >
+                            <span className="d-flex justify-content-center align-items-center">
+                              <FaArrowLeft />
+                              <span className="ms-3">Back</span>
+                            </span>
+                          </Button>
+                        )}
+                      </div>
+                    </Col>
+                    <Col md={6}>
+                      <div className="d-flex justify-content-end">
+                        {formStep <= 4 && (
+                          <Button
+                            size="lg"
+                            type="button"
+                            onClick={() =>
+                              setFormStep((prevState) => prevState + 1)
+                            }
+                          >
+                            Next
+                          </Button>
+                        )}
+                        {formStep == 5 && (
+                          <Button size="lg" type="submit">
+                            Create Account
+                          </Button>
+                        )}
+                      </div>
+                    </Col>
+                  </Row>
+                </Form>
+              </FormProvider>
+            </Col>
+          </Row>
+        </div>
       </Container>
     </div>
   );
