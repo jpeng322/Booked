@@ -9,18 +9,22 @@ const MyProfile = () => {
     useState(providerLoaderData);
   return (
     <div className="myprofile-container">
-      <EditProfileModal
-        showConfirmation={showConfirmation}
-        setShowConfirmation={setShowConfirmation}
-        setProviderInformation={setProviderInformation}
-        show={showSignoutModal}
-        onHide={() => {
-          setShowSignoutModal(false);
-        }}
-      />
-      <div className="account-settings-tabs-content-header">My Profile</div>
+      <div className="myprofile-header">
+        <div className="account-settings-tabs-content-header">My Profile</div>
+        <div className="myprofile-edit">
+          {" "}
+          <EditProfileModal
+            showConfirmation={showConfirmation}
+            setShowConfirmation={setShowConfirmation}
+            setProviderInformation={setProviderInformation}
+            show={showSignoutModal}
+            onHide={() => {
+              setShowSignoutModal(false);
+            }}
+          />
+        </div>
+      </div>
       <div className="myprofile-card">
-        <div className="myprofile-edit">Edit</div>
         <div className="myprofile-row d-flex">
           <div>
             <div>Business Name:</div>
