@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import Modal from "react-bootstrap/Modal";
 
 import "../../CSS/AccountSettings.css";
+import NotificationsModal from "../NotificationsModal";
+
 const Notifications = () => {
   return (
     <div className="notifications-container">
@@ -10,7 +13,9 @@ const Notifications = () => {
           <div>
             Confirm Phone number and email address for notifications on account.
           </div>
-          <div>Edit</div>
+          <div>
+            <NotificationsModal />{" "}
+          </div>
         </div>
         <div className="d-flex justify-content-around">
           <div>Phone number?</div>
@@ -20,7 +25,7 @@ const Notifications = () => {
       <div className="notification-card">
         <div className="d-flex justify-content-between  ">
           <div>Type of notifications</div>
-          <div>Edit</div>
+          <NotificationsModal type="notificationType" />
         </div>
         <div>
           <div className="d-flex justify-content-around">

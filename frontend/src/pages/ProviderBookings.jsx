@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Container, Col, Row, Pagination } from "react-bootstrap";
 import ProviderBookingInfo from "../components/ProviderBookingInfo";
+import ProviderBookingsHeader from "../components/ProviderBookingsHeader";
 import axios from "axios";
 import { useLoaderData } from "react-router-dom";
 //styling
 import "../CSS/ProviderBooking.css";
 import "react-calendar/dist/Calendar.css";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -18,6 +20,7 @@ const ProviderBookings = () => {
   const bookingData = useLoaderData();
 
   const [bookings, setBookings] = useState(bookingData);
+  console.log(bookingData);
 
   const [pendingBookings, setPendingBookings] = useState(
     bookings.filter((booking) => booking.status === "pending")
@@ -29,21 +32,20 @@ const ProviderBookings = () => {
     bookings.filter((booking) => booking.status === "completed")
   );
 
-  const [paginationBookings, setPaginationBookings] = useState(bookings);
-
-  const [bookingTab, setBookingTab] = useState("all");
+  const [cancelledBookings, setCancelledBookings] = useState(
+    bookings.filter((booking) => booking.status === "cancelled")
+  );
 
   const [filteredBookings, setFilteredBookings] = useState();
-  console.log(paginationBookings, "PAGINATION BOOKINGS");
 
   const numberOfBookings = 10;
-  const numberOfPages = Math.ceil(paginationBookings.length / numberOfBookings);
+  const numberOfPages = Math.ceil(bookings.length / numberOfBookings);
 
   const [pageNumber, setPageNumber] = useState(1);
   const currentBookings =
     pageNumber === 1
-      ? paginationBookings.slice(0, pageNumber * numberOfBookings)
-      : paginationBookings.slice(
+      ? bookings.slice(0, pageNumber * numberOfBookings)
+      : bookings.slice(
           (pageNumber - 1) * numberOfBookings,
           pageNumber * numberOfBookings
         );
@@ -68,16 +70,18 @@ const ProviderBookings = () => {
     pendingBookings.length / numberOfBookings
   );
 
+  console.log(numberOfPendingPages);
   const [pendingPageNumber, setPendingPageNumber] = useState(1);
   const currentPendingBookings =
-    pageNumber === 1
-      ? pendingBookings.slice(0, pageNumber * numberOfBookings)
+    pendingPageNumber === 1
+      ? pendingBookings.slice(0, pendingPageNumber * numberOfBookings)
       : pendingBookings.slice(
-          (pageNumber - 1) * numberOfBookings,
-          pageNumber * numberOfBookings
+          (pendingPageNumber - 1) * numberOfBookings,
+          pendingPageNumber * numberOfBookings
         );
 
   let pendingItems = [];
+  console.log(pendingItems);
   for (let number = 1; number <= numberOfPendingPages; number++) {
     pendingItems.push(
       <Pagination.Item
@@ -99,11 +103,11 @@ const ProviderBookings = () => {
 
   const [scheduledPageNumber, setScheduledPageNumber] = useState(1);
   const currentScheduledBookings =
-    pageNumber === 1
-      ? scheduledBookings.slice(0, pageNumber * numberOfBookings)
+    scheduledPageNumber === 1
+      ? scheduledBookings.slice(0, scheduledPageNumber * numberOfBookings)
       : scheduledBookings.slice(
-          (pageNumber - 1) * numberOfBookings,
-          pageNumber * numberOfBookings
+          (scheduledPageNumber - 1) * numberOfBookings,
+          scheduledPageNumber * numberOfBookings
         );
 
   let scheduledItems = [];
@@ -128,11 +132,11 @@ const ProviderBookings = () => {
 
   const [completedPageNumber, setCompletedPageNumber] = useState(1);
   const currentCompletedBookings =
-    pageNumber === 1
-      ? completedBookings.slice(0, pageNumber * numberOfBookings)
+    completedPageNumber === 1
+      ? completedBookings.slice(0, completedPageNumber * numberOfBookings)
       : completedBookings.slice(
-          (pageNumber - 1) * numberOfBookings,
-          pageNumber * numberOfBookings
+          (completedPageNumber - 1) * numberOfBookings,
+          completedPageNumber * numberOfBookings
         );
 
   let completedItems = [];
@@ -151,22 +155,37 @@ const ProviderBookings = () => {
     );
   }
 
+  const numberOfCancelledPages = Math.ceil(
+    cancelledBookings.length / numberOfBookings
+  );
+
+  const [cancelledPageNumber, setCancelledPageNumber] = useState(1);
+  const currentCancelledBookings =
+    cancelledPageNumber === 1
+      ? cancelledBookings.slice(0, cancelledPageNumber * numberOfBookings)
+      : cancelledBookings.slice(
+          (cancelledPageNumber - 1) * numberOfBookings,
+          cancelledPageNumber * numberOfBookings
+        );
+
+  let cancelledItems = [];
+  for (let number = 1; number <= numberOfCancelledPages; number++) {
+    cancelledItems.push(
+      <Pagination.Item
+        onClick={(e) => {
+          // console.log(breeds)
+          setCancelledPageNumber(parseInt(e.target.textContent));
+        }}
+        key={number}
+        active={number === cancelledPageNumber}
+      >
+        {number}
+      </Pagination.Item>
+    );
+  }
+
   let today = new Date();
 
-  let date =
-    parseInt(today.getMonth() + 1) +
-    "/" +
-    today.getDate() +
-    "/" +
-    today.getFullYear();
-
-  function sameOrAfterDateNow(date) {
-    return moment().isAfter(date) || moment().isSame(date, "day");
-  }
-
-  function isDayOf(date) {
-    return moment().isSame(date, "day");
-  }
   const bookingMakers = bookings.map((booking) => ({
     title: booking.client_name,
     status: booking.status,
@@ -175,25 +194,15 @@ const ProviderBookings = () => {
     color: "white",
     colorEvento:
       booking.status === "pending"
-        ? 
-          "#F3DD69"
+        ? "#F9EDB4"
         : booking.status === "completed"
-        ? "#F6C58E"
-        : 
-        booking.status === "cancelled"
+        ? "#889263"
+        : booking.status === "cancelled"
         ? "#FF6D60"
-        : "#AFC2D4",
+        : "#6d8fb0",
     // "#146C94",
   }));
   // console.log(newBookings);
-
-  function filterBooking(status) {
-    console.log("FILTERED");
-    // setBookings(bookingData.filter((booking) => booking.status === status));
-    setFilteredBookings(
-      bookings.filter((booking) => booking.status === status)
-    );
-  }
 
   const numberOfPending = bookingData.filter(
     (booking) => booking.status === "pending"
@@ -203,7 +212,7 @@ const ProviderBookings = () => {
   return (
     <Container
       fluid
-      className="provider-booking-container d-flex flex-column justify-content-center align-items-center border w-100  gap-5"
+      className="provider-booking-container d-flex flex-column justify-content-center align-items-center border w-100 "
     >
       <Calendar
         localizer={localizer}
@@ -219,52 +228,42 @@ const ProviderBookings = () => {
           return { style: { backgroundColor, color } };
         }}
       />
-      <div className="provider-booking-filter">
-        <div
-          className="pending filter"
-          // onClick={() => filterBooking("pending")}
-          onClick={() => {
-            setBookingTab("pending");
-            setPaginationBookings(pendingBookings);
-          }}
-        >
-          Pending (
-          {bookings.filter((booking) => booking.status === "pending").length})
-        </div>
-        <div
-          className="upcoming filter"
-          // onClick={() => filterBooking("scheduled")}
-          onClick={() => setBookingTab("scheduled")}
-        >
-          {" "}
-          Upcoming (
-          {bookings.filter((booking) => booking.status === "scheduled").length})
-        </div>
-        <div
-          className="completed filter"
-          // onClick={() => filterBooking("completed")}
-          onClick={() => setBookingTab("completed")}
-        >
-          Completed (
-          {bookings.filter((booking) => booking.status === "completed").length})
-        </div>
-      </div>
-      {/* <Calendar onChange={onChange} value={value} /> */}
-      <div className="provider-booking-rows w-100 text-center">
-        <div className="provider-booking-header-container ">
-          <div className="provider-booking-header">Name:</div>
-          <div className="provider-booking-header only-large">Address:</div>
-          <div className="provider-booking-header">Job Type:</div>
-          <div className="provider-booking-header only-large">Description:</div>
-          <div className="provider-booking-header only-large">Book Date:</div>
-          <div className="provider-booking-header only-large">Due Date:</div>
-          <div className="provider-booking-header ">Earning:</div>
-          <div className="provider-booking-header">Status:</div>
-          <div className="provider-booking-header"></div>
-        </div>
-        <div className="booking-info-container">
-          {bookingTab === "all" &&
-            currentBookings.map((booking) => (
+      <Tabs>
+        <TabList>
+          <Tab className="all-tab react-tabs__tab">All ({bookings.length})</Tab>
+          <Tab className="pending-tab react-tabs__tab">
+            Pending (
+            {bookings.filter((booking) => booking.status === "pending").length})
+          </Tab>
+          <Tab className="upcoming-tab react-tabs__tab">
+            Upcoming (
+            {
+              bookings.filter((booking) => booking.status === "scheduled")
+                .length
+            }
+            )
+          </Tab>
+          <Tab className="completed-tab react-tabs__tab">
+            Completed (
+            {
+              bookings.filter((booking) => booking.status === "completed")
+                .length
+            }
+            )
+          </Tab>
+          <Tab className="cancelled-tab react-tabs__tab">
+            Cancelled (
+            {
+              bookings.filter((booking) => booking.status === "cancelled")
+                .length
+            }
+            )
+          </Tab>
+        </TabList>
+        <TabPanel>
+          <div className="provider-booking-rows w-100 text-center">
+            <ProviderBookingsHeader />
+            {currentBookings.map((booking) => (
               <ProviderBookingInfo
                 bookings={bookings}
                 setBookings={setBookings}
@@ -283,97 +282,134 @@ const ProviderBookings = () => {
                 setPendingBookings={setPendingBookings}
                 setScheduledBookings={setScheduledBookings}
                 setCompletedBookings={setCompletedBookings}
+                setCancelledBookings={setCancelledBookings}
               />
             ))}
-
-          {bookingTab === "pending" &&
-            currentPendingBookings.map((booking) => (
-              <ProviderBookingInfo
-                bookings={bookings}
-                setBookings={setBookings}
-                id={booking.booking_id}
-                key={booking.id}
-                client_name={booking.client_name}
-                address={booking.address}
-                address_id={booking.address_id}
-                service_type={booking.service_type}
-                order_desc={booking.order_desc}
-                start_date={booking.start_date}
-                end_date={booking.end_date}
-                // order_due={booking.order_due}
-                cost={booking.cost}
-                status={booking.status}
-                filterBooking={filterBooking}
-                setFilteredBookings={setFilteredBookings}
-                setPendingBookings={setPendingBookings}
-                setScheduledBookings={setScheduledBookings}
-                setCompletedBookings={setCompletedBookings}
-              />
-            ))}
-
-          {bookingTab === "scheduled" &&
-            currentScheduledBookings.map((booking) => (
-              <ProviderBookingInfo
-                bookings={bookings}
-                setBookings={setBookings}
-                id={booking.booking_id}
-                key={booking.id}
-                client_name={booking.client_name}
-                address={booking.address}
-                address_id={booking.address_id}
-                service_type={booking.service_type}
-                order_desc={booking.order_desc}
-                start_date={booking.start_date}
-                end_date={booking.end_date}
-                // order_due={booking.order_due}
-                cost={booking.cost}
-                status={booking.status}
-                filterBooking={filterBooking}
-                setFilteredBookings={setFilteredBookings}
-                setPendingBookings={setPendingBookings}
-                setScheduledBookings={setScheduledBookings}
-                setCompletedBookings={setCompletedBookings}
-              />
-            ))}
-
-          {bookingTab === "completed" &&
-            currentCompletedBookings.map((booking) => (
-              <ProviderBookingInfo
-                bookings={bookings}
-                setBookings={setBookings}
-                id={booking.booking_id}
-                key={booking.id}
-                client_name={booking.client_name}
-                address={booking.address}
-                address_id={booking.address_id}
-                service_type={booking.service_type}
-                order_desc={booking.order_desc}
-                start_date={booking.start_date}
-                end_date={booking.end_date}
-                // order_due={booking.order_due}
-                cost={booking.cost}
-                status={booking.status}
-                filterBooking={filterBooking}
-                setFilteredBookings={setFilteredBookings}
-                setPendingBookings={setPendingBookings}
-                setScheduledBookings={setScheduledBookings}
-                setCompletedBookings={setCompletedBookings}
-              />
-            ))}
-
+          </div>
           {numberOfPages > 1 && (
             <div className="pagination-container">
               <Pagination>{items}</Pagination>
             </div>
           )}
-
-          {/* {numberOfPendingPages > 1 && (
+        </TabPanel>
+        <TabPanel>
+          <div className="provider-booking-rows w-100 text-center">
+            <ProviderBookingsHeader />
+            {currentPendingBookings.map((booking) => (
+              <ProviderBookingInfo
+                bookings={bookings}
+                setBookings={setBookings}
+                id={booking.booking_id}
+                key={booking.id}
+                client_name={booking.client_name}
+                address={booking.address}
+                address_id={booking.address_id}
+                service_type={booking.service_type}
+                order_desc={booking.order_desc}
+                start_date={booking.start_date}
+                end_date={booking.end_date}
+                // order_due={booking.order_due}
+                cost={booking.cost}
+                status={booking.status}
+                setFilteredBookings={setFilteredBookings}
+                setPendingBookings={setPendingBookings}
+                setScheduledBookings={setScheduledBookings}
+                setCompletedBookings={setCompletedBookings}
+                setCancelledBookings={setCancelledBookings}
+              />
+            ))}
+          </div>
+          {numberOfPendingPages > 1 && (
             <div className="pagination-container">
               <Pagination>{pendingItems}</Pagination>
             </div>
-          )} */}
-        </div>
-      </div>
+          )}
+        </TabPanel>
+        <TabPanel>
+          <div className="provider-booking-rows w-100 text-center">
+            <ProviderBookingsHeader />
+            {currentScheduledBookings.map((booking) => (
+              <ProviderBookingInfo
+                bookings={bookings}
+                setBookings={setBookings}
+                id={booking.booking_id}
+                key={booking.id}
+                client_name={booking.client_name}
+                address={booking.address}
+                address_id={booking.address_id}
+                service_type={booking.service_type}
+                order_desc={booking.order_desc}
+                start_date={booking.start_date}
+                end_date={booking.end_date}
+                // order_due={booking.order_due}
+                cost={booking.cost}
+                status={booking.status}
+                setFilteredBookings={setFilteredBookings}
+                setPendingBookings={setPendingBookings}
+                setScheduledBookings={setScheduledBookings}
+                setCompletedBookings={setCompletedBookings}
+                setCancelledBookings={setCancelledBookings}
+              />
+            ))}
+          </div>
+        </TabPanel>
+        <TabPanel>
+          <div className="provider-booking-rows w-100 text-center">
+            <ProviderBookingsHeader />
+            {currentCompletedBookings.map((booking) => (
+              <ProviderBookingInfo
+                bookings={bookings}
+                setBookings={setBookings}
+                id={booking.booking_id}
+                key={booking.id}
+                client_name={booking.client_name}
+                address={booking.address}
+                address_id={booking.address_id}
+                service_type={booking.service_type}
+                order_desc={booking.order_desc}
+                start_date={booking.start_date}
+                end_date={booking.end_date}
+                // order_due={booking.order_due}
+                cost={booking.cost}
+                status={booking.status}
+                setFilteredBookings={setFilteredBookings}
+                setPendingBookings={setPendingBookings}
+                setScheduledBookings={setScheduledBookings}
+                setCompletedBookings={setCompletedBookings}
+                setCancelledBookings={setCancelledBookings}
+              />
+            ))}
+          </div>
+        </TabPanel>
+        <TabPanel>
+          <div className="provider-booking-rows w-100 text-center">
+            <ProviderBookingsHeader />
+            {currentCancelledBookings.map((booking) => (
+              <ProviderBookingInfo
+                bookings={bookings}
+                setBookings={setBookings}
+                id={booking.booking_id}
+                key={booking.id}
+                client_name={booking.client_name}
+                address={booking.address}
+                address_id={booking.address_id}
+                service_type={booking.service_type}
+                order_desc={booking.order_desc}
+                start_date={booking.start_date}
+                end_date={booking.end_date}
+                // order_due={booking.order_due}
+                cost={booking.cost}
+                status={booking.status}
+                setFilteredBookings={setFilteredBookings}
+                setPendingBookings={setPendingBookings}
+                setScheduledBookings={setScheduledBookings}
+                setCompletedBookings={setCompletedBookings}
+                setCancelledBookings={setCancelledBookings}
+              />
+            ))}
+          </div>
+        </TabPanel>
+      </Tabs>
     </Container>
   );
 };

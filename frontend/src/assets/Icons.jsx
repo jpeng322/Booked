@@ -69,21 +69,37 @@ export const BookedLogo = () => {
   );
 };
 
-
 export const StarIcon = () => {
   return (
     <svg
-    viewBox="0 0 24 24"
-    width="24"
-    height="24"
-    stroke="currentColor"
-    stroke-width="1"
-    fill="yellow"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    class="css-i6dzq1"
-  >
-    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-  </svg>
+      viewBox="0 0 24 24"
+      width="24"
+      height="24"
+      stroke="currentColor"
+      stroke-width="1"
+      fill="yellow"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="css-i6dzq1"
+    >
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+    </svg>
+  );
+};
+
+export const EditIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="21"
+      height="11"
+      viewBox="0 0 21 11"
+      fill="none"
+    >
+      <path
+        d="M0 3.22917H12.7396V4.60987H0V3.22917ZM0 1.84847H12.7396V0.467773H0V1.84847ZM0 7.37126H8.10699V5.99057H0V7.37126ZM17.3837 5.21047L18.206 4.72032C18.6577 4.45109 19.3873 4.45109 19.839 4.72032L20.6612 5.21047C21.1129 5.47971 21.1129 5.91463 20.6612 6.18386L19.839 6.67401L17.3837 5.21047ZM16.5614 5.70062L10.4233 9.35947V10.823H12.8785L19.0167 7.16416L16.5614 5.70062Z"
+        fill="black"
+      />
+    </svg>
   );
 };

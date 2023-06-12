@@ -31,7 +31,7 @@ export const fetchLogin = async (email, password) => {
 export const fetchSignup = async (email, password, firstName, lastName, phoneNumber, preferredServices ) => {
     // console.log(email, password, firstName, lastName, phoneNumber)
     try {
-        const apiSignupData = await axios.post(`http://localhost:${import.meta.env.VITE_PORT}/auth/signup`, {
+        const apiSignupData = await axios.post(`http://localhost:${import.meta.env.VITE_PORT}/auth/signup/client`, {
             email: email,
             password: password,
             fname: firstName,

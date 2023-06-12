@@ -9,7 +9,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { createStore, StateMachineProvider } from 'little-state-machine';
+import { createStore, StateMachineProvider } from "little-state-machine";
 
 //pages
 import Home from "./pages/Home";
@@ -34,9 +34,8 @@ import {
   getBooking,
   getProviderBookings,
   getCoords,
-  getProviderInfo
+  getProviderInfo,
 } from "./api";
-
 
 import NavComp from "./components/Navbar";
 import HeroComp from "./components/HeroComp";
@@ -49,8 +48,9 @@ import DeleteAccount from "./components/AccountSettings/DeleteAccount";
 import Wallet from "./components/AccountSettings/Wallet";
 import SignOut from "./components/AccountSettings/SignOut";
 import MapMarker from "./components/MapMarker";
-import CustomerOnboarding from "./pages/CustomerOnboarding";
+import Main from "./template/Main";
 import ProviderAccountHero from "./pages/ProviderAccountHero";
+import CustomerOnboarding from "./pages/CustomerOnboarding";
 
 
 function App() {
@@ -59,7 +59,6 @@ function App() {
   // console.log(formData);
 
   createStore({});
-
 
   async function checkout() {
     try {
@@ -111,79 +110,154 @@ function App() {
   // };
   // }
   const router = createBrowserRouter([
-  
     {
       path: "/",
-      element: <Home />,
+      element: <Main />,
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+        {
+          path: "provider/settings",
+          element: <AccountSettings />,
+          children: [
+            {
+              path: "myprofile/",
+              // path: "myprofile/:provider_id",
+              element: <MyProfile />,
+              action: submitEditForm,
+              loader: () => {
+                // const provider_id = params.provider_id;
+                return getProviderInfo(6);
+              },
+              // loader: ({ params }) => {
+              //   const provider_id = params.provider_id;
+              //   return getProviderInfo(provider_id);
+              // },
+            },
+            {
+              path: "notifications",
+              element: <Notifications />,
+            },
+            {
+              path: "signout",
+              element: <SignOut />,
+            },
+            {
+              path: "delete_account",
+              element: <DeleteAccount />,
+            },
+            {
+              path: "wallet",
+              element: <Wallet />,
+            },
+          ],
+        },
+        {
+          path: "/customer/bookings",
+          element: <CustomerAcc />,
+        },
+        {
+          path: "/provider/bookings",
+          element: <ProviderBookings />,
+          loader: getProviderBookings,
+        },
+        {
+          path: "/customer/login",
+          element: <CustomerLogin />,
+          action: async ({ request }) => {
+            try {
+              const formData = await request.formData();
+              const email = formData.get("email");
+              const password = formData.get("password");
+              return await fetchLogin(email, password);
+            } catch (error) {
+              return error;
+            }
+          },
+        },
+        {
+          path: "/customer/signup",
+          element: <CustomerSignup />,
+        },
+        {
+          path: "/provider/signup",
+          element: <ProviderAccountHero />,
+        },
+        {
+          path: "/customer/login",
+          element: <CustomerLogin />,
+          action: async ({ request }) => {
+            try {
+              const formData = await request.formData();
+              const email = formData.get("email");
+              const password = formData.get("password");
+              return await fetchLogin(email, password);
+            } catch (error) {
+              return error;
+            }
+          },
+        },
+        {
+          path: "/customer/signup",
+          element: <CustomerSignup />,
+        },
+        {
+          path: "/customer/onboarding",
+          element: <CustomerOnboarding />,
+          action: async ({ request }) => {
+            try {
+              const formData = Object.fromEntries(await request.formData());
+              const {
+                email,
+                password,
+                firstName,
+                lastName,
+                phoneNumber,
+                preferredServices,
+              } = formData;
+              console.log(
+                email,
+                password,
+                firstName,
+                lastName,
+                phoneNumber,
+                preferredServices
+              );
+              return await fetchSignup(
+                email,
+                password,
+                firstName,
+                lastName,
+                phoneNumber,
+                preferredServices
+              );
+            } catch (error) {
+              return error;
+            }
+          },
+        },
+        {
+          path: "/provider/login",
+          element: <ProviderLogin />,
+          action: async ({ request }) => {
+            try {
+              const formData = await request.formData();
+              const email = formData.get("email");
+              const password = formData.get("password");
+              return await fetchLogin(email, password);
+            } catch (error) {
+              return error;
+            }
+          },
+        },
+      ],
     },
-    {
-      path: "/provider/signup",
-      element: <ProviderAccountHero />
-    },
-    {
-      path: "/customer/login",
-      element: <CustomerLogin />,
-      action: async ({ request }) => {
-        try {
-          const formData = await request.formData();
-          const email = formData.get("email");
-          const password = formData.get("password");
-          return await fetchLogin(email, password);
-        } catch (error) {
-          return error;
-        }
-      },
-    },
-    {
-      path: "/customer/signup",
-      element: <CustomerSignup />,
 
-    },
-    {
-      path: "/customer/onboarding",
-      element: <CustomerOnboarding />,
-      action: async ({ request }) => {
-        try {
-          const formData = Object.fromEntries(await request.formData());
-          const { email, password, firstName, lastName, phoneNumber, preferredServices } =
-            formData;
-          console.log(email, password, firstName, lastName, phoneNumber, preferredServices);
-          return await fetchSignup(
-            email,
-            password,
-            firstName,
-            lastName,
-            phoneNumber,
-            preferredServices 
-          );
-
-          return apiSignUpData
-        } catch (error) {
-          return error;
-        }
-      }
-    },
-    {
-      path: "/provider/login",
-      element: <ProviderLogin />,
-      action: async ({ request }) => {
-        try {
-          const formData = await request.formData();
-          const email = formData.get("email");
-          const password = formData.get("password");
-          return await fetchLogin(email, password);
-
-        } catch (error) {
-          return error;
-        }
-
-      }
-    }
-    ,
     {
       path: "/customeraccount",
       element: <CustomerAccountContact />,
-
     },
     {
       path: "/preferences",
@@ -197,17 +271,17 @@ function App() {
       path: "/profile",
       element: <Profile providers={providers} />,
     },
-    {
-      path: "/customer/bookings",
-      element: <CustomerAcc />,
-    },
+    // {
+    //   path: "/customer/bookings",
+    //   element: <CustomerAcc />,
+    // },
     {
       path: "/carousel",
-      element: <FavoriteProviders />
+      element: <FavoriteProviders />,
     },
     {
       path: "/provider",
-      element: <ProviderCard providers={providers} />
+      element: <ProviderCard providers={providers} />,
     },
     {
       path: "/about",
@@ -218,11 +292,11 @@ function App() {
       element: <ProviderPage />,
       action: submitRequestForm,
     },
-    {
-      path: "/provider/bookings",
-      element: <ProviderBookings />,
-      loader: getProviderBookings,
-    },
+    // {
+    //   path: "/provider/bookings",
+    //   element: <ProviderBookings />,
+    //   loader: getProviderBookings,
+    // },
     {
       path: "/customer/confirmation/:booking_id",
       loader: ({ params }) => {
@@ -231,42 +305,42 @@ function App() {
       },
       element: <ConfirmationPage />,
     },
-    {
-      path: "/settings",
-      element: <AccountSettings />,
-      children: [
-        {
-          path: "myprofile/",
-          // path: "myprofile/:provider_id",
-          element: <MyProfile />,
-          action: submitEditForm,
-          loader: () => {
-            // const provider_id = params.provider_id;
-            return getProviderInfo(6);
-          },
-          // loader: ({ params }) => {
-          //   const provider_id = params.provider_id;
-          //   return getProviderInfo(provider_id);
-          // },
-        },
-        {
-          path: "notifications",
-          element: <Notifications />,
-        },
-        {
-          path: "signout",
-          element: <SignOut />,
-        },
-        {
-          path: "delete_account",
-          element: <DeleteAccount />,
-        },
-        {
-          path: "wallet",
-          element: <Wallet />,
-        },
-      ],
-    },
+    // {
+    //   path: "/settings",
+    //   element: <AccountSettings />,
+    //   children: [
+    //     {
+    //       path: "myprofile/",
+    //       // path: "myprofile/:provider_id",
+    //       element: <MyProfile />,
+    //       action: submitEditForm,
+    //       loader: () => {
+    //         // const provider_id = params.provider_id;
+    //         return getProviderInfo(6);
+    //       },
+    //       // loader: ({ params }) => {
+    //       //   const provider_id = params.provider_id;
+    //       //   return getProviderInfo(provider_id);
+    //       // },
+    //     },
+    //     {
+    //       path: "notifications",
+    //       element: <Notifications />,
+    //     },
+    //     {
+    //       path: "signout",
+    //       element: <SignOut />,
+    //     },
+    //     {
+    //       path: "delete_account",
+    //       element: <DeleteAccount />,
+    //     },
+    //     {
+    //       path: "wallet",
+    //       element: <Wallet />,
+    //     },
+    //   ],
+    // },
     {
       path: "map/:address_id",
       loader: ({ params }) => {
@@ -282,8 +356,6 @@ function App() {
         <RouterProvider router={router} />
       </div>
     </StateMachineProvider>
-
-
   );
 }
 

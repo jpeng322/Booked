@@ -1,74 +1,72 @@
-import React, { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import axios from 'axios'
-import { Link, useActionData, useNavigate, useSubmit } from 'react-router-dom'
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Stack from 'react-bootstrap/Stack';
-import Image from 'react-bootstrap/Image';
-import bgImg from '../images/login-background.png'
-import logo from '../images/logo.png'
-
-
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { Link, useActionData, useNavigate, useSubmit } from "react-router-dom";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Stack from "react-bootstrap/Stack";
+import Image from "react-bootstrap/Image";
+import bgImg from "../images/login-background.png";
+import logo from "../images/logo.png";
 
 const ProviderLogin = () => {
   const submit = useSubmit();
   const actionData = useActionData();
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
-    if (actionData && actionData.status == 200 && actionData.data.success == true) {
+    if (
+      actionData &&
+      actionData.status == 200 &&
+      actionData.data.success == true
+    ) {
       console.log("welcome back PROVIDER user");
       navigate("/");
     }
-  }, [actionData])
+  }, [actionData]);
 
   const onSubmit = (data) => {
     console.log(data);
 
     submit(data, {
       method: "post",
-      action: "/provider/login"
+      action: "/provider/login",
     });
-  }
-
-
+  };
 
   const style = {
     label: {
-      color: '#B1660E',
-      fontSize: '24px',
+      color: "#B1660E",
+      fontSize: "24px",
       // border: '1px solid black',
-      marginBottom: '0',
-      fontWeight: '550',
-      marginLeft: '6px'
+      marginBottom: "0",
+      fontWeight: "550",
+      marginLeft: "6px",
     },
     control: {
-      border: '1px solid #B1660E',
-      borderRadius: '10px'
-
+      border: "1px solid #B1660E",
+      borderRadius: "10px",
     },
     hypertext: {
-      color: '#476685',
-      fontSize: '12px',
-      textDecoration: 'none'
+      color: "#476685",
+      fontSize: "12px",
+      textDecoration: "none",
     },
     hypertextBottom: {
-      color: '#476685',
-      fontSize: '16px',
-      textDecoration: 'none',
-      fontWeight: '500'
+      color: "#476685",
+      fontSize: "16px",
+      textDecoration: "none",
+      fontWeight: "500",
     },
-
-  }
-
-
-
-
+  };
 
   return (
     <div
@@ -77,45 +75,44 @@ const ProviderLogin = () => {
         // border: "1px solid black",
         backgroundImage: `url(${bgImg})`,
         backgroundRepeat: "no-repeat",
-        backgroundAttachment: 'fixed',
+        backgroundAttachment: "fixed",
         backgroundPosition: "center center",
         backgroundSize: "cover",
-        overflow: 'auto'
+        overflow: "auto",
       }}
     >
       <Stack
         className="col-lg-3 col-md-6 col-sm-10  mx-auto fw-bold rounded-2"
         style={{
-          backgroundColor: '#F9EDB4',
-          padding: '2rem 4rem 3rem 4rem',
-          border: '2px solid #B1660E',
-          marginTop: '120px',
-          boxShadow:  '-2px 2px 15px 0px rgba(0,0,0,0.7)'
-
+          backgroundColor: "#F9EDB4",
+          padding: "2rem 4rem 3rem 4rem",
+          border: "2px solid #B1660E",
+          marginTop: "120px",
+          boxShadow: "-2px 2px 15px 0px rgba(0,0,0,0.7)",
         }}
       >
         <Container
-          style={{
-            // border: '1px solid black',
-            // paddingTop: '4rem'
-          }}
+          style={
+            {
+              // border: '1px solid black',
+              // paddingTop: '4rem'
+            }
+          }
         >
-
-
           <Col
-            className='d-flex justify-content-center'
+            className="d-flex justify-content-center"
             style={{
               // border: '1px solid #B1660E',
-              padding: '0px',
-              height: '100%'
+              padding: "0px",
+              height: "100%",
             }}
           >
             <Image
               src={logo}
               style={{
                 // border: '1px solid blue',
-                width: '12rem',
-                height: '10rem',
+                width: "12rem",
+                height: "10rem",
               }}
             />
           </Col>
@@ -124,31 +121,40 @@ const ProviderLogin = () => {
             className="text-center fw-normal"
             style={{
               // border: '1px solid blue',
-              color: '#B1660E',
-              fontSize: '38px'
+              color: "#B1660E",
+              fontSize: "38px",
             }}
           >
             Provider Login
           </h1>
-
-
-
 
           <Row>
             <Col
             // lg={{ span: 4, offset: 4 }}
             // md={{ span: 0, offset: 0 }}
             >
-              <Form className='mb-2' onSubmit={handleSubmit(onSubmit)}>
-
+              <Form className="mb-2" onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label style={style.label}>Username</Form.Label>
-                  <Form.Control style={style.control} type="email" placeholder="Email" {...register("email", { required: true, maxLength: 80 })} />
+                  <Form.Control
+                    style={style.control}
+                    type="email"
+                    placeholder="Email"
+                    {...register("email", { required: true, maxLength: 80 })}
+                  />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                   <Form.Label style={style.label}>Password</Form.Label>
-                  <Form.Control style={style.control} type="text" placeholder="Password" {...register("password", { required: true, maxLength: 100 })} />
+                  <Form.Control
+                    style={style.control}
+                    type="text"
+                    placeholder="Password"
+                    {...register("password", {
+                      required: true,
+                      maxLength: 100,
+                    })}
+                  />
                 </Form.Group>
 
                 <Stack
@@ -158,16 +164,16 @@ const ProviderLogin = () => {
                   style={{
                     // paddingRight: '2rem',
                     // paddingLeft: '2rem',
-                    paddingTop: '1rem',
-                    paddingBottom: '1rem',
+                    paddingTop: "1rem",
+                    paddingBottom: "1rem",
                     // border: '1px solid black',
                   }}
                 >
-                  <a href="#" style={style.hypertext} onClick={() => { }}>
+                  <a href="#" style={style.hypertext} onClick={() => {}}>
                     Forgot username?
                   </a>
                   <div class="vr"></div>
-                  <a href="#" style={style.hypertext} onClick={() => { }}>
+                  <a href="#" style={style.hypertext} onClick={() => {}}>
                     Forgot password?
                   </a>
                 </Stack>
@@ -176,10 +182,14 @@ const ProviderLogin = () => {
                   className="d-flex align-items-center justify-content-center"
                   style={{
                     // border: '1px solid black',
-                    paddingBottom: '2rem',
+                    paddingBottom: "2rem",
                   }}
                 >
-                  <a href="#" style={style.hypertextBottom} onClick={() => navigate("/Provider/signup")}>
+                  <a
+                    href="#"
+                    style={style.hypertextBottom}
+                    onClick={() => navigate("/Provider/signup")}
+                  >
                     Join our network
                   </a>
                 </div>
@@ -187,15 +197,15 @@ const ProviderLogin = () => {
                 <Stack className="col-lg-12 col-md-12 col-sm-12">
                   <Button
                     type="submit"
-                    className='rounded-pill'
+                    className="rounded-pill"
                     style={{
-                      padding: '8px',
-                      margin: '20px 10px 20px 10px',
-                      fontWeight: '400',
-                      fontSize: '25px',
-                      color: '#476685',
-                      backgroundColor: '#F1A855',
-                      border: '2px solid #B1660E'
+                      padding: "8px",
+                      margin: "20px 10px 20px 10px",
+                      fontWeight: "400",
+                      fontSize: "25px",
+                      color: "#476685",
+                      backgroundColor: "#F1A855",
+                      border: "2px solid #B1660E",
                     }}
                   >
                     Login
@@ -203,33 +213,18 @@ const ProviderLogin = () => {
                 </Stack>
               </Form>
 
-              <Col
-                className='d-flex justify-content-center '
-              >
-                <Link to={"/customer/login"} style={style.hypertextBottom}>Login as Customer</Link>
+              <Col className="d-flex justify-content-center ">
+                <Link to={"/customer/login"} style={style.hypertextBottom}>
+                  Login as Customer
+                </Link>
                 {/* <a href='#' style={style.hypertextBottom}>Login as Customer</a> */}
               </Col>
-
-
-
             </Col>
           </Row>
         </Container>
-
-
       </Stack>
-
-
-
-
-
-
-
-
     </div>
-
-  )
-}
-
+  );
+};
 
 export default ProviderLogin;
