@@ -78,7 +78,7 @@ const Home = () => {
         <button onClick={() => navigate("provider/login")}>Provider Login</button>
         <button onClick={() => navigate("customer/login")}>Customer Login</button>
         <button onClick={() => navigate("/customeraccount")}>Customer Accunt Contact</button>
-        <NavComp />
+        {/* <NavComp /> */}
         {/* <LoggedInNavbar /> */}
         <HeroComp />
 

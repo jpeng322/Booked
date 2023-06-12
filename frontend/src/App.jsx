@@ -49,6 +49,8 @@ import Wallet from "./components/AccountSettings/Wallet";
 import SignOut from "./components/AccountSettings/SignOut";
 import MapMarker from "./components/MapMarker";
 import Main from "./template/Main";
+import ProviderAccountHero from "./pages/ProviderAccountHero"
+import CustomerOnboarding from "./pages/CustomerOnboarding"
 
 function App() {
   const [count, setCount] = useState(0);
