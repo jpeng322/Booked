@@ -4,7 +4,7 @@ import Pagination from "react-bootstrap/Pagination";
 
 
 const TabComp = ({ orders }) => {
-  const numberOfOrders = 3;
+  const numberOfOrders = 5;
   const numberOfPages = Math.ceil(orders.length / numberOfOrders);
 
   const [pageNumber, setPageNumber] = useState(1);

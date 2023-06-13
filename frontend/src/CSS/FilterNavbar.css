@@ -51,6 +51,13 @@
   gap: 1rem;
 }
 
+
+.filter-nav-top .active,
+.filter-nav-bottom .active {
+ color: var(--uniform-1)
+}
+
+
 .filter-nav-top > *,
 .filter-nav-bottom > * {
   /* border: 1px solid blue; */

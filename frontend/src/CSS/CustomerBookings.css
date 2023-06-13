@@ -3,3 +3,22 @@
     margin: 0 !important;
 
   } */
+
+
+  .customerbookings-container .pagination {
+    /* border: 1px solid red; */
+  }
+
+  .customerbookings-container .page-item .page-link {
+    background-color: transparent;
+    /* background-color: var(--uniform-4); */
+    /* border: 1px solid var(--uniform-1); */
+    border: 1px solid black;
+    color: black
+  }
+
+  .customerbookings-container .page-item.active  .page-link{
+       background-color: var(--uniform-3);
+       color: var(--uniform-5);
+       border-color: var(--uniform-1)
+  }

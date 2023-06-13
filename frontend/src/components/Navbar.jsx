@@ -7,7 +7,7 @@ import { Button } from "react-bootstrap";
 import BookedCheck from "../assets/navbar_logo.svg";
 import BookedCheckImg from "../images/logo_navbar.png";
 import LoggedInNavbar from "./LoggedInNavbar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 
 import "../CSS/FilterNavbar.css";
 function NavComp() {
@@ -20,6 +20,7 @@ function NavComp() {
           style={{
             paddingRight: "100px",
             width: "max(30%, 400px)",
+            cursor: "pointer"
           }}
           src={BookedCheckImg}
           alt=""
@@ -36,7 +37,6 @@ function NavComp() {
           <Button
             className="home-button"
             onClick={() => navigate("login/provider")}
-           
             size="sm"
           >
             Login/Sign Up
@@ -61,82 +61,83 @@ function NavComp() {
             //   marginLeft: "-15rem ",
             // }}
           >
-            <div className="d-flex flex-column flex-lg-row">
+            <div className=" gap-3 d-flex flex-column flex-lg-row">
               <div className="d-flex filter-nav-top ">
-                <Nav.Link
-                  href="#home"
+                <NavLink
+                  to="providers/home_improvement"
                   // style={{
                   //   marginLeft: "30px",
                   //   marginRight: "30px",
                   // }}
                 >
                   Home Improvement
-                </Nav.Link>
-                <Nav.Link
-                // href="#features"
-                // style={{
-                //   marginLeft: "30px",
-                //   marginRight: "30px",
-                // }}
+                </NavLink>
+                <NavLink
+                  to="providers/landscaping"
+                  // href="#features"
+                  // style={{
+                  //   marginLeft: "30px",
+                  //   marginRight: "30px",
+                  // }}
                 >
                   Landscaping
-                </Nav.Link>
-                <Nav.Link
-                  href="#pricing"
+                </NavLink>
+                <NavLink
+                  to="providers/automotive"
                   // style={{
                   //   marginLeft: "30px",
                   //   marginRight: "30px",
                   // }}
                 >
                   Automotive
-                </Nav.Link>
-                <Nav.Link
-                  href="#pricing"
+                </NavLink>
+                <NavLink
+                  to="providers/personal_care"
                   // style={{
                   //   marginLeft: "30px",
                   //   marginRight: "30px",
                   // }}
                 >
                   Personal Care
-                </Nav.Link>
+                </NavLink>
               </div>
               <div className="d-flex  filter-nav-bottom ">
-                <Nav.Link
-                  href="#pricing"
+                <NavLink
+                  to="providers/pet_care"
                   // style={{
                   //   marginLeft: "30px",
                   //   marginRight: "30px",
                   // }}
                 >
                   Pet Care
-                </Nav.Link>
-                <Nav.Link
-                  href="#pricing"
+                </NavLink>
+                <NavLink
+                  to="providers/designer_artist"
                   // style={{
                   //   marginLeft: "30px",
                   //   marginRight: "30px",
                   // }}
                 >
                   Designer & Artist
-                </Nav.Link>
-                <Nav.Link
-                  href="#pricing"
+                </NavLink>
+                <NavLink
+                  to="providers/events"
                   // style={{
                   //   marginLeft: "30px",
                   //   marginRight: "30px",
                   // }}
                 >
                   Events
-                </Nav.Link>
-                <Nav.Link
-                  href="#pricing"
+                </NavLink>
+                <NavLink
+                  to="providers/technology"
                   // style={{
                   //   marginLeft: "30px",
                   //   marginRight: "30px",
                   // }}
                 >
                   Technology
-                </Nav.Link>
+                </NavLink>
               </div>
             </div>
             {/* <div className="d-flex">
