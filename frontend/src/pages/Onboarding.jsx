@@ -19,8 +19,10 @@ import { FaPlusCircle, FaArrowLeft } from "react-icons/fa";
 import { useDropzone } from "react-dropzone";
 import { applyOnboarding } from "../api";
 import "../CSS/ProviderOnboarding.css";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Initial = () => {
+
   const { register } = useFormContext();
   return (
     <div className="onboarding-form">
@@ -335,12 +337,18 @@ const ProviderOnboarding = () => {
     },
   });
 
+  const  navigate = useNavigate()
+  let { id } = useParams()
+  console.log(id, "IDIDIDI")
   const submitProviderInfo = async (values) => {
-    console.log(values);
-
+    console.log(values, "VALUESVLUAES");
+   
     const data = await applyOnboarding(values);
+    // if (data) {
+    //   navigate(`/provider/bookings/${id}`)
+    // }
 
-    console.log(data);
+    console.log(data, "datatat");
   };
 
   return (

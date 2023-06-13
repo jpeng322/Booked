@@ -4,7 +4,7 @@ import About from "../src/pages/About";
 import "/src/App.css";
 import ProviderCard from "./pages/ProviderCard";
 import providers from "./providers";
-import providersWithChangedType from "./providersWithChangeType"
+import providersWithChangedType from "./providersWithChangeType";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -36,6 +36,7 @@ import {
   getProviderBookings,
   getCoords,
   getProviderInfo,
+  fetchProviderLogin,
 } from "./api";
 
 import NavComp from "./components/Navbar";
@@ -109,7 +110,7 @@ function App() {
   //     });
   // };
   // }
-  console.log(providersWithChangedType)
+  console.log(providersWithChangedType);
   const router = createBrowserRouter([
     {
       path: "/",
@@ -202,9 +203,14 @@ function App() {
           element: <CustomerAcc />,
         },
         {
-          path: "/provider/bookings",
+          path: "/provider/bookings/:id",
           element: <ProviderBookings />,
-          loader: getProviderBookings,
+
+          loader: ({ params }) => {
+            console.log(params);
+            const id = params.id;
+            return getProviderBookings(id);
+          },
         },
         {
           path: "/customer/login",
@@ -247,7 +253,7 @@ function App() {
           element: <CustomerSignup />,
         },
         {
-          path: "onboarding",
+          path: "onboarding/:id",
           element: <ProviderOnboarding />,
         },
         {
@@ -328,7 +334,7 @@ function App() {
               const formData = await request.formData();
               const email = formData.get("email");
               const password = formData.get("password");
-              return await fetchLogin(email, password);
+              return await fetchProviderLogin(email, password);
             } catch (error) {
               return error;
             }
