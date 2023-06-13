@@ -4,6 +4,7 @@ import About from "../src/pages/About";
 import "/src/App.css";
 import ProviderCard from "./pages/ProviderCard";
 import providers from "./providers";
+import providersWithChangedType from "./providersWithChangeType"
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -51,7 +52,7 @@ import MapMarker from "./components/MapMarker";
 import Main from "./template/Main";
 import ProviderAccountHero from "./pages/ProviderAccountHero";
 import CustomerOnboarding from "./pages/CustomerOnboarding";
-
+import { ProviderType } from "./components/ProviderTypeComp";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -109,6 +110,7 @@ function App() {
   //     });
   // };
   // }
+  console.log(providersWithChangedType)
   const router = createBrowserRouter([
     {
       path: "/",
@@ -151,6 +153,48 @@ function App() {
             {
               path: "wallet",
               element: <Wallet />,
+            },
+          ],
+        },
+        {
+          path: "/providers",
+          // element: <ProviderCard providers={providers} />,
+          children: [
+            {
+              path: "",
+              element: <ProviderCard providers={providers} />,
+            },
+            {
+              path: "home_improvement",
+              element: <ProviderType type="home improvement" />,
+            },
+            {
+              path: "landscaping",
+              element: <ProviderType type="landscaping" />,
+            },
+            {
+              path: "automotive",
+              element: <ProviderType type="automotive" />,
+            },
+            {
+              path: "personal_care",
+              element: <ProviderType type="personal care" />,
+            },
+            {
+              path: "pet_care",
+              element: <ProviderType type="pet care" />,
+            },
+            {
+              path: "designer_artist",
+              element: <ProviderType type="designer & artist" />,
+            },
+            {
+              path: "events",
+              element: <ProviderType type="events" />,
+            },
+            {
+              path: "technology",
+              element: <ProviderType type="technology" />,
             },
           ],
         },

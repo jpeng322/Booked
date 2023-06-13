@@ -8,6 +8,8 @@
     color: #fff ;
     border-bottom: 2px solid var(--uniform-1);
     border-bottom: 2px solid var(--uniform-1);
+    font-weight: 600;
+    letter-spacing: 1px;
 }
 
 .loggedin-nav .active{
