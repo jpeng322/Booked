@@ -4,8 +4,6 @@
 }
 
 .account-settings-container {
-  border: 1px solid red;
-  /* height: 100%; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,10 +68,11 @@
   border-radius: 0.6rem;
 }
 
-.notifications-container, .myprofile-container {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem
+.notifications-container,
+.myprofile-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 .myprofile-card {
   box-shadow: 0 5px 10px -5px;
@@ -86,9 +85,9 @@
 }
 
 .myprofile-edit {
-    position: absolute;
-    right: 2rem;
-    top: 2rem
+  position: absolute;
+  right: 2rem;
+  top: 2rem;
 }
 
 .myprofile-row {
@@ -104,4 +103,47 @@
 
 .myprofile-row-info {
   color: #476685;
+}
+
+.wallet-card {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  width: 100%;
+  box-shadow: 0 5px 10px -5px;
+  padding: 2.5rem 5%;
+  border-radius: 0.6rem;
+}
+
+.wallet-card button {
+  border-radius: 0.25rem;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  background-color: #d9d9d9;
+  color: var(--uniform-1);
+  font-weight: 600;
+}
+
+.notifications-container button,
+.notifications-container button:hover,
+.notifications-container button:active:focus {
+  background-color: transparent;
+  border: none;
+  color: black;
+  padding: 0;
+}
+.notifications-modal .modal-content {
+  padding: calc(1rem + 1vw);
+  padding: 2rem;
+  margin-top: 10rem;
+}
+.notifications-modal .modal-footer button:nth-child(1) {
+  background-color: var(--uniform-2);
+  border: none;
+}
+
+.notifications-modal .modal-footer button:nth-child(2) {
+  background-color: var(--brown-2);
+  border: none;
 }

@@ -1,0 +1,22 @@
+.loggedin-nav {
+    background-color: var(--uniform-1);
+    /* color: #fff !important; */
+
+}
+
+.loggedin-nav a {
+    color: #fff ;
+    border-bottom: 2px solid var(--uniform-1);
+    border-bottom: 2px solid var(--uniform-1);
+}
+
+.loggedin-nav .active{
+    border-bottom: 2px solid var(--uniform-1);
+    border-bottom: 2px solid var(--toolshop-4);
+    background: none;
+}
+
+
+.loggedin-nav .container-fluid {
+    padding: .5rem 5% !important;
+}

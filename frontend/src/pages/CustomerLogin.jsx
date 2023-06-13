@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { useActionData, useNavigate, useSubmit } from 'react-router-dom'
+import { useActionData, useNavigate, useSubmit, Link } from 'react-router-dom'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -15,11 +15,13 @@ import logo from '../images/logo.png'
 
 // This will be the Client login. For now it only logs in provider.
 
-const LoginClient = () => {
+const CustomerLogin = () => {
     const submit = useSubmit();
     const actionData = useActionData();
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
+
+    console.log(actionData)
 
     useEffect(() => {
         if (actionData && actionData.status == 200 && actionData.data.success == true) {
@@ -33,7 +35,7 @@ const LoginClient = () => {
 
         submit(data, {
             method: "post",
-            action: "/auth/loginClient"
+            action: "/customer/login"
         });
     }
 
@@ -69,8 +71,6 @@ const LoginClient = () => {
     }
 
 
-    // console.log(actionData);
-
     return (
         <div
             style={{
@@ -91,6 +91,7 @@ const LoginClient = () => {
                     padding: '2rem 4rem 3rem 4rem',
                     border: '2px solid #B1660E',
                     marginTop: '120px',
+                    boxShadow:  '-2px 2px 15px 0px rgba(0,0,0,0.7)'
                 }}
             >
                 <Container
@@ -170,9 +171,7 @@ const LoginClient = () => {
                                         paddingBottom: '2rem',
                                     }}
                                 >
-                                    <a href="#" style={style.hypertextBottom} onClick={() => navigate("/auth/signup")}>
-                                        Create an account
-                                    </a>
+                                    <Link to={"/customer/signup"} style={style.hypertextBottom}>Create an account</Link>
                                 </div>
 
                                 <Stack className="col-lg-12 col-md-12 col-sm-12">
@@ -198,7 +197,7 @@ const LoginClient = () => {
                             <Col
                                 className='d-flex justify-content-center '
                             >
-                                <a href='#' style={style.hypertextBottom}>Login as Provider</a>
+                                 <Link to={"/provider/login"} style={style.hypertextBottom}>Login as Customer</Link>
                             </Col>
 
 
@@ -214,4 +213,4 @@ const LoginClient = () => {
     )
 }
 
-export default LoginClient
+export default CustomerLogin;

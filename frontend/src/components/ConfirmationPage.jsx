@@ -39,7 +39,7 @@ const ConfirmationPage = () => {
         </div>{" "}
         <div className="confirmation-row d-flex flex-column ">
           <div className="confirmation-subhead">SERVICE ADDRESS</div>
-          <div>684 N. La Cienega Blvd Los Angeles, CA 90018</div>
+          <div>{bookingData.address}</div>
         </div>{" "}
         <div className="confirmation-row d-flex flex-column ">
           <div className="confirmation-subhead">SERVICE DETAIL</div>
@@ -69,6 +69,7 @@ const ConfirmationPage = () => {
       </div>
       <CancelModal
         // formData={data}
+        booking_id = {bookingData.booking_id}
         show={modalShow}
         onHide={() => {
           setModalShow(false);

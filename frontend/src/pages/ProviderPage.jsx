@@ -18,11 +18,22 @@ import {
   useSubmit,
 } from "react-router-dom";
 
+import {
+  geocodeByAddress,
+  geocodeByPlaceId,
+  getLatLng,
+} from "react-places-autocomplete";
+
 //components
 import RequestFormModal from "../components/RequestFormModal";
+import GooglePlacesComp from "../components/GooglePlacesAutocomplete";
+
 //styling
 import avatar from "../images/avatar.png";
 import "../CSS/ProviderProfile.css";
+
+import Autocomplete from "react-google-autocomplete";
+// import { geocodeByPlaceId } from 'react-google-places-autocomplete';
 
 export const submitRequestForm = async ({ request }) => {
   const data = await request.formData();
@@ -40,7 +51,7 @@ export const submitRequestForm = async ({ request }) => {
   return submission;
 };
 
-const ProviderPage = ({ setFormData }) => {
+const ProviderPage = () => {
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -64,10 +75,19 @@ const ProviderPage = ({ setFormData }) => {
   const [modalShow, setModalShow] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-
+  const [address, setAddress] = useState("");
+  console.log(address);
   // useEffect(() => {
-  //   setEndDate(startDate);
-  // }, [startDate]);
+  //   geocodeByPlaceId("ChIJ9V8ApDBFwokR0dW6ql0Pyoc")
+  //     //  .then((results) => console.log(results))
+  //     .then((results) => console.log(results))
+  //     .then((results) => getLatLng(results[0]))
+  //     .then(({ lat, lng }) => {
+  //       console.log("Successfully got latitude and longitude", { lat, lng });
+  //       return { lat, lng };
+  //     })
+  //     .catch((error) => console.error(error));
+  // }, []);
 
   const filterPassedTime = (time) => {
     const currentDate = new Date();
@@ -81,7 +101,7 @@ const ProviderPage = ({ setFormData }) => {
   };
 
   const data = useActionData();
-  console.log(data);
+  console.log(address);
   let submit = useSubmit();
   async function sendFormData() {
     try {
@@ -96,21 +116,12 @@ const ProviderPage = ({ setFormData }) => {
           end_date: dateFormat(new Date(endDate), "mmmm d, yyyy h:MM TT"),
           message: data.message,
           cost: "150",
+          address: address.label,
+          address_id: address.value.place_id,
         },
       });
-      console.log(response);
-      if (response) {
-        // window.open(`/customer/confirmation/${client_name}/${provider_name}/${start_date}/${end_date}}`,'_blank', 'rel=noopener noreferrer')
-        setFormData({
-          client_name: "mei",
-          provider_name: "john",
-          service_type: data.service_type,
-          start_date: dateFormat(new Date(startDate), "mmmm d, yyyy h:MM TT"),
-          end_date: dateFormat(new Date(endDate), "mmmm d, yyyy h:MM TT"),
-          message: data.message,
-          cost: "150",
-        });
 
+      if (response) {
         const booking_id = response.data.booking_info.booking_id;
         window.open(
           `/customer/confirmation/${booking_id}`,
@@ -122,7 +133,6 @@ const ProviderPage = ({ setFormData }) => {
         // return data;
 
         console.log(response);
-
       } else {
         throw Error("No response");
       }
@@ -216,15 +226,12 @@ const ProviderPage = ({ setFormData }) => {
             <h2>$150</h2>
             <h3>Starting cost</h3>
           </div>
+
           <div className="provider-input-group">
-            <label for="zip_code">Zip Code</label>
-            <input
-              type="text"
-              placeholder="Zip Code"
-              title="Please enter a Zip Code"
-              pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$"
-            />
+            <label for="address">Address</label>
+            <GooglePlacesComp address={address} setAddress={setAddress} />
           </div>
+
           <div className="provider-input-group">
             <label for="scheduling">Order Date</label>
 
@@ -289,7 +296,6 @@ const ProviderPage = ({ setFormData }) => {
           {/* <button type="submit" className="provider-form-button">
             Send Request
           </button> */}
-
           <p>
             Responds in about <span className="fw-bold">1 hour</span>
           </p>
