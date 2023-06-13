@@ -9,6 +9,7 @@ import HeroComp from "../components/HeroComp";
 import OtherComp from "../components/OtherComp";
 import SearchBar from "../components/SearchBar";
 import FooterComp from "../components/FooterComp";
+import HifiFooter from "../components/Footer/HifiFooter.jsx"
 const Home = () => {
   async function checkout() {
     console.log("asdasd");
@@ -84,6 +85,7 @@ const Home = () => {
         <div style={{backgroundColor:'#F9EDB4'}}>
           <SearchBar /> 
           <Carouselandsub />
+          <HifiFooter />
         </div>
 
       </div>

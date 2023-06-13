@@ -1,75 +1,97 @@
-import Button from 'react-bootstrap/Button';
-import InputGroup from 'react-bootstrap/InputGroup';
+import React, { useState } from 'react';
+import { Container, Row, Form, FormControl, Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function SearchBar({placeholder, data}) {
-    return ( 
-<div>
-    <form className="mx-auto p-2" role="search" 
-         style={{
-        textAlign:"center",
-        fontWeight: "600",
-        position: "relative",
-        height: "50px",
-      }}
-      >
-        <input className="mx-auto p-2" type="search" placeholder="Search" aria-label="Search"
-        style={{
-          width:"600px",
-          height: "49px",
-          alignContent: "center",
-          borderRadius: "50px",
-          borderColor: "grey"
-        }}
-        />
-        <button className="bi bi-search" type="submit" 
-        style={{
-          position: 'absolute',
-          right: "895px",
-          paddingTop:"16px",
-          paddingLeft: "2px",
-          paddingRight: "15px",
-          paddingBottom: "1px",
-          borderRadius: "50px",
-          backgroundColor: "light",
-          borderColor: "light"
-          
-        }}
+function SearchBar() {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log('Search term:', searchTerm);
+  };
+
+  return (
+    <Container className="d-flex justify-content-center">
+      <div className="text-center">
+        <h1>Find what you are looking for</h1>
+        <Form
+          className="mx-auto p-2 d-flex align-items-center"
+          role="search"
+          style={{
+            fontWeight: '600',
+            height: '50px',
+          }}
         >
-        <svg xmlns="http://www.w3.org/2000/svg" width="74" height="26" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-      </svg>
-          
-        </button>
-      </form>
+          <Row className="align-items-center justify-content-center">
+            <FormControl
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+              value={searchTerm}
+              onChange={handleChange}
+              style={{
+                width: '600px',
+                height: '49px',
+                borderRadius: '50px',
+                borderColor: 'grey',
+                paddingRight: '40px',
+              }}
+            />
+            <Button
+              className="search-icon ml-auto"
+              variant="outline-primary"
+              onClick={handleSubmit}
+              style={{
+                position: 'absolute',
+                top: '100%',
+                right: '5px',
+                transform: 'translateY(-50%)',
+                border: 'none',
+                backgroundColor: 'transparent',
+                boxShadow: 'none',
+                cursor: 'pointer',
+              }}>
+              {/* <FontAwesomeIcon icon={faSearch} /> */}
+            </Button>
+          </Row>
+        </Form>
 
-      <div className="d-flex mx-auto justify-content-center">
-        <div className="row align-items-center"
-         style={{
-          width: "400px",
-          margin: "20px"
-        }} >
+        <div className="d-flex mx-auto justify-content-center">
+          <div
+            className="row align-items-center"
+            style={{
+              width: '400px',
+              margin: '20px',
+            }}
+          >
+            <div className="col">
+              <a href="#">Most Popular</a>
+            </div>
 
-      <div className="col"><a href="#"
-      >Most Popular</a></div>
+            <div className="col">
+              <span className="border-start border-end">
+                <a href="#" className="col">
+                  Recommended
+                </a>
+              </span>
+            </div>
 
-      <div className="col">
-      <span className="border-start border-end"
-      style={{
-    
-      }}>
-       <a href="#" className="col">Recommended</a>
-       </span>
-       </div>
-
-      <div className="col"
-      ><a href="#" className="alignContents"
-      >Filter</a></div>
-
+            <div className="col">
+              <a href="#" className="alignContents">
+                Filter+
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
-     </div>
-  </div>
-      
-    );
-  }
+    </Container>
+  );
+}
 
-  export default SearchBar;
+export default SearchBar;
