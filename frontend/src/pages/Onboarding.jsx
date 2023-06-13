@@ -344,9 +344,9 @@ const ProviderOnboarding = () => {
     console.log(values, "VALUESVLUAES");
    
     const data = await applyOnboarding(values);
-    // if (data) {
-    //   navigate(`/provider/bookings/${id}`)
-    // }
+    if (data) {
+      navigate(`/provider/bookings/${id}`)
+    }
 
     console.log(data, "datatat");
   };

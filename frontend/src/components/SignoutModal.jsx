@@ -22,6 +22,9 @@ export default function SignoutModal() {
 
   function signout() {
     setSignedOut(true);
+    localStorage.removeItem("userId")
+    localStorage.removeItem("userType")
+    localStorage.removeItem("token")
     setTimeout(() => {
       navigate("/");
     }, 3000);

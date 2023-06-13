@@ -121,7 +121,7 @@ export default function providerRouter(passport) {
             provider_response: req.body.responseTime,
             provider_payment_methods: req.body.paymentMethods,
             provider_standing: req.body.backgroundCertified,
-            profile_pic: uploadedProfilePic.url,
+            // profile_pic: uploadedProfilePic.url,
             service: {
               createMany: {
                 data: listOfServices.map((service) => {
@@ -132,11 +132,13 @@ export default function providerRouter(passport) {
                 }),
               },
             },
+            onboarded: true
           },
         });
 
         res.status(200).json({
           success: true,
+          updatedProvider
         });
       } catch (e) {
         console.log(e);

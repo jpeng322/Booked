@@ -121,17 +121,17 @@ function App() {
           element: <Home />,
         },
         {
-          path: "provider/settings",
+          path: "provider/settings/:id",
           element: <AccountSettings />,
           children: [
             {
-              path: "myprofile/",
+              path: "myprofile",
               // path: "myprofile/:provider_id",
               element: <MyProfile />,
               action: submitEditForm,
               loader: () => {
                 // const provider_id = params.provider_id;
-                return getProviderInfo(6);
+                return getProviderInfo(localStorage.getItem("userId"));
               },
               // loader: ({ params }) => {
               //   const provider_id = params.provider_id;

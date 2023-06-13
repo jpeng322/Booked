@@ -38,11 +38,12 @@ export const fetchProviderLogin = async (email, password) => {
       }
     );
 
-    console.log(apiLoginData);
+    console.log(apiLoginData, "APILOGINLOGIN");
 
     if (apiLoginData.status == 200 && apiLoginData.data.token) {
       localStorage.setItem("token", apiLoginData.data.token);
       localStorage.setItem("userType", apiLoginData.data.type);
+      localStorage.setItem("userId", apiLoginData.data.findProvider.provider_id )
     }
 
     return apiLoginData;

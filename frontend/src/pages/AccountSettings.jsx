@@ -26,16 +26,16 @@ const AccountSettings = () => {
           <div className="account-settings-top-row">
             <div className="account-settings-tabs">
               {" "}
-              <NavLink to="/provider/settings/myprofile">Profile</NavLink>
+              <NavLink to="myprofile">Profile</NavLink>
             </div>
             <div className="account-settings-tabs">
               {" "}
-              <NavLink to="/provider/settings/wallet">Wallet</NavLink>
+              <NavLink to="wallet">Wallet</NavLink>
             </div>
 
             <div className="account-settings-tabs">
               {" "}
-              <NavLink to="/provider/settings/notifications">
+              <NavLink to="notifications">
                 Notifications
               </NavLink>
             </div>
