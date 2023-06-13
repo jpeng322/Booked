@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 
 const OrderInfo = ({
   service_type,
@@ -27,23 +27,57 @@ const OrderInfo = ({
     }
   }
 
-  return (
-    <div className="completed-information">
-      <div className="provider-image">{provider_name}</div>
-      <div className="service-type">{service_type}</div>
-      <div>{order_desc}</div>
-      <div>{start_date}</div>
-      <div>{end_date}</div>
-      <div>${cost}.00</div>
+  const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
 
-      <div className="status">{status}</div>
-      <div>
-        {status === "scheduled" && (
-          <button onClick={() => requestResponse("cancelled", id)}>
-            Cancel
-          </button>
-        )}
+  return (
+    <div className="completed-information d-flex flex-column">
+      <div className="completed-information-main">
+        <div className="provider-image">{provider_name}</div>
+        <div className="service-type">{service_type}</div>
+        <div>{order_desc}</div>
+        <div className="display-status">{start_date}</div>
+        <div className="display-status">{end_date}</div>
+        <div className="display-status">${cost}.00</div>
+
+        <div className="status">{status}</div>
+        <div className="display-status">
+          {status === "scheduled" && (
+            <button onClick={() => requestResponse("cancelled", id)}>
+              Cancel
+            </button>
+          )}
+        </div>
+        <div
+          onClick={() =>
+            setShowAdditionalInfo(showAdditionalInfo ? false : true)
+          }
+          className="show-additional-info"
+        >
+          {showAdditionalInfo
+            ? "Hide Additional Info"
+            : "Show Additional Information"}
+        </div>
       </div>
+      {showAdditionalInfo && (
+        <div className="additional-info">
+          <div className="">
+            <span className="fw-bold">Order Date:</span> {start_date}
+          </div>
+          <div className="">
+            <span className="fw-bold">Due On:</span> {end_date}
+          </div>
+          <div className="">
+            <span className="fw-bold">Price:</span> ${cost}.00
+          </div>
+          <div className="">
+            {status === "scheduled" && (
+              <button onClick={() => requestResponse("cancelled", id)}>
+                Cancel
+              </button>
+            )}{" "}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

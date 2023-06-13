@@ -38,11 +38,11 @@ const TabComp = ({ orders }) => {
         <div></div>
         <div className="service-type-header"></div>
         <div></div>
-        <div>ORDER DATE </div>
-        <div>DUE ON </div>
-        <div>TOTAL </div>
-        <div>STATUS </div>
-        <div></div>
+        <div className="display-status">Order Date </div>
+        <div className="display-status">Due On </div>
+        <div className="display-status">Total </div>
+        <div>Status </div>
+        <div className="display-status"></div>
       </div>
       {/* <div className="completed-information"> */}
       {currentOrders.map((booking) => (

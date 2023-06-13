@@ -4,15 +4,64 @@
 
   } */
 
-
-  .customerbookings-container .pagination {
-    /* border: 1px solid red; */
+  .customerbookings-container  .tab-container {
+    margin: 0px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
   }
+  
+  .customerbookings-container  .react-tabs__tab-panel,
+  .customerbookings-container   .react-tabs__tab-panel--selected {
+    /* border: 1px solid red !important; */
+    border-radius: 0.75rem;
+    /* padding: 2rem; */
+    background-color: var(--light-background);
+    z-index: 2;
+  }
+  
+  .customerbookings-container  .react-tabs__tab-list {
+    /* border: 1px solid red; */
+    width: 100%;
+    margin: 0;
+    border: none;
+    display: flex;
+    padding: 1rem 1rem 0 1rem;
+    /* flex-shrink: 1; */
+    font-size: calc(1rem + 0.2vw);
+    gap: 1rem;
+  }
+  
+  .customerbookings-container  .react-tabs__tab {
+    border-top-right-radius: 1rem;
+    border-top-left-radius: 1rem;
+    /* flex-grow: 1; */
+    text-align: center;
+    padding: 1rem 1.5rem;
+    font-weight: 600;
+  }
+  
+  .customerbookings-container  .react-tabs__tab--selected {
+    background-color: var(--light-background);
+    /* padding: 0.75rem ; */
+    padding: 1rem 1.5rem;
+    border: none;
+  }
+  
+  .customerbookings-container  .react-tabs__tab-panel,
+  .customerbookings-container  .react-tabs__tab-panel--selected {
+    align-self: stretch;
+  }
+  
+  .customerbookings-container  .react-tabs__tab--selected::after {
+    display: none;
+  }
+
 
   .customerbookings-container .page-item .page-link {
     background-color: transparent;
-    /* background-color: var(--uniform-4); */
-    /* border: 1px solid var(--uniform-1); */
     border: 1px solid black;
     color: black
   }
@@ -21,4 +70,64 @@
        background-color: var(--uniform-3);
        color: var(--uniform-5);
        border-color: var(--uniform-1)
+  }
+
+  .customerbookings-container .completed-information-main button {
+    border: none;
+    padding: 0.33rem 0.75rem;
+    border-radius: 0.25rem;
+    transition: 0.1s;
+    font-weight: 500;
+    min-width: 70px;
+    height: 2.5rem;
+  
+    background-color: rgb(228, 226, 226);
+  }
+
+  .customerbookings-container .completed-information-main button:hover {
+    background-color: rgb(219, 218, 218);
+  }
+  
+
+  @media screen and (max-width: 992px) {
+    /* .customerbookings-container  .react-tabs__tab-list {
+      width: 80%;
+      margin: 0;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem 1rem 0 1rem;
+      font-size: calc(1rem + 0.2vw);
+      gap: 1rem;
+      border: 1px solid blue;
+      margin-bottom: 1rem;
+    } */
+    
+    .customerbookings-container  .react-tabs__tab-list {
+      width: 90%;
+      margin: 0;
+      border: none;
+      display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      padding: 0;
+      font-size: calc(1rem + 0.2vw);
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .customerbookings-container  .react-tabs__tab {
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+      /* flex-grow: 1; */
+      text-align: center;
+      padding: 1rem 1.5rem;
+      border: 2px solid var(--uniform-4);
+    }
+    
+    .customerbookings-container  .react-tabs__tab--selected {
+      background-color: var(--uniform-4);
+      /* padding: 0.75rem ; */
+      padding: 1rem 1.5rem;
+      border: none;
+    }
+    
   }

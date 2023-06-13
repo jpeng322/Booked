@@ -219,6 +219,20 @@
 .provider-booking.only-large {
   display: none;
 }
+
+.provider-booking-container .page-item .page-link {
+  background-color: transparent;
+  /* background-color: var(--uniform-4); */
+  /* border: 1px solid var(--uniform-1); */
+  border: 1px solid black;
+  color: black
+}
+
+.provider-booking-container .page-item.active  .page-link{
+     background-color: var(--uniform-3);
+     color: var(--uniform-5);
+     border-color: var(--uniform-1)
+}
 @media screen and (min-width: 1400px) {
   .provider-booking-filter {
     gap: 7rem;
