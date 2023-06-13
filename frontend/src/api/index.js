@@ -28,17 +28,27 @@ export const fetchLogin = async (email, password) => {
   }
 };
 
-export const fetchSignup = async (email, password, firstName, lastName, phoneNumber, preferredServices ) => {
-    // console.log(email, password, firstName, lastName, phoneNumber)
-    try {
-        const apiSignupData = await axios.post(`http://localhost:${import.meta.env.VITE_PORT}/auth/signup/client`, {
-            email: email,
-            password: password,
-            fname: firstName,
-            lname: lastName,
-            phone: phoneNumber,
-            services: preferredServices, 
-        });
+export const fetchSignup = async (
+  email,
+  password,
+  firstName,
+  lastName,
+  phoneNumber,
+  preferredServices
+) => {
+  // console.log(email, password, firstName, lastName, phoneNumber)
+  try {
+    const apiSignupData = await axios.post(
+      `http://localhost:${import.meta.env.VITE_PORT}/auth/signup/client`,
+      {
+        email: email,
+        password: password,
+        fname: firstName,
+        lname: lastName,
+        phone: phoneNumber,
+        services: preferredServices,
+      }
+    );
 
     return apiSignupData;
   } catch (error) {
@@ -113,5 +123,39 @@ export const getProviderInfo = async (id = 6) => {
     }
   } catch (e) {
     console.log(e);
+  }
+};
+
+export const applyOnboarding = async (values) => {
+  try {
+    const token = localStorage.getItem("token");
+    const newFormData = new FormData();
+
+    newFormData.append("firstName", values.firstName);
+    newFormData.append("lastName", values.lastName);
+    newFormData.append("listOfServices", JSON.stringify(values.listOfServices));
+    newFormData.append("paymentMethods", values.paymentMethods);
+    newFormData.append("responseTime", values.responseTime);
+    newFormData.append("amountOfEmployees", values.amountOfEmployees);
+    newFormData.append("backgroundCertified", values.backgroundCertified);
+    newFormData.append("profile", values.profilePicture[0]);
+
+    const resp = await axios.put(
+      `http://localhost:${import.meta.env.VITE_PORT}/provider/onboard`,
+      newFormData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (resp.status == 200) {
+      return resp.data;
+    }
+  } catch (e) {
+    console.log(e);
+    return {};
   }
 };

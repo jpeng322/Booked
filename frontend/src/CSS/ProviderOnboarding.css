@@ -1,0 +1,26 @@
+ul {
+  list-style: none;
+}
+
+.step-pill {
+  width: 90%;
+  height: 40px;
+  border-radius: 15px;
+  border: 1px solid black;
+}
+
+.active-pill {
+  background-color: #f6c58e;
+}
+
+.not-active-pill {
+  background-color: white;
+}
+
+.onboarding-main-form {
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 10px 10%;
+  width: 66%;
+  background-color: #f6c58e;
+}
