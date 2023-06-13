@@ -16,6 +16,7 @@ import {
   Table,
 } from "react-bootstrap";
 import { FaPlusCircle, FaArrowLeft } from "react-icons/fa";
+import { useDropzone } from "react-dropzone";
 import { applyOnboarding } from "../api";
 import "../CSS/ProviderOnboarding.css";
 
@@ -265,7 +266,13 @@ const ServicesProvided = () => {
 };
 
 const MoreInfo = () => {
-  const { register } = useFormContext();
+  const { register, setValue } = useFormContext();
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop: (file) => {
+      setValue("profilePicture", file);
+    },
+    maxFiles: 1,
+  });
   return (
     <div>
       <h1 className="text-center">Lastly, specify your information below</h1>
@@ -277,6 +284,11 @@ const MoreInfo = () => {
           {...register("areaServed")}
         />
       </Form.Group>
+
+      <div {...getRootProps({ className: "dropzone mb-3" })}>
+        <input {...getInputProps()} />
+        <p>Click here to choose a profile picture</p>
+      </div>
 
       <Form.Group className="mb-3">
         <Form.Label>Are you background check certified? Yes or No</Form.Label>

@@ -128,9 +128,30 @@ export const getProviderInfo = async (id = 6) => {
 
 export const applyOnboarding = async (values) => {
   try {
-    const resp = await axios.post("", values);
+    const token = localStorage.getItem("token");
+    const newFormData = new FormData();
 
-    if (resp.status == 201) {
+    newFormData.append("firstName", values.firstName);
+    newFormData.append("lastName", values.lastName);
+    newFormData.append("listOfServices", JSON.stringify(values.listOfServices));
+    newFormData.append("paymentMethods", values.paymentMethods);
+    newFormData.append("responseTime", values.responseTime);
+    newFormData.append("amountOfEmployees", values.amountOfEmployees);
+    newFormData.append("backgroundCertified", values.backgroundCertified);
+    newFormData.append("profile", values.profilePicture[0]);
+
+    const resp = await axios.put(
+      `http://localhost:${import.meta.env.VITE_PORT}/provider/onboard`,
+      newFormData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (resp.status == 200) {
       return resp.data;
     }
   } catch (e) {

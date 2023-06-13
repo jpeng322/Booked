@@ -1,9 +1,14 @@
 import express from "express";
 import prisma from "../db/index.js";
+import cloudinary from "../utilities/cloudinary.js";
+import multer from "multer";
+import formData from "express-form-data";
 
 export default function providerRouter(passport) {
   //Creates a new instance of a router
   const router = express.Router();
+  const memStorage = multer.memoryStorage();
+  const multerUpload = multer({ storage: memStorage }).single("profile");
 
   // Get all providers
   router.get("/", async (req, res) => {
@@ -93,15 +98,50 @@ export default function providerRouter(passport) {
     }
   });
 
-  router.put("/onboard/provider/:id", passport.authenticate("jwt", { session: false }) async (req, res) => {
-    try {
-      const updatedProvider = await prisma.provider.update({
-        where: {
+  router.put(
+    "/onboard",
+    passport.authenticate("jwt", { session: false }),
+    multerUpload,
+    async (req, res) => {
+      try {
+        const file = req.file;
+        const b64 = Buffer.from(file.buffer).toString("base64");
+        let dataURI = "data:" + file.mimetype + ";base64," + b64;
 
-        }
-      })
+        const uploadedProfilePic = await cloudinary.uploader.upload(dataURI);
+
+        const listOfServices = JSON.parse(req.body.listOfServices);
+
+        const updatedProvider = await prisma.provider.update({
+          where: {
+            provider_id: req.user.Provider.provider_id,
+          },
+          data: {
+            provider_response: req.body.responseTime,
+            provider_payment_methods: req.body.paymentMethods,
+            provider_standing: req.body.backgroundCertified,
+            profile_pic: uploadedProfilePic.url,
+            service: {
+              createMany: {
+                data: listOfServices.map((service) => {
+                  return {
+                    price: parseInt(service.price),
+                    service_type: service.service,
+                  };
+                }),
+              },
+            },
+          },
+        });
+
+        res.status(200).json({
+          success: true,
+        });
+      } catch (e) {
+        console.log(e);
+      }
     }
-  })
+  );
 
   // Create a new provider
   router.post(
@@ -188,8 +228,6 @@ export default function providerRouter(passport) {
     }
   );
 
-
-
   // router.put('/preferred-services', passport.authenticate("jwt", { session: false }), async (request, response) => {
   //   console.log('THIS IS THE PROVIDER:', request.user.Provider)
   //   try {
@@ -206,7 +244,7 @@ export default function providerRouter(passport) {
   //       },
 
   //     });
-  
+
   //     if(providerPreferredServices.count == 0){
   //       response.status(404).json({
   //         success: false,
@@ -219,7 +257,7 @@ export default function providerRouter(passport) {
   //         providerPreferredServices
   //       })
   //     }
-  
+
   //   } catch (error) {
   //     response.status(500).json({
   //       success: false,
@@ -227,7 +265,6 @@ export default function providerRouter(passport) {
   //     });
   //   }
   // });
-
 
   // Delete a provider by ID
   router.delete(

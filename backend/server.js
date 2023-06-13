@@ -15,6 +15,7 @@ import providerRouter from "./routes/provider.js";
 import clientRouter from "./routes/client.js";
 import profileRouter from "./routes/profile.js";
 // import bookingRoute from "./routes/booking.js"
+// import formData from "express-form-data";
 
 dotenv.config();
 export default function createServer() {
@@ -22,17 +23,14 @@ export default function createServer() {
 
   app.use(cors());
 
-  app.use(express.json({limit: '50mb'}));
-
+  app.use(express.json({ limit: "50mb" }));
+  // app.use(formData.parse());
   //Here is where you will add the authentication strategies
   setupJWTStrategy(passport);
 
   app.use("/auth", authRouter);
 
-  app.use(
-    "/service",
-    serviceRouter(passport)
-  );
+  app.use("/service", serviceRouter(passport));
 
   app.use("/profile", profileRouter(passport));
 
