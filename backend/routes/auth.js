@@ -45,6 +45,9 @@ router.post("/signup/provider", async (request, response) => {
   }
 });
 
+
+
+
 router.post("/signup/client", async (request, response) => {
   console.log(request.body);
   try {
@@ -168,6 +171,60 @@ router.post("/login/client", async (request, response) => {
           success: true,
           token,
           type: "client",
+        });
+      } else {
+        response.status(401).json({
+          success: false,
+          message: "Incorrect email or password.",
+        });
+      }
+    } catch (e) {
+      console.log(e);
+      response.status(500).json({
+        success: false,
+        message: "Something went wrong",
+      });
+    }
+  } catch (e) {
+    response.status(401).json({
+      success: false,
+      message: "Incorrect email or password",
+    });
+  }
+});
+
+
+router.post("/login/provider", async (request, response) => {
+  console.log(request.body)
+  try {
+    const findProvider = await prisma.provider.findFirst({
+      where: {
+        provider_email: request.body.email,
+      },
+    });
+
+    try {
+      const verifiedPassword = await argon2.verify(
+        findProvider.provider_password,
+        request.body.password
+      );
+
+      if (verifiedPassword) {
+        const token = jwt.sign(
+          {
+            Provider: {
+              provider_email: findProvider.provider_email,
+              provider_id: findProvider.provider_id,
+            },
+          },
+          "showMeTheProvidersOrClients"
+        );
+
+        response.status(200).json({
+          success: true,
+          token,
+          findProvider,
+          type: "provider",
         });
       } else {
         response.status(401).json({

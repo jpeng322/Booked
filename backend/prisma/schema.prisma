@@ -24,7 +24,7 @@ model Provider {
   preferred_services String? 
   profile_pic       String?
   profile_pic_id    String?
-  onboarded Boolean
+  onboarded Boolean @default(false)
   // service_id  Int
   // booking_id Int
   service           Service[]

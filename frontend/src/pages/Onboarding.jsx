@@ -19,15 +19,17 @@ import { FaPlusCircle, FaArrowLeft } from "react-icons/fa";
 import { useDropzone } from "react-dropzone";
 import { applyOnboarding } from "../api";
 import "../CSS/ProviderOnboarding.css";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Initial = () => {
+
   const { register } = useFormContext();
   return (
-    <div>
+    <div className="onboarding-form">
       <h1 className="text-center">Tell us more about your business</h1>
       <Form.Group className="mb-2">
         <Form.Label>What is your name?</Form.Label>
-        <Stack direction="horizontal" gap={2}>
+        <Stack direction="horizontal" gap={4}>
           <Form.Control
             type="text"
             size="lg"
@@ -287,7 +289,7 @@ const MoreInfo = () => {
 
       <div {...getRootProps({ className: "dropzone mb-3" })}>
         <input {...getInputProps()} />
-        <p>Click here to choose a profile picture</p>
+        <p className="profile-upload">Click here to choose a profile picture</p>
       </div>
 
       <Form.Group className="mb-3">
@@ -335,16 +337,22 @@ const ProviderOnboarding = () => {
     },
   });
 
+  const  navigate = useNavigate()
+  let { id } = useParams()
+  console.log(id, "IDIDIDI")
   const submitProviderInfo = async (values) => {
-    console.log(values);
-
+    console.log(values, "VALUESVLUAES");
+   
     const data = await applyOnboarding(values);
+    if (data) {
+      navigate(`/provider/bookings/${id}`)
+    }
 
-    console.log(data);
+    console.log(data, "datatat");
   };
 
   return (
-    <div className="pt-3 m-5">
+    <div className="p-xxl-5 pt-5 pb-5 onboarding-container">
       <Container fluid>
         <div className="mb-5">
           <Row>
@@ -397,9 +405,9 @@ const ProviderOnboarding = () => {
                     {formStep == 4 && <ServicesProvided />}
                     {formStep == 5 && <MoreInfo />}
                   </div>
-                  <Row>
+                  <Row className="onboarding-button-container">
                     <Col md={6}>
-                      <div className="d-flex justify-content-start">
+                      <div className="d-flex ">
                         {formStep > 1 && (
                           <Button
                             type="button"
@@ -407,17 +415,18 @@ const ProviderOnboarding = () => {
                             onClick={() =>
                               setFormStep((prevState) => prevState - 1)
                             }
+                            className="back-button"
                           >
                             <span className="d-flex justify-content-center align-items-center">
                               <FaArrowLeft />
-                              <span className="ms-3">Back</span>
+                              <span className="ms-2">Back</span>
                             </span>
                           </Button>
                         )}
                       </div>
                     </Col>
                     <Col md={6}>
-                      <div className="d-flex justify-content-end">
+                      <div className="d-flex">
                         {formStep <= 4 && (
                           <Button
                             size="lg"
@@ -425,6 +434,7 @@ const ProviderOnboarding = () => {
                             onClick={() =>
                               setFormStep((prevState) => prevState + 1)
                             }
+                            className="next-button"
                           >
                             Next
                           </Button>

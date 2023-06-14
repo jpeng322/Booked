@@ -28,6 +28,30 @@ export const fetchLogin = async (email, password) => {
   }
 };
 
+export const fetchProviderLogin = async (email, password) => {
+  try {
+    const apiLoginData = await axios.post(
+      `http://localhost:${import.meta.env.VITE_PORT}/auth/login/provider`,
+      {
+        email: email,
+        password: password,
+      }
+    );
+
+    console.log(apiLoginData, "APILOGINLOGIN");
+
+    if (apiLoginData.status == 200 && apiLoginData.data.token) {
+      localStorage.setItem("token", apiLoginData.data.token);
+      localStorage.setItem("userType", apiLoginData.data.type);
+      localStorage.setItem("userId", apiLoginData.data.findProvider.provider_id )
+    }
+
+    return apiLoginData;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const fetchSignup = async (
   email,
   password,
@@ -72,11 +96,12 @@ export const getBooking = async (booking_id) => {
   }
 };
 
-export const getProviderBookings = async () => {
+export const getProviderBookings = async (id) => {
+  console.log(id, "PROVIDERID")
   try {
     const response = await axios({
       method: "get",
-      url: `http://localhost:${import.meta.env.VITE_PORT}/booking/provider/1`,
+      url: `http://localhost:${import.meta.env.VITE_PORT}/booking/provider/${id}`,
     });
 
     console.log(response);
@@ -108,6 +133,7 @@ export const getCoords = (address_id) => {
 };
 
 export const getProviderInfo = async (id = 6) => {
+  console.log(id, "PROVIDERID")
   try {
     const response = await axios({
       method: "get",
@@ -127,9 +153,11 @@ export const getProviderInfo = async (id = 6) => {
 };
 
 export const applyOnboarding = async (values) => {
+  console.log(values)
   try {
     const token = localStorage.getItem("token");
     const newFormData = new FormData();
+    console.log(values.paymentMethods[0], "API VALUESVALUES")
 
     newFormData.append("firstName", values.firstName);
     newFormData.append("lastName", values.lastName);
@@ -138,8 +166,9 @@ export const applyOnboarding = async (values) => {
     newFormData.append("responseTime", values.responseTime);
     newFormData.append("amountOfEmployees", values.amountOfEmployees);
     newFormData.append("backgroundCertified", values.backgroundCertified);
-    newFormData.append("profile", values.profilePicture[0]);
+    // newFormData.append("profile", values.profilePicture[0]);
 
+   
     const resp = await axios.put(
       `http://localhost:${import.meta.env.VITE_PORT}/provider/onboard`,
       newFormData,
@@ -150,9 +179,11 @@ export const applyOnboarding = async (values) => {
         },
       }
     );
+    console.log(resp)
 
     if (resp.status == 200) {
-      return resp.data;
+      return resp.data; 
+  
     }
   } catch (e) {
     console.log(e);
