@@ -30,11 +30,13 @@ import AccountSettings from "./pages/AccountSettings";
 //loaders
 import {
   fetchLogin,
+  fetchLoginProvider,
   fetchSignup,
   getBooking,
   getProviderBookings,
   getCoords,
   getProviderInfo,
+  editClientAxios,
 } from "./api";
 
 import NavComp from "./components/Navbar";
@@ -217,14 +219,14 @@ function App() {
                 phoneNumber,
                 preferredServices,
               } = formData;
-              console.log(
-                email,
-                password,
-                firstName,
-                lastName,
-                phoneNumber,
-                preferredServices
-              );
+              // console.log(
+              //   email,
+              //   password,
+              //   firstName,
+              //   lastName,
+              //   phoneNumber,
+              //   preferredServices
+              // );
               return await fetchSignup(
                 email,
                 password,
@@ -246,7 +248,7 @@ function App() {
               const formData = await request.formData();
               const email = formData.get("email");
               const password = formData.get("password");
-              return await fetchLogin(email, password);
+              return await fetchLoginProvider(email, password);
             } catch (error) {
               return error;
             }
@@ -258,6 +260,36 @@ function App() {
     {
       path: "/customeraccount",
       element: <CustomerAccountContact />,
+      action: async ({ request }) => {
+        try {
+
+          const formData = Object.fromEntries(await request.formData());
+          // console.log(formData)
+          const {
+            email,
+            firstName,
+            lastName,
+            phoneNumber,
+            zipcode,
+          } = formData;
+          // console.log(
+          //   email,
+          //   firstName,
+          //   lastName,
+          //   phoneNumber,
+          //   zipcode,
+          //   );
+          return await editClientAxios(
+            email,
+            firstName,
+            lastName,
+            phoneNumber,
+            zipcode,
+          );
+        } catch (error) {
+          return error;
+        }
+      }
     },
     {
       path: "/preferences",

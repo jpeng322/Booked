@@ -10,9 +10,12 @@ import firstPic from '../images/provider-card1.png'
 import secondPic from '../images/provider-card2.png'
 import thirdPic from '../images/provider-card3.png'
 import { useForm } from 'react-hook-form';
-import { Form } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import { useStateMachine } from 'little-state-machine';
+import updateSignupAction from '../updateSignupAction';
 import ProviderSignupPopupOne from '../components/ProviderSignupPopupOne';
 import ProviderSignupPopupTwo from '../components/ProviderSignupPopupTwo';
+import '../CSS/ProviderAccountHero.css'
 
 
 const heroCards = [
@@ -39,15 +42,29 @@ const ProviderAccountHero = () => {
     const [openPopupTwo, setOpenPopupTwo] = useState(false);
     // const [ timedPopup, setTimedPopup ] = useState(false)
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
+    const { register, handleSubmit, reset, formState, formState: { isSubmitSuccessful, errors } } = useForm();
+    const { actions } = useStateMachine({ updateSignupAction })
+    
+    const onSubmit = data => {
+        console.log(data);
+        actions.updateSignupAction(data)
+
+        setOpenPopupOne(true)
+    }
+
     console.log(errors);
 
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setOpenPopupOne(true)
+    //     }, 3000);
+    // }, [])
+
     useEffect(() => {
-        setTimeout(() => {
-            setOpenPopupOne(true)
-        }, 3000);
-    }, [])
+        if(formState.isSubmitSuccessful) {
+            reset({ services: '', location: '' })
+        }
+    },[formState, reset])
 
 
 
@@ -93,22 +110,26 @@ const ProviderAccountHero = () => {
         <Container fluid style={{ height: '100vh' }}>
             <Row style={{ height: '80%' }}>
                 <Col
-                    // md={5} 
-                    className="col-xxl-5 col-lg-5 col-md-5 col-sm-5 "
-                    style={{ border: '1px solid black' }}
+                    xl={5} lg={5} md={12} sm={12} xs={12}
+                    className='left-box'
+                    // className="col-xxl-5 col-lg-5 col-md-5 col-sm-5 "
+                    // style={{ border: '1px solid black' }}
                 >
+                    {/* Left box handled in CSS file */}
                     <Col
-                        style={{
-                            // padding: 'px',
-                            // margin: '20px 10px 20px 10px',
-                            margin: '40px 250px 0px 80px',
-                            fontWeight: '400',
-                            // fontSize: '25px',
-                            color: '#476685',
-                            // backgroundColor: '#F1A855',
-                            border: '1px solid #B1660E',
-                            // textAlign: 'left'
-                        }}
+                        className='left-box-title'
+                        xl={8} lg={12} md={6} sm={10} xs={12}
+                        // style={{
+                        //     // padding: 'px',
+                        //     // margin: '20px 10px 20px 10px',
+                        //     margin: '40px 250px 0px 80px',
+                        //     fontWeight: '400',
+                        //     // fontSize: '25px',
+                        //     color: '#476685',
+                        //     // backgroundColor: '#F1A855',
+                        //     border: '1px solid #B1660E',
+                        //     // textAlign: 'left'
+                        // }}
                     >
                         <p
                             style={{
@@ -133,22 +154,25 @@ const ProviderAccountHero = () => {
                         >Over 1K leads on Booked per day.</p>
                     </Col>
 
-                    {/* floating box */}
+                    {/* floating box handled in CSS file */}
                     {/* <Row> */}
                     <Col
-                        style={{
-                            position: 'absolute',
-                            right: '50%',
-                            top: '30%',
-                            maxWidth: '47%',
-                            width: '100%',
-                            height: '350px',
-                            border: '1px solid red',
-                            backgroundColor: 'white',
-                            zIndex: 10,
-                            padding: '30px',
-                            boxShadow: '2px 2px 10px 0px rgba(0,0,0,0.7)'
-                        }}>
+                        // xs={12}
+                        className='floating-box'
+                        // style={{
+                        //     position: 'absolute',
+                        //     right: '50%',
+                        //     top: '60%',
+                        //     maxWidth: '47%',
+                        //     width: '100%',
+                        //     height: '350px',
+                        //     border: '1px solid red',
+                        //     backgroundColor: 'white',
+                        //     zIndex: 10,
+                        //     padding: '30px',
+                        //     boxShadow: '2px 2px 10px 0px rgba(0,0,0,0.7)'
+                        // }}
+                        >
                         <p
                             style={{
                                 textAlign: 'left',
@@ -159,12 +183,12 @@ const ProviderAccountHero = () => {
                             What service do yo provide?
                         </p>
                         <Form onSubmit={handleSubmit(onSubmit)}>
-                            <Form.Group className="mb-3" controlId="formBasicFirstEmail">
-                                <Form.Control style={style.control} type="email" placeholder="Beautician" {...register("email", { required: true, maxLength: 80 })} />
+                            <Form.Group className="mb-3" controlId="formBasicServices">
+                                <Form.Control style={style.control} type="text" placeholder="Beautician" {...register("services", { required: true, maxLength: 80 })} />
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formBasicLocation">
-                                <Form.Control style={style.control} type="text" placeholder="Atlanta, Georgia" {...register("password", { required: true, maxLength: 100 })} />
+                                <Form.Control style={style.control} type="text" placeholder="Atlanta, Georgia" {...register("location", { required: true, maxLength: 100 })} />
                             </Form.Group>
 
                             <Stack className="col-lg-12 col-md-12 col-sm-12">
@@ -183,10 +207,10 @@ const ProviderAccountHero = () => {
                 </Col>
 
                 <Col
-                    // md={7}
-                    className="col-xxl-7 col-lg-7 col-md-7 col-sm-7 "
+                    xl={7} lg={7} md={12} xs={12}
+                    // className="col-xxl-7 col-lg-7 col-md-7 col-sm-7 "
                     style={{
-                        border: '1px solid black',
+                        // border: '1px solid black',
                         backgroundImage: `url(${bgImg})`,
                         backgroundPosition: 'center',
                         backgroundSize: 'cover',
@@ -203,25 +227,27 @@ const ProviderAccountHero = () => {
             <Row
                 style={{ height: '0%' }}
             >
-                <Col style={{ border: '1px solid black' }}>
-                    <h1 style={{ textAlign: 'center' }}>See how Booked is different. </h1>
+                <Col>
+                    <h1 style={{ textAlign: 'center', margin: '2rem auto' }}>See how Booked is different. </h1>
 
                     <Row>
                         {
                             heroCards.map((item, index) => (
                                 <Col
                                     key={index}
+                                    xs={12}
                                     className="col-xxl-4 col-lg-4 col-md-12 col-sm-12 "
                                 >
                                     <Row
                                         style={{
-                                            border: '1px solid green',
+                                            // border: '1px solid green',
                                         }}
                                     >
                                         <Col
+                                            xs={4}
                                             className='col-xxl-3 col-lg-3 col-md-3 col-sm-3 '
                                             style={{
-                                                border: '1px solid blue',
+                                                // border: '1px solid blue',
                                                 // marginLeft: '40px'
 
                                             }}
@@ -242,7 +268,7 @@ const ProviderAccountHero = () => {
                                             className='col-xxl-9 col-lg-9 col-md-9 col-sm-9 '
                                             style={{
                                                 textAlign: 'center',
-                                                border: '1px solid red',
+                                                // border: '1px solid red',
                                             }}
                                         >
                                             <Stack>

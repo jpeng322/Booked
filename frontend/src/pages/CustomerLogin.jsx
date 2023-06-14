@@ -84,129 +84,135 @@ const CustomerLogin = () => {
                 overflow: 'auto'
             }}
         >
-            <Stack
-                className="col-lg-3 col-md-6 col-sm-10  mx-auto fw-bold rounded-2"
-                style={{
-                    backgroundColor: '#F9EDB4',
-                    padding: '2rem 4rem 3rem 4rem',
-                    border: '2px solid #B1660E',
-                    marginTop: '120px',
-                    boxShadow:  '-2px 2px 15px 0px rgba(0,0,0,0.7)'
-                }}
-            >
-                <Container
+            <Container>
+                <Stack
+                    className="col-xxl-5 col-lg-5 col-md-8 col-sm-10  mx-auto fw-bold rounded-2"
                     style={{
-                        // border: '1px solid black',
-                        // paddingTop: '4rem'
+                        backgroundColor: '#F9EDB4',
+                        padding: '2rem 4rem 3rem 4rem',
+                        border: '2px solid #B1660E',
+                        marginTop: '120px',
+                        maxWidth: '500px',
+                        width: '100%',
+                        boxShadow: '-2px 2px 15px 0px rgba(0,0,0,0.7)'
                     }}
                 >
-
-                    <Col
-                        className='d-flex justify-content-center'
+                    <Container
                         style={{
-                            // border: '1px solid #B1660E',
-                            padding: '0px',
-                            height: '100%'
+                            // border: '1px solid black',
+                            // paddingTop: '4rem'
                         }}
                     >
-                        <Image
-                            src={logo}
+
+                        <Col
+                            className='d-flex justify-content-center'
+                            style={{
+                                // border: '1px solid #B1660E',
+                                padding: '0px',
+                                height: '100%'
+                            }}
+                        >
+                            <Image
+                                src={logo}
+                                style={{
+                                    // border: '1px solid blue',
+                                    width: '12rem',
+                                    height: '10rem',
+                                }}
+                            />
+                        </Col>
+
+                        <h1
+                            className="text-center fw-normal"
                             style={{
                                 // border: '1px solid blue',
-                                width: '12rem',
-                                height: '10rem',
+                                color: '#263646',
+                                fontSize: '38px'
                             }}
-                        />
-                    </Col>
-
-                    <h1
-                        className="text-center fw-normal"
-                        style={{
-                            // border: '1px solid blue',
-                            color: '#263646',
-                            fontSize: '38px'
-                        }}
-                    >
-                        User Login
-                    </h1>
-
-                    <Row>
-                        <Col
                         >
-                            <Form onSubmit={handleSubmit(onSubmit)}>
+                            User Login
+                        </h1>
 
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
-                                    <Form.Label style={style.label}>Username</Form.Label>
-                                    <Form.Control style={style.control} type="email" placeholder="Email" {...register("email", { required: true, maxLength: 80 })} />
-                                </Form.Group>
+                        <Row>
+                            <Col
+                            >
+                                <Form onSubmit={handleSubmit(onSubmit)}>
 
-                                <Form.Group className="mb-3" controlId="formBasicPassword">
-                                    <Form.Label style={style.label}>Password</Form.Label>
-                                    <Form.Control style={style.control} type="text" placeholder="Password" {...register("password", { required: true, maxLength: 100 })} />
-                                </Form.Group>
+                                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                                        <Form.Label style={style.label}>Username</Form.Label>
+                                        <Form.Control style={style.control} type="email" placeholder="Email" {...register("email", { required: true, maxLength: 80 })} />
+                                    </Form.Group>
 
-                                <Stack
-                                    direction="horizontal"
-                                    gap={3}
-                                    className="col-lg-12 col-md-12 col-sm-10 justify-content-center mx-auto"
-                                    style={{
-                                        paddingTop: '1rem',
-                                        paddingBottom: '1rem',
-                                        // border: '1px solid black',
-                                    }}
-                                >
-                                    <a href="#" style={style.hypertext} onClick={() => { }}>
-                                        Forgot username?
-                                    </a>
-                                    <div class="vr"></div>
-                                    <a href="#" style={style.hypertext} onClick={() => { }}>
-                                        Forgot password?
-                                    </a>
-                                </Stack>
+                                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                                        <Form.Label style={style.label}>Password</Form.Label>
+                                        <Form.Control style={style.control} type="text" placeholder="Password" {...register("password", { required: true, maxLength: 100 })} />
+                                    </Form.Group>
 
-                                <div
-                                    className="d-flex align-items-center justify-content-center"
-                                    style={{
-                                        // border: '1px solid black',
-                                        paddingBottom: '2rem',
-                                    }}
-                                >
-                                    <Link to={"/customer/signup"} style={style.hypertextBottom}>Create an account</Link>
-                                </div>
-
-                                <Stack className="col-lg-12 col-md-12 col-sm-12">
-                                    <Button
-                                        type="submit"
-                                        className='rounded-pill'
+                                    <Stack
+                                        direction="horizontal"
+                                        gap={3}
+                                        // className="col-lg-12 col-md-12 col-sm-10 justify-content-center mx-auto"
                                         style={{
-                                            padding: '8px',
-                                            margin: '20px 10px 20px 10px',
-                                            fontWeight: '400',
-                                            fontSize: '25px',
-                                            color: '#F9EDB4',
-                                            backgroundColor: '#F1A855',
-                                            border: '2px solid #263646'
+                                            paddingTop: '1rem',
+                                            paddingBottom: '1rem',
+                                            justifyContent: 'center'
+                                            // border: '1px solid black',
                                         }}
                                     >
-                                        Login
-                                    </Button>
-                                </Stack>
+                                        <a href="#" style={style.hypertext} onClick={() => { }}>
+                                            Forgot username?
+                                        </a>
+                                        <div class="vr"></div>
+                                        <a href="#" style={style.hypertext} onClick={() => { }}>
+                                            Forgot password?
+                                        </a>
+                                    </Stack>
 
-                            </Form>
+                                    <div
+                                        className="d-flex align-items-center justify-content-center"
+                                        style={{
+                                            // border: '1px solid black',
+                                            paddingBottom: '2rem',
+                                        }}
+                                    >
+                                        <Link to={"/customer/signup"} style={style.hypertextBottom}>Create an account</Link>
+                                    </div>
 
-                            <Col
-                                className='d-flex justify-content-center '
-                            >
-                                 <Link to={"/provider/login"} style={style.hypertextBottom}>Login as Customer</Link>
+                                    <Stack className="col-lg-12 col-md-12 col-sm-12">
+                                        <Button
+                                            type="submit"
+                                            className='rounded-pill'
+                                            style={{
+                                                padding: '8px',
+                                                margin: '20px 10px 20px 10px',
+                                                fontWeight: '400',
+                                                fontSize: '25px',
+                                                color: '#F9EDB4',
+                                                backgroundColor: '#F1A855',
+                                                border: '2px solid #263646'
+                                            }}
+                                        >
+                                            Login
+                                        </Button>
+                                    </Stack>
+
+                                </Form>
+
+                                <Col
+                                    className='d-flex justify-content-center '
+                                >
+                                    <Link to={"/provider/login"} style={style.hypertextBottom}>Login as Provider</Link>
+                                </Col>
+
+
                             </Col>
+                        </Row>
+                    </Container>
 
 
-                        </Col>
-                    </Row>
-                </Container>
+                </Stack>
+            </Container>
 
-
-            </Stack>
 
         </div>
 
