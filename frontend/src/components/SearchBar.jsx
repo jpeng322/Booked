@@ -3,6 +3,7 @@ import { Container, Row, Form, FormControl, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../CSS/SearchBar.css'
 
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -14,12 +15,15 @@ function SearchBar() {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log('Search term:', searchTerm);
+    // window.location.href = `/search?query=${searchTerm}`
+    window.location.href = "/provider"
   };
 
   return (
     <Container className="d-flex justify-content-center">
       <div className="text-center">
         <h1>Find what you are looking for</h1>
+        <br></br>
         <Form
           className="mx-auto p-2 d-flex align-items-center"
           role="search"
@@ -44,20 +48,22 @@ function SearchBar() {
               }}
             />
             <Button
-              className="search-icon ml-auto"
+              className="search-icon ml-auto custom-button"
               variant="outline-primary"
               onClick={handleSubmit}
+              size="sm"
               style={{
-                position: 'absolute',
-                top: '100%',
-                right: '5px',
+                color: 'black',
+                position: 'relative',
+                bottom: "25px",
+                marginLeft: '550px',
                 transform: 'translateY(-50%)',
                 border: 'none',
                 backgroundColor: 'transparent',
                 boxShadow: 'none',
                 cursor: 'pointer',
               }}>
-              {/* <FontAwesomeIcon icon={faSearch} /> */}
+              <FontAwesomeIcon icon={faSearch} />
             </Button>
           </Row>
         </Form>
