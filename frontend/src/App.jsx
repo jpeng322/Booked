@@ -37,6 +37,7 @@ import {
   getCoords,
   getProviderInfo,
   fetchProviderLogin,
+  getProviderInfoAndServices,
 } from "./api";
 
 import NavComp from "./components/Navbar";
@@ -376,9 +377,13 @@ function App() {
       element: <About />,
     },
     {
-      path: "/provider/profile",
+      path: "/provider/profile/:id",
       element: <ProviderPage />,
       action: submitRequestForm,
+      loader: ({params}) => {
+        let id = params.id
+        return getProviderInfoAndServices(id);
+      },
     },
     // {
     //   path: "/provider/bookings",

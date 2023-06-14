@@ -16,7 +16,11 @@ import {
   useActionData,
   useNavigate,
   useSubmit,
+  useLoaderData,
+  useParams,
 } from "react-router-dom";
+
+import { getProviderInfo } from "../api";
 
 import {
   geocodeByAddress,
@@ -52,6 +56,59 @@ export const submitRequestForm = async ({ request }) => {
 };
 
 const ProviderPage = () => {
+  let { id } = useParams();
+  const loaderData = useLoaderData();
+
+  const [providerInfo, setProviderInfo] = useState(loaderData);
+
+  const [checkedState, setCheckedState] = useState(
+    new Array(providerInfo.services.length).fill(false)
+  );
+
+  const providerServices = providerInfo.services;
+
+  const [total, setTotal] = useState(0);
+  const handleOnChange = (position) => {
+    const updatedCheckedState = checkedState.map((item, index) =>
+      index === position ? !item : item
+    );
+
+    setCheckedState(updatedCheckedState);
+
+    const totalPrice = updatedCheckedState.reduce(
+      (sum, currentState, index) => {
+        if (currentState === true) {
+          return sum + providerServices[index].price;
+        }
+        return sum;
+      },
+      0
+    );
+
+    setTotal(totalPrice);
+  };
+  const listOfServices = providerInfo.services.map((service, index) => (
+    <div className="service-checkbox-container" key={service.service_id}>
+      <label
+        className="service-label"
+        for={`provider-${service.provider_id}-${service.service_type}`}
+      >
+        <input
+          className="service-checkbox"
+          type="checkbox"
+          id={`provider-${service.provider_id}-${service.service_type}`}
+          name={service.service_type}
+          value={service.price}
+          checked={checkedState[index]}
+          onChange={() => handleOnChange(index)}
+        />
+        <span className="checkmark"></span> <div>{service.service_type}</div>
+        <span className="service-price">${service.price}</span>
+      </label>
+    </div>
+  ));
+
+
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -76,18 +133,6 @@ const ProviderPage = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [address, setAddress] = useState("");
-  console.log(address);
-  // useEffect(() => {
-  //   geocodeByPlaceId("ChIJ9V8ApDBFwokR0dW6ql0Pyoc")
-  //     //  .then((results) => console.log(results))
-  //     .then((results) => console.log(results))
-  //     .then((results) => getLatLng(results[0]))
-  //     .then(({ lat, lng }) => {
-  //       console.log("Successfully got latitude and longitude", { lat, lng });
-  //       return { lat, lng };
-  //     })
-  //     .catch((error) => console.error(error));
-  // }, []);
 
   const filterPassedTime = (time) => {
     const currentDate = new Date();
@@ -99,46 +144,54 @@ const ProviderPage = () => {
     const selectedStartDate = new Date(date);
     return selectedStartDate.getTime() + 86400000 > initialDate.getTime();
   };
-
+  const arrayOfServiceTypes = providerInfo.services.map(service => service.service_type)
+  const stringOfServiceTypes = JSON.stringify(arrayOfServiceTypes).replace(/[\[\]"']+/g, '').replaceAll(",", ", ")
   const data = useActionData();
-  console.log(address);
   let submit = useSubmit();
   async function sendFormData() {
-    try {
-      const response = await axios({
-        method: "post",
-        url: `http://localhost:${import.meta.env.VITE_PORT}/booking`,
-        data: {
-          client_name: "mei",
-          provider_name: "john",
-          service_type: data.service_type,
-          start_date: dateFormat(new Date(startDate), "mmmm d, yyyy h:MM TT"),
-          end_date: dateFormat(new Date(endDate), "mmmm d, yyyy h:MM TT"),
-          message: data.message,
-          cost: "150",
-          address: address.label,
-          address_id: address.value.place_id,
-        },
-      });
 
-      if (response) {
-        const booking_id = response.data.booking_info.booking_id;
-        window.open(
-          `/customer/confirmation/${booking_id}`,
-          "_blank",
-          "rel=noopener noreferrer"
-        );
 
-        setModalShow(true);
-        // return data;
+        try {
+          const response = await axios({
+            method: "post",
+            url: `http://localhost:${import.meta.env.VITE_PORT}/booking`,
+            data: {
+              client_name: "jac",
+              client_id: localStorage.getItem(userId) || 1,
+              provider_id: providerInfo.provider.provider_id,
+              provider_name: providerInfo.provider.provider_fname,
+              service_type: stringOfServiceTypes,
+              start_date: dateFormat(
+                new Date(startDate),
+                "mmmm d, yyyy h:MM TT"
+              ),
+              end_date: dateFormat(new Date(endDate), "mmmm d, yyyy h:MM TT"),
+              message: data.message,
+              cost: total.toString(),
+              address: address.label,
+              address_id: address.value.place_id,
+            },
+          });
 
-        console.log(response);
-      } else {
-        throw Error("No response");
+          if (response) {
+            const booking_id = response.data.booking_info.booking_id;
+            window.open(
+              `/customer/confirmation/${booking_id}`,
+              "_blank",
+              "rel=noopener noreferrer"
+            );
+
+            setModalShow(true);
+            // return data;
+
+            console.log(response);
+          } else {
+            throw Error("No response");
+          }
+        } catch (e) {
+          console.log(e);
+    
       }
-    } catch (e) {
-      console.log(e);
-    }
   }
 
   return (
@@ -220,7 +273,8 @@ const ProviderPage = () => {
           }}
           className="provider-form"
           method="post"
-          action="/provider/profile"
+          action={`/provider/profile/${localStorage.getItem("userId")}`}
+          // action={`/provider/profile/:id`}
         >
           <div className="provider-pricing">
             <h2>$150</h2>
@@ -272,12 +326,13 @@ const ProviderPage = () => {
           </div>
           <div className="provider-input-group">
             <label for="service_type">Service Type</label>
-            <input
+            {/* <input
               type="text"
               id="service_type"
               name="service_type"
               placeholder="What service would you like?"
-            />
+            /> */}
+            {listOfServices}
           </div>
           <div className="provider-input-group">
             <label htmlFor="message">Message </label>

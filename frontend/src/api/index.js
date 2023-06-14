@@ -132,8 +132,8 @@ export const getCoords = (address_id) => {
   return latLng;
 };
 
-export const getProviderInfo = async (id = 6) => {
-  console.log(id, "PROVIDERID")
+export const getProviderInfo = async (id) => {
+  console.log(id, "PROVIDERIDasdasd")
   try {
     const response = await axios({
       method: "get",
@@ -152,12 +152,41 @@ export const getProviderInfo = async (id = 6) => {
   }
 };
 
+export const getProviderInfoAndServices = async (id) => {
+  console.log(id, "PROVIDERID")
+  try {
+    const providerInfo = await axios({
+      method: "get",
+      url: `http://localhost:${
+        import.meta.env.VITE_PORT
+      }/provider/providers/${id}`,
+    });
+
+    const serviceInfo = await axios({
+      method: "get",
+      url: `http://localhost:${
+        import.meta.env.VITE_PORT
+      }/service/${id}`,
+    })
+
+
+    if (providerInfo && serviceInfo) {
+     console.log(providerInfo, serviceInfo)
+      const data = {
+        provider : providerInfo.data.provider,
+        services : serviceInfo.data.services
+      }
+      return data;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export const applyOnboarding = async (values) => {
-  console.log(values)
   try {
     const token = localStorage.getItem("token");
     const newFormData = new FormData();
-    console.log(values.paymentMethods[0], "API VALUESVALUES")
 
     newFormData.append("firstName", values.firstName);
     newFormData.append("lastName", values.lastName);

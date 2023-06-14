@@ -119,11 +119,11 @@ export default function bookingRouter(passport) {
     try {
       const createBooking = await prisma.booking.create({
         data: {
-          client_id: request.body.client_id || 1,
-          provider_id: request.body.provider_id || 1,
+          client_id: request.body.client_id ,
+          provider_id: request.body.provider_id,
           provider_name: request.body.provider_name,
           client_name: request.body.client_name,
-          service_type: request.body.service_type,
+          service_type: request.body.service_type || "asdasdas",
           order_desc: request.body.message,
           cost: request.body.cost,
           status: request.body.status,
@@ -131,7 +131,7 @@ export default function bookingRouter(passport) {
           end_date: request.body.end_date,
           address: request.body.address,
           address_id: request.body.address_id,
-          provider_name: request.body.provider_name,
+
         },
       });
 
