@@ -18,7 +18,7 @@ const CustomerBookings = () => {
       className="customerbookings-container pe-md-4 ps-md-4 pe-lg-5 ps-lg-5 m-0"
     >
       <Row className="m-0">
-        <h1>Manage Bookings</h1>
+        <h1 className="mt-5 mb-4">Manage Bookings</h1>
         <BookingsTabs />
       </Row>
       <Row className="m-0">

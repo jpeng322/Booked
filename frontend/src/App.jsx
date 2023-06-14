@@ -4,10 +4,10 @@ import About from "../src/pages/About";
 import "/src/App.css";
 import ProviderCard from "./pages/ProviderCard";
 import providers from "./providers";
+import providersWithChangedType from "./providersWithChangeType";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import axios from "axios";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { createStore, StateMachineProvider } from "little-state-machine";
 
@@ -26,6 +26,7 @@ import { submitEditForm } from "./components/EditProfileModal";
 import CustomerAccountContact from "./pages/CustomerAccountContact";
 import ProviderPage from "./pages/ProviderPage";
 import AccountSettings from "./pages/AccountSettings";
+import ProviderOnboarding from "./pages/Onboarding";
 
 //loaders
 import {
@@ -35,11 +36,11 @@ import {
   getProviderBookings,
   getCoords,
   getProviderInfo,
+  fetchProviderLogin,
 } from "./api";
 
 import NavComp from "./components/Navbar";
 import HeroComp from "./components/HeroComp";
-
 import ConfirmationPage from "./components/ConfirmationPage";
 import FavoriteProviders from "./components/FavoritesComp";
 import MyProfile from "./components/AccountSettings/MyProfile";
@@ -51,7 +52,7 @@ import MapMarker from "./components/MapMarker";
 import Main from "./template/Main";
 import ProviderAccountHero from "./pages/ProviderAccountHero";
 import CustomerOnboarding from "./pages/CustomerOnboarding";
-
+import { ProviderType } from "./components/ProviderTypeComp";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -109,6 +110,7 @@ function App() {
   //     });
   // };
   // }
+  console.log(providersWithChangedType);
   const router = createBrowserRouter([
     {
       path: "/",
@@ -119,17 +121,17 @@ function App() {
           element: <Home />,
         },
         {
-          path: "provider/settings",
+          path: "provider/settings/:id",
           element: <AccountSettings />,
           children: [
             {
-              path: "myprofile/",
+              path: "myprofile",
               // path: "myprofile/:provider_id",
               element: <MyProfile />,
               action: submitEditForm,
               loader: () => {
                 // const provider_id = params.provider_id;
-                return getProviderInfo(6);
+                return getProviderInfo(localStorage.getItem("userId"));
               },
               // loader: ({ params }) => {
               //   const provider_id = params.provider_id;
@@ -155,13 +157,60 @@ function App() {
           ],
         },
         {
+          path: "/providers",
+          // element: <ProviderCard providers={providers} />,
+          children: [
+            {
+              path: "",
+              element: <ProviderCard providers={providers} />,
+            },
+            {
+              path: "home_improvement",
+              element: <ProviderType type="home improvement" />,
+            },
+            {
+              path: "landscaping",
+              element: <ProviderType type="landscaping" />,
+            },
+            {
+              path: "automotive",
+              element: <ProviderType type="automotive" />,
+            },
+            {
+              path: "personal_care",
+              element: <ProviderType type="personal care" />,
+            },
+            {
+              path: "pet_care",
+              element: <ProviderType type="pet care" />,
+            },
+            {
+              path: "designer_artist",
+              element: <ProviderType type="designer & artist" />,
+            },
+            {
+              path: "events",
+              element: <ProviderType type="events" />,
+            },
+            {
+              path: "technology",
+              element: <ProviderType type="technology" />,
+            },
+          ],
+        },
+        {
           path: "/customer/bookings",
           element: <CustomerAcc />,
         },
         {
-          path: "/provider/bookings",
+          path: "/provider/bookings/:id",
           element: <ProviderBookings />,
-          loader: getProviderBookings,
+
+          loader: ({ params }) => {
+            console.log(params);
+            const id = params.id;
+            return getProviderBookings(id);
+          },
         },
         {
           path: "/customer/login",
@@ -202,6 +251,45 @@ function App() {
         {
           path: "/customer/signup",
           element: <CustomerSignup />,
+        },
+        {
+          path: "onboarding/:id",
+          element: <ProviderOnboarding />,
+        },
+        {
+          path: "/customer/onboarding",
+          element: <CustomerOnboarding />,
+          action: async ({ request }) => {
+            try {
+              const formData = Object.fromEntries(await request.formData());
+              const {
+                email,
+                password,
+                firstName,
+                lastName,
+                phoneNumber,
+                preferredServices,
+              } = formData;
+              console.log(
+                email,
+                password,
+                firstName,
+                lastName,
+                phoneNumber,
+                preferredServices
+              );
+              return await fetchSignup(
+                email,
+                password,
+                firstName,
+                lastName,
+                phoneNumber,
+                preferredServices
+              );
+            } catch (error) {
+              return error;
+            }
+          },
         },
         {
           path: "/customer/onboarding",
@@ -246,7 +334,7 @@ function App() {
               const formData = await request.formData();
               const email = formData.get("email");
               const password = formData.get("password");
-              return await fetchLogin(email, password);
+              return await fetchProviderLogin(email, password);
             } catch (error) {
               return error;
             }

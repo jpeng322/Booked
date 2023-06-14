@@ -25,8 +25,8 @@ const LoggedInNavbar = () => {
                 <NavLink
                   to={
                     localStorage.getItem("userType") === "client"
-                      ? "/customer/bookings" //   client bookings
-                      : "/provider/bookings" //   provider bookings
+                      ? `/customer/bookings/${localStorage.getItem("userId")}` //   client bookings
+                      : `/provider/bookings/${localStorage.getItem("userId")}` //   provider bookings
                   }
                 >
                   Bookings
@@ -35,7 +35,7 @@ const LoggedInNavbar = () => {
                   to={
                     localStorage.getItem("userType") === "client"
                       ? "/client/settings" //   client settings
-                      : "/provider/settings" //   provider settings
+                      : `/provider/settings/${localStorage.getItem("userId")}`//   provider settings
                   }
                 >
                   Settings

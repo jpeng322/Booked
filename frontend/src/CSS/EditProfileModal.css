@@ -7,8 +7,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* border: 1px solid green; */
   flex: 1;
+  margin-right: 1rem;
+
 }
 
 .edit-input-div > :nth-child(2) {

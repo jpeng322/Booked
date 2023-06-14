@@ -25,6 +25,13 @@
   padding: 2.5rem;
 }
 
+.account-settings-top-row,
+.account-settings-bottom-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .account-settings-tabs-container {
   width: 20%;
   border-right: 1px solid black;
@@ -84,10 +91,9 @@
   position: relative;
 }
 
-.myprofile-edit {
-  position: absolute;
-  right: 2rem;
-  top: 2rem;
+.myprofile-header {
+  display: flex;
+  justify-content: space-between;
 }
 
 .myprofile-row {
@@ -103,6 +109,19 @@
 
 .myprofile-row-info {
   color: #476685;
+}
+
+.edit-modal .modal-content {
+  padding: 1rem 2rem;
+}
+
+.edit-modal-container button,
+.edit-modal-container button:hover,
+.edit-modal-container button:active:focus {
+  background-color: transparent;
+  border: none;
+  color: black;
+  padding: 0;
 }
 
 .wallet-card {
@@ -146,4 +165,62 @@
 .notifications-modal .modal-footer button:nth-child(2) {
   background-color: var(--brown-2);
   border: none;
+}
+
+@media screen and (max-width: 1200px) {
+  .account-settings-panel {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 1.25rem;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .account-settings-tabs-container {
+    width: 100%;
+    /* display: flex;
+    flex-direction: row; */
+
+    gap: 1rem;
+    /* border: 1px solid red; */
+    margin-bottom: 1rem;
+    border-right: none;
+  }
+
+  .account-settings-top-row,
+  .account-settings-bottom-row {
+    display: flex;
+    flex-direction: row;
+
+  }
+
+  .account-settings-top-row {
+    justify-content: space-around;
+  }
+
+  .account-settings-bottom-row {
+   justify-content: center;
+   gap: 5vw;
+  }
+
+  .account-settings-tabs-container > * {
+    /* border: 1px solid red; */
+  }
+  .account-settings-tab-content {
+    margin-left: 0px;
+    /* border: 1px solid red; */
+    width: 100%;
+  }
+
+  .myprofile-card {
+    box-shadow: 0 5px 10px -5px;
+    border-radius: 0.6rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: relative;
+  }
 }

@@ -46,7 +46,7 @@ const CustomerSignup = () => {
         backgroundAttachment: 'fixed',
         backgroundPosition: 'center center',
         backgroundSize: 'cover',
-        overflow: 'hidden'
+        overflow: 'hidden',
       }}
     >
       <Stack

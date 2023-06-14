@@ -29,7 +29,10 @@ const ProviderLogin = () => {
       actionData.data.success == true
     ) {
       console.log("welcome back PROVIDER user");
-      navigate("/");
+      console.log(actionData)
+      const onboardStatus = actionData.data.findProvider.onboarded
+      const provider_id = actionData.data.findProvider.provider_id
+      onboardStatus === false ? navigate(`/onboarding/${provider_id}`) : navigate(`/provider/bookings/${provider_id}`)
     }
   }, [actionData]);
 
