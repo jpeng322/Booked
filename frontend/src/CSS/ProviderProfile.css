@@ -79,6 +79,11 @@
   border-radius: 0.5rem;
 }
 
+.provider-form-container .css-b62m3t-container .css-13cymwt-control {
+  border: 1px solid grey !important;
+
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;

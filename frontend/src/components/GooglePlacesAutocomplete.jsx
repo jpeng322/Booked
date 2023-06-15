@@ -25,7 +25,7 @@ const GooglePlacesComp = ({ address, setAddress, placeholder="Select Address" })
         }}
           /> */}
           
-          <GooglePlacesAutocomplete
+      <GooglePlacesAutocomplete
       apiKey={import.meta.env.VITE_GOOGLE_API}
       autocompletionRequest={{
         componentRestrictions: {

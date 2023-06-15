@@ -93,32 +93,39 @@ ul {
   box-shadow: none;
 }
 
-
 .onboarding-button-container {
   display: flex;
   justify-content: space-between;
-  }
-
-.onboarding-button-container >* {
-width: calc(125px + 5vw);
-
 }
 
-.back-button, .back-button:hover, .back-button:active:focus {
+.onboarding-button-container > * {
+  width: calc(125px + 5vw);
+}
+
+.onboarding-main-form .css-b62m3t-container .css-13cymwt-control {
+  border: none !important;
+  border-radius: .25rem !important;
+}
+
+.back-button,
+.back-button:hover,
+.back-button:active:focus {
   background-color: var(--brown-4);
   color: black;
   border: none;
 }
 
-.next-button, .next-button:hover, .next-button:active:focus{
+.next-button,
+.next-button:hover,
+.next-button:active:focus {
   background-color: var(--uniform-2);
   color: var(--brown-4);
   border-color: black !important;
-
 }
 
-.next-button, .back-button {
-  border-radius: .625rem;
+.next-button,
+.back-button {
+  border-radius: 0.625rem;
   width: 100%;
   padding: 1rem 0rem;
 }
