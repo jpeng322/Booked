@@ -2,9 +2,9 @@ export const CircleCheck = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      // width="16"
-      // height="16"
-      fill="currentColor"
+      width="91px"
+      height="91px"
+      fill="#F1A855"
       class="bi bi-check-circle"
       viewBox="0 0 16 16"
     >

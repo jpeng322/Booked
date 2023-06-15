@@ -43,6 +43,7 @@ model Client {
   client_fname    String
   client_lname    String
   client_phone    String    @unique
+  client_zipcode  String?
   preferred_services String? 
   profile_pic     String?
   profile_pic_id  String?

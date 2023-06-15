@@ -15,7 +15,7 @@ export const fetchLogin = async (email, password) => {
       }
     );
 
-    // console.log(apiLoginData);
+    console.log(apiLoginData);
 
     if (apiLoginData.status == 200 && apiLoginData.data.token) {
       localStorage.setItem("token", apiLoginData.data.token);
@@ -28,7 +28,9 @@ export const fetchLogin = async (email, password) => {
   }
 };
 
-export const fetchProviderLogin = async (email, password) => {
+
+export const fetchLoginProvider = async (email, password) => {
+
   try {
     const apiLoginData = await axios.post(
       `http://localhost:${import.meta.env.VITE_PORT}/auth/login/provider`,
@@ -39,6 +41,7 @@ export const fetchProviderLogin = async (email, password) => {
     );
 
     console.log(apiLoginData, "APILOGINLOGIN");
+
 
     if (apiLoginData.status == 200 && apiLoginData.data.token) {
       localStorage.setItem("token", apiLoginData.data.token);
@@ -52,27 +55,20 @@ export const fetchProviderLogin = async (email, password) => {
   }
 };
 
-export const fetchSignup = async (
-  email,
-  password,
-  firstName,
-  lastName,
-  phoneNumber,
-  preferredServices
-) => {
+
+
+export const fetchSignup = async (email, password, firstName, lastName, phoneNumber, preferredServices) => {
   // console.log(email, password, firstName, lastName, phoneNumber)
   try {
-    const apiSignupData = await axios.post(
-      `http://localhost:${import.meta.env.VITE_PORT}/auth/signup/client`,
-      {
-        email: email,
-        password: password,
-        fname: firstName,
-        lname: lastName,
-        phone: phoneNumber,
-        services: preferredServices,
-      }
-    );
+    const apiSignupData = await axios.post(`http://localhost:${import.meta.env.VITE_PORT}/auth/signup/client`, {
+      email: email,
+      password: password,
+      fname: firstName,
+      lname: lastName,
+      phone: phoneNumber,
+      services: preferredServices,
+    });
+
 
     return apiSignupData;
   } catch (error) {
@@ -137,9 +133,8 @@ export const getProviderInfo = async (id) => {
   try {
     const response = await axios({
       method: "get",
-      url: `http://localhost:${
-        import.meta.env.VITE_PORT
-      }/provider/providers/${id}`,
+      url: `http://localhost:${import.meta.env.VITE_PORT
+        }/provider/providers/${id}`,
     });
 
     if (response) {
@@ -151,6 +146,88 @@ export const getProviderInfo = async (id) => {
     console.log(e);
   }
 };
+
+
+
+export const uploadImageToAxios = async (base64EncodedImage) => {
+  console.log(base64EncodedImage);
+
+  try {
+    const token = localStorage.getItem('token');
+    const userType = localStorage.getItem('userType');
+
+    const postTOAxios = await axios.post(`http://localhost:${import.meta.env.VITE_PORT}/profile/pic`, { data: base64EncodedImage, type: userType }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    console.log(postTOAxios);
+
+    const response = postTOAxios.data
+
+    console.log(response);
+
+    return response;
+
+  } catch (error) {
+    console.log(error);
+  }
+
+};
+
+export const deleteImageToAxios = async () => {
+  try {
+    const token = localStorage.getItem('token');
+    const userType = localStorage.getItem('userType');
+
+    const deleteToAxios = await axios.put(`http://localhost:${import.meta.env.VITE_PORT}/profile/pic/remove`, { type: userType }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    console.log(deleteToAxios);
+    const response = deleteToAxios.data
+    console.log(response);
+
+    return response;
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+export const editClientAxios = async (email, firstName, lastName, phoneNumber, zipcode,) => {
+  try {
+    const token = localStorage.getItem('token');
+    // const userType = localStorage.getItem('userType');
+
+    const apiEditClient = await axios.put(`http://localhost:${import.meta.env.VITE_PORT}/client/information`, {
+      client_email: email,
+      client_fname: firstName,
+      client_lname: lastName,
+      client_phone: phoneNumber,
+      client_zipcode: zipcode,
+
+    }, 
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    console.log(apiEditClient);
+    // const response = editClient.data
+    // console.log(response);
+
+    return apiEditClient;
+
+  } catch (error) {
+    return error;
+  }
+}
 
 export const getProviderInfoAndServices = async (id) => {
   console.log(id, "PROVIDERID")
@@ -226,3 +303,4 @@ export const applyOnboarding = async (values, areaAddress) => {
     return {};
   }
 };
+

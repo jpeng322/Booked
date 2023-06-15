@@ -88,7 +88,7 @@ router.post("/signup/client", async (request, response) => {
   }
 });
 
-router.post("/login", async (request, response) => {
+router.post("/login/provider", async (request, response) => {
   try {
     const findProvider = await prisma.provider.findFirst({
       where: {
@@ -121,6 +121,7 @@ router.post("/login", async (request, response) => {
         response.status(200).json({
           success: true,
           token,
+          type: "provider"
         });
       } else {
         response.status(401).json({

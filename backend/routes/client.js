@@ -165,6 +165,55 @@ async (req, res) => {
     };
 });
 
+//PUT only signed in Client user and edit thier information
+router.put('/information', passport.authenticate("jwt", { session: false }), 
+async (req, res) => {
+
+  // const id  = req.params.client_id;
+  
+  try {
+    const client = await prisma.client.findUnique({
+        where: {
+            client_id: req.user.Client.client_id
+        }
+    });
+
+    if (client){
+    const updateClient = await prisma.client.update({
+      where: { 
+        client_id: req.user.Client.client_id 
+    },
+      data: {
+        client_email: req.body.client_email,
+        client_fname: req.body.client_fname,
+        client_lname: req.body.client_lname,
+        client_phone: req.body.client_phone,
+        client_zipcode: req.body.client_zipcode,
+      },
+    });
+    
+    if (updateClient) {
+        res.status(200).json({
+            success: true,
+            message: "Client information updated successfully"
+        })
+    } else {
+        res.status(500).json({
+            success: false,
+            message: "Failed to update client"
+        });
+    };
+};
+  } catch (error) {
+    res.status(500).json({ 
+        success: false,
+        message: 'Failed to update client' 
+        });
+    };
+});
+
+
+
 //PUT only signed in Client user
 router.put('/services', async(request, response) => {
   try {

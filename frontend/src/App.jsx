@@ -31,11 +31,13 @@ import ProviderOnboarding from "./pages/Onboarding";
 //loaders
 import {
   fetchLogin,
+  fetchLoginProvider,
   fetchSignup,
   getBooking,
   getProviderBookings,
   getCoords,
   getProviderInfo,
+  editClientAxios,
   fetchProviderLogin,
   getProviderInfoAndServices,
 } from "./api";
@@ -306,14 +308,14 @@ function App() {
                 phoneNumber,
                 preferredServices,
               } = formData;
-              console.log(
-                email,
-                password,
-                firstName,
-                lastName,
-                phoneNumber,
-                preferredServices
-              );
+              // console.log(
+              //   email,
+              //   password,
+              //   firstName,
+              //   lastName,
+              //   phoneNumber,
+              //   preferredServices
+              // );
               return await fetchSignup(
                 email,
                 password,
@@ -347,6 +349,36 @@ function App() {
     {
       path: "/customeraccount",
       element: <CustomerAccountContact />,
+      action: async ({ request }) => {
+        try {
+
+          const formData = Object.fromEntries(await request.formData());
+          // console.log(formData)
+          const {
+            email,
+            firstName,
+            lastName,
+            phoneNumber,
+            zipcode,
+          } = formData;
+          // console.log(
+          //   email,
+          //   firstName,
+          //   lastName,
+          //   phoneNumber,
+          //   zipcode,
+          //   );
+          return await editClientAxios(
+            email,
+            firstName,
+            lastName,
+            phoneNumber,
+            zipcode,
+          );
+        } catch (error) {
+          return error;
+        }
+      }
     },
     {
       path: "/preferences",

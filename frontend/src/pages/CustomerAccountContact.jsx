@@ -9,6 +9,10 @@ import Stack from 'react-bootstrap/Stack';
 import { Image } from "react-bootstrap";
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
+import { deleteImageToAxios, uploadImageToAxios } from '../api/index.js'
+import { CircleCheck } from "../assets/Icons.jsx";
+import { useActionData, useNavigate, useSubmit, Link } from 'react-router-dom'
+import '../CSS/CustomerAccountContact.css'
 
 
 
@@ -16,6 +20,7 @@ import axios from "axios";
 const CustomerAccountContact = () => {
     const [showFirstModal, setShowFirstModal] = useState(false);
     const [showSecondModal, setShowSecondModal] = useState(false);
+    const [showThirdModal, setShowThirdModal] = useState(false);
     const [preview, setPreview] = useState();
     const [selectedFile, setSelectedFile] = useState();
     const [userPic, setUserPic] = useState();
@@ -30,16 +35,25 @@ const CustomerAccountContact = () => {
     };
     const handleShowSecondModal = () => setShowSecondModal(true);
 
+    const handleCloseThirdModal = () => setShowThirdModal(false);
+    const handleShowThirdModal = () => setShowThirdModal(true);
+
+    const submit = useSubmit();
+    const actionData = useActionData();
+
     useEffect(() => {
         const savedUserPic = localStorage.getItem('pic');
 
-        console.log('useEFFECT FOR PROFILE PIC RAN')
+        // console.log('useEFFECT FOR PROFILE PIC RAN')
 
-        if(savedUserPic){
+        if (savedUserPic) {
             setUserPic(savedUserPic);
         }
+        else {
+            setUserPic()
+        }
 
-        
+
     }, [setUserPic])
 
 
@@ -58,6 +72,7 @@ const CustomerAccountContact = () => {
         }
     };
 
+
     // Cleanup func for URL.createObjectURL
     useEffect(() => {
         return () => {
@@ -65,17 +80,45 @@ const CustomerAccountContact = () => {
                 URL.revokeObjectURL(preview);
             }
         }
-    }, [preview])
+    }, [preview]);
+
+
+    //Reset Form
+    useEffect(() => {
+        if (actionData && actionData.status == 200 && actionData.data.success == true) {
+            console.log("EDIT SUCCESSFUL!");
+            // navigate("/");
+        }
+    }, [actionData])
+
+
 
     // Form handing for CONTACT
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, formState, formState: { isSubmitSuccessful, errors } } = useForm();
     const onSubmit = (data) => {
         console.log(data);
+
+        submit(data, {
+            method: "put",
+            action: "/customeraccount"
+        });
+
+
     };
+    useEffect(() => {
+        if(formState.isSubmitSuccessful) {
+            reset({ firstName: '', lastName: '', email: '', phoneNumber: '', zipcode: '',  })
+        }
+    },[formState, reset])
+
+    // console.log(actionData);
     console.log(errors);
 
+
+
+
+
     //Form handling for PROFILE PICTURE with axios
-   
     const onSubmitPicture = (e) => {
         e.preventDefault();
         // console.log(e.target.files);
@@ -83,44 +126,53 @@ const CustomerAccountContact = () => {
 
         const reader = new FileReader();
         reader.readAsDataURL(selectedFile);
-        reader.onloadend = () => {
+        reader.onloadend = async () => {
             // console.log(reader.result)
-            uploadImgageToAxios(reader.result)
+            const response = await uploadImageToAxios(reader.result);
 
-        };
-        const uploadImgageToAxios = async (base64EncodedImage) => {
-            console.log(base64EncodedImage);
+            console.log(response);
 
-            try {
-                 const token = localStorage.getItem('token');
 
-                 const postTOAxios = await axios.post(`http://localhost:${import.meta.env.VITE_PORT}/profile/pic`, { data: base64EncodedImage }, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                 });
-
-                 console.log(postTOAxios);
-
-                 const response = postTOAxios.data
-
-                 console.log(response);
-
-                 if(response){
+            if (response.success === true) {
+                if (response.providerProfilePic) {
                     const url = response.providerProfilePic.profile_pic
-                    localStorage.setItem('pic', url );
+                    localStorage.setItem('pic', url);
                     setUserPic(url);
-                 }
+                    setShowFirstModal(false);
+                    setShowSecondModal(false);
+                    handleShowThirdModal();
+                }
 
-            } catch (error) {
-                console.log(error);
+                if (response.clientProfilePic) {
+                    const url = response.clientProfilePic.profile_pic
+                    localStorage.setItem('pic', url);
+                    setUserPic(url);
+                    setShowFirstModal(false);
+                    setShowSecondModal(false);
+                    handleShowThirdModal();
+                }
+
             }
 
+        };
+
+
+    };
+
+
+    //Delete PROFILE PICTURE with axios
+    const handleDeletePic = async () => {
+        const response = await deleteImageToAxios();
+
+        console.log(response);
+
+        if (response.success === true) {
+            localStorage.removeItem('pic')
+            setUserPic()
+            setShowFirstModal(false)
         }
-
-       
-
     }
+
 
 
 
@@ -186,8 +238,8 @@ const CustomerAccountContact = () => {
                         alt="Circle image"
                         roundedCircle
                         style={{
-                            width: '150px',
-                            height: '150px',
+                            width: '200px',
+                            height: '200px',
 
                         }}
                     />
@@ -225,8 +277,8 @@ const CustomerAccountContact = () => {
                                 alt="Circle image"
                                 roundedCircle
                                 style={{
-                                    width: '150px',
-                                    height: '150px',
+                                    width: '200px',
+                                    height: '200px',
 
                                 }}
                             />
@@ -235,11 +287,13 @@ const CustomerAccountContact = () => {
                             <Button className="col-4" style={{ backgroundColor: '#476685' }} onClick={handleShowSecondModal}>
                                 Change
                             </Button>
-                            <Button className="col-4" style={{ backgroundColor: '#476685' }} onClick={handleCloseFirstModal}>
+                            <Button className="col-4" style={{ backgroundColor: '#476685' }} onClick={handleDeletePic}>
                                 Remove
                             </Button>
                         </Modal.Footer>
                     </Modal>
+
+
 
                     {/* Second Modal */}
                     <Modal show={showSecondModal} onHide={handleCloseSecondModal} centered>
@@ -249,18 +303,17 @@ const CustomerAccountContact = () => {
                         <Modal.Body className="d-flex justify-content-center">
                             <Image
                                 src={preview ? preview : "https://dummyimage.com/640x360/eee/aaa"}
-                                alt="Circle image"
+                                // alt="Circle image"
                                 roundedCircle
                                 style={{
-                                    width: '150px',
-                                    height: '150px',
+                                    width: '200px',
+                                    height: '200px',
 
                                 }}
                             />
                         </Modal.Body>
                         <Modal.Footer className="d-flex justify-content-evenly" >
-                            {/* SET MULTER FOR UPLOAD */}
-                           
+
                             <Form onSubmit={onSubmitPicture} encType="multipart/form-data" >
                                 <input type="file" name="image" onChange={handleChange} accept="image/png, image/gif, image/jpeg" />
                                 <Button type="submit" className="col-4" style={{ backgroundColor: '#476685' }} >
@@ -272,7 +325,28 @@ const CustomerAccountContact = () => {
                     </Modal>
 
 
+                    {/* Third Modal */}
+                    <Modal show={showThirdModal} onHide={handleCloseThirdModal} centered>
+                        <Modal.Header closeButton>
+                        {/* <Modal.Title className="w-100 d-flex justify-content-center" >Profile Picture</Modal.Title> */}
+                        </Modal.Header>
+                        <Modal.Body
+                            className="d-flex justify-content-center align-items-center"
+                            style={{
+                                flexDirection: 'column'
+                            }}
+                        >
 
+                            <CircleCheck />
+                            <p
+                                style={{
+                                    fontSize: '30px',
+                                    fontWeight: '400'
+                                }}
+                            >
+                                Profile Updated.</p>
+                        </Modal.Body>
+                    </Modal>
 
 
 

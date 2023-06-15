@@ -1,0 +1,10 @@
+
+
+@media (max-width: 800px) {
+   .about-image-text {
+        /* aspect-ratio: 16/9; */
+        /* width: 100vw; */
+        /* height: 0px; */
+        color: white;
+    }
+}
