@@ -196,7 +196,11 @@ const ProviderPage = () => {
       <div className="provider-information">
         <div className="provider-bio">
           <div className="provider-header">
-            <img src={avatar} alt="asdasd" />
+            <img
+              className="border"
+              src={providerInfo.provider.profile_pic}
+              alt="profile-pic"
+            />
             <div className="provider-media">
               <h2>{providerInfo.provider.provider_businessName}</h2>
               {/* <h3>Super stars</h3> */}
@@ -222,7 +226,10 @@ const ProviderPage = () => {
               time{providerInfo.timesBooked !== 1 && "s"}
             </div>
             <div>
-              Serves <span className="fw-bold">{providerInfo.provider.provider_areaServed}</span>{" "}
+              Serves{" "}
+              <span className="fw-bold">
+                {providerInfo.provider.provider_areaServed}
+              </span>{" "}
             </div>
             {providerInfo.provider.provider_standing === "true" && (
               <div>
@@ -246,25 +253,31 @@ const ProviderPage = () => {
             <div>
               <span className="fw-bold">Payments</span>
             </div>
-            {console.log(providerInfo.provider.provider_payment_methods.split(","))}
-            {providerInfo.provider.provider_payment_methods.split(",").map(payment_method => <div className="text-capitalize">{payment_method}</div>)}
+            {console.log(
+              providerInfo.provider.provider_payment_methods.split(",")
+            )}
+            {providerInfo.provider.provider_payment_methods
+              .split(",")
+              .map((payment_method) => (
+                <div className="text-capitalize">{payment_method}</div>
+              ))}
           </div>
         </div>
         <div className="provider-photos">
           <h3>Featured Project Photos</h3>
-          <div>30 photos</div>
+          <div>{providerInfo.provider.image.length} photos</div>
 
           {/* <div className="provider-photos-container"> */}
 
           {/* </div> */}
           <Carousel responsive={responsive}>
-            <img src={avatar} alt="" />
-            <img src={avatar} alt="" />
-            <img src={avatar} alt="" />
-            <img src={avatar} alt="" />
-            <img src={avatar} alt="" />
-            <img src={avatar} alt="" />
-            <img src={avatar} alt="" />
+            {providerInfo.provider.image.map((image) => (
+              <img
+                key={image.image_id}
+                src={image.image_url}
+                alt="provider-carousel-images"
+              />
+            ))}
           </Carousel>
         </div>
       </div>

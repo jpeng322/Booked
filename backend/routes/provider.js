@@ -100,6 +100,10 @@ export default function providerRouter(passport) {
         where: {
           provider_id: parseInt(id),
         },
+        include: {
+          service: true,
+          image: true
+        }
       });
       if (provider) {
         res.status(200).json({
