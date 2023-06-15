@@ -318,7 +318,7 @@ const ServicesProvided = () => {
                 <Form.Check
                   type="radio"
                   label="home improvement"
-                  value="home_improvement"
+                  value="home improvement"
                   {...register("businessType")}
                 />
               </li>
@@ -342,7 +342,7 @@ const ServicesProvided = () => {
                 <Form.Check
                   type="radio"
                   label="personal care"
-                  value="personal_care"
+                  value="personal care"
                   {...register("businessType")}
                 />
               </li>
@@ -360,7 +360,7 @@ const ServicesProvided = () => {
                 <Form.Check
                   type="radio"
                   label="designer & artist"
-                  value="designer_artist"
+                  value="designer artist"
                   {...register("businessType")}
                 />
               </li>

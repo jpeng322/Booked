@@ -48,21 +48,23 @@ const ProviderCard = (props) => {
       <Container fluid className="p-5">
         <Row className="d-flex justify-content-center">
           {providersToDisplay.map((provider, index) => (
-            <Row>
+            <Row className="provider-card-container">
               <Col className="" key={index}>
                 <div className="provider-card">
-                  <div>
-                    <h3 className="text-left">
-                      <img
-                        src={provider.profile_pic}
-                        alt={props.name}
-                        className="provider-logo"
-                      />
-                      {provider.provider_businessName}
-                    </h3>
-                    <p className="business-location">
-                      {provider.provider_areaServed}
-                    </p>
+                  <div className="provider-card-header">
+                    <img
+                      src={provider.profile_pic}
+                      alt={props.name}
+                      className="provider-logo"
+                    />
+                    <div className="d-flex flex-column">
+                      <p className="business-name"> {provider.provider_businessName}</p>
+
+                      <p className="business-location">
+                        {provider.provider_areaServed}
+                      </p>
+                    </div>
+
                     <div className="rating">
                       <span className="numeric-rating">
                         {/* {provider.rating.toFixed(1)} */}
@@ -93,18 +95,30 @@ const ProviderCard = (props) => {
                     </Col>
                   </Row>
                   <Row>
-                    <Col>
-                      <div className="text-left">
-                        <div className="type-highlight">{provider.type}</div>
-                        <div className="skill-highlight">{provider.skill}</div>
-                        <div className="skill-highlight">{provider.skill}</div>
+                    <Col className="d-flex justify-content-between">
+                      <div className="provider-attributes">
+                        <div className="type-highlight">
+                          {provider.provider_businessType}
+                        </div>
+                        {provider.service.map((service) => (
+                          <div
+                            className="skill-highlight"
+                            key={service.service_id}
+                          >
+                            {service.service_type}
+                          </div>
+                        ))}
                       </div>
                       <div className="justify-content-end">
                         <Button
                           className="viewprofile"
                           variant="warning"
                           // onClick={handleSubmit}
-                          onClick={() => navigate(`/provider/profile/${provider.provider_id}`)}
+                          onClick={() =>
+                            navigate(
+                              `/provider/profile/${provider.provider_id}`
+                            )
+                          }
                         >
                           View Profile
                         </Button>

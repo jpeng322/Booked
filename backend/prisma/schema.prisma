@@ -28,7 +28,7 @@ model Provider {
   preferred_services String? 
   profile_pic       String?
   profile_pic_id    String?
-  
+  provider_businessType String?
   onboarded Boolean @default(false)
   // service_id  Int
   // booking_id Int

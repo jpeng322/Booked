@@ -40,7 +40,8 @@ export default function providerRouter(passport) {
           onboarded: true
         },
         include: {
-          image: true
+          image: true,
+          service: true
         }
       });
 
@@ -157,6 +158,7 @@ export default function providerRouter(passport) {
             provider_amountOfEmployees: parseInt(req.body.amountOfEmployees),
             provider_yearsInBusiness: parseInt(req.body.yearsInBusiness),
             provider_businessName: req.body.businessName,
+            provider_businessType: req.body.businessType.replace("_"," "),
             provider_areaServed: req.body.areaServed,
             profile_pic: uploadedProfilePic.url,
             service: {
