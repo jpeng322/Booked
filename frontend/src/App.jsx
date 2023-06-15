@@ -40,6 +40,7 @@ import {
   editClientAxios,
   // fetchProviderLogin,
   getProviderInfoAndServices,
+  getOnboardedProviders
 } from "./api";
 
 import NavComp from "./components/Navbar";
@@ -113,7 +114,6 @@ function App() {
   //     });
   // };
   // }
-  console.log(providersWithChangedType);
   const router = createBrowserRouter([
     {
       path: "/",
@@ -402,7 +402,9 @@ function App() {
     },
     {
       path: "/provider",
+      // element: <ProviderCard providers={providers} />,
       element: <ProviderCard providers={providers} />,
+      loader: getOnboardedProviders
     },
     {
       path: "/about",

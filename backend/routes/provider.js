@@ -15,17 +15,6 @@ export default function providerRouter(passport) {
   router.get("/", async (req, res) => {
     try {
       const providers = await prisma.provider.findMany({
-        // where: {
-        //   provider_id: req.provider.provider_id,
-        // },
-        // //choosing the fields wish to get back from the table
-        // select: {
-        //   provider_id: true,
-        //   provider_fname: true,
-        //   provider_lname: true,
-        //   provider_phone: true,
-        //   provider_email: true,
-        // },
       });
 
       if (providers) {
@@ -39,6 +28,38 @@ export default function providerRouter(passport) {
       res.status(500).json({
         success: false,
         message: "Failed to fetch providers",
+      });
+    }
+  });
+
+  //Get onboarded providers
+  router.get("/onboarded", async (req, res) => {
+    try {
+      const onboardedProviders = await prisma.provider.findMany({
+        where: {
+          onboarded: true
+        },
+        include: {
+          image: true
+        }
+      });
+
+      if (onboardedProviders) {
+        res.status(200).json({
+          success: true,
+          onboardedProviders,
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          message: "Failed to fetch onboarded providers."
+        })
+      }
+    } catch (e) {
+      console.log(e);
+      res.status(500).json({
+        success: false,
+        message: "Something went wrong.",
       });
     }
   });
@@ -118,16 +139,11 @@ export default function providerRouter(passport) {
         const listOfServices = JSON.parse(req.body.listOfServices);
 
         const uploadedFilesPromises = req.files.slice(1).map(async (file) => {
-          //Need to convert the buffer (which is the acutal image) to a base64 string. That is so cloudinary servers know the actual image's data.
           const b64 = Buffer.from(file.buffer).toString("base64");
-          //Creating a dataURI that Cloudinary can understand to render the image and understand the acutal data plus any additional data about the image
           let dataURI = "data:" + file.mimetype + ";base64," + b64;
-          //Sets up the cloudinary uploading but doesn't actually do it.
           return await cloudinary.uploader.upload(dataURI);
         });
-  
-        //This is where the uploading acutally happens. All the promises get walked through one at a time.
-        //Also you can go through each file and store their public_id to your DB along with any other info.
+
         const uploadedFiles = await Promise.all(uploadedFilesPromises);
 
         const updatedProvider = await prisma.provider.update({
