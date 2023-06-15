@@ -5,7 +5,7 @@ export default function serviceRouter(passport) {
   const router = express.Router();
 
   //GET all services
-  router.get("/", async (_request, response) => {
+  router.get("/", async (request, response) => {
     try {
       const allService = await prisma.service.findMany();
 
@@ -21,6 +21,37 @@ export default function serviceRouter(passport) {
         });
       }
     } catch (error) {
+      response.status(500).json({
+        success: false,
+        message: "Something went wrong",
+      });
+    }
+  });
+
+    //GET providers services by id
+  router.get("/:provider_id", async (request, response) => {
+    console.log(request.params.provider_id, "provider_id")
+    try {
+      const providerServices = await prisma.service.findMany({
+        where: {
+          provider_id: parseInt(request.params.provider_id)
+        }
+      });
+      console.log(providerServices)
+
+      if (providerServices) {
+        response.status(200).json({
+          success: true,
+          services: providerServices,
+        });
+      } else {
+        response.status(404).json({
+          success: false,
+          message: "Services do not exist",
+        });
+      }
+    } catch (error) {
+      console.log(error)
       response.status(500).json({
         success: false,
         message: "Something went wrong",

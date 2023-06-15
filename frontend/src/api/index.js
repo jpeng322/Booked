@@ -97,7 +97,7 @@ export const getBooking = async (booking_id) => {
 };
 
 export const getProviderBookings = async (id) => {
-  console.log(id, "PROVIDERID")
+  // console.log(id, "PROVIDERID")
   try {
     const response = await axios({
       method: "get",
@@ -132,8 +132,8 @@ export const getCoords = (address_id) => {
   return latLng;
 };
 
-export const getProviderInfo = async (id = 6) => {
-  console.log(id, "PROVIDERID")
+export const getProviderInfo = async (id) => {
+  console.log(id, "PROVIDERIDasdasd")
   try {
     const response = await axios({
       method: "get",
@@ -152,12 +152,45 @@ export const getProviderInfo = async (id = 6) => {
   }
 };
 
-export const applyOnboarding = async (values) => {
-  console.log(values)
+export const getProviderInfoAndServices = async (id) => {
+  console.log(id, "PROVIDERID")
+  try {
+    const providerInfo = await axios({
+      method: "get",
+      url: `http://localhost:${
+        import.meta.env.VITE_PORT
+      }/provider/providers/${id}`,
+    });
+
+    const serviceInfo = await axios({
+      method: "get",
+      url: `http://localhost:${
+        import.meta.env.VITE_PORT
+      }/service/${id}`,
+    })
+
+    const bookingsInfo = await getProviderBookings(id)
+
+
+    if (providerInfo && serviceInfo) {
+     console.log(providerInfo, serviceInfo)
+      const data = {
+        provider : providerInfo.data.provider,
+        services: serviceInfo.data.services,
+        timesBooked: bookingsInfo.length,
+      }
+      return data;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const applyOnboarding = async (values, areaAddress) => {
+  console.log(values, areaAddress, "APAPAPPAII")
   try {
     const token = localStorage.getItem("token");
     const newFormData = new FormData();
-    console.log(values.paymentMethods[0], "API VALUESVALUES")
 
     newFormData.append("firstName", values.firstName);
     newFormData.append("lastName", values.lastName);
@@ -165,18 +198,21 @@ export const applyOnboarding = async (values) => {
     newFormData.append("paymentMethods", values.paymentMethods);
     newFormData.append("responseTime", values.responseTime);
     newFormData.append("amountOfEmployees", values.amountOfEmployees);
+    newFormData.append("yearsInBusiness", values.yearsInBusiness);
     newFormData.append("backgroundCertified", values.backgroundCertified);
+    newFormData.append("businessName", values.businessName);
+    newFormData.append("areaServed", areaAddress.label)
     // newFormData.append("profile", values.profilePicture[0]);
 
    
     const resp = await axios.put(
       `http://localhost:${import.meta.env.VITE_PORT}/provider/onboard`,
-      newFormData,
+       newFormData,
       {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
-        },
+        }
       }
     );
     console.log(resp)

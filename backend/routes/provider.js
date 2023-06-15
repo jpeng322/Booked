@@ -103,7 +103,7 @@ export default function providerRouter(passport) {
     passport.authenticate("jwt", { session: false }),
     multerUpload,
     async (req, res) => {
-      console.log(req.user)
+      console.log(req.body);
       try {
         // const file = req.file;
         // const b64 = Buffer.from(file.buffer).toString("base64");
@@ -121,6 +121,10 @@ export default function providerRouter(passport) {
             provider_response: req.body.responseTime,
             provider_payment_methods: req.body.paymentMethods,
             provider_standing: req.body.backgroundCertified,
+            provider_amountOfEmployees: parseInt(req.body.amountOfEmployees),
+            provider_yearsInBusiness: parseInt(req.body.yearsInBusiness),
+            provider_businessName: req.body.businessName,
+            provider_areaServed: req.body.areaServed,
             // profile_pic: uploadedProfilePic.url,
             service: {
               createMany: {
@@ -132,13 +136,13 @@ export default function providerRouter(passport) {
                 }),
               },
             },
-            onboarded: true
+            onboarded: true,
           },
         });
 
         res.status(200).json({
           success: true,
-          updatedProvider
+          updatedProvider,
         });
       } catch (e) {
         console.log(e);

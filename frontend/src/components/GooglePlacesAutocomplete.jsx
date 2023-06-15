@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 
 import "../CSS/GooglePlacesComp.css";
-const GooglePlacesComp = ({ address, setAddress }) => {
+const GooglePlacesComp = ({ address, setAddress, placeholder="Select Address" }) => {
   //   const [value, setValue] = useState(null);
   //   console.log(value);
 
@@ -25,7 +25,7 @@ const GooglePlacesComp = ({ address, setAddress }) => {
         }}
           /> */}
           
-          <GooglePlacesAutocomplete
+      <GooglePlacesAutocomplete
       apiKey={import.meta.env.VITE_GOOGLE_API}
       autocompletionRequest={{
         componentRestrictions: {
@@ -35,21 +35,7 @@ const GooglePlacesComp = ({ address, setAddress }) => {
       selectProps={{
         defaultInputValue: address, //set default value
         onChange: setAddress, //save the value gotten from google
-        placeholder: "Select Address",
-        // styles: {
-        //   input: (provided) => ({
-        //     ...provided,
-        //     color: "#222222",
-        //   }),
-        //   option: (provided) => ({
-        //     ...provided,
-        //     color: "#222222",
-        //   }),
-        //   singleValue: (provided) => ({
-        //     ...provided,
-        //     color: "#222222",
-        //   }),
-        // },
+        placeholder: placeholder,
       }}
       onLoadFailed={(error) => {
         console.log(error);
