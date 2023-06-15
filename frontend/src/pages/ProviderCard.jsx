@@ -8,10 +8,14 @@ import Row from 'react-bootstrap/Row';
 import Pagination from 'react-bootstrap/Pagination';
 import { FaStar } from 'react-icons/fa';
 import Button from 'react-bootstrap/Button';
-
+import SearchBarProviderCardPg from '../components/SearchBarProviderCardPg'
 import "../CSS/ProviderCard.css"
+import NavBar from '../components/Navbar'
+import HifiFooter from '../components/Footer/HifiFooter'
+
 
 import avatar from "../images/avatar.png";
+import SearchBar from "../components/SearchBar";
 const ProviderCard = (props) => {
   const [activePage, setActivePage] = useState(1);
   const itemsPerPage = 4;
@@ -27,9 +31,16 @@ const ProviderCard = (props) => {
     activePage * itemsPerPage
   );
   
+  const handleSubmit = (event) => {
+    window.location.href = "/profile"
+  };
 
   return (
+    <>
+    <NavBar />
+     <SearchBarProviderCardPg />
     <Container fluid className="p-5">
+     
       <Row className="d-flex justify-content-center">
         {providersToDisplay.map((provider, index) => (
           <Row>
@@ -85,7 +96,7 @@ const ProviderCard = (props) => {
                     </div>
                     <div className="justify-content-end">
 
-                      <Button className="viewprofile" variant="warning">View Profile</Button>{' '}
+                      <Button className="viewprofile" variant="warning" onClick={handleSubmit}>View Profile</Button>
 
                     </div>
                   </Col>
@@ -115,7 +126,10 @@ const ProviderCard = (props) => {
           </Col>
         </Row>
       </Row>
+      
     </Container>
+    <HifiFooter />
+    </>
   );
 };
 
