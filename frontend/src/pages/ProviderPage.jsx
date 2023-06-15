@@ -60,7 +60,7 @@ const ProviderPage = () => {
   const loaderData = useLoaderData();
 
   const [providerInfo, setProviderInfo] = useState(loaderData);
-
+  console.log(providerInfo);
   const [checkedState, setCheckedState] = useState(
     new Array(providerInfo.services.length).fill(false)
   );
@@ -108,7 +108,6 @@ const ProviderPage = () => {
     </div>
   ));
 
-
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -144,54 +143,52 @@ const ProviderPage = () => {
     const selectedStartDate = new Date(date);
     return selectedStartDate.getTime() + 86400000 > initialDate.getTime();
   };
-  const arrayOfServiceTypes = providerInfo.services.map(service => service.service_type)
-  const stringOfServiceTypes = JSON.stringify(arrayOfServiceTypes).replace(/[\[\]"']+/g, '').replaceAll(",", ", ")
+  const arrayOfServiceTypes = providerInfo.services.map(
+    (service) => service.service_type
+  );
+  const stringOfServiceTypes = JSON.stringify(arrayOfServiceTypes)
+    .replace(/[\[\]"']+/g, "")
+    .replaceAll(",", ", ");
   const data = useActionData();
   let submit = useSubmit();
   async function sendFormData() {
+    try {
+      const response = await axios({
+        method: "post",
+        url: `http://localhost:${import.meta.env.VITE_PORT}/booking`,
+        data: {
+          client_name: "jac",
+          client_id: localStorage.getItem(userId) || 1,
+          provider_id: providerInfo.provider.provider_id,
+          provider_name: providerInfo.provider.provider_fname,
+          service_type: stringOfServiceTypes,
+          start_date: dateFormat(new Date(startDate), "mmmm d, yyyy h:MM TT"),
+          end_date: dateFormat(new Date(endDate), "mmmm d, yyyy h:MM TT"),
+          message: data.message,
+          cost: total.toString(),
+          address: address.label,
+          address_id: address.value.place_id,
+        },
+      });
 
+      if (response) {
+        const booking_id = response.data.booking_info.booking_id;
+        window.open(
+          `/customer/confirmation/${booking_id}`,
+          "_blank",
+          "rel=noopener noreferrer"
+        );
 
-        try {
-          const response = await axios({
-            method: "post",
-            url: `http://localhost:${import.meta.env.VITE_PORT}/booking`,
-            data: {
-              client_name: "jac",
-              client_id: localStorage.getItem(userId) || 1,
-              provider_id: providerInfo.provider.provider_id,
-              provider_name: providerInfo.provider.provider_fname,
-              service_type: stringOfServiceTypes,
-              start_date: dateFormat(
-                new Date(startDate),
-                "mmmm d, yyyy h:MM TT"
-              ),
-              end_date: dateFormat(new Date(endDate), "mmmm d, yyyy h:MM TT"),
-              message: data.message,
-              cost: total.toString(),
-              address: address.label,
-              address_id: address.value.place_id,
-            },
-          });
+        setModalShow(true);
+        // return data;
 
-          if (response) {
-            const booking_id = response.data.booking_info.booking_id;
-            window.open(
-              `/customer/confirmation/${booking_id}`,
-              "_blank",
-              "rel=noopener noreferrer"
-            );
-
-            setModalShow(true);
-            // return data;
-
-            console.log(response);
-          } else {
-            throw Error("No response");
-          }
-        } catch (e) {
-          console.log(e);
-    
+        console.log(response);
+      } else {
+        throw Error("No response");
       }
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   return (
@@ -201,7 +198,7 @@ const ProviderPage = () => {
           <div className="provider-header">
             <img src={avatar} alt="asdasd" />
             <div className="provider-media">
-              <h2>GR Brothers Landscaping</h2>
+              <h2>{providerInfo.provider.provider_businessName}</h2>
               <h3>Super stars</h3>
               <button>Share</button>
             </div>
@@ -221,30 +218,36 @@ const ProviderPage = () => {
             </div>
             <div>Pro</div>
             <div>
-              Hired <span className="fw-bold">66</span> times
+              Booked <span className="fw-bold">{providerInfo.timesBooked}</span>{" "}
+              time{providerInfo.timesBooked !== 1 && "s"}
             </div>
             <div>
-              Serves <span className="fw-bold">Los Angeles, CA</span>{" "}
+              Serves <span className="fw-bold">{providerInfo.provider.provider_areaServed}</span>{" "}
+            </div>
+            {providerInfo.provider.provider_standing === "true" && (
+              <div>
+                Background <span className="fw-bold">checked</span>
+              </div>
+            )}
+            <div>
+              <span className="fw-bold">
+                {providerInfo.provider.provider_amountOfEmployees}
+              </span>{" "}
+              employees
             </div>
             <div>
-              Background <span className="fw-bold">checked</span>
-            </div>
-            <div>
-              <span className="fw-bold">4</span> employees
-            </div>
-            <div>
-              <span className="fw-bold">2</span> years in business
+              <span className="fw-bold">
+                {providerInfo.provider.provider_yearsInBusiness}
+              </span>{" "}
+              years in business
             </div>
           </div>
           <div className="provider-payments">
             <div>
               <span className="fw-bold">Payments</span>
             </div>
-            <div>Cash</div>
-            <div>CashApp</div>
-            <div>Venmo</div>
-            <div>Zelle</div>
-            <div>ApplePay</div>
+            {console.log(providerInfo.provider.provider_payment_methods.split(","))}
+            {providerInfo.provider.provider_payment_methods.split(",").map(payment_method => <div className="text-capitalize">{payment_method}</div>)}
           </div>
         </div>
         <div className="provider-photos">
@@ -352,7 +355,13 @@ const ProviderPage = () => {
             Send Request
           </button> */}
           <p>
-            Responds in about <span className="fw-bold">1 hour</span>
+            Responds{" "}
+            {providerInfo.provider.provider_response === "1-3 hours" ||
+              (providerInfo.provider.provider_response === "3-7 hours" &&
+                "in about")}
+            <span className="fw-bold text-lowercase">
+              {providerInfo.provider.provider_response}
+            </span>
           </p>
         </Form>
       </Row>

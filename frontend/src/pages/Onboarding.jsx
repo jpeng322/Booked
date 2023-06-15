@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   useForm,
   useFormContext,
@@ -20,15 +20,23 @@ import { useDropzone } from "react-dropzone";
 import { applyOnboarding } from "../api";
 import "../CSS/ProviderOnboarding.css";
 import { useNavigate, useParams } from "react-router-dom";
+import GooglePlacesComp from "../components/GooglePlacesAutocomplete";
 
 const Initial = () => {
-
   const { register } = useFormContext();
   return (
     <div className="onboarding-form">
       <h1 className="text-center">Tell us more about your business</h1>
       <Form.Group className="mb-2">
         <Form.Label>What is your name?</Form.Label>
+        <Stack className="mb-4" direction="horizontal" gap={4}>
+          <Form.Control
+            type="text"
+            size="lg"
+            placeholder="Business Name"
+            {...register("businessName")}
+          />
+        </Stack>
         <Stack direction="horizontal" gap={4}>
           <Form.Control
             type="text"
@@ -153,7 +161,7 @@ const PaymentMethod = () => {
             <Form.Check
               type="checkbox"
               label="Credit or Debit Card"
-              value="credit-or-debit"
+              value="Credit/Debit"
               {...register("paymentMethods")}
             />
           </li>
@@ -168,7 +176,7 @@ const PaymentMethod = () => {
           <li>
             <Form.Check
               type="checkbox"
-              label="Venmo or Cashapp"
+              label="Venmo"
               value="venmo"
               {...register("paymentMethods")}
             />
@@ -176,8 +184,25 @@ const PaymentMethod = () => {
           <li>
             <Form.Check
               type="checkbox"
-              label="Google/Apple Pay"
-              value="google-and-apple-pay"
+              label="Cashapp"
+              value="cashapp"
+              {...register("paymentMethods")}
+            />
+          </li>
+          <li>
+            <Form.Check
+              type="checkbox"
+              label="Google"
+              value="google pay"
+              {...register("paymentMethods")}
+            />
+          </li>
+
+          <li>
+            <Form.Check
+              type="checkbox"
+              label="Apple Pay"
+              value="Apple Pay"
               {...register("paymentMethods")}
             />
           </li>
@@ -193,7 +218,7 @@ const PaymentMethod = () => {
             <Form.Check
               type="checkbox"
               label="Cash/Check"
-              value="cash-or-check"
+              value="Cash/Check"
               {...register("paymentMethods")}
             />
           </li>
@@ -267,23 +292,32 @@ const ServicesProvided = () => {
   );
 };
 
-const MoreInfo = () => {
-  const { register, setValue } = useFormContext();
+const MoreInfo = ({ areaAddress, setAreaAddress }) => {
+  // const [address, setAddress] = useState("");
+  // const [addressValue, setAddressValue] = useState(null);
+  console.log(areaAddress);
+  const { register } = useFormContext();
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (file) => {
       setValue("profilePicture", file);
     },
     maxFiles: 1,
   });
+
   return (
     <div>
       <h1 className="text-center">Lastly, specify your information below</h1>
       <Form.Group className="mb-3">
         <Form.Label>What area do you primarily serve?</Form.Label>
-        <Form.Control
+        {/* <Form.Control
           type="text"
           placeholder="City, state, zipcode"
-          {...register("areaServed")}
+          {...register("areaServed", { value: address.value })}
+        /> */}
+        <GooglePlacesComp
+          address={areaAddress}
+          setAddress={setAreaAddress}
+          placeholder="Input State, City, or Zip Code"
         />
       </Form.Group>
 
@@ -325,6 +359,7 @@ const MoreInfo = () => {
 };
 
 const ProviderOnboarding = () => {
+  const [areaAddress, setAreaAddress] = useState("");
   const [formStep, setFormStep] = useState(1);
   const methods = useForm({
     defaultValues: {
@@ -337,15 +372,15 @@ const ProviderOnboarding = () => {
     },
   });
 
-  const  navigate = useNavigate()
-  let { id } = useParams()
-  console.log(id, "IDIDIDI")
-  const submitProviderInfo = async (values) => {
-    console.log(values, "VALUESVLUAES");
-   
-    const data = await applyOnboarding(values);
+  const navigate = useNavigate();
+  let { id } = useParams();
+
+  const submitProviderInfo = async (values, address = areaAddress) => {
+    console.log(values, areaAddress, "VALUESVLUAES");
+
+    const data = await applyOnboarding(values, areaAddress);
     if (data) {
-      navigate(`/provider/bookings/${id}`)
+      navigate(`/provider/bookings/${id}`);
     }
 
     console.log(data, "datatat");
@@ -403,7 +438,12 @@ const ProviderOnboarding = () => {
                     {formStep == 2 && <ResponseTime />}
                     {formStep == 3 && <PaymentMethod />}
                     {formStep == 4 && <ServicesProvided />}
-                    {formStep == 5 && <MoreInfo />}
+                    {formStep == 5 && (
+                      <MoreInfo
+                        areaAddress={areaAddress}
+                        setAreaAddress={setAreaAddress}
+                      />
+                    )}
                   </div>
                   <Row className="onboarding-button-container">
                     <Col md={6}>

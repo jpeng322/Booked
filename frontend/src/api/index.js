@@ -97,7 +97,7 @@ export const getBooking = async (booking_id) => {
 };
 
 export const getProviderBookings = async (id) => {
-  console.log(id, "PROVIDERID")
+  // console.log(id, "PROVIDERID")
   try {
     const response = await axios({
       method: "get",
@@ -169,12 +169,15 @@ export const getProviderInfoAndServices = async (id) => {
       }/service/${id}`,
     })
 
+    const bookingsInfo = await getProviderBookings(id)
+
 
     if (providerInfo && serviceInfo) {
      console.log(providerInfo, serviceInfo)
       const data = {
         provider : providerInfo.data.provider,
-        services : serviceInfo.data.services
+        services: serviceInfo.data.services,
+        timesBooked: bookingsInfo.length,
       }
       return data;
     }
@@ -183,7 +186,8 @@ export const getProviderInfoAndServices = async (id) => {
   }
 };
 
-export const applyOnboarding = async (values) => {
+export const applyOnboarding = async (values, areaAddress) => {
+  console.log(values, areaAddress, "APAPAPPAII")
   try {
     const token = localStorage.getItem("token");
     const newFormData = new FormData();
@@ -194,18 +198,21 @@ export const applyOnboarding = async (values) => {
     newFormData.append("paymentMethods", values.paymentMethods);
     newFormData.append("responseTime", values.responseTime);
     newFormData.append("amountOfEmployees", values.amountOfEmployees);
+    newFormData.append("yearsInBusiness", values.yearsInBusiness);
     newFormData.append("backgroundCertified", values.backgroundCertified);
+    newFormData.append("businessName", values.businessName);
+    newFormData.append("areaServed", areaAddress.label)
     // newFormData.append("profile", values.profilePicture[0]);
 
    
     const resp = await axios.put(
       `http://localhost:${import.meta.env.VITE_PORT}/provider/onboard`,
-      newFormData,
+       newFormData,
       {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
-        },
+        }
       }
     );
     console.log(resp)
