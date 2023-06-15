@@ -1,6 +1,6 @@
 import express from "express";
 import prisma from "../db/index.js";
-import cloudinary from "../utilities/cloudinary.js";
+import { cloudinary, storage } from "../utilities/cloudinary.js";
 import multer from "multer";
 import formData from "express-form-data";
 
@@ -8,7 +8,8 @@ export default function providerRouter(passport) {
   //Creates a new instance of a router
   const router = express.Router();
   const memStorage = multer.memoryStorage();
-  const multerUpload = multer({ storage: memStorage }).single("profile");
+  const multerUpload = multer({ storage: memStorage }).array("profile");
+  // const multerUpload = multer({ storage: memStorage }).single("profile");
 
   // Get all providers
   router.get("/", async (req, res) => {
@@ -102,14 +103,17 @@ export default function providerRouter(passport) {
     "/onboard",
     passport.authenticate("jwt", { session: false }),
     multerUpload,
+    // multerUploadMultiple,
     async (req, res) => {
-      console.log(req.body);
+      console.log(req.body, req.file, req.files);
       try {
         // const file = req.file;
-        // const b64 = Buffer.from(file.buffer).toString("base64");
-        // let dataURI = "data:" + file.mimetype + ";base64," + b64;
+        const file = req.files[0];
 
-        // const uploadedProfilePic = await cloudinary.uploader.upload(dataURI);
+        const b64 = Buffer.from(file.buffer).toString("base64");
+        let dataURI = "data:" + file.mimetype + ";base64," + b64;
+
+        const uploadedProfilePic = await cloudinary.uploader.upload(dataURI);
 
         const listOfServices = JSON.parse(req.body.listOfServices);
 
@@ -125,13 +129,32 @@ export default function providerRouter(passport) {
             provider_yearsInBusiness: parseInt(req.body.yearsInBusiness),
             provider_businessName: req.body.businessName,
             provider_areaServed: req.body.areaServed,
-            // profile_pic: uploadedProfilePic.url,
+            profile_pic: uploadedProfilePic.url,
             service: {
               createMany: {
                 data: listOfServices.map((service) => {
                   return {
                     price: parseInt(service.price),
                     service_type: service.service,
+                  };
+                }),
+              },
+            },
+            image: {
+              createMany: {
+                data: req.files.slice(1).map(async (serviceImage) => {
+                  const file = serviceImage;
+                  // console.log(file, "FILFILEFILE")
+                  const b64 = Buffer.from(file.buffer).toString("base64");
+                  let dataURI = "data:" + file.mimetype + ";base64," + b64;
+                  // console.log(dataURI, "DATAURI");
+                  const uploadedServicePic = await cloudinary.uploader.upload(
+                    dataURI
+                  );
+                  // const uploadedServicePic = "hello";
+                  console.log(uploadedServicePic);
+                  return {
+                    image_url: uploadedServicePic.url,
                   };
                 }),
               },

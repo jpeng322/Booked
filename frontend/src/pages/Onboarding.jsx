@@ -4,7 +4,7 @@ import {
   useFormContext,
   FormProvider,
   useFieldArray,
-  Controller,
+  Controller
 } from "react-hook-form";
 import {
   Container,
@@ -21,6 +21,7 @@ import { applyOnboarding } from "../api";
 import "../CSS/ProviderOnboarding.css";
 import { useNavigate, useParams } from "react-router-dom";
 import GooglePlacesComp from "../components/GooglePlacesAutocomplete";
+// import { uploadProfileImages } from "../api";
 
 const Initial = () => {
   const { register } = useFormContext();
@@ -234,6 +235,16 @@ const ServicesProvided = () => {
     control,
     name: "listOfServices",
   });
+  const { register, setValue } = useFormContext();
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop: (file) => {
+      setValue("serviceImages", file);
+    },
+    maxFiles: 10,
+  });
+
+  // console.log()
+ 
   return (
     <>
       <Table borderless>
@@ -288,15 +299,17 @@ const ServicesProvided = () => {
           </tr>
         </tbody>
       </Table>
+
+      <div {...getRootProps({ className: "dropzone mb-3" })}>
+        <input {...getInputProps()} />
+        <p className="service-images-upload">Click here to choose a profile picture</p>
+      </div>
     </>
   );
 };
 
 const MoreInfo = ({ areaAddress, setAreaAddress }) => {
-  // const [address, setAddress] = useState("");
-  // const [addressValue, setAddressValue] = useState(null);
-  console.log(areaAddress);
-  const { register } = useFormContext();
+  const { register, setValue } = useFormContext();
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (file) => {
       setValue("profilePicture", file);
@@ -309,11 +322,6 @@ const MoreInfo = ({ areaAddress, setAreaAddress }) => {
       <h1 className="text-center">Lastly, specify your information below</h1>
       <Form.Group className="mb-3">
         <Form.Label>What area do you primarily serve?</Form.Label>
-        {/* <Form.Control
-          type="text"
-          placeholder="City, state, zipcode"
-          {...register("areaServed", { value: address.value })}
-        /> */}
         <GooglePlacesComp
           address={areaAddress}
           setAddress={setAreaAddress}
@@ -376,7 +384,7 @@ const ProviderOnboarding = () => {
   let { id } = useParams();
 
   const submitProviderInfo = async (values, address = areaAddress) => {
-    console.log(values, areaAddress, "VALUESVLUAES");
+    console.log(values, "VALUESVLUAES");
 
     const data = await applyOnboarding(values, areaAddress);
     if (data) {

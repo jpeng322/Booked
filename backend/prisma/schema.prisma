@@ -34,6 +34,7 @@ model Provider {
   // booking_id Int
   service           Service[]
   booking           Booking[]
+  image             Image[]
 }
 
 model Client {
@@ -76,6 +77,16 @@ model Service {
   service_id   Int       @unique @default(autoincrement())
   service_type String
   price  Int
+  provider_id  Int
+  provider     Provider  @relation(fields: [provider_id], references: [provider_id])
+
+  @@index([provider_id])
+}
+
+
+model Image {
+  image_id Int            @unique @default(autoincrement())
+  image_url String
   provider_id  Int
   provider     Provider  @relation(fields: [provider_id], references: [provider_id])
 

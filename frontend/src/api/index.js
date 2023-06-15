@@ -15,7 +15,7 @@ export const fetchLogin = async (email, password) => {
       }
     );
 
-    console.log(apiLoginData);
+    
 
     if (apiLoginData.status == 200 && apiLoginData.data.token) {
       localStorage.setItem("token", apiLoginData.data.token);
@@ -39,8 +39,9 @@ export const fetchLoginProvider = async (email, password) => {
         password: password,
       }
     );
-
-    console.log(apiLoginData, "APILOGINLOGIN");
+    // console.log(apiLoginData.status === 200, apiLogin.data.token === true);
+    console.log(apiLoginData, apiLoginData.data.token, "APILOGINLOGIN");
+    // console.log(apiLoginData.status === 200, apiLogin.data.token === true);
 
 
     if (apiLoginData.status == 200 && apiLoginData.data.token) {
@@ -265,9 +266,20 @@ export const getProviderInfoAndServices = async (id) => {
 
 export const applyOnboarding = async (values, areaAddress) => {
   console.log(values, areaAddress, "APAPAPPAII")
+  // console.log(values.profilePicture[0])
+  console.log(values.profilePicture.concat(values.serviceImages))
+ 
   try {
+    const allImagesArray = values.profilePicture.concat(values.serviceImages)
     const token = localStorage.getItem("token");
     const newFormData = new FormData();
+
+    if (allImagesArray) {
+      for (let i = 0; i < allImagesArray.length; i++) {
+        newFormData.append("profile", allImagesArray[i]);
+      }
+    }
+    
 
     newFormData.append("firstName", values.firstName);
     newFormData.append("lastName", values.lastName);
@@ -292,6 +304,17 @@ export const applyOnboarding = async (values, areaAddress) => {
         }
       }
     );
+
+    // const resp = await axios.put(
+    //   `http://localhost:${import.meta.env.VITE_PORT}/provider/onboard`,
+    //    newFormData,
+    //   {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //       Authorization: `Bearer ${token}`,
+    //     }
+    //   }
+    // );
     console.log(resp)
 
     if (resp.status == 200) {
@@ -303,4 +326,5 @@ export const applyOnboarding = async (values, areaAddress) => {
     return {};
   }
 };
+
 

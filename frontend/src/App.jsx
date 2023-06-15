@@ -38,7 +38,7 @@ import {
   getCoords,
   getProviderInfo,
   editClientAxios,
-  fetchProviderLogin,
+  // fetchProviderLogin,
   getProviderInfoAndServices,
 } from "./api";
 
@@ -337,7 +337,7 @@ function App() {
               const formData = await request.formData();
               const email = formData.get("email");
               const password = formData.get("password");
-              return await fetchProviderLogin(email, password);
+              return await fetchLoginProvider(email, password);
             } catch (error) {
               return error;
             }
