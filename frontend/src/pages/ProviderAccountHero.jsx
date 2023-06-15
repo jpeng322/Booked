@@ -1,3 +1,4 @@
+
 import react, { useEffect, useState } from 'react'
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -16,26 +17,28 @@ import updateSignupAction from '../updateSignupAction';
 import ProviderSignupPopupOne from '../components/ProviderSignupPopupOne';
 import ProviderSignupPopupTwo from '../components/ProviderSignupPopupTwo';
 import '../CSS/ProviderAccountHero.css'
+import axios from "axios";
 
 
 const heroCards = [
-    {
-        image: firstPic,
-        title: 'Provider highlights',
-        description: 'Routine provider highlights to increase company’s visibility.'
-    },
-    {
-        image: secondPic,
-        title: 'Great Customers',
-        description: 'Hear from great customers who choose you, with high intent to hire.'
-    },
-    {
-        image: thirdPic,
-        title: 'Outstanding support',
-        description: 'Help that is easily accessible, and a simple.'
-    }
-]
-
+  {
+    image: firstPic,
+    title: "Provider highlights",
+    description:
+      "Routine provider highlights to increase company’s visibility.",
+  },
+  {
+    image: secondPic,
+    title: "Great Customers",
+    description:
+      "Hear from great customers who choose you, with high intent to hire.",
+  },
+  {
+    image: thirdPic,
+    title: "Outstanding support",
+    description: "Help that is easily accessible, and a simple.",
+  },
+];
 
 const ProviderAccountHero = () => {
     const [openPopupOne, setOpenPopupOne] = useState(false);
@@ -384,3 +387,4 @@ const ProviderAccountHero = () => {
 }
 
 export default ProviderAccountHero;
+

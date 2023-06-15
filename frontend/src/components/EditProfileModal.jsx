@@ -71,7 +71,7 @@ export default function EditProfileModal({
     }
   }
   return (
-    <>
+    <div className="edit-modal-container">
       <Button onClick={handleShow}>Edit</Button>
 
       <Modal
@@ -187,6 +187,6 @@ export default function EditProfileModal({
           )}
         </Modal.Footer>
       </Modal>
-    </>
+    </div>
   );
 }

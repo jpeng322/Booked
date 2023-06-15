@@ -15,12 +15,21 @@ model Provider {
   provider_id       Int       @unique @default(autoincrement())
   provider_email    String    @unique
   provider_password String
-  provider_fname    String
-  provider_lname    String
-  provider_phone    String    @unique
+  provider_fname String?  
+  provider_lname String?
+  provider_businessName String?
+  provider_areaServed String?
+  provider_phone String @unique
+  provider_payment_methods String?
+  provider_standing String?
+  provider_response String?
+  provider_amountOfEmployees Int?
+  provider_yearsInBusiness Int?
   preferred_services String? 
   profile_pic       String?
   profile_pic_id    String?
+  
+  onboarded Boolean @default(false)
   // service_id  Int
   // booking_id Int
   service           Service[]
@@ -66,11 +75,9 @@ status String @default("pending")
 model Service {
   service_id   Int       @unique @default(autoincrement())
   service_type String
-  payment_id   String?
-  booking_id   Int       @unique
-  // booking Booking? @relation(fields: [booking_id], references: [booking_id])
+  price  Int
   provider_id  Int
-  provider     Provider  @relation(fields: [service_id], references: [provider_id])
-  booking_date DateTime?
-  payment_fee  Int
+  provider     Provider  @relation(fields: [provider_id], references: [provider_id])
+
+  @@index([provider_id])
 }

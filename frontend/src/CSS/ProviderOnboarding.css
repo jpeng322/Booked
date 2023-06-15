@@ -1,0 +1,131 @@
+ul {
+  list-style: none;
+}
+
+.step-pill {
+  width: 90%;
+  height: 40px;
+  border-radius: 15px;
+  border: 1px solid black;
+}
+
+.active-pill {
+  background-color: #f6c58e;
+}
+
+.not-active-pill {
+  background-color: white;
+}
+
+.onboarding-main-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 10px 4%;
+  background-color: #f6c58e;
+  min-height: 800px;
+  width: max(50%, 475px);
+  font-weight: 500;
+  /* font-size: 1.05rem; */
+}
+
+.onboarding-form ul {
+  /* border: 1px solid red; */
+  padding: 0;
+}
+
+@media screen and (min-width: 500px) {
+  .onboarding-main-form {
+    padding: 10px 8%;
+    width: max(75%, 475px);
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .onboarding-main-form {
+    padding: 10px 8%;
+    width: max(50%, 475px);
+  }
+}
+
+.onboarding-container {
+  width: 100%;
+  /* height: 100%; */
+}
+
+.onboarding-form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* gap: 2rem; */
+}
+
+.onboarding-main-form h1 {
+  /* border: 1px solid red; */
+  margin-bottom: 2rem;
+}
+
+.onboarding-main-form .form-label {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.onboarding-main-form .form-check-label {
+  margin-bottom: 1rem;
+}
+
+.onboarding-main-form .form-check {
+  display: flex;
+  gap: 1rem;
+}
+
+.onboarding-main-form .profile-upload {
+  cursor: pointer;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #ced4da;
+  box-shadow: none;
+}
+
+.onboarding-button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.onboarding-button-container > * {
+  width: calc(125px + 5vw);
+}
+
+.onboarding-main-form .css-b62m3t-container .css-13cymwt-control {
+  border: none !important;
+  border-radius: .25rem !important;
+}
+
+.back-button,
+.back-button:hover,
+.back-button:active:focus {
+  background-color: var(--brown-4);
+  color: black;
+  border: none;
+}
+
+.next-button,
+.next-button:hover,
+.next-button:active:focus {
+  background-color: var(--uniform-2);
+  color: var(--brown-4);
+  border-color: black !important;
+}
+
+.next-button,
+.back-button {
+  border-radius: 0.625rem;
+  width: 100%;
+  padding: 1rem 0rem;
+}

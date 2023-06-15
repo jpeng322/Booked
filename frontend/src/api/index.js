@@ -30,6 +30,7 @@ export const fetchLogin = async (email, password) => {
 
 
 export const fetchLoginProvider = async (email, password) => {
+
   try {
     const apiLoginData = await axios.post(
       `http://localhost:${import.meta.env.VITE_PORT}/auth/login/provider`,
@@ -39,11 +40,13 @@ export const fetchLoginProvider = async (email, password) => {
       }
     );
 
-    console.log(apiLoginData);
+    console.log(apiLoginData, "APILOGINLOGIN");
+
 
     if (apiLoginData.status == 200 && apiLoginData.data.token) {
       localStorage.setItem("token", apiLoginData.data.token);
       localStorage.setItem("userType", apiLoginData.data.type);
+      localStorage.setItem("userId", apiLoginData.data.findProvider.provider_id )
     }
 
     return apiLoginData;
@@ -51,6 +54,7 @@ export const fetchLoginProvider = async (email, password) => {
     return error;
   }
 };
+
 
 
 export const fetchSignup = async (email, password, firstName, lastName, phoneNumber, preferredServices) => {
@@ -64,6 +68,7 @@ export const fetchSignup = async (email, password, firstName, lastName, phoneNum
       phone: phoneNumber,
       services: preferredServices,
     });
+
 
     return apiSignupData;
   } catch (error) {
@@ -87,11 +92,12 @@ export const getBooking = async (booking_id) => {
   }
 };
 
-export const getProviderBookings = async () => {
+export const getProviderBookings = async (id) => {
+  // console.log(id, "PROVIDERID")
   try {
     const response = await axios({
       method: "get",
-      url: `http://localhost:${import.meta.env.VITE_PORT}/booking/provider/1`,
+      url: `http://localhost:${import.meta.env.VITE_PORT}/booking/provider/${id}`,
     });
 
     console.log(response);
@@ -122,7 +128,8 @@ export const getCoords = (address_id) => {
   return latLng;
 };
 
-export const getProviderInfo = async (id = 6) => {
+export const getProviderInfo = async (id) => {
+  console.log(id, "PROVIDERIDasdasd")
   try {
     const response = await axios({
       method: "get",
@@ -221,3 +228,79 @@ export const editClientAxios = async (email, firstName, lastName, phoneNumber, z
     return error;
   }
 }
+
+export const getProviderInfoAndServices = async (id) => {
+  console.log(id, "PROVIDERID")
+  try {
+    const providerInfo = await axios({
+      method: "get",
+      url: `http://localhost:${
+        import.meta.env.VITE_PORT
+      }/provider/providers/${id}`,
+    });
+
+    const serviceInfo = await axios({
+      method: "get",
+      url: `http://localhost:${
+        import.meta.env.VITE_PORT
+      }/service/${id}`,
+    })
+
+    const bookingsInfo = await getProviderBookings(id)
+
+
+    if (providerInfo && serviceInfo) {
+     console.log(providerInfo, serviceInfo)
+      const data = {
+        provider : providerInfo.data.provider,
+        services: serviceInfo.data.services,
+        timesBooked: bookingsInfo.length,
+      }
+      return data;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const applyOnboarding = async (values, areaAddress) => {
+  console.log(values, areaAddress, "APAPAPPAII")
+  try {
+    const token = localStorage.getItem("token");
+    const newFormData = new FormData();
+
+    newFormData.append("firstName", values.firstName);
+    newFormData.append("lastName", values.lastName);
+    newFormData.append("listOfServices", JSON.stringify(values.listOfServices));
+    newFormData.append("paymentMethods", values.paymentMethods);
+    newFormData.append("responseTime", values.responseTime);
+    newFormData.append("amountOfEmployees", values.amountOfEmployees);
+    newFormData.append("yearsInBusiness", values.yearsInBusiness);
+    newFormData.append("backgroundCertified", values.backgroundCertified);
+    newFormData.append("businessName", values.businessName);
+    newFormData.append("areaServed", areaAddress.label)
+    // newFormData.append("profile", values.profilePicture[0]);
+
+   
+    const resp = await axios.put(
+      `http://localhost:${import.meta.env.VITE_PORT}/provider/onboard`,
+       newFormData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        }
+      }
+    );
+    console.log(resp)
+
+    if (resp.status == 200) {
+      return resp.data; 
+  
+    }
+  } catch (e) {
+    console.log(e);
+    return {};
+  }
+};
+

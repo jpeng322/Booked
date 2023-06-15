@@ -23,39 +23,42 @@ const AccountSettings = () => {
       </div>
       <div className="account-settings-panel d-flex ">
         <div className="account-settings-tabs-container">
-          <div className="account-settings-tabs">
-            {" "}
-            <NavLink to="/settings/myprofile">My Profile</NavLink>
-          </div>
-          <div className="account-settings-tabs">
-            {" "}
-            <NavLink to="/settings/wallet">Wallet</NavLink>
-          </div>
+          <div className="account-settings-top-row">
+            <div className="account-settings-tabs">
+              {" "}
+              <NavLink to="myprofile">Profile</NavLink>
+            </div>
+            <div className="account-settings-tabs">
+              {" "}
+              <NavLink to="wallet">Wallet</NavLink>
+            </div>
 
-          <div className="account-settings-tabs">
-            {" "}
-            <NavLink to="/settings/notifications">Notifications</NavLink>
+            <div className="account-settings-tabs">
+              {" "}
+              <NavLink to="notifications">
+                Notifications
+              </NavLink>
+            </div>
           </div>
-          <div className="account-settings-tabs">
-            {" "}
-            <SignoutModal
-              show={showSignoutModal}
-              onHide={() => {
-                setShowSignoutModal(false);
-              }}
-            />
-            {/* <NavLink to="/settings/signout">Sign Out</NavLink> */}
-          </div>
-          <div className="account-settings-tabs ">
-            {" "}
-            {/* <NavLink to="/settings/delete_account"> */}{" "}
-            <DeleteAccountModal
-              show={showSignoutModal}
-              onHide={() => {
-                setShowSignoutModal(false);
-              }}
-            />
-            {/* </NavLink> */}
+          <div className="account-settings-bottom-row">
+            <div className="account-settings-tabs">
+              {" "}
+              <SignoutModal
+                show={showSignoutModal}
+                onHide={() => {
+                  setShowSignoutModal(false);
+                }}
+              />
+            </div>
+            <div className="account-settings-tabs ">
+              {" "}
+              <DeleteAccountModal
+                show={showSignoutModal}
+                onHide={() => {
+                  setShowSignoutModal(false);
+                }}
+              />
+            </div>
           </div>
         </div>
         <div className="account-settings-tab-content">
