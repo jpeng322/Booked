@@ -64,10 +64,19 @@
 
 .provider-stats {
   display: flex;
+  justify-content: space-between;
 }
+
+
 .provider-overview,
 .provider-payments {
   flex: 1;
+}
+
+.provider-overview >*,
+.provider-payments >* {
+  /* flex: 1; */
+  width: 75%;
 }
 
 .provider-form-container {

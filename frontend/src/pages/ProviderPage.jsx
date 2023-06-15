@@ -199,17 +199,17 @@ const ProviderPage = () => {
             <img src={avatar} alt="asdasd" />
             <div className="provider-media">
               <h2>{providerInfo.provider.provider_businessName}</h2>
-              <h3>Super stars</h3>
+              {/* <h3>Super stars</h3> */}
               <button>Share</button>
             </div>
           </div>
-          <div className="provider-about">
+          {/* <div className="provider-about">
             <span className="fw-bold">About:</span> Lorem ipsum dolor sit amet
             consectetur adipisicing elit. Voluptatibus similique sint harum at
             sequi quam excepturi quidem cumque doloribus officia! Dolorem quo
             adipisci quaerat facere nesciunt voluptatibus perspiciatis nam
             veniam.
-          </div>
+          </div> */}
         </div>
         <div className="provider-stats">
           <div className="provider-overview">
@@ -358,7 +358,7 @@ const ProviderPage = () => {
             Responds{" "}
             {providerInfo.provider.provider_response === "1-3 hours" ||
               (providerInfo.provider.provider_response === "3-7 hours" &&
-                "in about")}
+                "in about ")}
             <span className="fw-bold text-lowercase">
               {providerInfo.provider.provider_response}
             </span>
