@@ -117,6 +117,19 @@ export default function providerRouter(passport) {
 
         const listOfServices = JSON.parse(req.body.listOfServices);
 
+        const uploadedFilesPromises = req.files.slice(1).map(async (file) => {
+          //Need to convert the buffer (which is the acutal image) to a base64 string. That is so cloudinary servers know the actual image's data.
+          const b64 = Buffer.from(file.buffer).toString("base64");
+          //Creating a dataURI that Cloudinary can understand to render the image and understand the acutal data plus any additional data about the image
+          let dataURI = "data:" + file.mimetype + ";base64," + b64;
+          //Sets up the cloudinary uploading but doesn't actually do it.
+          return await cloudinary.uploader.upload(dataURI);
+        });
+  
+        //This is where the uploading acutally happens. All the promises get walked through one at a time.
+        //Also you can go through each file and store their public_id to your DB along with any other info.
+        const uploadedFiles = await Promise.all(uploadedFilesPromises);
+
         const updatedProvider = await prisma.provider.update({
           where: {
             provider_id: req.user.Provider.provider_id,
@@ -142,19 +155,9 @@ export default function providerRouter(passport) {
             },
             image: {
               createMany: {
-                data: req.files.slice(1).map(async (serviceImage) => {
-                  const file = serviceImage;
-                  // console.log(file, "FILFILEFILE")
-                  const b64 = Buffer.from(file.buffer).toString("base64");
-                  let dataURI = "data:" + file.mimetype + ";base64," + b64;
-                  // console.log(dataURI, "DATAURI");
-                  const uploadedServicePic = await cloudinary.uploader.upload(
-                    dataURI
-                  );
-                  // const uploadedServicePic = "hello";
-                  console.log(uploadedServicePic);
+                data: uploadedFiles.map(file => {
                   return {
-                    image_url: uploadedServicePic.url,
+                    image_url: file.url,
                   };
                 }),
               },
@@ -162,6 +165,9 @@ export default function providerRouter(passport) {
             onboarded: true,
           },
         });
+
+
+
 
         res.status(200).json({
           success: true,
