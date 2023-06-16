@@ -5,7 +5,7 @@ import bgImg from '../images/about-page-img.png'
 import img1 from '../images/about-card1.png'
 import img2 from '../images/about-card2.png'
 import img3 from '../images/about-card3.png'
-import '../CSS/about.css'
+import '../CSS/About.css'
 
 
 const About = () => {
