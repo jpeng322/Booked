@@ -16,7 +16,7 @@ const OrderInfo = ({
     try {
       const response = await axios({
         method: "put",
-        url: `http://localhost:${import.meta.env.VITE_PORT}/booking/${id}`,
+        url: `${import.meta.env.VITE_PORT}/booking/${id}`,
         data: {
           status: providerResponse === "accept" ? "scheduled" : "cancelled",
         },

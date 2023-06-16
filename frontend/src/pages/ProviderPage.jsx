@@ -31,7 +31,9 @@ import {
 //components
 import RequestFormModal from "../components/RequestFormModal";
 import GooglePlacesComp from "../components/GooglePlacesAutocomplete";
-
+import Reviews from "../components/ReviewTab/Reviews";
+import BackgroundCheck from "../components/ReviewTab/Credentials";
+import ReviewsTabs from "../components/ReviewTab/ReviewTabs";
 //styling
 import avatar from "../images/avatar.png";
 import "../CSS/ProviderProfile.css";
@@ -56,6 +58,26 @@ export const submitRequestForm = async ({ request }) => {
 };
 
 const ProviderPage = () => {
+  const reviews = [
+    {
+      stars: 4,
+      name: "Jay Z.",
+      time: "1hr",
+      comment:
+        "I recently had Alex install my kitchen cabinets and I'm very impressed with his work. He arrived on time and got right to work, showing his professionalism from the start. He was able to efficiently install the cabinets without any issues, and the end result is fantastic. The cabinets look great and are securely mounted.",
+    },
+    { stars: 1.5, name: "Bey N.", time: "4hr", comment: "No no!" },
+    { stars: 5, name: "Brad P.", time: "7hr", comment: "Love it!" },
+    {
+      stars: 2,
+      name: "Justin B.",
+      time: "12hr",
+      comment: "Not what I expected.",
+    },
+    { stars: 5, name: "Dwayne J.", time: "5hr", comment: "Amazing!" },
+    { stars: 3, name: "Ryan K.", time: "2hr", comment: "It's okay." },
+  ];
+
   let { id } = useParams();
   const loaderData = useLoaderData();
 
@@ -155,7 +177,7 @@ const ProviderPage = () => {
     try {
       const response = await axios({
         method: "post",
-        url: `http://localhost:${import.meta.env.VITE_PORT}/booking`,
+        url: `${import.meta.env.VITE_PORT}/booking`,
         data: {
           client_name: "jac",
           client_id: localStorage.getItem(userId) || 1,
@@ -192,11 +214,16 @@ const ProviderPage = () => {
   }
 
   return (
+    <>
     <Container fluid className="provider-profile-container d-flex p-5">
       <div className="provider-information">
         <div className="provider-bio">
           <div className="provider-header">
-            <img src={avatar} alt="asdasd" />
+            <img
+              className="border"
+              src={providerInfo.provider.profile_pic}
+              alt="profile-pic"
+            />
             <div className="provider-media">
               <h2>{providerInfo.provider.provider_businessName}</h2>
               {/* <h3>Super stars</h3> */}
@@ -222,7 +249,10 @@ const ProviderPage = () => {
               time{providerInfo.timesBooked !== 1 && "s"}
             </div>
             <div>
-              Serves <span className="fw-bold">{providerInfo.provider.provider_areaServed}</span>{" "}
+              Serves{" "}
+              <span className="fw-bold">
+                {providerInfo.provider.provider_areaServed}
+              </span>{" "}
             </div>
             {providerInfo.provider.provider_standing === "true" && (
               <div>
@@ -246,25 +276,31 @@ const ProviderPage = () => {
             <div>
               <span className="fw-bold">Payments</span>
             </div>
-            {console.log(providerInfo.provider.provider_payment_methods.split(","))}
-            {providerInfo.provider.provider_payment_methods.split(",").map(payment_method => <div className="text-capitalize">{payment_method}</div>)}
+            {console.log(
+              providerInfo.provider.provider_payment_methods.split(",")
+            )}
+            {providerInfo.provider.provider_payment_methods
+              .split(",")
+              .map((payment_method) => (
+                <div className="text-capitalize">{payment_method}</div>
+              ))}
           </div>
         </div>
         <div className="provider-photos">
           <h3>Featured Project Photos</h3>
-          <div>30 photos</div>
+          <div>{providerInfo.provider.image.length} photos</div>
 
           {/* <div className="provider-photos-container"> */}
 
           {/* </div> */}
           <Carousel responsive={responsive}>
-            <img src={avatar} alt="" />
-            <img src={avatar} alt="" />
-            <img src={avatar} alt="" />
-            <img src={avatar} alt="" />
-            <img src={avatar} alt="" />
-            <img src={avatar} alt="" />
-            <img src={avatar} alt="" />
+            {providerInfo.provider.image.map((image) => (
+              <img
+                key={image.image_id}
+                src={image.image_url}
+                alt="provider-carousel-images"
+              />
+            ))}
           </Carousel>
         </div>
       </div>
@@ -372,7 +408,13 @@ const ProviderPage = () => {
           setModalShow(false);
         }}
       /> */}
+
     </Container>
+          <Reviews reviews={reviews} />
+
+          <ReviewsTabs />
+          <BackgroundCheck />
+    </>
   );
 };
 

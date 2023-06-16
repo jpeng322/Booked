@@ -10,7 +10,7 @@ import OtherComp from "../components/OtherComp";
 import SearchBar from "../components/SearchBar";
 import FooterComp from "../components/FooterComp";
 
-import HifiFooter from "../components/Footer/HifiFooter.jsx"
+import HifiFooter from "../components/Footer/HifiFooter.jsx";
 
 import LoggedInNavbar from "../components/LoggedInNavbar";
 
@@ -20,7 +20,7 @@ const Home = () => {
     try {
       const response = await axios({
         method: "post",
-        url: `http://localhost:${import.meta.env.VITE_PORT}/payment`,
+        url: `${import.meta.env.VITE_PORT}/payment`,
         headers: { "Content-Type": "application/json" },
         //data will equal to payment fee of service id instead of items
         data: {
@@ -76,12 +76,18 @@ const Home = () => {
         <button onClick={() => navigate("auth/login")}>Login</button>
         <button onClick={() => navigate("auth/loginClient")}>
           Client Login
-        </button> 
+        </button>
         {/* <button onClick={() => navigate("/customeraccount")}>Customer Accunt Contact</button> */}
 
-        <button onClick={() => navigate("provider/login")}>Provider Login</button>
-        <button onClick={() => navigate("customer/login")}>Customer Login</button>
-        <button onClick={() => navigate("/customeraccount")}>Customer Accunt Contact</button>
+        <button onClick={() => navigate("provider/login")}>
+          Provider Login
+        </button>
+        <button onClick={() => navigate("customer/login")}>
+          Customer Login
+        </button>
+        <button onClick={() => navigate("/customeraccount")}>
+          Customer Accunt Contact
+        </button>
         {/* <NavComp /> */}
         {/* <LoggedInNavbar /> */}
         <HeroComp />

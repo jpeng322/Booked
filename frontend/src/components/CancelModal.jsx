@@ -13,7 +13,7 @@ const CancelModal = (props) => {
     try {
       const response = await axios({
         method: "delete",
-        url: `http://localhost:${import.meta.env.VITE_PORT}/booking/${props.booking_id}`,
+        url: `${import.meta.env.VITE_PORT}/booking/${props.booking_id}`,
       });
 
       if (response) {

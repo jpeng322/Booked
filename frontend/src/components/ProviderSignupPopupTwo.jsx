@@ -80,6 +80,7 @@ function ProviderSignupPopupTwo({ open, setOpenPopupTwo }) {
 
     actions.updateSignupAction(data);
 
+
     setSaveState(true);
     // try {
     //   const providerSignupResponse = await axios({
@@ -101,6 +102,7 @@ function ProviderSignupPopupTwo({ open, setOpenPopupTwo }) {
     //   if (providerSignupResponse) {
     //     // const providerId = providerSignupResponse.data.newProvider.provider_id;
     //     //   navigate(`/onboarding/${providerId}`);
+
           
     //       navigate("/provider/login")
 

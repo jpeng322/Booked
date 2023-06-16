@@ -15,7 +15,7 @@ const BookingsTabs = () => {
       try {
         const response = await axios({
           method: "get",
-          url: `http://localhost:${import.meta.env.VITE_PORT}/booking/client/1`,
+          url: `${import.meta.env.VITE_PORT}/booking/client/1`,
         });
 
         console.log(response);

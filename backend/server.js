@@ -14,6 +14,7 @@ import bookingRoute from "./routes/booking.js";
 import providerRouter from "./routes/provider.js";
 import clientRouter from "./routes/client.js";
 import profileRouter from "./routes/profile.js";
+import providerServiceImageRouter from "./routes/providerServiceImage.js";
 // import bookingRoute from "./routes/booking.js"
 // import formData from "express-form-data";
 
@@ -41,6 +42,8 @@ export default function createServer() {
   app.use("/client", clientRouter(passport));
 
   app.use("/booking", bookingRoute(passport));
+
+  app.use("/serviceImage", providerServiceImageRouter(passport));
 
   return app;
 }

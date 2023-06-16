@@ -6,7 +6,6 @@ const Main = () => {
     <>
       <NavComp />
       <Outlet />
-      <footer>This is the footer</footer>
     </>
   );
 };

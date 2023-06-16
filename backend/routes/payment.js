@@ -29,8 +29,8 @@ router.post("/", async (request, response) => {
           quantity: item.quantity,
         };
       }),
-      success_url: `http://localhost:${import.meta.env.VITE_PORT}/success.html`,
-      cancel_url: `http://localhost:${import.meta.env.VITE_PORT}/`,
+      success_url: `${import.meta.env.VITE_PORT}/success.html`,
+      cancel_url: `${import.meta.env.VITE_PORT}/`,
     });
     console.log(session.line_items);
     // const session = await stripe.checkout.sessions.create({

@@ -16,3 +16,14 @@ align-items: center;
 gap: 24px;
 }
 
+.progress-bar  {
+  background-color: var(--brown-2);
+}
+
+.stars svg {
+  fill: var(--brown-2);
+}
+
+.stars svg:nth-child(5) {
+  fill: #d2d4d6;
+}
