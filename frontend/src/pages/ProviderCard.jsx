@@ -91,7 +91,7 @@ const ProviderCard = (props) => {
                   </div>
                   <Row className="center-images">
                     <Col className="image-container">
-                      {provider.image.map((image, index) => (
+                      {provider.image.slice(0,4).map((image, index) => (
                         <div className="d-flex justify-content-center">
                           <Image
                             key={index}
