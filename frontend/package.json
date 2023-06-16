@@ -9,9 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-
-    "@esbuild/win32-x64": "^0.18.0",
-
     "@fortawesome/fontawesome": "^1.1.8",
     "@fortawesome/fontawesome-free-regular": "^5.0.13",
     "@fortawesome/fontawesome-free-solid": "^5.0.13",
@@ -30,10 +27,8 @@
     "react-calendar": "^4.2.1",
     "react-datepicker": "^4.11.0",
     "react-dom": "^18.2.0",
-    "react-fontawesome": "^1.7.1",
-
     "react-dropzone": "^14.2.3",
-
+    "react-fontawesome": "^1.7.1",
     "react-google-autocomplete": "^2.7.3",
     "react-google-places-autocomplete": "^4.0.1",
     "react-hook-form": "^7.43.9",

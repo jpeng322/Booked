@@ -25,7 +25,8 @@ model Provider {
   provider_response String?
   provider_amountOfEmployees Int?
   provider_yearsInBusiness Int?
-  preferred_services String? 
+  provider_services String? 
+  provider_location String?
   profile_pic       String?
   profile_pic_id    String?
   

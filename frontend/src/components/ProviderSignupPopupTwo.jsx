@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 function ProviderSignupPopupTwo({ open, setOpenPopupTwo }) {
   const navigate = useNavigate();
   const [formCompleted, setFormCompleted] = useState(false);
+  const [saveState, setSaveState] = useState(false);
   const {
     register,
     handleSubmit,
@@ -30,36 +31,84 @@ function ProviderSignupPopupTwo({ open, setOpenPopupTwo }) {
   //     }
   // }, [])
 
-  const onSubmit = async (data) => {
+
+  useEffect(() => {
+    // if(saveState){
+    //   actions.updateSignupAction(data);
+    // }
+
+    const fetchProviderSignup = async () => {
+      try {
+        const providerSignupResponse = await axios({
+          method: "post",
+          url: `http://localhost:${
+            import.meta.env.VITE_PORT
+          }/auth/signup/provider`,
+          data: {
+            email: state.email,
+            password: state.password,
+            // fname: "request.body.fname",
+            // lname: "request.body.lname",
+            phone: state.phone,
+            location : state.location,
+            services: state.services,
+          },
+        });
+  
+        if (providerSignupResponse) {
+          // const providerId = providerSignupResponse.data.newProvider.provider_id;
+          //   navigate(`/onboarding/${providerId}`);
+            
+            navigate("/provider/login")
+  
+          // console.log(providerSignupResponse);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    
+    fetchProviderSignup();
+
+  },[saveState])
+
+
+
+  const onSubmit = (data) => {
+    
     console.log(data);
 
     actions.updateSignupAction(data);
-    try {
-      const providerSignupResponse = await axios({
-        method: "post",
-        url: `http://localhost:${
-          import.meta.env.VITE_PORT
-        }/auth/signup/provider`,
-        data: {
-          email: state.email,
-          password: state.password,
-          fname: "request.body.fname",
-          lname: "request.body.lname",
-          phone: state.phone,
-        },
-      });
 
-      if (providerSignupResponse) {
-        // const providerId = providerSignupResponse.data.newProvider.provider_id;
-        //   navigate(`/onboarding/${providerId}`);
+    setSaveState(true);
+    // try {
+    //   const providerSignupResponse = await axios({
+    //     method: "post",
+    //     url: `http://localhost:${
+    //       import.meta.env.VITE_PORT
+    //     }/auth/signup/provider`,
+    //     data: {
+    //       email: state.email,
+    //       password: state.password,
+    //       fname: "request.body.fname",
+    //       lname: "request.body.lname",
+    //       phone: state.phone,
+    //       location : state.location,
+    //       services: state.services,
+    //     },
+    //   });
+
+    //   if (providerSignupResponse) {
+    //     // const providerId = providerSignupResponse.data.newProvider.provider_id;
+    //     //   navigate(`/onboarding/${providerId}`);
           
-          navigate("/provider/login")
+    //       navigate("/provider/login")
 
-        // console.log(providerSignupResponse);
-      }
-    } catch (e) {
-      console.log(e);
-    }
+    //     // console.log(providerSignupResponse);
+    //   }
+    // } catch (e) {
+    //   console.log(e);
+    // }
   };
   console.log(state);
 

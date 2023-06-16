@@ -25,9 +25,11 @@ router.post("/signup/provider", async (request, response) => {
         data: {
           provider_email: request.body.email,
           provider_password: pHashedPassword,
-          provider_fname: request.body.fname,
-          provider_lname: request.body.lname,
+          // provider_fname: request.body.fname,
+          // provider_lname: request.body.lname,
           provider_phone: request.body.phone,
+          provider_location: request.body.location,
+          provider_services: request.body.services,
         },
       });
       response.status(201).json({
@@ -88,60 +90,60 @@ router.post("/signup/client", async (request, response) => {
   }
 });
 
-router.post("/login/provider", async (request, response) => {
-  try {
-    const findProvider = await prisma.provider.findFirst({
-      where: {
-        provider_email: request.body.email,
-      },
-    });
-    // const findClient = await prisma.client.findFirst({
-    //   where: {
-    //     client_email: request.body.client,
-    //   },
-    // });
-    console.log(findProvider);
-    try {
-      const verifiedPassword = await argon2.verify(
-        findProvider.provider_password,
-        request.body.password
-      );
+// router.post("/login/provider", async (request, response) => {
+//   try {
+//     const findProvider = await prisma.provider.findFirst({
+//       where: {
+//         provider_email: request.body.email,
+//       },
+//     });
+//     // const findClient = await prisma.client.findFirst({
+//     //   where: {
+//     //     client_email: request.body.client,
+//     //   },
+//     // });
+//     console.log(findProvider);
+//     try {
+//       const verifiedPassword = await argon2.verify(
+//         findProvider.provider_password,
+//         request.body.password
+//       );
 
-      if (verifiedPassword) {
-        const token = jwt.sign(
-          {
-            Provider: {
-              provider_email: findProvider.provider_email,
-              provider_id: findProvider.provider_id,
-            },
-          },
-          "showMeTheProvidersOrClients"
-        );
+//       if (verifiedPassword) {
+//         const token = jwt.sign(
+//           {
+//             Provider: {
+//               provider_email: findProvider.provider_email,
+//               provider_id: findProvider.provider_id,
+//             },
+//           },
+//           "showMeTheProvidersOrClients"
+//         );
 
-        response.status(200).json({
-          success: true,
-          token,
-          type: "provider"
-        });
-      } else {
-        response.status(401).json({
-          success: false,
-          message: "Incorrect email or password.",
-        });
-      }
-    } catch (e) {
-      response.status(500).json({
-        success: false,
-        message: "Something went wrong",
-      });
-    }
-  } catch (e) {
-    response.status(401).json({
-      success: false,
-      message: "Incorrect email or password",
-    });
-  }
-});
+//         response.status(200).json({
+//           success: true,
+//           token,
+//           type: "provider"
+//         });
+//       } else {
+//         response.status(401).json({
+//           success: false,
+//           message: "Incorrect email or password.",
+//         });
+//       }
+//     } catch (e) {
+//       response.status(500).json({
+//         success: false,
+//         message: "Something went wrong",
+//       });
+//     }
+//   } catch (e) {
+//     response.status(401).json({
+//       success: false,
+//       message: "Incorrect email or password",
+//     });
+//   }
+// });
 
 router.post("/login/client", async (request, response) => {
   try {

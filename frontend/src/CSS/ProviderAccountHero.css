@@ -1,3 +1,11 @@
+.page-container{
+    height: 110vh;
+}
+
+.top-row-container{
+    height: 70vh;
+}
+
 .left-box-title {
     margin: 40px 250px 0px 80px;
     font-weight: 400;
@@ -20,6 +28,13 @@
 }
 
 @media (max-width: 990px) {
+    .page-container{
+        height: 195vh;
+    }
+
+    .top-row-container{
+
+    }
     
     .left-box {
         display: flex;
