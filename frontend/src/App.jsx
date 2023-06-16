@@ -40,7 +40,7 @@ import {
   editClientAxios,
   // fetchProviderLogin,
   getProviderInfoAndServices,
-  getOnboardedProviders
+  getOnboardedProviders,
 } from "./api";
 
 import NavComp from "./components/Navbar";
@@ -69,7 +69,7 @@ function App() {
     try {
       const response = await axios({
         method: "post",
-        url: `http://localhost:${import.meta.env.VITE_PORT}/payment`,
+        url: `${import.meta.env.VITE_PORT}/payment`,
         headers: { "Content-Type": "application/json" },
         //data will equal to payment fee of service id instead of items
         data: {
@@ -351,16 +351,9 @@ function App() {
       element: <CustomerAccountContact />,
       action: async ({ request }) => {
         try {
-
           const formData = Object.fromEntries(await request.formData());
           // console.log(formData)
-          const {
-            email,
-            firstName,
-            lastName,
-            phoneNumber,
-            zipcode,
-          } = formData;
+          const { email, firstName, lastName, phoneNumber, zipcode } = formData;
           // console.log(
           //   email,
           //   firstName,
@@ -373,12 +366,12 @@ function App() {
             firstName,
             lastName,
             phoneNumber,
-            zipcode,
+            zipcode
           );
         } catch (error) {
           return error;
         }
-      }
+      },
     },
     {
       path: "/preferences",
@@ -404,7 +397,7 @@ function App() {
       path: "/provider",
       // element: <ProviderCard providers={providers} />,
       element: <ProviderCard providers={providers} />,
-      loader: getOnboardedProviders
+      loader: getOnboardedProviders,
     },
     {
       path: "/about",
@@ -414,8 +407,8 @@ function App() {
       path: "/provider/profile/:id",
       element: <ProviderPage />,
       action: submitRequestForm,
-      loader: ({params}) => {
-        let id = params.id
+      loader: ({ params }) => {
+        let id = params.id;
         return getProviderInfoAndServices(id);
       },
     },

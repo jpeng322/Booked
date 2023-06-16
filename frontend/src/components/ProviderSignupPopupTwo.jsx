@@ -37,7 +37,7 @@ function ProviderSignupPopupTwo({ open, setOpenPopupTwo }) {
     try {
       const providerSignupResponse = await axios({
         method: "post",
-        url: `http://localhost:${
+        url: `${
           import.meta.env.VITE_PORT
         }/auth/signup/provider`,
         data: {

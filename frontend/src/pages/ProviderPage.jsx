@@ -155,7 +155,7 @@ const ProviderPage = () => {
     try {
       const response = await axios({
         method: "post",
-        url: `http://localhost:${import.meta.env.VITE_PORT}/booking`,
+        url: `${import.meta.env.VITE_PORT}/booking`,
         data: {
           client_name: "jac",
           client_id: localStorage.getItem(userId) || 1,

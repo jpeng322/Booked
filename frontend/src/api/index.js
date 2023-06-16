@@ -8,7 +8,7 @@ import {
 export const fetchLogin = async (email, password) => {
   try {
     const apiLoginData = await axios.post(
-      `http://localhost:${import.meta.env.VITE_PORT}/auth/login/client`,
+      `${import.meta.env.VITE_PORT}/auth/login/client`,
       {
         email: email,
         password: password,
@@ -29,7 +29,7 @@ export const fetchLogin = async (email, password) => {
 export const fetchLoginProvider = async (email, password) => {
   try {
     const apiLoginData = await axios.post(
-      `http://localhost:${import.meta.env.VITE_PORT}/auth/login/provider`,
+      `${import.meta.env.VITE_PORT}/auth/login/provider`,
       {
         email: email,
         password: password,
@@ -62,7 +62,7 @@ export const fetchSignup = async (
   // console.log(email, password, firstName, lastName, phoneNumber)
   try {
     const apiSignupData = await axios.post(
-      `http://localhost:${import.meta.env.VITE_PORT}/auth/signup/client`,
+      `${import.meta.env.VITE_PORT}/auth/signup/client`,
       {
         email: email,
         password: password,
@@ -82,7 +82,7 @@ export const fetchSignup = async (
 export const getBooking = async (booking_id) => {
   try {
     const response = await axios.get(
-      `http://localhost:${import.meta.env.VITE_PORT}/booking/${booking_id}`
+      `${import.meta.env.VITE_PORT}/booking/${booking_id}`
     );
 
     if (response) {
@@ -100,9 +100,7 @@ export const getProviderBookings = async (id) => {
   try {
     const response = await axios({
       method: "get",
-      url: `http://localhost:${
-        import.meta.env.VITE_PORT
-      }/booking/provider/${id}`,
+      url: `${import.meta.VITE_PORT}/booking/provider/${id}`,
     });
 
     console.log(response);
@@ -137,13 +135,12 @@ export const getOnboardedProviders = async () => {
   try {
     const response = await axios({
       method: "get",
-      url: `http://localhost:${import.meta.env.VITE_PORT}/provider/onboarded`,
+      url: `${import.meta.env.VITE_PORT}/provider/onboarded`,
     });
 
-
     if (response) {
-      const providers = response.data.onboardedProviders
-      return providers
+      const providers = response.data.onboardedProviders;
+      return providers;
     }
   } catch (e) {}
 };
@@ -153,9 +150,7 @@ export const getProviderInfo = async (id) => {
   try {
     const response = await axios({
       method: "get",
-      url: `http://localhost:${
-        import.meta.env.VITE_PORT
-      }/provider/providers/${id}`,
+      url: `${import.meta.VITE_PORT}/provider/providers/${id}`,
     });
 
     if (response) {
@@ -176,7 +171,7 @@ export const uploadImageToAxios = async (base64EncodedImage) => {
     const userType = localStorage.getItem("userType");
 
     const postTOAxios = await axios.post(
-      `http://localhost:${import.meta.env.VITE_PORT}/profile/pic`,
+      `${import.meta.env.VITE_PORT}/profile/pic`,
       { data: base64EncodedImage, type: userType },
       {
         headers: {
@@ -203,7 +198,7 @@ export const deleteImageToAxios = async () => {
     const userType = localStorage.getItem("userType");
 
     const deleteToAxios = await axios.put(
-      `http://localhost:${import.meta.env.VITE_PORT}/profile/pic/remove`,
+      `${import.meta.env.VITE_PORT}/profile/pic/remove`,
       { type: userType },
       {
         headers: {
@@ -234,7 +229,7 @@ export const editClientAxios = async (
     // const userType = localStorage.getItem('userType');
 
     const apiEditClient = await axios.put(
-      `http://localhost:${import.meta.env.VITE_PORT}/client/information`,
+      `${import.meta.env.VITE_PORT}/client/information`,
       {
         client_email: email,
         client_fname: firstName,
@@ -264,14 +259,12 @@ export const getProviderInfoAndServices = async (id) => {
   try {
     const providerInfo = await axios({
       method: "get",
-      url: `http://localhost:${
-        import.meta.env.VITE_PORT
-      }/provider/providers/${id}`,
+      url: `${import.meta.VITE_PORT}/provider/providers/${id}`,
     });
 
     const serviceInfo = await axios({
       method: "get",
-      url: `http://localhost:${import.meta.env.VITE_PORT}/service/${id}`,
+      url: `${import.meta.env.VITE_PORT}/service/${id}`,
     });
 
     const bookingsInfo = await getProviderBookings(id);
@@ -315,13 +308,13 @@ export const applyOnboarding = async (values, areaAddress) => {
     newFormData.append("yearsInBusiness", values.yearsInBusiness);
     newFormData.append("backgroundCertified", values.backgroundCertified);
     newFormData.append("businessName", values.businessName);
-    newFormData.append("businessType",values.businessType);
+    newFormData.append("businessType", values.businessType);
     newFormData.append("areaServed", areaAddress.label);
-    
+
     // newFormData.append("profile", values.profilePicture[0]);
 
     const resp = await axios.put(
-      `http://localhost:${import.meta.env.VITE_PORT}/provider/onboard`,
+      `${import.meta.env.VITE_PORT}/provider/onboard`,
       newFormData,
       {
         headers: {
@@ -332,7 +325,7 @@ export const applyOnboarding = async (values, areaAddress) => {
     );
 
     // const resp = await axios.put(
-    //   `http://localhost:${import.meta.env.VITE_PORT}/provider/onboard`,
+    //   `${import.meta.env.VITE_PORT}/provider/onboard`,
     //    newFormData,
     //   {
     //     headers: {

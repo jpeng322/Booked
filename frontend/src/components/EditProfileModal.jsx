@@ -46,7 +46,7 @@ export default function EditProfileModal({
     try {
       const response = await axios({
         method: "put",
-        url: `http://localhost:${
+        url: `${
           import.meta.env.VITE_PORT
         }/provider/providers/6`,
         data: {

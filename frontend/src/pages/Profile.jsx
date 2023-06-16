@@ -33,7 +33,7 @@ const Profile = () => {
       console.log(localStorage.getItem("token"));
       const response = await axios({
         method: "post",
-        url: `http://localhost:${import.meta.env.VITE_PORT}/service`,
+        url: `${import.meta.env.VITE_PORT}/service`,
         data: {
           service_type: "Plumbing",
           payment_id: "asdasdasdasdasd",
