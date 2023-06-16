@@ -104,7 +104,40 @@ ul {
 
 .onboarding-main-form .css-b62m3t-container .css-13cymwt-control {
   border: none !important;
-  border-radius: .25rem !important;
+  border-radius: 0.25rem !important;
+}
+
+.onboarding-main-form .dropzone {
+  border: 1px solid #ced4da;
+  cursor: pointer;
+  padding: 0.25rem;
+  background-color: #ebe7e7;
+  width: 400px;
+}
+
+.business-type-container {
+  /* border: 1px solid red; */
+  width: 100%;
+}
+
+.business-type-container li {
+  /* border: 1px solid red; */
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.business-type-container .form-check {
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+.business-type-container li label {
+  /* border: 1px solid red; */
+  margin: 0 !important;
+  text-transform: capitalize;
+  text-align: center;
 }
 
 .back-button,

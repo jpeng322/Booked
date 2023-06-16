@@ -6,10 +6,6 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import "../CSS/LoggedInNavbar.css";
 import { NavLink } from "react-router-dom";
 const LoggedInNavbar = () => {
-  console.log(
-    localStorage.getItem("token"),
-    localStorage.getItem("userType") === "client"
-  );
   return (
     // {
     //     localStorage.getItem("token") === true && localStorage.getItem("type") === "client" &&

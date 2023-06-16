@@ -121,7 +121,8 @@ router.post("/login/provider", async (request, response) => {
         response.status(200).json({
           success: true,
           token,
-          type: "provider"
+          type: "provider",
+          findProvider
         });
       } else {
         response.status(401).json({

@@ -1,7 +1,8 @@
 import express from "express";
 import prisma from "../db/index.js";
 import upload from "../middleware/multer.js";
-import cloudinary from "../utilities/cloudinary.js";
+import { cloudinary } from "../utilities/cloudinary.js";
+// import  cloudinary  from "../utilities/cloudinary.js";
 // import router from "./auth.js";
 
 

@@ -21,6 +21,7 @@ import { applyOnboarding } from "../api";
 import "../CSS/ProviderOnboarding.css";
 import { useNavigate, useParams } from "react-router-dom";
 import GooglePlacesComp from "../components/GooglePlacesAutocomplete";
+// import { uploadProfileImages } from "../api";
 
 const Initial = () => {
   const { register } = useFormContext();
@@ -234,69 +235,161 @@ const ServicesProvided = () => {
     control,
     name: "listOfServices",
   });
+  const { register, setValue } = useFormContext();
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop: (file) => {
+      setValue("serviceImages", file);
+    },
+    maxFiles: 10,
+  });
+
+  // console.log()
+
   return (
     <>
-      <Table borderless>
-        <thead>
-          <tr>
-            <th>
-              <h2 className="text-center">List services that you provide</h2>
-            </th>
-            <th>
-              <h2 className="text-center">Price</h2>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {fields.map((item, index) => (
-            <tr key={item.id}>
-              <td>
-                <Controller
-                  render={({ field }) => (
-                    <Form.Group className="mb-2">
-                      <Form.Control type="text" {...field} />
-                    </Form.Group>
-                  )}
-                  name={`listOfServices.${index}.service`}
-                  control={control}
-                />
-              </td>
-              <td>
-                <Controller
-                  render={({ field }) => (
-                    <Form.Group className="mb-2">
-                      <Form.Control type="number" {...field} />
-                    </Form.Group>
-                  )}
-                  name={`listOfServices.${index}.price`}
-                  control={control}
-                />
+      <Table
+        borderless
+        className="d-flex flex-column gap-5 justify-content-center align-items-center"
+      >
+        <div>
+          <thead>
+            <tr>
+              <th>
+                <h2 className="text-center">List services that you provide</h2>
+              </th>
+              <th>
+                <h2 className="text-center">Price</h2>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {fields.map((item, index) => (
+              <tr key={item.id}>
+                <td>
+                  <Controller
+                    render={({ field }) => (
+                      <Form.Group className="mb-2">
+                        <Form.Control type="text" {...field} />
+                      </Form.Group>
+                    )}
+                    name={`listOfServices.${index}.service`}
+                    control={control}
+                  />
+                </td>
+                <td>
+                  <Controller
+                    render={({ field }) => (
+                      <Form.Group className="mb-2">
+                        <Form.Control type="number" {...field} />
+                      </Form.Group>
+                    )}
+                    name={`listOfServices.${index}.price`}
+                    control={control}
+                  />
+                </td>
+              </tr>
+            ))}
+            <tr>
+              <td colSpan={2}>
+                <div className="d-flex justify-content-center">
+                  <Button
+                    variant="light"
+                    onClick={() => append({ service: "", price: 0 })}
+                  >
+                    <FaPlusCircle />
+                  </Button>
+                </div>
               </td>
             </tr>
-          ))}
-          <tr>
-            <td colSpan={2}>
-              <div className="d-flex justify-content-center">
-                <Button
-                  variant="light"
-                  onClick={() => append({ service: "", price: 0 })}
-                >
-                  <FaPlusCircle />
-                </Button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
+            <tr></tr>
+          </tbody>
+        </div>
+        <div {...getRootProps({ className: "dropzone mb-3 pointer " })}>
+          <input {...getInputProps()} />
+          <p className="service-images-upload">
+            Click here to upload pictures of your business!
+          </p>
+        </div>
+        <div className="business-type-container">
+          <h2 className="text-center mb-3 ">What category is your business involved in?</h2>
+          <Form.Group className="mb-2">
+          <ul className="d-flex ">
+              <li>
+                <Form.Check
+                  type="radio"
+                  label="home improvement"
+                  value="home improvement"
+                  {...register("businessType")}
+                />
+              </li>
+              <li>
+                <Form.Check
+                  type="radio"
+                  label="landscaping"
+                  value="landscaping"
+                  {...register("businessType")}
+                />
+              </li>
+              <li>
+                <Form.Check
+                  type="radio"
+                  label="automotive"
+                  value="automotive"
+                  {...register("businessType")}
+                />
+              </li>
+              <li>
+                <Form.Check
+                  type="radio"
+                  label="personal care"
+                  value="personal care"
+                  {...register("businessType")}
+                />
+              </li>
+            </ul>
+            <ul className="d-flex">
+              <li>
+                <Form.Check
+                  type="radio"
+                  label="pet care"
+                  value="pet_care"
+                  {...register("businessType")}
+                />
+              </li>
+              <li>
+                <Form.Check
+                  type="radio"
+                  label="designer & artist"
+                  value="designer artist"
+                  {...register("businessType")}
+                />
+              </li>
+              <li>
+                <Form.Check
+                  type="radio"
+                  label="events"
+                  value="events"
+                  {...register("businessType")}
+                />
+              </li>
+              <li>
+                <Form.Check
+                  type="radio"
+                  label="technology"
+                  value="technology"
+                  {...register("businessType")}
+                />
+              </li>
+            </ul>
+          </Form.Group>
+        </div>
       </Table>
     </>
   );
 };
 
 const MoreInfo = ({ areaAddress, setAreaAddress }) => {
-  // const [address, setAddress] = useState("");
-  // const [addressValue, setAddressValue] = useState(null);
-  console.log(areaAddress);
-  const { register } = useFormContext();
+  const { register, setValue } = useFormContext();
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (file) => {
       setValue("profilePicture", file);
@@ -305,15 +398,10 @@ const MoreInfo = ({ areaAddress, setAreaAddress }) => {
   });
 
   return (
-    <div>
+    <div className="d-flex flex-column ">
       <h1 className="text-center">Lastly, specify your information below</h1>
       <Form.Group className="mb-3">
         <Form.Label>What area do you primarily serve?</Form.Label>
-        {/* <Form.Control
-          type="text"
-          placeholder="City, state, zipcode"
-          {...register("areaServed", { value: address.value })}
-        /> */}
         <GooglePlacesComp
           address={areaAddress}
           setAddress={setAreaAddress}
@@ -321,7 +409,7 @@ const MoreInfo = ({ areaAddress, setAreaAddress }) => {
         />
       </Form.Group>
 
-      <div {...getRootProps({ className: "dropzone mb-3" })}>
+      <div {...getRootProps({ className: "dropzone mb-3 align-self-center" })}>
         <input {...getInputProps()} />
         <p className="profile-upload">Click here to choose a profile picture</p>
       </div>
@@ -376,7 +464,7 @@ const ProviderOnboarding = () => {
   let { id } = useParams();
 
   const submitProviderInfo = async (values, address = areaAddress) => {
-    console.log(values, areaAddress, "VALUESVLUAES");
+    console.log(values, "VALUESVLUAES");
 
     const data = await applyOnboarding(values, areaAddress);
     if (data) {

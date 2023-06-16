@@ -17,7 +17,7 @@ export default function DeleteAccountModal() {
     try {
       const response = await axios({
         method: "delete",
-        url: `http://localhost:${import.meta.env.VITE_PORT}/auth/delete`,
+        url: `${import.meta.env.VITE_PORT}/auth/delete`,
         data: {
           userId: 3,
         },

@@ -1,6 +1,6 @@
 import express from "express";
 import prisma from "../db/index.js";
-import cloudinary from "../utilities/cloudinary.js";
+import { cloudinary, storage } from "../utilities/cloudinary.js";
 import multer from "multer";
 import formData from "express-form-data";
 
@@ -8,23 +8,13 @@ export default function providerRouter(passport) {
   //Creates a new instance of a router
   const router = express.Router();
   const memStorage = multer.memoryStorage();
-  const multerUpload = multer({ storage: memStorage }).single("profile");
+  const multerUpload = multer({ storage: memStorage }).array("profile");
+  // const multerUpload = multer({ storage: memStorage }).single("profile");
 
   // Get all providers
   router.get("/", async (req, res) => {
     try {
       const providers = await prisma.provider.findMany({
-        // where: {
-        //   provider_id: req.provider.provider_id,
-        // },
-        // //choosing the fields wish to get back from the table
-        // select: {
-        //   provider_id: true,
-        //   provider_fname: true,
-        //   provider_lname: true,
-        //   provider_phone: true,
-        //   provider_email: true,
-        // },
       });
 
       if (providers) {
@@ -38,6 +28,39 @@ export default function providerRouter(passport) {
       res.status(500).json({
         success: false,
         message: "Failed to fetch providers",
+      });
+    }
+  });
+
+  //Get onboarded providers
+  router.get("/onboarded", async (req, res) => {
+    try {
+      const onboardedProviders = await prisma.provider.findMany({
+        where: {
+          onboarded: true
+        },
+        include: {
+          image: true,
+          service: true
+        }
+      });
+
+      if (onboardedProviders) {
+        res.status(200).json({
+          success: true,
+          onboardedProviders,
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          message: "Failed to fetch onboarded providers."
+        })
+      }
+    } catch (e) {
+      console.log(e);
+      res.status(500).json({
+        success: false,
+        message: "Something went wrong.",
       });
     }
   });
@@ -77,6 +100,10 @@ export default function providerRouter(passport) {
         where: {
           provider_id: parseInt(id),
         },
+        include: {
+          service: true,
+          image: true
+        }
       });
       if (provider) {
         res.status(200).json({
@@ -102,16 +129,27 @@ export default function providerRouter(passport) {
     "/onboard",
     passport.authenticate("jwt", { session: false }),
     multerUpload,
+    // multerUploadMultiple,
     async (req, res) => {
-      console.log(req.body);
+      console.log(req.body, req.file, req.files);
       try {
         // const file = req.file;
-        // const b64 = Buffer.from(file.buffer).toString("base64");
-        // let dataURI = "data:" + file.mimetype + ";base64," + b64;
+        const file = req.files[0];
 
-        // const uploadedProfilePic = await cloudinary.uploader.upload(dataURI);
+        const b64 = Buffer.from(file.buffer).toString("base64");
+        let dataURI = "data:" + file.mimetype + ";base64," + b64;
+
+        const uploadedProfilePic = await cloudinary.uploader.upload(dataURI);
 
         const listOfServices = JSON.parse(req.body.listOfServices);
+
+        const uploadedFilesPromises = req.files.slice(1).map(async (file) => {
+          const b64 = Buffer.from(file.buffer).toString("base64");
+          let dataURI = "data:" + file.mimetype + ";base64," + b64;
+          return await cloudinary.uploader.upload(dataURI);
+        });
+
+        const uploadedFiles = await Promise.all(uploadedFilesPromises);
 
         const updatedProvider = await prisma.provider.update({
           where: {
@@ -124,8 +162,9 @@ export default function providerRouter(passport) {
             provider_amountOfEmployees: parseInt(req.body.amountOfEmployees),
             provider_yearsInBusiness: parseInt(req.body.yearsInBusiness),
             provider_businessName: req.body.businessName,
+            provider_businessType: req.body.businessType.replace("_"," "),
             provider_areaServed: req.body.areaServed,
-            // profile_pic: uploadedProfilePic.url,
+            profile_pic: uploadedProfilePic.url,
             service: {
               createMany: {
                 data: listOfServices.map((service) => {
@@ -136,9 +175,21 @@ export default function providerRouter(passport) {
                 }),
               },
             },
+            image: {
+              createMany: {
+                data: uploadedFiles.map(file => {
+                  return {
+                    image_url: file.url,
+                  };
+                }),
+              },
+            },
             onboarded: true,
           },
         });
+
+
+
 
         res.status(200).json({
           success: true,
