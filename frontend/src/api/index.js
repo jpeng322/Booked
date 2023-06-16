@@ -139,10 +139,13 @@ export const getOnboardedProviders = async () => {
     });
 
     if (response) {
+     
       const providers = response.data.onboardedProviders;
       return providers;
     }
-  } catch (e) {}
+  } catch (e) {
+    console.log(e)
+  }
 };
 
 export const getProviderInfo = async (id) => {

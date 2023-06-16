@@ -161,43 +161,58 @@ function App() {
         },
         {
           path: "/providers",
-          // element: <ProviderCard providers={providers} />,
           children: [
+            // {
+            //   path: "/provider",
+            //   // element: <ProviderCard providers={providers} />,
+            //   element: <ProviderCard providers={providers} />,
+            //   loader: getOnboardedProviders,
+            // },
             {
-              path: "",
-              element: <ProviderCard providers={providers} />,
+              path: "all",
+              element: <ProviderType type="all" />,
+              loader: getOnboardedProviders,
             },
+
             {
               path: "home_improvement",
               element: <ProviderType type="home improvement" />,
+              loader: getOnboardedProviders,
             },
             {
               path: "landscaping",
               element: <ProviderType type="landscaping" />,
+              loader: getOnboardedProviders,
             },
             {
               path: "automotive",
               element: <ProviderType type="automotive" />,
+              loader: getOnboardedProviders,
             },
             {
               path: "personal_care",
               element: <ProviderType type="personal care" />,
+              loader: getOnboardedProviders,
             },
             {
               path: "pet_care",
               element: <ProviderType type="pet care" />,
+              loader: getOnboardedProviders,
             },
             {
               path: "designer_artist",
               element: <ProviderType type="designer & artist" />,
+              loader: getOnboardedProviders,
             },
             {
               path: "events",
               element: <ProviderType type="events" />,
+              loader: getOnboardedProviders,
             },
             {
               path: "technology",
               element: <ProviderType type="technology" />,
+              loader: getOnboardedProviders,
             },
           ],
         },
@@ -343,6 +358,12 @@ function App() {
             }
           },
         },
+        {
+          path: "/provider",
+          // element: <ProviderCard providers={providers} />,
+          element: <ProviderType type="all" />,
+          loader: getOnboardedProviders,
+        },
       ],
     },
 
@@ -392,12 +413,6 @@ function App() {
     {
       path: "/carousel",
       element: <FavoriteProviders />,
-    },
-    {
-      path: "/provider",
-      // element: <ProviderCard providers={providers} />,
-      element: <ProviderCard providers={providers} />,
-      loader: getOnboardedProviders,
     },
     {
       path: "/about",

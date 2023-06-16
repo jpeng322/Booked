@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
 
 import Col from "react-bootstrap/Col";
@@ -18,10 +18,13 @@ import SearchBar from "../components/SearchBar";
 
 import { useLoaderData, useNavigate } from "react-router-dom";
 const ProviderCard = (props) => {
-  const initialProviders = useLoaderData();
+  // const initialProviders = useLoaderData();
+  const initialProviders = props.providers;
+
 
   const navigate = useNavigate();
   const [providers, setProviders] = useState(initialProviders);
+
   const [activePage, setActivePage] = useState(1);
   const itemsPerPage = 4;
   const totalItems = providers.length;
@@ -30,6 +33,12 @@ const ProviderCard = (props) => {
   const handleClick = (pageNumber) => {
     setActivePage(pageNumber);
   };
+
+
+  useEffect(() => {
+    setProviders(initialProviders)
+  }, [initialProviders]);
+
 
   const providersToDisplay = providers.slice(
     (activePage - 1) * itemsPerPage,
@@ -43,7 +52,6 @@ const ProviderCard = (props) => {
   console.log(providersToDisplay);
   return (
     <>
-      <NavBar />
       <SearchBarProviderCardPg />
       <Container fluid className="p-5">
         <Row className="d-flex justify-content-center">
@@ -58,7 +66,10 @@ const ProviderCard = (props) => {
                       className="provider-logo"
                     />
                     <div className="d-flex flex-column">
-                      <p className="business-name"> {provider.provider_businessName}</p>
+                      <p className="business-name">
+                        {" "}
+                        {provider.provider_businessName}
+                      </p>
 
                       <p className="business-location">
                         {provider.provider_areaServed}
@@ -163,7 +174,6 @@ const ProviderCard = (props) => {
           </Row>
         </Row>
       </Container>
-      <HifiFooter />
     </>
   );
 };
