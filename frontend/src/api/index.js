@@ -100,7 +100,7 @@ export const getProviderBookings = async (id) => {
   try {
     const response = await axios({
       method: "get",
-      url: `${import.meta.VITE_PORT}/booking/provider/${id}`,
+      url: `${import.meta.env.VITE_PORT}/booking/provider/${id}`,
     });
 
     console.log(response);
@@ -150,7 +150,7 @@ export const getProviderInfo = async (id) => {
   try {
     const response = await axios({
       method: "get",
-      url: `${import.meta.VITE_PORT}/provider/providers/${id}`,
+      url: `${import.meta.env.VITE_PORT}/provider/providers/${id}`,
     });
 
     if (response) {
@@ -259,7 +259,7 @@ export const getProviderInfoAndServices = async (id) => {
   try {
     const providerInfo = await axios({
       method: "get",
-      url: `${import.meta.VITE_PORT}/provider/providers/${id}`,
+      url: `${import.meta.env.VITE_PORT}/provider/providers/${id}`,
     });
 
     const serviceInfo = await axios({
