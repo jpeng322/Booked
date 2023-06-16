@@ -16,7 +16,7 @@ function ProviderSignupPopupOne({ open, setOpenPopupOne, setOpenPopupTwo }) {
     const onSubmit = data => {
         console.log(data);
 
-        actions.updateSignupAction(data);
+        actions.updateSignupAction({...data});
 
         setOpenPopupTwo(true)
 

@@ -145,7 +145,7 @@ const CustomerLogin = () => {
 
                                     <Form.Group className="mb-3" controlId="formBasicPassword">
                                         <Form.Label style={style.label}>Password</Form.Label>
-                                        <Form.Control style={style.control} type="text" placeholder="Password" {...register("password", { required: true, maxLength: 100 })} />
+                                        <Form.Control style={style.control} type="password" placeholder="Password" {...register("password", { required: true, maxLength: 100 })} />
                                     </Form.Group>
 
                                     <Stack

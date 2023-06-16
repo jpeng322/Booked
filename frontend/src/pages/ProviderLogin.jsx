@@ -25,8 +25,9 @@ const ProviderLogin = () => {
   useEffect(() => {
     if (
       actionData &&
-      actionData.status == 200 &&
-      actionData.data.success == true
+      actionData.status == 200 
+      // &&
+      // actionData.data.success == true
     ) {
       console.log("welcome back PROVIDER user");
       console.log(actionData)
@@ -155,7 +156,7 @@ const ProviderLogin = () => {
                     <Form.Label style={style.label}>Password</Form.Label>
                     <Form.Control
                       style={style.control}
-                      type="text"
+                      type="password"
                       placeholder="Password"
                       {...register("password", {
                         required: true,

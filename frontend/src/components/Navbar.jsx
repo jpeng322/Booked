@@ -31,12 +31,16 @@ function NavComp() {
                 fontSize:"80px"
                 }}>{BookedCheck}</h1> */}
         <div className="d-flex gap-4">
-          <Button className="home-button" size="sm">
+          <Button 
+          className="home-button" 
+          onClick={() => navigate("provider/signup")}
+          size="sm"
+          >
             Join Our Network
           </Button>{" "}
           <Button
             className="home-button"
-            onClick={() => navigate("login/provider")}
+            onClick={() => navigate("customer/login")}
             size="sm"
           >
             Login/Sign Up
