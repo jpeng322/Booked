@@ -10,7 +10,6 @@
   },
   "dependencies": {
 
-    "@esbuild/win32-x64": "^0.18.0",
 
     "@fortawesome/fontawesome": "^1.1.8",
     "@fortawesome/fontawesome-free-regular": "^5.0.13",
@@ -22,7 +21,6 @@
     "axios": "^1.4.0",
     "date-fns": "^2.30.0",
     "dateformat": "^5.0.3",
-    "esbuild": "^0.17.18",
     "little-state-machine": "^4.8.0",
     "moment": "^2.29.4",
     "react": "^18.2.0",
