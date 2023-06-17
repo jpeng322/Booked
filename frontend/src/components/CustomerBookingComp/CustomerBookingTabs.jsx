@@ -31,7 +31,6 @@ const BookingsTabs = () => {
     getBookings();
   }, []);
 
-  console.log(bookings);
 
   const completedOrders = bookings.filter(
     (booking) => booking.status === "completed"
@@ -54,7 +53,6 @@ const BookingsTabs = () => {
     (booking) => booking.status === "pending"
   );
 
-  console.log(completedOrders);
   return (
     <Tabs className="tab-container">
       <TabList>

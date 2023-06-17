@@ -47,7 +47,7 @@ import {
 import NavComp from "./components/Navbar";
 import HeroComp from "./components/HeroComp";
 import ConfirmationPage from "./components/ConfirmationPage";
-import FavoriteProviders from "./components/FavoritesComp";
+import FavoriteProviders from "./components/CustomerCarousel";
 import MyProfile from "./components/AccountSettings/MyProfile";
 import Notifications from "./components/AccountSettings/Notifications";
 import DeleteAccount from "./components/AccountSettings/DeleteAccount";

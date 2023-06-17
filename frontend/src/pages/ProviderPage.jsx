@@ -435,7 +435,7 @@ const ProviderPage = () => {
       </Container>
       <Reviews reviews={reviews} />
       <ReviewsTabs />
-      <BackgroundCheck />
+      {/* <BackgroundCheck /> */}
     </>
   );
 };

@@ -8,22 +8,22 @@ import {
 export const getCustomerName = async (id) => {
   try {
     const response = await axios.get(
-      `${import.meta.env.VITE_PORT}/client/client/${id}`,
+      `${import.meta.env.VITE_PORT}/client/client/${id}`
     );
 
     if (response) {
-     const { client_fname, client_lname, client_email}  = response.data.client
+      const { client_fname, client_lname, client_email } = response.data.client;
       const customerInfo = {
         fname: client_fname,
         lname: client_lname,
-        email: client_email
-      }
-      return customerInfo
+        email: client_email,
+      };
+      return customerInfo;
     }
   } catch (error) {
     return error;
   }
-} 
+};
 
 export const fetchLogin = async (email, password) => {
   try {
@@ -325,10 +325,6 @@ export const getProviderInfoAndServices = async (id) => {
 };
 
 export const applyOnboarding = async (values, areaAddress) => {
-  console.log(values, areaAddress, "APAPAPPAII");
-  // console.log(values.profilePicture[0])
-  console.log(values.profilePicture.concat(values.serviceImages));
-
   try {
     const allImagesArray = values.profilePicture.concat(values.serviceImages);
     const token = localStorage.getItem("token");
@@ -365,16 +361,6 @@ export const applyOnboarding = async (values, areaAddress) => {
       }
     );
 
-    // const resp = await axios.put(
-    //   `${import.meta.env.VITE_PORT}/provider/onboard`,
-    //    newFormData,
-    //   {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //       Authorization: `Bearer ${token}`,
-    //     }
-    //   }
-    // );
     console.log(resp);
 
     if (resp.status == 200) {
@@ -383,5 +369,44 @@ export const applyOnboarding = async (values, areaAddress) => {
   } catch (e) {
     console.log(e);
     return {};
+  }
+};
+
+export const getCustomerRecommendations = async (id) => {
+  const token = localStorage.getItem("token");
+  try {
+    const response = await axios.get(
+      `${import.meta.env.VITE_PORT}/client/client/${id}`,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (response) {
+      const customerType = response.data.client.preferred_services;
+
+      try {
+        const providersResponse = await axios.get(
+          `${
+            import.meta.env.VITE_PORT
+          }/provider/provider/${customerType.toLowerCase()}`,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        // console.log(providersResponse)
+        const recommendedProviders = providersResponse.data.providers;
+        console.log(recommendedProviders);
+        return recommendedProviders;
+      } catch (e) {}
+    }
+  } catch (error) {
+    return error;
   }
 };

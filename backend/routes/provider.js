@@ -14,8 +14,7 @@ export default function providerRouter(passport) {
   // Get all providers
   router.get("/", async (req, res) => {
     try {
-      const providers = await prisma.provider.findMany({
-      });
+      const providers = await prisma.provider.findMany({});
 
       if (providers) {
         res.status(200).json({
@@ -37,12 +36,12 @@ export default function providerRouter(passport) {
     try {
       const onboardedProviders = await prisma.provider.findMany({
         where: {
-          onboarded: true
+          onboarded: true,
         },
         include: {
           image: true,
-          service: true
-        }
+          service: true,
+        },
       });
 
       if (onboardedProviders) {
@@ -53,8 +52,8 @@ export default function providerRouter(passport) {
       } else {
         res.status(400).json({
           success: false,
-          message: "Failed to fetch onboarded providers."
-        })
+          message: "Failed to fetch onboarded providers.",
+        });
       }
     } catch (e) {
       console.log(e);
@@ -66,6 +65,34 @@ export default function providerRouter(passport) {
   });
 
   //Get providers from logged in user
+  router.get(
+    "/provider/:type",
+    passport.authenticate("jwt", { session: false }),
+    async (req, res) => {
+      const { type } = req.params;
+      try {
+        const providers = await prisma.provider.findMany({
+          where: {
+            provider_businessType: type,
+          },
+          include: { image: true, service: true },
+        });
+        if (providers) {
+          res.status(200).json({
+            success: true,
+            providers,
+          });
+        }
+      } catch (e) {
+        console.log(e);
+        res.status(500).json({
+          success: false,
+          message: "Login is required for access",
+        });
+      }
+    }
+  );
+
   router.get(
     "/provider",
     passport.authenticate("jwt", { session: false }),
@@ -102,8 +129,8 @@ export default function providerRouter(passport) {
         },
         include: {
           service: true,
-          image: true
-        }
+          image: true,
+        },
       });
       if (provider) {
         res.status(200).json({
@@ -162,7 +189,7 @@ export default function providerRouter(passport) {
             provider_amountOfEmployees: parseInt(req.body.amountOfEmployees),
             provider_yearsInBusiness: parseInt(req.body.yearsInBusiness),
             provider_businessName: req.body.businessName,
-            provider_businessType: req.body.businessType.replace("_"," "),
+            provider_businessType: req.body.businessType.replace("_", " "),
             provider_areaServed: req.body.areaServed,
             profile_pic: uploadedProfilePic.url,
             service: {
@@ -177,7 +204,7 @@ export default function providerRouter(passport) {
             },
             image: {
               createMany: {
-                data: uploadedFiles.map(file => {
+                data: uploadedFiles.map((file) => {
                   return {
                     image_url: file.url,
                   };
@@ -187,9 +214,6 @@ export default function providerRouter(passport) {
             onboarded: true,
           },
         });
-
-
-
 
         res.status(200).json({
           success: true,

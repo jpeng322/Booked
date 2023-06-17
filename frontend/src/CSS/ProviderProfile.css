@@ -147,6 +147,7 @@ input::-webkit-inner-spin-button {
 .provider-carousel-images {
   padding-right: 1rem;
   padding: 1rem 0.5rem;
+  margin: 0;
 }
 
 .react-multi-carousel-list ul > *:nth-child(1) img {
@@ -155,9 +156,6 @@ input::-webkit-inner-spin-button {
 .react-multi-carousel-list ul > *:last-child img {
   padding-right: 1rem;
   margin-left: 1rem;
-}
-
-.provider-photos .react-multi-carousel-track li {
 }
 
 .react-multi-carousel-track li {

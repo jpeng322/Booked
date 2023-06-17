@@ -96,10 +96,10 @@ const ProviderBookingInfo = ({
               width="24"
               height="24"
               stroke="currentColor"
-              stroke-width="2"
+              strokeWidth="2"
               fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               className="map-pin"
             >
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
