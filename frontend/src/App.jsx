@@ -41,6 +41,7 @@ import {
   // fetchProviderLogin,
   getProviderInfoAndServices,
   getOnboardedProviders,
+  getCustomerBookings,
 } from "./api";
 
 import NavComp from "./components/Navbar";
@@ -217,8 +218,13 @@ function App() {
           ],
         },
         {
-          path: "/customer/bookings",
+          path: "/customer/bookings/:id",
           element: <CustomerAcc />,
+          loader: ({ params }) => {
+            console.log(params);
+            const id = params.id;
+            return getCustomerBookings(id);
+          },
         },
         {
           path: "/provider/bookings/:id",
@@ -364,6 +370,19 @@ function App() {
           element: <ProviderType type="all" />,
           loader: getOnboardedProviders,
         },
+        {
+          path: "/about",
+          element: <About />,
+        },
+        {
+          path: "/provider/profile/:id",
+          element: <ProviderPage />,
+          action: submitRequestForm,
+          loader: ({ params }) => {
+            let id = params.id;
+            return getProviderInfoAndServices(id);
+          },
+        },
       ],
     },
 
@@ -414,19 +433,7 @@ function App() {
       path: "/carousel",
       element: <FavoriteProviders />,
     },
-    {
-      path: "/about",
-      element: <About />,
-    },
-    {
-      path: "/provider/profile/:id",
-      element: <ProviderPage />,
-      action: submitRequestForm,
-      loader: ({ params }) => {
-        let id = params.id;
-        return getProviderInfoAndServices(id);
-      },
-    },
+
     // {
     //   path: "/provider/bookings",
     //   element: <ProviderBookings />,
@@ -440,42 +447,7 @@ function App() {
       },
       element: <ConfirmationPage />,
     },
-    // {
-    //   path: "/settings",
-    //   element: <AccountSettings />,
-    //   children: [
-    //     {
-    //       path: "myprofile/",
-    //       // path: "myprofile/:provider_id",
-    //       element: <MyProfile />,
-    //       action: submitEditForm,
-    //       loader: () => {
-    //         // const provider_id = params.provider_id;
-    //         return getProviderInfo(6);
-    //       },
-    //       // loader: ({ params }) => {
-    //       //   const provider_id = params.provider_id;
-    //       //   return getProviderInfo(provider_id);
-    //       // },
-    //     },
-    //     {
-    //       path: "notifications",
-    //       element: <Notifications />,
-    //     },
-    //     {
-    //       path: "signout",
-    //       element: <SignOut />,
-    //     },
-    //     {
-    //       path: "delete_account",
-    //       element: <DeleteAccount />,
-    //     },
-    //     {
-    //       path: "wallet",
-    //       element: <Wallet />,
-    //     },
-    //   ],
-    // },
+
     {
       path: "map/:address_id",
       loader: ({ params }) => {

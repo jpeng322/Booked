@@ -5,6 +5,26 @@ import {
   getLatLng,
 } from "react-places-autocomplete";
 
+export const getCustomerName = async (id) => {
+  try {
+    const response = await axios.get(
+      `${import.meta.env.VITE_PORT}/client/client/${id}`,
+    );
+
+    if (response) {
+     const { client_fname, client_lname, client_email}  = response.data.client
+      const customerInfo = {
+        fname: client_fname,
+        lname: client_lname,
+        email: client_email
+      }
+      return customerInfo
+    }
+  } catch (error) {
+    return error;
+  }
+} 
+
 export const fetchLogin = async (email, password) => {
   try {
     const apiLoginData = await axios.post(
@@ -18,6 +38,7 @@ export const fetchLogin = async (email, password) => {
     if (apiLoginData.status == 200 && apiLoginData.data.token) {
       localStorage.setItem("token", apiLoginData.data.token);
       localStorage.setItem("userType", apiLoginData.data.type);
+      localStorage.setItem("userId", apiLoginData.data.findClient.client_id);
     }
 
     return apiLoginData;
@@ -113,6 +134,24 @@ export const getProviderBookings = async (id) => {
     console.log(e);
   }
 };
+export const getCustomerBookings = async (id) => {
+  // console.log(id, "PROVIDERID")
+  try {
+    const response = await axios({
+      method: "get",
+      url: `${import.meta.env.VITE_PORT}/booking/client/${id}`,
+    });
+
+    console.log(response);
+
+    if (response) {
+      const customerBookings = response.data.bookings;
+      return customerBookings;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 export const getCoords = (address_id) => {
   // let latLng;
@@ -139,12 +178,11 @@ export const getOnboardedProviders = async () => {
     });
 
     if (response) {
-     
       const providers = response.data.onboardedProviders;
       return providers;
     }
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 };
 

@@ -1,16 +1,16 @@
 .btns{
   display: flex;
   flex-direction: column;
-  justify-content:left;
-  align-items: left;
+
+  align-items: center;
   height: 100vh;
-  position: absolute;
-  width: 80%;
+  /* position: absolute; */
+  width: 100%;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 150px;
+  /* margin-top: 150px;
   margin-bottom: 100px;
-  margin-left: 150px;
+  margin-left: 150px; */
 }
 
 .reviews-container {

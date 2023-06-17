@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    const client = await prisma.client.findMany({
+    const clients = await prisma.client.findMany({
         where: {
             client_id: req.client.client_id
         },
@@ -26,11 +26,12 @@ router.get('/', async (req, res) => {
     if(clients) {
         res.status(200).json({
             success: true,
-            client
+            clients
         })
     };
 
   } catch (e) {
+    console.log(e)
     res.status(500).json({ 
         success: false,
         message: 'Failed to fetch clients'
@@ -63,7 +64,7 @@ async (req, res) => {
 });
 
 router.get('/client/:id', async (req, res) => {
-  const id = req.params;
+  const { id } = req.params;
 
   try {
     const client = await prisma.client.findUnique({ 
@@ -82,6 +83,7 @@ router.get('/client/:id', async (req, res) => {
         message: 'Client not found' });
     }
   } catch (e) {
+    console.log(e)
     res.status(500).json({ 
         success: false, 
         message: 'Failed to fetch client' });

@@ -121,31 +121,31 @@ router.post("/signup/client", async (request, response) => {
 //         );
 
 
-        response.status(200).json({
-          success: true,
-          token,
-          type: "provider",
-          findProvider
-        });
-      } else {
-        response.status(401).json({
-          success: false,
-          message: "Incorrect email or password.",
-        });
-      }
-    } catch (e) {
-      response.status(500).json({
-        success: false,
-        message: "Something went wrong",
-      });
-    }
-  } catch (e) {
-    response.status(401).json({
-      success: false,
-      message: "Incorrect email or password",
-    });
-  }
-});
+//         response.status(200).json({
+//           success: true,
+//           token,
+//           type: "provider",
+//           findProvider
+//         });
+//       } else {
+//         response.status(401).json({
+//           success: false,
+//           message: "Incorrect email or password.",
+//         });
+//       }
+//     } catch (e) {
+//       response.status(500).json({
+//         success: false,
+//         message: "Something went wrong",
+//       });
+//     }
+//   } catch (e) {
+//     response.status(401).json({
+//       success: false,
+//       message: "Incorrect email or password",
+//     });
+//   }
+// });
 
 router.post("/login/client", async (request, response) => {
   try {
@@ -172,10 +172,13 @@ router.post("/login/client", async (request, response) => {
           "showMeTheProvidersOrClients"
         );
 
+        console.log(findClient)
+
         response.status(200).json({
           success: true,
           token,
           type: "client",
+          findClient
         });
       } else {
         response.status(401).json({

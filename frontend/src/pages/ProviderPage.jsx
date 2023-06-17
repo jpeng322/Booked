@@ -41,6 +41,8 @@ import "../CSS/ProviderProfile.css";
 import Autocomplete from "react-google-autocomplete";
 // import { geocodeByPlaceId } from 'react-google-places-autocomplete';
 
+//api
+import { getCustomerName } from "../api";
 export const submitRequestForm = async ({ request }) => {
   const data = await request.formData();
 
@@ -82,6 +84,7 @@ const ProviderPage = () => {
   const loaderData = useLoaderData();
 
   const [providerInfo, setProviderInfo] = useState(loaderData);
+
   console.log(providerInfo);
   const [checkedState, setCheckedState] = useState(
     new Array(providerInfo.services.length).fill(false)
@@ -174,39 +177,53 @@ const ProviderPage = () => {
   const data = useActionData();
   let submit = useSubmit();
   async function sendFormData() {
+    console.log("SENDING FORM DATA");
     try {
-      const response = await axios({
-        method: "post",
-        url: `${import.meta.env.VITE_PORT}/booking`,
-        data: {
-          client_name: "jac",
-          client_id: localStorage.getItem(userId) || 1,
-          provider_id: providerInfo.provider.provider_id,
-          provider_name: providerInfo.provider.provider_fname,
-          service_type: stringOfServiceTypes,
-          start_date: dateFormat(new Date(startDate), "mmmm d, yyyy h:MM TT"),
-          end_date: dateFormat(new Date(endDate), "mmmm d, yyyy h:MM TT"),
-          message: data.message,
-          cost: total.toString(),
-          address: address.label,
-          address_id: address.value.place_id,
-        },
-      });
+      const customerName = await getCustomerName(
+        localStorage.getItem("userId")
+      );
+      // const customerName = await axios({
+      //   method: "get",
+      //   url: `${import.meta.env.VITE_PORT}/client/client/${localStorage.getItem("userId")}`
+      // })
 
-      if (response) {
-        const booking_id = response.data.booking_info.booking_id;
-        window.open(
-          `/customer/confirmation/${booking_id}`,
-          "_blank",
-          "rel=noopener noreferrer"
-        );
+      console.log(customerName);
+      try {
+        const response = await axios({
+          method: "post",
+          url: `${import.meta.env.VITE_PORT}/booking`,
+          data: {
+            client_name: customerName.fname + " " + customerName.lname,
+            client_id: localStorage.getItem("userId") || 1,
+            provider_id: providerInfo.provider.provider_id,
+            provider_name: providerInfo.provider.provider_fname,
+            service_type: stringOfServiceTypes,
+            start_date: dateFormat(new Date(startDate), "mmmm d, yyyy h:MM TT"),
+            end_date: dateFormat(new Date(endDate), "mmmm d, yyyy h:MM TT"),
+            message: data.message,
+            cost: total.toString(),
+            address: address.label,
+            address_id: address.value.place_id,
+          },
+        });
 
-        setModalShow(true);
-        // return data;
+        if (response) {
+          const booking_id = response.data.booking_info.booking_id;
+          window.open(
+            `/customer/confirmation/${booking_id}`,
+            "_blank",
+            "rel=noopener noreferrer"
+          );
 
-        console.log(response);
-      } else {
-        throw Error("No response");
+          setModalShow(true);
+          // return data;
+
+          console.log(response);
+        } else {
+          throw Error("No response");
+        }
+      } catch (e) {
+        console.log(e);
       }
     } catch (e) {
       console.log(e);
@@ -215,205 +232,210 @@ const ProviderPage = () => {
 
   return (
     <>
-    <Container fluid className="provider-profile-container d-flex p-5">
-      <div className="provider-information">
-        <div className="provider-bio">
-          <div className="provider-header">
-            <img
-              className="border"
-              src={providerInfo.provider.profile_pic}
-              alt="profile-pic"
-            />
-            <div className="provider-media">
-              <h2>{providerInfo.provider.provider_businessName}</h2>
-              {/* <h3>Super stars</h3> */}
-              <button>Share</button>
+      <Container fluid className="provider-profile-container d-flex  p-5">
+        <div className="provider-information">
+          <div className="provider-bio">
+            <div className="provider-header">
+              <img
+                className="border"
+                src={providerInfo.provider.profile_pic}
+                alt="profile-pic"
+              />
+              <div className="provider-media">
+                <h2>{providerInfo.provider.provider_businessName}</h2>
+                {/* <h3>Super stars</h3> */}
+                <button>Share</button>
+              </div>
             </div>
-          </div>
-          {/* <div className="provider-about">
+            {/* <div className="provider-about">
             <span className="fw-bold">About:</span> Lorem ipsum dolor sit amet
             consectetur adipisicing elit. Voluptatibus similique sint harum at
             sequi quam excepturi quidem cumque doloribus officia! Dolorem quo
             adipisci quaerat facere nesciunt voluptatibus perspiciatis nam
             veniam.
           </div> */}
-        </div>
-        <div className="provider-stats">
-          <div className="provider-overview">
-            <div>
-              <span className="fw-bold">Overview</span>
-            </div>
-            <div>Pro</div>
-            <div>
-              Booked <span className="fw-bold">{providerInfo.timesBooked}</span>{" "}
-              time{providerInfo.timesBooked !== 1 && "s"}
-            </div>
-            <div>
-              Serves{" "}
-              <span className="fw-bold">
-                {providerInfo.provider.provider_areaServed}
-              </span>{" "}
-            </div>
-            {providerInfo.provider.provider_standing === "true" && (
+          </div>
+          <div className="provider-stats">
+            <div className="provider-overview">
               <div>
-                Background <span className="fw-bold">checked</span>
+                <span className="fw-bold">Overview</span>
               </div>
-            )}
-            <div>
-              <span className="fw-bold">
-                {providerInfo.provider.provider_amountOfEmployees}
-              </span>{" "}
-              employees
+              <div>Pro</div>
+              <div>
+                Booked{" "}
+                <span className="fw-bold">{providerInfo.timesBooked}</span> time
+                {providerInfo.timesBooked !== 1 && "s"}
+              </div>
+              <div>
+                Serves{" "}
+                <span className="fw-bold">
+                  {providerInfo.provider.provider_areaServed}
+                </span>{" "}
+              </div>
+              {providerInfo.provider.provider_standing === "true" && (
+                <div>
+                  Background <span className="fw-bold">checked</span>
+                </div>
+              )}
+              <div>
+                <span className="fw-bold">
+                  {providerInfo.provider.provider_amountOfEmployees}
+                </span>{" "}
+                employees
+              </div>
+              <div>
+                <span className="fw-bold">
+                  {providerInfo.provider.provider_yearsInBusiness}
+                </span>{" "}
+                years in business
+              </div>
             </div>
-            <div>
-              <span className="fw-bold">
-                {providerInfo.provider.provider_yearsInBusiness}
-              </span>{" "}
-              years in business
-            </div>
-          </div>
-          <div className="provider-payments">
-            <div>
-              <span className="fw-bold">Payments</span>
-            </div>
-            {console.log(
+            <div className="provider-payments">
+              <div>
+                <span className="fw-bold">Payments</span>
+              </div>
+              {/* {console.log(
               providerInfo.provider.provider_payment_methods.split(",")
-            )}
-            {providerInfo.provider.provider_payment_methods
-              .split(",")
-              .map((payment_method) => (
-                <div className="text-capitalize">{payment_method}</div>
-              ))}
+            )} */}
+              {console.log(providerInfo.provider.provider_payment_methods)}
+              {providerInfo.provider.provider_payment_methods
+                ? providerInfo.provider.provider_payment_methods
+                    .split(",")
+                    .map((payment_method) => (
+                      <div className="text-capitalize">{payment_method}</div>
+                    ))
+                : ""}
+            </div>
+          </div>
+          <div className="provider-photos">
+            <h3>Featured Project Photos</h3>
+            <div>{providerInfo.provider.image.length} photos</div>
+
+            {/* <div className="provider-photos-container"> */}
+
+            {/* </div> */}
+            <div className="carousel-container">
+              <Carousel partialVisbile={false} responsive={responsive}>
+                {providerInfo.provider.image.map((image) => (
+                  <img
+                    className="provider-carousel-images"
+                    key={image.image_id}
+                    src={image.image_url}
+                    alt="provider-carousel-images"
+                  />
+                ))}
+              </Carousel>
+            </div>
           </div>
         </div>
-        <div className="provider-photos">
-          <h3>Featured Project Photos</h3>
-          <div>{providerInfo.provider.image.length} photos</div>
 
-          {/* <div className="provider-photos-container"> */}
+        <Row className="provider-form-container">
+          <Form
+            onChange={(event) => {
+              submit(event.currentTarget);
+            }}
+            className="provider-form"
+            method="post"
+            action={`/provider/profile/${id}`}
+            // action={`/provider/profile/:id`}
+          >
+            <div className="provider-pricing">
+              <h2>$150</h2>
+              <h3>Starting cost</h3>
+            </div>
 
-          {/* </div> */}
-          <Carousel responsive={responsive}>
-            {providerInfo.provider.image.map((image) => (
-              <img
-                key={image.image_id}
-                src={image.image_url}
-                alt="provider-carousel-images"
+            <div className="provider-input-group">
+              <label for="address">Address</label>
+              <GooglePlacesComp address={address} setAddress={setAddress} />
+            </div>
+
+            <div className="provider-input-group">
+              <label for="scheduling">Order Date</label>
+
+              <DatePicker
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                showTimeSelect
+                filterDate={(date) => filterBeforeDate(date, new Date())}
+                filterTime={(time) => filterPassedTime(time, new Date())}
+                // filterTime={filterPassedTime}
+                dateFormat="MMMM d, yyyy h:mm aa"
+                name="start_date"
+                timeIntervals={60}
+                placeholderText="Please select a start date."
               />
-            ))}
-          </Carousel>
-        </div>
-      </div>
 
-      <Row className="provider-form-container">
-        <Form
-          onChange={(event) => {
-            submit(event.currentTarget);
-          }}
-          className="provider-form"
-          method="post"
-          action={`/provider/profile/${localStorage.getItem("userId")}`}
-          // action={`/provider/profile/:id`}
-        >
-          <div className="provider-pricing">
-            <h2>$150</h2>
-            <h3>Starting cost</h3>
-          </div>
-
-          <div className="provider-input-group">
-            <label for="address">Address</label>
-            <GooglePlacesComp address={address} setAddress={setAddress} />
-          </div>
-
-          <div className="provider-input-group">
-            <label for="scheduling">Order Date</label>
-
-            <DatePicker
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              showTimeSelect
-              filterDate={(date) => filterBeforeDate(date, new Date())}
-              filterTime={(time) => filterPassedTime(time, new Date())}
-              // filterTime={filterPassedTime}
-              dateFormat="MMMM d, yyyy h:mm aa"
-              name="start_date"
-              timeIntervals={60}
-              placeholderText="Please select a start date."
-            />
-
-            {startDate && (
-              <>
-                <label for="scheduling">Due On</label>
-                <DatePicker
-                  selected={endDate}
-                  onChange={(date) => setEndDate(date)}
-                  showTimeSelect
-                  filterDate={(date) =>
-                    filterBeforeDate(date, new Date(startDate))
-                  }
-                  filterTime={(time) =>
-                    filterPassedTime(time, new Date(startDate))
-                  }
-                  // filterTime={filterPassedTime}
-                  dateFormat="MMMM d, yyyy h:mm a"
-                  name="end_date"
-                  timeIntervals={60}
-                  placeholderText="Please select an end date."
-                />
-              </>
-            )}
-          </div>
-          <div className="provider-input-group">
-            <label for="service_type">Service Type</label>
-            {/* <input
+              {startDate && (
+                <>
+                  <label for="scheduling">Due On</label>
+                  <DatePicker
+                    selected={endDate}
+                    onChange={(date) => setEndDate(date)}
+                    showTimeSelect
+                    filterDate={(date) =>
+                      filterBeforeDate(date, new Date(startDate))
+                    }
+                    filterTime={(time) =>
+                      filterPassedTime(time, new Date(startDate))
+                    }
+                    // filterTime={filterPassedTime}
+                    dateFormat="MMMM d, yyyy h:mm a"
+                    name="end_date"
+                    timeIntervals={60}
+                    placeholderText="Please select an end date."
+                  />
+                </>
+              )}
+            </div>
+            <div className="provider-input-group">
+              <label for="service_type">Service Type</label>
+              {/* <input
               type="text"
               id="service_type"
               name="service_type"
               placeholder="What service would you like?"
             /> */}
-            {listOfServices}
-          </div>
-          <div className="provider-input-group">
-            <label htmlFor="message">Message </label>
-            <textarea
-              className="p-3"
-              name="message"
-              id="message"
-              cols="30"
-              rows="4"
-              placeholder="Any additional information that the provider needs to know? Ex. Anticipated duration of service, notice of pets, specific information needed to know for better service"
-            ></textarea>
-          </div>
-          <button className="provider-form-button" onClick={sendFormData}>
-            Send Request
-          </button>
-          {/* <button type="submit" className="provider-form-button">
+              {listOfServices}
+            </div>
+            <div className="provider-input-group">
+              <label htmlFor="message">Message </label>
+              <textarea
+                className="p-3"
+                name="message"
+                id="message"
+                cols="30"
+                rows="4"
+                placeholder="Any additional information that the provider needs to know? Ex. Anticipated duration of service, notice of pets, specific information needed to know for better service"
+              ></textarea>
+            </div>
+            <button className="provider-form-button" onClick={sendFormData}>
+              Send Request
+            </button>
+            {/* <button type="submit" className="provider-form-button">
             Send Request
           </button> */}
-          <p>
-            Responds{" "}
-            {providerInfo.provider.provider_response === "1-3 hours" ||
-              (providerInfo.provider.provider_response === "3-7 hours" &&
-                "in about ")}
-            <span className="fw-bold text-lowercase">
-              {providerInfo.provider.provider_response}
-            </span>
-          </p>
-        </Form>
-      </Row>
-      {/* <RequestFormModal
+            <p>
+              Responds{" "}
+              {providerInfo.provider.provider_response === "1-3 hours" ||
+                (providerInfo.provider.provider_response === "3-7 hours" &&
+                  "in about ")}
+              <span className="fw-bold text-lowercase">
+                {providerInfo.provider.provider_response}
+              </span>
+            </p>
+          </Form>
+        </Row>
+        {/* <RequestFormModal
         formData={data}
         show={modalShow}
         onHide={() => {
           setModalShow(false);
         }}
       /> */}
-
-    </Container>
-          <Reviews reviews={reviews} />
-
-          <ReviewsTabs />
-          <BackgroundCheck />
+      </Container>
+      <Reviews reviews={reviews} />
+      <ReviewsTabs />
+      <BackgroundCheck />
     </>
   );
 };

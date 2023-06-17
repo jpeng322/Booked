@@ -26,7 +26,8 @@ const CustomerLogin = () => {
     useEffect(() => {
         if (actionData && actionData.status == 200 && actionData.data.success == true) {
             console.log("welcome back CLIENT user");
-            navigate("/");
+            navigate(`/customer/bookings/${localStorage.getItem("userId")}`)
+            
         }
     }, [actionData])
 
@@ -191,6 +192,7 @@ const CustomerLogin = () => {
                                                 backgroundColor: '#F1A855',
                                                 border: '2px solid #263646'
                                             }}
+                                            
                                         >
                                             Login
                                         </Button>
