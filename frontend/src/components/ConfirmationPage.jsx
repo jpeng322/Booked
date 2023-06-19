@@ -14,7 +14,7 @@ import CancelModal from "./CancelModal";
 const ConfirmationPage = () => {
   const bookingData = useLoaderData();
   const [modalShow, setModalShow] = useState(false);
-  // console.log(bookingData);
+  console.log(bookingData);
   const bookingTime = bookingData.start_date.split(" ").slice(3).join(" ");
   const bookingDate = bookingData.start_date.split(" ").splice(0, 3).join(" ");
   return (
@@ -47,19 +47,19 @@ const ConfirmationPage = () => {
         </div>{" "}
         <div className="confirmation-row d-flex flex-column ">
           <div className="confirmation-subhead">ESTIMATED COST</div>
-          <div>{bookingData.cost}</div>
+          <div>${bookingData.cost}</div>
         </div>{" "}
         <div className="confirmation-row d-flex flex-column ">
           <div className="confirmation-subhead">SERVICE PROVIDER</div>
-          <div>{bookingData.provider_name}</div>
+          <div>{bookingData.provider.provider_name}</div>
         </div>{" "}
         <div className="confirmation-row confirmation-row-image border d-flex  ">
           <div>
-            <img src={Placeholder} alt="IMAGE" />
+            <img src={bookingData.provider.profile_pic} alt="business_image" className="" />
           </div>
           <div>
-            <div>{bookingData.provider_name}</div>
-            <div> Super </div>
+            <div>{bookingData.provider.provider_businessName}</div>
+        
           </div>
         </div>{" "}
         <div className="confirmation-row confirmation-button-row d-flex gap-5 ">
