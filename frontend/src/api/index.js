@@ -25,6 +25,27 @@ export const getCustomerName = async (id) => {
   }
 };
 
+export const getCustomerInfo = async (id) => {
+  try {
+    const response = await axios.get(
+      `${import.meta.env.VITE_PORT}/client/client/${id}`
+    );
+
+    if (response) {
+      // const { client_fname, client_lname, client_email } = response.data.client;
+      // const customerInfo = {
+      //   fname: client_fname,
+      //   lname: client_lname,
+      //   email: client_email,
+      // };
+      const customerInfo = response.data.client
+      return customerInfo;
+    }
+  } catch (error) {
+    return error;
+  }
+};
+
 export const fetchLogin = async (email, password) => {
   try {
     const apiLoginData = await axios.post(
@@ -78,9 +99,10 @@ export const fetchSignup = async (
   firstName,
   lastName,
   phoneNumber,
-  preferredServices
+  preferredServices,
+  zipCode
 ) => {
-  // console.log(email, password, firstName, lastName, phoneNumber)
+
   try {
     const apiSignupData = await axios.post(
       `${import.meta.env.VITE_PORT}/auth/signup/client`,
@@ -91,11 +113,13 @@ export const fetchSignup = async (
         lname: lastName,
         phone: phoneNumber,
         services: preferredServices,
+        zipcode: zipCode
       }
     );
 
     return apiSignupData;
   } catch (error) {
+    console.log(error)
     return error;
   }
 };

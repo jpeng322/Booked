@@ -172,7 +172,7 @@ router.put('/information', passport.authenticate("jwt", { session: false }),
 async (req, res) => {
 
   // const id  = req.params.client_id;
-  
+ 
   try {
     const client = await prisma.client.findUnique({
         where: {

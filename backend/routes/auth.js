@@ -51,7 +51,7 @@ router.post("/signup/provider", async (request, response) => {
 
 
 router.post("/signup/client", async (request, response) => {
-  console.log(request.body);
+  // console.log(request.body);
   try {
     const foundClient = await prisma.client.findFirst({
       where: {
@@ -72,7 +72,8 @@ router.post("/signup/client", async (request, response) => {
           client_fname: request.body.fname,
           client_lname: request.body.lname,
           client_phone: request.body.phone,
-          preferred_services: request.body.services,
+          preferred_services: request.body.services, 
+          client_zipcode: request.body.zipcode
         },
       });
       response.status(201).json({
@@ -171,8 +172,6 @@ router.post("/login/client", async (request, response) => {
           },
           "showMeTheProvidersOrClients"
         );
-
-        console.log(findClient)
 
         response.status(200).json({
           success: true,

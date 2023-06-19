@@ -42,6 +42,7 @@ import {
   getProviderInfoAndServices,
   getOnboardedProviders,
   getCustomerBookings,
+  getCustomerInfo
 } from "./api";
 
 import NavComp from "./components/Navbar";
@@ -293,22 +294,16 @@ function App() {
                 lastName,
                 phoneNumber,
                 preferredServices,
+                zipCode
               } = formData;
-              console.log(
-                email,
-                password,
-                firstName,
-                lastName,
-                phoneNumber,
-                preferredServices
-              );
               return await fetchSignup(
                 email,
                 password,
                 firstName,
                 lastName,
                 phoneNumber,
-                preferredServices
+                preferredServices,
+                zipCode
               );
             } catch (error) {
               return error;
@@ -383,36 +378,41 @@ function App() {
             return getProviderInfoAndServices(id);
           },
         },
+        {
+          path: "/customer/account/:id",
+          element: <CustomerAccountContact />,
+          loader: ({ params }) => {
+            let id = params.id;
+            return getCustomerInfo(id);
+          },
+          action: async ({ request }) => {
+            try {
+              const formData = Object.fromEntries(await request.formData());
+              // console.log(formData)
+              const { email, firstName, lastName, phoneNumber, zipcode } =
+                formData;
+              // console.log(
+              //   email,
+              //   firstName,
+              //   lastName,
+              //   phoneNumber,
+              //   zipcode,
+              //   );
+              return await editClientAxios(
+                email,
+                firstName,
+                lastName,
+                phoneNumber,
+                zipcode
+              );
+            } catch (error) {
+              return error;
+            }
+          },
+        },
       ],
     },
 
-    {
-      path: "/customeraccount",
-      element: <CustomerAccountContact />,
-      action: async ({ request }) => {
-        try {
-          const formData = Object.fromEntries(await request.formData());
-          // console.log(formData)
-          const { email, firstName, lastName, phoneNumber, zipcode } = formData;
-          // console.log(
-          //   email,
-          //   firstName,
-          //   lastName,
-          //   phoneNumber,
-          //   zipcode,
-          //   );
-          return await editClientAxios(
-            email,
-            firstName,
-            lastName,
-            phoneNumber,
-            zipcode
-          );
-        } catch (error) {
-          return error;
-        }
-      },
-    },
     {
       path: "/preferences",
       element: <OnboardingSurvey />,
