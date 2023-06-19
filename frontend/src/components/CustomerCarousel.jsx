@@ -100,8 +100,9 @@ function CustomerCarousel({ title }) {
   return (
     <div className="carousel-container mt-4">
       <h2 className="carousel-title"> {title}</h2>
-      {displayedProviders === [] ? (
+      {displayedProviders !== undefined && displayedProviders.length > 0 ? (
         <Carousel
+          className="w-100"
           responsive={responsive}
           transitionDuration={500}
           removeArrowOnDeviceType={["tablet", "mobile"]}
@@ -115,7 +116,7 @@ function CustomerCarousel({ title }) {
           dotListClass="custom-dot-list-style"
           // removeArrowOnDeviceType={}
         >
-          {displayedProviders &&
+          {displayedProviders.length &&
             displayedProviders.map((provider) => {
               const startingPrice = provider.service.reduce(function (
                 prev,
@@ -137,8 +138,9 @@ function CustomerCarousel({ title }) {
             })}
         </Carousel>
       ) : (
-        <div className="d-flex justify-content-center m-5 ">
-          No <span className="text-lowercase me-1 ms-1">{title}</span> providers.
+        <div className="d-flex justify-content-center m-5  vw-100">
+          No <span className="text-lowercase me-1 ms-1">{title}</span>{" "}
+          providers.
         </div>
       )}
     </div>

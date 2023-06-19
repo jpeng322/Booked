@@ -35,6 +35,9 @@ export default function bookingRouter(passport) {
         where: {
           booking_id: parseInt(booking_id),
         },
+        include: {
+          provider: true
+        }
       });
 
       if (foundBooking) {

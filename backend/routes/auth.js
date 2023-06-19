@@ -51,7 +51,7 @@ router.post("/signup/provider", async (request, response) => {
 
 
 router.post("/signup/client", async (request, response) => {
-  // console.log(request.body);
+  console.log(request.body);
   try {
     const foundClient = await prisma.client.findFirst({
       where: {
@@ -203,12 +203,15 @@ router.post("/login/client", async (request, response) => {
 
 router.post("/login/provider", async (request, response) => {
   console.log(request.body)
+
+  console.log(request.body.email)
   try {
     const findProvider = await prisma.provider.findFirst({
       where: {
         provider_email: request.body.email,
       },
     });
+    console.log(findProvider)
 
     try {
       const verifiedPassword = await argon2.verify(

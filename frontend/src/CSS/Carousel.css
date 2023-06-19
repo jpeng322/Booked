@@ -84,6 +84,7 @@
   border-radius: 50%;
   object-fit: cover;
   padding: 0;
+
   
 }
 
@@ -163,6 +164,11 @@
   background-color: #cac5c5;
   width: 100%;
   margin: 0;
+}
+
+.card-img-top {
+
+  height: 300px;
 }
 
 .react-multi-carousel-dot--active button {

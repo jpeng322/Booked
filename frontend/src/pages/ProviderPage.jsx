@@ -196,7 +196,7 @@ const ProviderPage = () => {
             client_name: customerName.fname + " " + customerName.lname,
             client_id: localStorage.getItem("userId") || 1,
             provider_id: providerInfo.provider.provider_id,
-            provider_name: providerInfo.provider.provider_fname,
+            provider_name: providerInfo.provider.provider_fname || "No name",
             service_type: stringOfServiceTypes,
             start_date: dateFormat(new Date(startDate), "mmmm d, yyyy h:MM TT"),
             end_date: dateFormat(new Date(endDate), "mmmm d, yyyy h:MM TT"),
@@ -230,6 +230,9 @@ const ProviderPage = () => {
     }
   }
 
+  const startingPrice = providerInfo.services.reduce(function (prev, curr) {
+    return prev.price < curr.price ? prev : curr;
+  });
   return (
     <>
       <Container fluid className="provider-profile-container d-flex  p-5">
@@ -340,7 +343,7 @@ const ProviderPage = () => {
             // action={`/provider/profile/:id`}
           >
             <div className="provider-pricing">
-              <h2>$150</h2>
+              <h2>${startingPrice.price}</h2>
               <h3>Starting cost</h3>
             </div>
 
@@ -408,9 +411,16 @@ const ProviderPage = () => {
                 placeholder="Any additional information that the provider needs to know? Ex. Anticipated duration of service, notice of pets, specific information needed to know for better service"
               ></textarea>
             </div>
-            <button className="provider-form-button" onClick={sendFormData}>
-              Send Request
-            </button>
+            {localStorage.getItem("userType") === "client" ? (
+              <button className="provider-form-button" onClick={sendFormData}>
+                Send Request
+              </button>
+            ) : (
+              <button disabled className="provider-form-button">
+                Log in as a client to request a booking!
+              </button>
+            )}
+
             {/* <button type="submit" className="provider-form-button">
             Send Request
           </button> */}
