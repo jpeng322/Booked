@@ -150,10 +150,10 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-.react-multi-carousel-list ul > *:nth-child(1) img {
+.provider-photos .react-multi-carousel-list ul > *:nth-child(1) img {
   padding-left: 1rem;
 }
-.react-multi-carousel-list ul > *:last-child img {
+.provider-photos .react-multi-carousel-list ul > *:last-child img {
   padding-right: 1rem;
   margin-left: 1rem;
 }

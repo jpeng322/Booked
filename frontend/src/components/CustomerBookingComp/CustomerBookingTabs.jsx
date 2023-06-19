@@ -15,7 +15,9 @@ const BookingsTabs = () => {
       try {
         const response = await axios({
           method: "get",
-          url: `${import.meta.env.VITE_PORT}/booking/client/1`,
+          url: `${
+            import.meta.env.VITE_PORT
+          }/booking/client/${localStorage.getItem("userId")}`,
         });
 
         console.log(response);
@@ -30,7 +32,6 @@ const BookingsTabs = () => {
 
     getBookings();
   }, []);
-
 
   const completedOrders = bookings.filter(
     (booking) => booking.status === "completed"

@@ -16,7 +16,7 @@ function BookingsCard({
       <Card.Img variant="top" src={firstImage} />
       <Card.Body>
         <Card.Title className="d-flex gap-3">
-          <Image className="provider-pic" src={profilePic} alt="profile-pic" />
+          <Image className="provider-pic p-0 m-0" src={profilePic} alt="profile-pic" />
           <div>{businessName}</div>
         </Card.Title>
         <Card.Text className="d-flex ">I serve in {areaServed}</Card.Text>

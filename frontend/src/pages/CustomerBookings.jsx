@@ -21,10 +21,10 @@ const CustomerBookings = () => {
         <BookingsTabs />
       </Row>
       <Row className="m-0">
-        <CustomerCarousel title="Your Favorites" />
+        <CustomerCarousel title="Recommended" />
       </Row>
       <Row className="m-0">
-        <CustomerCarousel title="Recommended" type="" />
+        <CustomerCarousel title="Recently Booked" type="" />
       </Row>
     </Container>
   );
