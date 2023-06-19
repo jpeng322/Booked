@@ -8,7 +8,7 @@ const OrderInfo = ({
   end_date,
   cost,
   status,
-  provider_name,
+  provider_pic,
   id,
 }) => {
   async function requestResponse(providerResponse, id) {
@@ -32,8 +32,11 @@ const OrderInfo = ({
   return (
     <div className="completed-information d-flex flex-column">
       <div className="completed-information-main">
-        <div className="provider-image">{provider_name}</div>
-        <div className="service-type">{service_type}</div>
+        <div className="provider-image-container">
+          {" "}
+          <img src={provider_pic} className="provider-image" />
+        </div>
+        <div className="display-status-sm service-type">{service_type}</div>
         <div>{order_desc}</div>
         <div className="display-status">{start_date}</div>
         <div className="display-status">{end_date}</div>
@@ -60,6 +63,10 @@ const OrderInfo = ({
       </div>
       {showAdditionalInfo && (
         <div className="additional-info">
+          <div className="display-status-sm-additional ">
+            <span className="fw-bold ">Business Type:</span>{" "}
+            <span className="text-capitalize">{service_type}</span>
+          </div>
           <div className="">
             <span className="fw-bold">Order Date:</span> {start_date}
           </div>

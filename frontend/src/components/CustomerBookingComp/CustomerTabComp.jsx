@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import OrderInfo from "./CustomerBookingInfo";
 import Pagination from "react-bootstrap/Pagination";
 
-
 const TabComp = ({ orders }) => {
   const numberOfOrders = 5;
   const numberOfPages = Math.ceil(orders.length / numberOfOrders);
@@ -31,11 +30,11 @@ const TabComp = ({ orders }) => {
       </Pagination.Item>
     );
   }
-
+  console.log(currentOrders, "CURRENDERORDERS");
   return (
     <div className="completed-containers">
       <div className="completed-headers ">
-        <div></div>
+        <div className=" "></div>
         <div className="service-type-header"></div>
         <div></div>
         <div className="display-status">Order Date </div>
@@ -48,8 +47,8 @@ const TabComp = ({ orders }) => {
       {currentOrders.map((booking) => (
         <OrderInfo
           key={booking.id}
-          provider_name={booking.provider_name}
-          service_type={booking.service_type}
+          provider_pic={booking.provider.profile_pic}
+          service_type={booking.provider.provider_businessType.replace("_", " ")}
           order_desc={booking.order_desc}
           start_date={booking.start_date}
           end_date={booking.end_date}

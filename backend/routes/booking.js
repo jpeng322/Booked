@@ -90,7 +90,9 @@ export default function bookingRouter(passport) {
       const clientBooking = await prisma.booking.findMany({
         where: {
           client_id: parseInt(request.params.userId),
-        },
+        }, include: {
+        provider: true
+        }
       });
 
       if (clientBooking) {
