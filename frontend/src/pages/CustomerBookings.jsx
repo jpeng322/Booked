@@ -1,16 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Col, Row } from "react-bootstrap";
 import BookingsCard from "../components/BookingsCard";
-import FavoriteProviders from "../components/FavoritesComp";
+import CustomerCarousel from "../components/CustomerCarousel";
 import BookingsTabs from "../components/CustomerBookingComp/CustomerBookingTabs";
-
+import { useLoaderData } from "react-router-dom";
 
 //css
 import "../CSS/CustomerBookings.css";
 const CustomerBookings = () => {
-
-
-
+  const customerBookings = useLoaderData();
+  console.log(customerBookings);
 
   return (
     <Container
@@ -22,10 +21,10 @@ const CustomerBookings = () => {
         <BookingsTabs />
       </Row>
       <Row className="m-0">
-        <FavoriteProviders />
+        <CustomerCarousel title="Recommended" />
       </Row>
       <Row className="m-0">
-        <FavoriteProviders />
+        <CustomerCarousel title="Recently Booked" type="" />
       </Row>
     </Container>
   );

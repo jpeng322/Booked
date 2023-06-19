@@ -41,12 +41,14 @@ import {
   // fetchProviderLogin,
   getProviderInfoAndServices,
   getOnboardedProviders,
+  getCustomerBookings,
+  getCustomerInfo
 } from "./api";
 
 import NavComp from "./components/Navbar";
 import HeroComp from "./components/HeroComp";
 import ConfirmationPage from "./components/ConfirmationPage";
-import FavoriteProviders from "./components/FavoritesComp";
+import FavoriteProviders from "./components/CustomerCarousel";
 import MyProfile from "./components/AccountSettings/MyProfile";
 import Notifications from "./components/AccountSettings/Notifications";
 import DeleteAccount from "./components/AccountSettings/DeleteAccount";
@@ -161,49 +163,69 @@ function App() {
         },
         {
           path: "/providers",
-          // element: <ProviderCard providers={providers} />,
           children: [
+            // {
+            //   path: "/provider",
+            //   // element: <ProviderCard providers={providers} />,
+            //   element: <ProviderCard providers={providers} />,
+            //   loader: getOnboardedProviders,
+            // },
             {
-              path: "",
-              element: <ProviderCard providers={providers} />,
+              path: "all",
+              element: <ProviderType type="all" />,
+              loader: getOnboardedProviders,
             },
+
             {
               path: "home_improvement",
               element: <ProviderType type="home improvement" />,
+              loader: getOnboardedProviders,
             },
             {
               path: "landscaping",
               element: <ProviderType type="landscaping" />,
+              loader: getOnboardedProviders,
             },
             {
               path: "automotive",
               element: <ProviderType type="automotive" />,
+              loader: getOnboardedProviders,
             },
             {
               path: "personal_care",
               element: <ProviderType type="personal care" />,
+              loader: getOnboardedProviders,
             },
             {
               path: "pet_care",
               element: <ProviderType type="pet care" />,
+              loader: getOnboardedProviders,
             },
             {
               path: "designer_artist",
               element: <ProviderType type="designer & artist" />,
+              loader: getOnboardedProviders,
             },
             {
               path: "events",
               element: <ProviderType type="events" />,
+              loader: getOnboardedProviders,
             },
             {
               path: "technology",
               element: <ProviderType type="technology" />,
+              loader: getOnboardedProviders,
             },
           ],
         },
         {
-          path: "/customer/bookings",
+          path: "/customer/bookings/:id",
           element: <CustomerAcc />,
+          loader: ({ params }) => {
+            console.log(params);
+            const id = params.id;
+            return getCustomerBookings(id);
+          },
         },
         {
           path: "/provider/bookings/:id",
@@ -272,22 +294,16 @@ function App() {
                 lastName,
                 phoneNumber,
                 preferredServices,
+                zipCode
               } = formData;
-              console.log(
-                email,
-                password,
-                firstName,
-                lastName,
-                phoneNumber,
-                preferredServices
-              );
               return await fetchSignup(
                 email,
                 password,
                 firstName,
                 lastName,
                 phoneNumber,
-                preferredServices
+                preferredServices,
+                zipCode
               );
             } catch (error) {
               return error;
@@ -343,36 +359,60 @@ function App() {
             }
           },
         },
+        {
+          path: "/provider",
+          // element: <ProviderCard providers={providers} />,
+          element: <ProviderType type="all" />,
+          loader: getOnboardedProviders,
+        },
+        {
+          path: "/about",
+          element: <About />,
+        },
+        {
+          path: "/provider/profile/:id",
+          element: <ProviderPage />,
+          action: submitRequestForm,
+          loader: ({ params }) => {
+            let id = params.id;
+            return getProviderInfoAndServices(id);
+          },
+        },
+        {
+          path: "/customer/account/:id",
+          element: <CustomerAccountContact />,
+          loader: ({ params }) => {
+            let id = params.id;
+            return getCustomerInfo(id);
+          },
+          action: async ({ request }) => {
+            try {
+              const formData = Object.fromEntries(await request.formData());
+              // console.log(formData)
+              const { email, firstName, lastName, phoneNumber, zipcode } =
+                formData;
+              // console.log(
+              //   email,
+              //   firstName,
+              //   lastName,
+              //   phoneNumber,
+              //   zipcode,
+              //   );
+              return await editClientAxios(
+                email,
+                firstName,
+                lastName,
+                phoneNumber,
+                zipcode
+              );
+            } catch (error) {
+              return error;
+            }
+          },
+        },
       ],
     },
 
-    {
-      path: "/customeraccount",
-      element: <CustomerAccountContact />,
-      action: async ({ request }) => {
-        try {
-          const formData = Object.fromEntries(await request.formData());
-          // console.log(formData)
-          const { email, firstName, lastName, phoneNumber, zipcode } = formData;
-          // console.log(
-          //   email,
-          //   firstName,
-          //   lastName,
-          //   phoneNumber,
-          //   zipcode,
-          //   );
-          return await editClientAxios(
-            email,
-            firstName,
-            lastName,
-            phoneNumber,
-            zipcode
-          );
-        } catch (error) {
-          return error;
-        }
-      },
-    },
     {
       path: "/preferences",
       element: <OnboardingSurvey />,
@@ -393,25 +433,7 @@ function App() {
       path: "/carousel",
       element: <FavoriteProviders />,
     },
-    {
-      path: "/provider",
-      // element: <ProviderCard providers={providers} />,
-      element: <ProviderCard providers={providers} />,
-      loader: getOnboardedProviders,
-    },
-    {
-      path: "/about",
-      element: <About />,
-    },
-    {
-      path: "/provider/profile/:id",
-      element: <ProviderPage />,
-      action: submitRequestForm,
-      loader: ({ params }) => {
-        let id = params.id;
-        return getProviderInfoAndServices(id);
-      },
-    },
+
     // {
     //   path: "/provider/bookings",
     //   element: <ProviderBookings />,
@@ -425,42 +447,7 @@ function App() {
       },
       element: <ConfirmationPage />,
     },
-    // {
-    //   path: "/settings",
-    //   element: <AccountSettings />,
-    //   children: [
-    //     {
-    //       path: "myprofile/",
-    //       // path: "myprofile/:provider_id",
-    //       element: <MyProfile />,
-    //       action: submitEditForm,
-    //       loader: () => {
-    //         // const provider_id = params.provider_id;
-    //         return getProviderInfo(6);
-    //       },
-    //       // loader: ({ params }) => {
-    //       //   const provider_id = params.provider_id;
-    //       //   return getProviderInfo(provider_id);
-    //       // },
-    //     },
-    //     {
-    //       path: "notifications",
-    //       element: <Notifications />,
-    //     },
-    //     {
-    //       path: "signout",
-    //       element: <SignOut />,
-    //     },
-    //     {
-    //       path: "delete_account",
-    //       element: <DeleteAccount />,
-    //     },
-    //     {
-    //       path: "wallet",
-    //       element: <Wallet />,
-    //     },
-    //   ],
-    // },
+
     {
       path: "map/:address_id",
       loader: ({ params }) => {

@@ -30,7 +30,7 @@ const LoggedInNavbar = () => {
                 <NavLink
                   to={
                     localStorage.getItem("userType") === "client"
-                      ? "/client/settings" //   client settings
+                      ? `/customer/account/${localStorage.getItem("userId")}` //   client settings
                       : `/provider/settings/${localStorage.getItem("userId")}`//   provider settings
                   }
                 >

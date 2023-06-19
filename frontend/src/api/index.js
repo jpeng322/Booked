@@ -5,6 +5,47 @@ import {
   getLatLng,
 } from "react-places-autocomplete";
 
+export const getCustomerName = async (id) => {
+  try {
+    const response = await axios.get(
+      `${import.meta.env.VITE_PORT}/client/client/${id}`
+    );
+
+    if (response) {
+      const { client_fname, client_lname, client_email } = response.data.client;
+      const customerInfo = {
+        fname: client_fname,
+        lname: client_lname,
+        email: client_email,
+      };
+      return customerInfo;
+    }
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getCustomerInfo = async (id) => {
+  try {
+    const response = await axios.get(
+      `${import.meta.env.VITE_PORT}/client/client/${id}`
+    );
+
+    if (response) {
+      // const { client_fname, client_lname, client_email } = response.data.client;
+      // const customerInfo = {
+      //   fname: client_fname,
+      //   lname: client_lname,
+      //   email: client_email,
+      // };
+      const customerInfo = response.data.client
+      return customerInfo;
+    }
+  } catch (error) {
+    return error;
+  }
+};
+
 export const fetchLogin = async (email, password) => {
   try {
     const apiLoginData = await axios.post(
@@ -18,6 +59,7 @@ export const fetchLogin = async (email, password) => {
     if (apiLoginData.status == 200 && apiLoginData.data.token) {
       localStorage.setItem("token", apiLoginData.data.token);
       localStorage.setItem("userType", apiLoginData.data.type);
+      localStorage.setItem("userId", apiLoginData.data.findClient.client_id);
     }
 
     return apiLoginData;
@@ -57,9 +99,10 @@ export const fetchSignup = async (
   firstName,
   lastName,
   phoneNumber,
-  preferredServices
+  preferredServices,
+  zipCode
 ) => {
-  // console.log(email, password, firstName, lastName, phoneNumber)
+
   try {
     const apiSignupData = await axios.post(
       `${import.meta.env.VITE_PORT}/auth/signup/client`,
@@ -70,11 +113,13 @@ export const fetchSignup = async (
         lname: lastName,
         phone: phoneNumber,
         services: preferredServices,
+        zipcode: zipCode
       }
     );
 
     return apiSignupData;
   } catch (error) {
+    console.log(error)
     return error;
   }
 };
@@ -113,6 +158,24 @@ export const getProviderBookings = async (id) => {
     console.log(e);
   }
 };
+export const getCustomerBookings = async (id) => {
+  // console.log(id, "PROVIDERID")
+  try {
+    const response = await axios({
+      method: "get",
+      url: `${import.meta.env.VITE_PORT}/booking/client/${id}`,
+    });
+
+    console.log(response);
+
+    if (response) {
+      const customerBookings = response.data.bookings;
+      return customerBookings;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 export const getCoords = (address_id) => {
   // let latLng;
@@ -142,7 +205,9 @@ export const getOnboardedProviders = async () => {
       const providers = response.data.onboardedProviders;
       return providers;
     }
-  } catch (e) {}
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const getProviderInfo = async (id) => {
@@ -284,10 +349,6 @@ export const getProviderInfoAndServices = async (id) => {
 };
 
 export const applyOnboarding = async (values, areaAddress) => {
-  console.log(values, areaAddress, "APAPAPPAII");
-  // console.log(values.profilePicture[0])
-  console.log(values.profilePicture.concat(values.serviceImages));
-
   try {
     const allImagesArray = values.profilePicture.concat(values.serviceImages);
     const token = localStorage.getItem("token");
@@ -324,16 +385,6 @@ export const applyOnboarding = async (values, areaAddress) => {
       }
     );
 
-    // const resp = await axios.put(
-    //   `${import.meta.env.VITE_PORT}/provider/onboard`,
-    //    newFormData,
-    //   {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //       Authorization: `Bearer ${token}`,
-    //     }
-    //   }
-    // );
     console.log(resp);
 
     if (resp.status == 200) {
@@ -344,3 +395,43 @@ export const applyOnboarding = async (values, areaAddress) => {
     return {};
   }
 };
+
+export const getCustomerRecommendations = async (id) => {
+  const token = localStorage.getItem("token");
+  try {
+    const response = await axios.get(
+      `${import.meta.env.VITE_PORT}/client/client/${id}`,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (response) {
+      const customerType = response.data.client.preferred_services;
+
+      try {
+        const providersResponse = await axios.get(
+          `${
+            import.meta.env.VITE_PORT
+          }/provider/provider/${customerType.toLowerCase()}`,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        // console.log(providersResponse)
+        const recommendedProviders = providersResponse.data.providers;
+        console.log(recommendedProviders);
+        return recommendedProviders;
+      } catch (e) {}
+    }
+  } catch (error) {
+    return error;
+  }
+};
+

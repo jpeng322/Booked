@@ -90,7 +90,9 @@ export default function bookingRouter(passport) {
       const clientBooking = await prisma.booking.findMany({
         where: {
           client_id: parseInt(request.params.userId),
-        },
+        }, include: {
+        provider: true
+        }
       });
 
       if (clientBooking) {
@@ -115,22 +117,23 @@ export default function bookingRouter(passport) {
   //Create a booking
   router.post("/", async (request, response) => {
     console.log(request.body);
-
+    const {client_id, provider_id, client_name, provider_name, service_type, cost, status, start_date, end_date, address, address_id, message} = request.body
     try {
       const createBooking = await prisma.booking.create({
+
         data: {
-          client_id: request.body.client_id ,
-          provider_id: request.body.provider_id,
-          provider_name: request.body.provider_name,
-          client_name: request.body.client_name,
-          service_type: request.body.service_type || "asdasdas",
-          order_desc: request.body.message,
-          cost: request.body.cost,
-          status: request.body.status,
-          start_date: request.body.start_date,
-          end_date: request.body.end_date,
-          address: request.body.address,
-          address_id: request.body.address_id,
+          client_id: parseInt(client_id) ,
+          provider_id: parseInt(provider_id),
+          provider_name: provider_name,
+          client_name: client_name,
+          service_type: service_type,
+          order_desc: message,
+          cost: cost,
+          status: status,
+          start_date: start_date,
+          end_date: end_date,
+          address: address,
+          address_id: address_id,
 
         },
       });

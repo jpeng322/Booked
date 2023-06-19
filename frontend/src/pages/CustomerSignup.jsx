@@ -112,15 +112,6 @@ const CustomerSignup = () => {
                   <Form.Control type="text" placeholder="Password" {...register("password", { required: true, maxLength: 72 })} />
                 </Form.Group>
 
-
-
-                <Form.Group className="mb-3" >
-                  <Form.Label>Phone Number</Form.Label>
-                  <Form.Control type="text" placeholder="Phone Number" {...register("phoneNumber", {})} />
-                </Form.Group>
-
-
-
                 <div
                   style={{
                     // border: '1px solid black',
@@ -134,7 +125,7 @@ const CustomerSignup = () => {
                     }}
                   >Your password must:
                     <ul>
-                      <li>be 8 to 72 character long</li>
+                      <li>be 8 to 72 characters long</li>
                       <li>not contain your name or email</li>
                       <li>not be commonly used, easily guessed
                         or contains any variation of the word “Booked”</li>
@@ -142,15 +133,29 @@ const CustomerSignup = () => {
                     </ul>
                   </li>
 
-                  <p
+  
+
+                </div>
+
+                <Form.Group className="mb-3" >
+                  <Form.Label>Phone Number</Form.Label>
+                  <Form.Control type="text" placeholder="Phone Number" {...register("phoneNumber", {})} />
+                </Form.Group>
+
+
+                <Form.Group className="mb-3" >
+                  <Form.Label>Zip Code</Form.Label>
+                  <Form.Control type="text" placeholder="Zip Code" {...register("zipCode", {})} />
+                </Form.Group>
+
+
+                <p
+                  className="mb-3"
                     style={{
                       fontSize: '11px',
                       textAlign: 'left'
                     }}
                   >By clicking Create Account, you agree to the Terms of Use, and Privacy Policy.</p>
-
-                </div>
-
                 {/* <Stack
                   direction="horizontal"
                   gap={3}

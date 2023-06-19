@@ -311,9 +311,11 @@ const ServicesProvided = () => {
           </p>
         </div>
         <div className="business-type-container">
-          <h2 className="text-center mb-3 ">What category is your business involved in?</h2>
+          <h2 className="text-center mb-3 ">
+            What category is your business involved in?
+          </h2>
           <Form.Group className="mb-2">
-          <ul className="d-flex ">
+            <ul className="d-flex ">
               <li>
                 <Form.Check
                   type="radio"
@@ -568,7 +570,11 @@ const ProviderOnboarding = () => {
                           </Button>
                         )}
                         {formStep == 5 && (
-                          <Button size="lg" type="submit">
+                          <Button
+                            className="next-button"
+                            size="lg"
+                            type="submit"
+                          >
                             Create Account
                           </Button>
                         )}
