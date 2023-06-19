@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import OrderInfo from "./CustomerBookingInfo";
 import Pagination from "react-bootstrap/Pagination";
+import { Link } from "react-router-dom";
 
 const TabComp = ({ orders }) => {
   const numberOfOrders = 5;
@@ -44,7 +45,48 @@ const TabComp = ({ orders }) => {
         <div className="display-status"></div>
       </div>
       {/* <div className="completed-information"> */}
-      {currentOrders.map((booking) => (
+      {currentOrders.length > 0 ? (
+        <>
+          {currentOrders.map((booking) => (
+            <OrderInfo
+              key={booking.id}
+              provider_pic={booking.provider.profile_pic}
+              service_type={booking.provider.provider_businessType.replace(
+                "_",
+                " "
+              )}
+              order_desc={booking.order_desc}
+              start_date={booking.start_date}
+              end_date={booking.end_date}
+              cost={booking.cost}
+              status={booking.status}
+              id={booking.booking_id}
+            />
+          ))}
+          {numberOfPages > 1 && (
+            <div className="pagination-container">
+              <Pagination>{items}</Pagination>
+            </div>
+          )}
+        </>
+      ) : (
+        <div className="d-flex justify-content-center mt-5 mb-5">
+          No current bookings available. Click
+          <Link
+            to="/providers/all"
+            className="ms-1 me-1 fw-bold"
+              style={{
+                color: "var(--uniform-2)"
+              }}
+          >
+            {" "}
+            here{" "}
+          </Link>
+          to find providers to book!
+        </div>
+      )}
+
+      {/* {currentOrders.map((booking) => (
         <OrderInfo
           key={booking.id}
           provider_pic={booking.provider.profile_pic}
@@ -61,7 +103,7 @@ const TabComp = ({ orders }) => {
         <div className="pagination-container">
           <Pagination>{items}</Pagination>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
