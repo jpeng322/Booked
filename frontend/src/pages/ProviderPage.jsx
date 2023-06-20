@@ -204,6 +204,7 @@ const ProviderPage = () => {
             cost: total.toString(),
             address: address.label,
             address_id: address.value.place_id,
+            provider_address: providerInfo.provider.provider_areaServed
           },
         });
 

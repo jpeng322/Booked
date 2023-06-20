@@ -49,17 +49,28 @@ export default function MapMarker() {
 
 function Map() {
   const placeId = useLoaderData();
+  // console.log(placeId)
 
   const [code, setCode] = useState("");
+  const [providerCode, setProviderCode] = useState("");
   const [lati, setLati] = useState();
   const [long, setLong] = useState();
-  console.log(code);
-  const coords = useRef();
+  // console.log(code);
   // const center = useMemo(() => ({ lat: 44 + , lng: -80 }), []);
+  console.log(providerCode);
 
+  // geocodeByAddress(placeId.providerAddress).then((results) =>
+  //   console.log(
+  //     getLatLng(results[0]).then(({ lat, lng }) => {
+  //       // setLati(lat);
+  //       // setLong(lng);
+  //       // setProviderCode({ lat, lng });
+  //     })
+  //   )
+  // );
   let center;
   useEffect(() => {
-    geocodeByPlaceId(placeId)
+    geocodeByPlaceId(placeId.address_id)
       .then((results) => getLatLng(results[0]))
       .then(({ lat, lng }) => {
         setLati(lat);
@@ -71,16 +82,31 @@ function Map() {
         return { lat, lng };
       })
       .catch((error) => console.error(error));
+
+    geocodeByAddress(placeId.providerAddress).then((results) =>
+      getLatLng(results[0]).then(({ lat, lng }) => {
+        // setLati(lat);
+        // setLong(lng);
+        setProviderCode({ lat, lng });
+      })
+    );
   }, []);
 
   geocodeByPlaceId("ChIJ9V8ApDBFwokR0dW6ql0Pyoc")
     .then((results) => console.log(results))
     .catch((error) => console.error(error));
 
-  console.log({ lat: lati + 20, lng: long + 20 });
+  // console.log({ lat: lati + 20, lng: long + 20 });
   return (
     <>
-      <GoogleMap zoom={5} center={{ lat: code.lat + 20, lng: code.lng + 20 }} mapContainerClassName="map-container">
+      <GoogleMap
+        zoom={4}
+        center={{
+          lat: (code.lat + providerCode.lat) / 2,
+          lng: (code.lng + providerCode.lng) / 2,
+        }}
+        mapContainerClassName="map-container"
+      >
         <MarkerF className="" position={code} />
         <MarkerF
           className=""
