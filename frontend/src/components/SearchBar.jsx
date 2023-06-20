@@ -17,6 +17,7 @@ function SearchBar() {
     console.log("Search term:", searchTerm);
     // window.location.href = `/search?query=${searchTerm}`
     window.location.href = "/provider";
+
   };
 
   return (
@@ -31,6 +32,7 @@ function SearchBar() {
               aria-label="Search"
               value={searchTerm}
               onChange={handleChange}
+              
               style={
                 {
                   // width: '600px',
