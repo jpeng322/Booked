@@ -61,7 +61,6 @@ function CustomerCarousel({ title }) {
   const [displayedProviders, setDisplayedProviders] = useState();
   const userId = localStorage.getItem("userId");
   useEffect(() => {
-    console.log(title);
     const fetchData = async () => {
       if (title === "Recommended") {
         const displayedProvidersResponse = await getCustomerRecommendations(
@@ -87,7 +86,6 @@ function CustomerCarousel({ title }) {
           providerArray.push(providerInfo);
         }
 
-        console.log(providerArray);
         setDisplayedProviders(providerArray);
       }
     };
@@ -96,7 +94,6 @@ function CustomerCarousel({ title }) {
     // setRecommendedProviders(recommendedProvidersResponse);
   }, []);
 
-  console.log(displayedProviders, "DISPLAYED PROVIDERS");
   return (
     <div className="carousel-container mt-4">
       <h2 className="carousel-title"> {title}</h2>

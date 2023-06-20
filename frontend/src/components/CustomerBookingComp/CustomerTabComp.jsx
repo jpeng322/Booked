@@ -31,7 +31,6 @@ const TabComp = ({ orders }) => {
       </Pagination.Item>
     );
   }
-  console.log(currentOrders, "CURRENDERORDERS");
   return (
     <div className="completed-containers">
       <div className="completed-headers ">

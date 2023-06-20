@@ -1,17 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Button, Col } from "react-bootstrap";
+import { Button, Col, Dropdown } from "react-bootstrap";
 
 import BookedCheck from "../assets/navbar_logo.svg";
 import BookedCheckImg from "../images/logo_navbar.png";
 import LoggedInNavbar from "./LoggedInNavbar";
-import { useNavigate, NavLink } from "react-router-dom";
+import { useNavigate, NavLink, Link } from "react-router-dom";
 
 import "../CSS/FilterNavbar.css";
+import { getCustomerInfo, getProviderInfo } from "../api";
 function NavComp() {
   const navigate = useNavigate();
+
+  function signOut() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userType");
+    return navigate("/");
+  }
+
+  const [userInfo, setUserInfo] = useState("");
+  const userType = localStorage.getItem("userType");
+  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    async function fetchData() {
+      if (userType === "client") {
+        const userInfo = await getCustomerInfo(userId);
+        setUserInfo(userInfo);
+      } else if (userType === "provider") {
+        const providerInfo = await getProviderInfo(userId);
+        setUserInfo(providerInfo);
+      } else {
+        return;
+      }
+    }
+    fetchData();
+  }, [token]);
+
+  // console.log(userInfo);
   return (
     <>
       <div className="col-md-12 d-flex justify-content-between align-items-center pt-4 pe-5 ps-4  ">
@@ -20,7 +50,7 @@ function NavComp() {
           style={{
             paddingRight: "100px",
             width: "max(30%, 400px)",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
           src={BookedCheckImg}
           alt=""
@@ -30,22 +60,65 @@ function NavComp() {
                 paddingRight: "100px",
                 fontSize:"80px"
                 }}>{BookedCheck}</h1> */}
-        <div className="d-flex gap-4">
-          <Button 
-          className="home-button" 
-          onClick={() => navigate("provider/signup")}
-          size="sm"
-          >
-            Join Our Network
-          </Button>{" "}
-          <Button
-            className="home-button"
-            onClick={() => navigate("customer/login")}
-            size="sm"
-          >
-            Login/Sign Up
-          </Button>{" "}
-        </div>
+        {localStorage.getItem("token") ? (
+          <div className="d-flex dropdown-container">
+            {userInfo && <img src={userInfo.profile_pic} alt="" />}
+            <Dropdown className="navbar-dropdown">
+              <Dropdown.Toggle id="dropdown-basic">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="css-i6dzq1"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu className="p-0 overflow-hidden">
+                <div className="link-container">
+                  <NavLink
+                    className="underline"
+                    to={`/customer/bookings/${localStorage.getItem("userId")}`}
+                  >
+                    Dashboard
+                  </NavLink>
+
+                  <NavLink
+                    className=""
+                    to={`/customer/account/${localStorage.getItem("userId")}`}
+                  >
+                    Settings
+                  </NavLink>
+
+                  <Link onClick={signOut}>Sign Out</Link>
+                </div>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+        ) : (
+          <div className="d-flex gap-4 ">
+            <Button
+              className="home-button"
+              onClick={() => navigate("provider/signup")}
+              size="sm"
+            >
+              Join Our Network
+            </Button>{" "}
+            <Button
+              className="home-button"
+              onClick={() => navigate("customer/login")}
+              size="sm"
+            >
+              Login/Sign Up
+            </Button>{" "}
+          </div>
+        )}
       </div>
 
       <Navbar className="m-auto filter-nav p-0" variant="light" expand="lg">
@@ -159,10 +232,18 @@ function NavComp() {
             </div> */}
           </Nav>
           {/* </Navbar.Collapse> */}
-          <Col><a href="/about" ><p class="fs-5"
-               style={{
-                marginLeft: "-9rem "
-               }}>About</p></a></Col>
+          <Col>
+            <a href="/about">
+              <p
+                class="fs-5"
+                style={{
+                  marginLeft: "-9rem ",
+                }}
+              >
+                About
+              </p>
+            </a>
+          </Col>
         </Container>
       </Navbar>
       <LoggedInNavbar />
