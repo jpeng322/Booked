@@ -131,7 +131,7 @@ const CustomerLogin = () => {
                                 fontSize: '38px'
                             }}
                         >
-                            User Login
+                            Customer Login
                         </h1>
 
                         <Row>

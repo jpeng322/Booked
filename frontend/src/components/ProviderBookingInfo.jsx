@@ -14,12 +14,14 @@ const ProviderBookingInfo = ({
   status,
   client_name,
   id,
+  booking,
   bookings,
   setBookings,
   setCompletedBookings,
   setScheduledBookings,
   setPendingBookings,
   setCancelledBookings,
+
 }) => {
   const dateNow = moment().format("L");
 
@@ -52,7 +54,6 @@ const ProviderBookingInfo = ({
 
       if (response) {
         const updateBookings = bookings.map((booking) => {
-          console.log(booking);
           if (booking.booking_id === id) {
             return {
               ...booking,
@@ -83,14 +84,14 @@ const ProviderBookingInfo = ({
   function openMap(address_id) {
     window.open(`/map/${address_id}`, "_blank", "rel=noopener noreferrer");
   }
-
+  console.log(bookings);
   return (
     <div className={"provider-booking-container d-flex flex-column " + status}>
       <div className="d-flex w-100">
-        <div className="provider-booking">{client_name}</div>
+        <div className="provider-booking">{booking.client_name}</div>
         <div className="provider-booking  ">
-          {address}{" "}
-          <span onClick={() => openMap(address_id)}>
+          {booking.address}{" "}
+          <span onClick={() => openMap(booking.address_id)}>
             <svg
               viewBox="0 0 24 24"
               width="24"
@@ -107,17 +108,17 @@ const ProviderBookingInfo = ({
             </svg>
           </span>
         </div>
-        <div className="provider-booking ">{service_type}</div>
-        <div className="provider-booking  only-large">{order_desc}</div>
-        <div className="provider-booking   only-large">{start_date}</div>
-        <div className="provider-booking  only-large">{end_date}</div>
+        <div className="provider-booking ">{booking.service_type}</div>
+        <div className="provider-booking  only-large">{booking.order_desc}</div>
+        <div className="provider-booking   only-large">{booking.start_date}</div>
+        <div className="provider-booking  only-large">{booking.end_date}</div>
         {/* <div className="provider-booking flex-grow-1 ">{order_due}</div> */}
-        <div className="provider-booking ">{cost}</div>
+        <div className="provider-booking ">${booking.cost}</div>
         <div className="provider-booking   ">
           {" "}
-          {status === "scheduled" && sameOrAfterDateNow(start_date)
+          {booking.status === "scheduled" && sameOrAfterDateNow(booking.start_date)
             ? "active"
-            : status}
+            : booking.status}
         </div>
         <div>
           <button
@@ -132,38 +133,38 @@ const ProviderBookingInfo = ({
           </button>
         </div>
         <div className="provider-booking  gap-2 flex-column flex-md-row only-large ">
-          {status === "pending" && (
+          {booking.status === "pending" && (
             <>
               <button
                 className="accept-button"
                 onClick={() => {
-                  requestResponse("accept", id);
+                  requestResponse("accept", booking.id);
                 }}
               >
                 Accept
               </button>
               <button
                 className="decline-button"
-                onClick={() => requestResponse("decline", id)}
+                onClick={() => requestResponse("decline", booking.id)}
               >
                 Decline
               </button>
             </>
           )}
-          {status === "scheduled" && sameOrAfterDateNow(start_date) && (
+          {booking.status === "scheduled" && sameOrAfterDateNow(booking.start_date) && (
             <button
               className="complete-button"
               onClick={() => {
-                requestResponse("completed", id);
+                requestResponse("completed", booking.id);
               }}
             >
               Completed
             </button>
           )}
-          {status === "scheduled" && beforeDateNow(start_date) && (
+          {booking.status === "scheduled" && beforeDateNow(booking.start_date) && (
             <button
               className="cancel-button"
-              onClick={() => requestResponse("decline", id)}
+              onClick={() => requestResponse("decline", booking.id)}
             >
               Cancel
             </button>
@@ -178,13 +179,13 @@ const ProviderBookingInfo = ({
       {showDropdown === "hidden" && (
         <div className="provider-dropdown-info">
           <div>
-            <span className="fw-bold me-1">Description:</span> {order_desc}
+            <span className="fw-bold me-1">Description:</span> {booking.order_desc}
           </div>
           <div>
-            <span className="fw-bold me-1">Book Date:</span> {start_date}
+            <span className="fw-bold me-1">Book Date:</span> {booking.start_date}
           </div>
           <div>
-            <span className="fw-bold me-1">Due Date:</span> {end_date}
+            <span className="fw-bold me-1">Due Date:</span> {booking.end_date}
           </div>
           <div className="provider-booking d-flex gap-2 only-large">
             {status === "pending" && (
@@ -192,33 +193,33 @@ const ProviderBookingInfo = ({
                 <button
                   className="accept-button"
                   onClick={() => {
-                    requestResponse("accept", id);
+                    requestResponse("accept", booking.id);
                   }}
                 >
                   Accept
                 </button>
                 <button
                   className="decline-button"
-                  onClick={() => requestResponse("decline", id)}
+                  onClick={() => requestResponse("decline", booking.id)}
                 >
                   Decline
                 </button>
               </>
             )}
-            {status === "scheduled" && sameOrAfterDateNow(start_date) && (
+            {booking.status === "scheduled" && sameOrAfterDateNow(booking.start_date) && (
               <button
                 className="complete-button"
                 onClick={() => {
-                  requestResponse("completed", id);
+                  requestResponse("completed", booking.id);
                 }}
               >
                 Completed
               </button>
             )}
-            {status === "scheduled" && beforeDateNow(start_date) && (
+            {status === "scheduled" && beforeDateNow(booking.start_date) && (
               <button
                 className="cancel-button"
-                onClick={() => requestResponse("decline", id)}
+                onClick={() => requestResponse("decline", booking.id)}
               >
                 Cancel
               </button>
