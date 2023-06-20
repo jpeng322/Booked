@@ -4,14 +4,16 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import "../CSS/LoggedInNavbar.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 const LoggedInNavbar = () => {
+  let location = useLocation();
+  console.log(location);
   return (
     // {
     //     localStorage.getItem("token") === true && localStorage.getItem("type") === "client" &&
     //     <>
     <div>
-      {localStorage.getItem("token") ? (
+      {localStorage.getItem("token") && location.pathname !== "/" ? (
         <Navbar className="loggedin-nav">
           <Container fluid>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
