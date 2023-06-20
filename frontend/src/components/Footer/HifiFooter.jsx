@@ -8,13 +8,14 @@ function HifiFooter() {
              <div className="list-items">
              <Row className= "border-bottom">
                
-               <Col><p class="fs-5"
+               <Col><a href="/about" ><p class="fs-5"
                style={{
                 marginLeft: "-9rem "
-               }}>About</p></Col>
+               }}>About</p></a></Col>
                <Col><p class="fs-5" 
                style={{
                 marginRight: "5rem"
+                
                }}>Careers</p></Col>
                <Col><p class="fs-5"
                style={{

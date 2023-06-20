@@ -2,7 +2,7 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Button } from "react-bootstrap";
+import { Button, Col } from "react-bootstrap";
 
 import BookedCheck from "../assets/navbar_logo.svg";
 import BookedCheckImg from "../images/logo_navbar.png";
@@ -159,6 +159,10 @@ function NavComp() {
             </div> */}
           </Nav>
           {/* </Navbar.Collapse> */}
+          <Col><a href="/about" ><p class="fs-5"
+               style={{
+                marginLeft: "-9rem "
+               }}>About</p></a></Col>
         </Container>
       </Navbar>
       <LoggedInNavbar />
