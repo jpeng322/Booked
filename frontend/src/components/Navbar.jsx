@@ -8,6 +8,7 @@ import BookedCheck from "../assets/navbar_logo.svg";
 import BookedCheckImg from "../images/logo_navbar.png";
 import LoggedInNavbar from "./LoggedInNavbar";
 import { useNavigate, NavLink, Link } from "react-router-dom";
+import AnonPfp from "../images/default-avatar.jpg";
 
 import "../CSS/FilterNavbar.css";
 import { getCustomerInfo, getProviderInfo } from "../api";
@@ -41,7 +42,7 @@ function NavComp() {
     fetchData();
   }, [token]);
 
-  // console.log(userInfo);
+  console.log(userInfo);
   return (
     <>
       <div className="col-md-12 d-flex justify-content-between align-items-center pt-4 pe-5 ps-4  ">
@@ -62,7 +63,11 @@ function NavComp() {
                 }}>{BookedCheck}</h1> */}
         {localStorage.getItem("token") ? (
           <div className="d-flex dropdown-container">
-            {userInfo && <img src={userInfo.profile_pic} alt="" />}
+            {userInfo.profile_pic ? (
+              <img src={userInfo.profile_pic} alt="profile-pic" />
+            ) : (
+              <img src={AnonPfp} alt="" />
+            )}
             <Dropdown className="navbar-dropdown">
               <Dropdown.Toggle id="dropdown-basic">
                 <svg
