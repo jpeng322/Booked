@@ -266,23 +266,14 @@ const ProviderBookings = () => {
             {currentBookings.map((booking) => (
               <ProviderBookingInfo
                 bookings={bookings}
+                booking={booking}
                 setBookings={setBookings}
-                id={booking.booking_id}
                 key={booking.id}
-                client_name={booking.client_name}
-                address={booking.address}
-                address_id={booking.address_id}
-                service_type={booking.service_type}
-                order_desc={booking.order_desc}
-                start_date={booking.start_date}
-                end_date={booking.end_date}
-                // order_due={booking.order_due}
-                cost={booking.cost}
-                status={booking.status}
                 setPendingBookings={setPendingBookings}
                 setScheduledBookings={setScheduledBookings}
                 setCompletedBookings={setCompletedBookings}
                 setCancelledBookings={setCancelledBookings}
+                provider_address
               />
             ))}
           </div>
@@ -297,20 +288,10 @@ const ProviderBookings = () => {
             <ProviderBookingsHeader />
             {currentPendingBookings.map((booking) => (
               <ProviderBookingInfo
+                booking={booking}
                 bookings={bookings}
                 setBookings={setBookings}
-                id={booking.booking_id}
                 key={booking.id}
-                client_name={booking.client_name}
-                address={booking.address}
-                address_id={booking.address_id}
-                service_type={booking.service_type}
-                order_desc={booking.order_desc}
-                start_date={booking.start_date}
-                end_date={booking.end_date}
-                // order_due={booking.order_due}
-                cost={booking.cost}
-                status={booking.status}
                 setFilteredBookings={setFilteredBookings}
                 setPendingBookings={setPendingBookings}
                 setScheduledBookings={setScheduledBookings}
@@ -331,19 +312,9 @@ const ProviderBookings = () => {
             {currentScheduledBookings.map((booking) => (
               <ProviderBookingInfo
                 bookings={bookings}
+                booking={booking}
                 setBookings={setBookings}
-                id={booking.booking_id}
                 key={booking.id}
-                client_name={booking.client_name}
-                address={booking.address}
-                address_id={booking.address_id}
-                service_type={booking.service_type}
-                order_desc={booking.order_desc}
-                start_date={booking.start_date}
-                end_date={booking.end_date}
-                // order_due={booking.order_due}
-                cost={booking.cost}
-                status={booking.status}
                 setFilteredBookings={setFilteredBookings}
                 setPendingBookings={setPendingBookings}
                 setScheduledBookings={setScheduledBookings}
@@ -359,19 +330,9 @@ const ProviderBookings = () => {
             {currentCompletedBookings.map((booking) => (
               <ProviderBookingInfo
                 bookings={bookings}
+                booking={booking}
                 setBookings={setBookings}
-                id={booking.booking_id}
                 key={booking.id}
-                client_name={booking.client_name}
-                address={booking.address}
-                address_id={booking.address_id}
-                service_type={booking.service_type}
-                order_desc={booking.order_desc}
-                start_date={booking.start_date}
-                end_date={booking.end_date}
-                // order_due={booking.order_due}
-                cost={booking.cost}
-                status={booking.status}
                 setFilteredBookings={setFilteredBookings}
                 setPendingBookings={setPendingBookings}
                 setScheduledBookings={setScheduledBookings}
@@ -387,19 +348,9 @@ const ProviderBookings = () => {
             {currentCancelledBookings.map((booking) => (
               <ProviderBookingInfo
                 bookings={bookings}
+                booking={booking}
                 setBookings={setBookings}
-                id={booking.booking_id}
                 key={booking.id}
-                client_name={booking.client_name}
-                address={booking.address}
-                address_id={booking.address_id}
-                service_type={booking.service_type}
-                order_desc={booking.order_desc}
-                start_date={booking.start_date}
-                end_date={booking.end_date}
-                // order_due={booking.order_due}
-                cost={booking.cost}
-                status={booking.status}
                 setFilteredBookings={setFilteredBookings}
                 setPendingBookings={setPendingBookings}
                 setScheduledBookings={setScheduledBookings}

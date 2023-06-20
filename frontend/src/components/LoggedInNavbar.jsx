@@ -17,7 +17,6 @@ const LoggedInNavbar = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="d-flex gap-3">
-                <NavLink to="/">Dashboard</NavLink>
                 <NavLink
                   to={
                     localStorage.getItem("userType") === "client"
@@ -25,13 +24,13 @@ const LoggedInNavbar = () => {
                       : `/provider/bookings/${localStorage.getItem("userId")}` //   provider bookings
                   }
                 >
-                  Bookings
+                  Dashboard
                 </NavLink>
                 <NavLink
                   to={
                     localStorage.getItem("userType") === "client"
                       ? `/customer/account/${localStorage.getItem("userId")}` //   client settings
-                      : `/provider/settings/${localStorage.getItem("userId")}`//   provider settings
+                      : `/provider/settings/${localStorage.getItem("userId")}` //   provider settings
                   }
                 >
                   Settings

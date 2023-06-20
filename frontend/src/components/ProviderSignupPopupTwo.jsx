@@ -31,55 +31,49 @@ function ProviderSignupPopupTwo({ open, setOpenPopupTwo }) {
   //     }
   // }, [])
 
-
   useEffect(() => {
     // if(saveState){
     //   actions.updateSignupAction(data);
     // }
+    console.log(`${import.meta.env.VITE_PORT}/auth/signup/provider`);
 
     const fetchProviderSignup = async () => {
+      console.log(state);
       try {
         const providerSignupResponse = await axios({
           method: "post",
-          url: `http://localhost:${
-            import.meta.env.VITE_PORT
-          }/auth/signup/provider`,
+          url: `${import.meta.env.VITE_PORT}/auth/signup/provider`,
           data: {
             email: state.email,
             password: state.password,
             // fname: "request.body.fname",
             // lname: "request.body.lname",
             phone: state.phone,
-            location : state.location,
-            services: state.services,
+            // location: state.location,
+            // services: state.services,
           },
         });
-  
+
         if (providerSignupResponse) {
           // const providerId = providerSignupResponse.data.newProvider.provider_id;
           //   navigate(`/onboarding/${providerId}`);
-            
-            navigate("/provider/login")
-  
+
+          navigate("/provider/login");
+
           // console.log(providerSignupResponse);
         }
       } catch (e) {
         console.log(e);
       }
-    }
-    
+    };
+
     fetchProviderSignup();
-
-  },[saveState])
-
-
+  }, [saveState]);
 
   const onSubmit = (data) => {
-    
     console.log(data);
 
     actions.updateSignupAction(data);
-
 
     setSaveState(true);
     // try {
@@ -103,7 +97,6 @@ function ProviderSignupPopupTwo({ open, setOpenPopupTwo }) {
     //     // const providerId = providerSignupResponse.data.newProvider.provider_id;
     //     //   navigate(`/onboarding/${providerId}`);
 
-          
     //       navigate("/provider/login")
 
     //     // console.log(providerSignupResponse);

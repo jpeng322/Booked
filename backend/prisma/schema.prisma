@@ -67,6 +67,7 @@ end_date String
 order_desc String
 address String
 address_id String
+provider_address String
 cost String
 status String @default("pending")
 

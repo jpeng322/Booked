@@ -35,6 +35,9 @@ export default function bookingRouter(passport) {
         where: {
           booking_id: parseInt(booking_id),
         },
+        include: {
+          provider: true
+        }
       });
 
       if (foundBooking) {
@@ -117,7 +120,7 @@ export default function bookingRouter(passport) {
   //Create a booking
   router.post("/", async (request, response) => {
     console.log(request.body);
-    const {client_id, provider_id, client_name, provider_name, service_type, cost, status, start_date, end_date, address, address_id, message} = request.body
+    const {client_id, provider_id, client_name, provider_name, service_type, cost, status, start_date, end_date, address, address_id, message, provider_address} = request.body
     try {
       const createBooking = await prisma.booking.create({
 
@@ -134,7 +137,7 @@ export default function bookingRouter(passport) {
           end_date: end_date,
           address: address,
           address_id: address_id,
-
+          provider_address: provider_address
         },
       });
 

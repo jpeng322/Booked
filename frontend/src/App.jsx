@@ -410,6 +410,14 @@ function App() {
             }
           },
         },
+        {
+          path: "/customer/confirmation/:booking_id",
+          loader: ({ params }) => {
+            const booking_id = params.booking_id;
+            return getBooking(booking_id);
+          },
+          element: <ConfirmationPage />,
+        },
       ],
     },
 
@@ -439,14 +447,7 @@ function App() {
     //   element: <ProviderBookings />,
     //   loader: getProviderBookings,
     // },
-    {
-      path: "/customer/confirmation/:booking_id",
-      loader: ({ params }) => {
-        const booking_id = params.booking_id;
-        return getBooking(booking_id);
-      },
-      element: <ConfirmationPage />,
-    },
+   
 
     {
       path: "map/:address_id",

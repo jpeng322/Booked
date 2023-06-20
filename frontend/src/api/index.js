@@ -177,7 +177,7 @@ export const getCustomerBookings = async (id) => {
   }
 };
 
-export const getCoords = (address_id) => {
+export const getCoords = async (address_id) => {
   // let latLng;
   // geocodeByPlaceId(address_id)
   //   //  .then((results) => console.log(results))
@@ -190,7 +190,11 @@ export const getCoords = (address_id) => {
   //     // return { lat, lng };
   //   })
   //   .catch((error) => console.error(error));
-  return address_id;
+
+  const providerInfo = await getProviderInfo(localStorage.getItem("userId"))
+  const providerAddress = providerInfo.provider_areaServed
+  // console.log(providerAddress)
+  return { address_id, providerAddress };
   return latLng;
 };
 
