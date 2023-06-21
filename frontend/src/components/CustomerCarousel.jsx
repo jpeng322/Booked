@@ -26,33 +26,33 @@ function CustomerCarousel({ title }) {
   const responsive = {
     xxl: {
       // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 1950 },
+      breakpoint: { max: 4000, min: 2200 },
       items: 6,
       slidesToSlide: 6,
     },
     xl: {
       // the naming can be any, depends on you.
-      breakpoint: { max: 1950, min: 1625 },
+      breakpoint: { max: 2200, min: 1850 },
       items: 4,
       slidesToSlide: 4,
     },
     lg: {
-      breakpoint: { max: 1625, min: 1300 },
+      breakpoint: { max: 1850, min: 1450 },
       items: 4,
       slidesToSlide: 4,
     },
     md: {
-      breakpoint: { max: 1300, min: 975 },
+      breakpoint: { max: 1450, min: 1150 },
       items: 3,
       slidesToSlide: 3,
     },
     sm: {
-      breakpoint: { max: 975, min: 650 },
+      breakpoint: { max: 1150, min: 750 },
       items: 2,
       slidesToSlide: 2,
     },
     xs: {
-      breakpoint: { max: 650, min: 0 },
+      breakpoint: { max: 750, min: 0 },
       items: 1,
       slidesToSlide: 1,
     },
@@ -61,7 +61,6 @@ function CustomerCarousel({ title }) {
   const [displayedProviders, setDisplayedProviders] = useState();
   const userId = localStorage.getItem("userId");
   useEffect(() => {
-    console.log(title);
     const fetchData = async () => {
       if (title === "Recommended") {
         const displayedProvidersResponse = await getCustomerRecommendations(
@@ -87,7 +86,6 @@ function CustomerCarousel({ title }) {
           providerArray.push(providerInfo);
         }
 
-        console.log(providerArray);
         setDisplayedProviders(providerArray);
       }
     };
@@ -96,7 +94,6 @@ function CustomerCarousel({ title }) {
     // setRecommendedProviders(recommendedProvidersResponse);
   }, []);
 
-  console.log(displayedProviders, "DISPLAYED PROVIDERS");
   return (
     <div className="carousel-container mt-4">
       <h2 className="carousel-title"> {title}</h2>

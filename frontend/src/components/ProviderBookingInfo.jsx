@@ -84,7 +84,6 @@ const ProviderBookingInfo = ({
   function openMap(address_id) {
     window.open(`/map/${address_id}`, "_blank", "rel=noopener noreferrer");
   }
-  console.log(bookings);
   return (
     <div className={"provider-booking-container d-flex flex-column " + status}>
       <div className="d-flex w-100">

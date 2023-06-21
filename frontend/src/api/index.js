@@ -215,7 +215,6 @@ export const getOnboardedProviders = async () => {
 };
 
 export const getProviderInfo = async (id) => {
-  console.log(id, "PROVIDERIDasdasd");
   try {
     const response = await axios({
       method: "get",
@@ -223,7 +222,6 @@ export const getProviderInfo = async (id) => {
     });
 
     if (response) {
-      console.log(response);
       const data = response.data.provider;
       return data;
     }
