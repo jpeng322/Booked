@@ -11,7 +11,7 @@ const reviews = [
     name: "Jay Z.",
     time: "1hr",
     comment:
-      "I recently had Alex install my kitchen cabinets and I'm very impressed with his work. He arrived on time and got right to work, showing his professionalism from the start. He was able to efficiently install the cabinets without any issues, and the end result is fantastic. The cabinets look great and are securely mounted.",
+      "I'm very impressed with his work. He arrived on time and got right to work, showing his professionalism from the start. He was able to efficiently install the parts without any issues, and the end result is fantastic. It looks great and are securely mounted.",
   },
   { stars: 1.5, name: "Bey N.", time: "4hr", comment: "No no!" },
   { stars: 5, name: "Brad P.", time: "7hr", comment: "Love it!" },
