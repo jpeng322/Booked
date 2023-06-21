@@ -45,7 +45,7 @@
 
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 320px;
+  width: 350px;
   margin: auto 1rem;
   text-align: center;
   font-family: arial;
@@ -68,11 +68,12 @@
    display: flex;
   justify-content: center;
   align-items: start;
-  min-height: 75px
+  min-height: 75px;
+width: 320px;
+/* width: 100%; */
 }
 
 .card .card-title {
-  /* border: 1px solid red; */
   display: flex;
   align-items: center;
   justify-content: center;

@@ -32,6 +32,7 @@
     /* flex-shrink: 1; */
     font-size: calc(1rem + 0.2vw);
     gap: 1rem;
+
   }
   
   .customerbookings-container  .react-tabs__tab {
