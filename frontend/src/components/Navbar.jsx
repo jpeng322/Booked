@@ -89,7 +89,11 @@ function NavComp() {
                 <div className="link-container">
                   <NavLink
                     className="underline"
-                    to={`/customer/bookings/${localStorage.getItem("userId")}`}
+                    to={
+                      userType === "client"
+                        ? `/customer/bookings/${localStorage.getItem("userId")}`
+                        : `/provider/bookings/${localStorage.getItem("userId")}`
+                    }
                   >
                     Dashboard
                   </NavLink>
