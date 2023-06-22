@@ -191,12 +191,86 @@
   justify-content: center;
 }
 
-.searchbar-input-container {
+.search-dropdown-container {
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   width: 600px;
+}
+
+.searchbar-input-container,
+.css-b62m3t-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 600px;
+}
+
+.css-b62m3t-container {
+  position: relative !important;
+  width: 100%;
+  height: 50px;
+}
+.css-13cymwt-control.react-select__control,
+.react-select__control.css-t3ipsp-control.react-select__control--is-focused,
+.react-select__control.css-t3ipsp-control.react-select__control--is-focused.react-select__control--menu-is-open,
+.css-13cymwt-control.react-select__control:hover {
+  width: 100%;
+  border: none;
+  padding: 0;
+  border-radius: 50px !important;
+  border: 2px solid var(--uniform-3) !important;
+  /* height: 3rem; */
+  padding-left: 2rem !important;
+
+}
+
+
+
+.css-13cymwt-control.react-select-search-br-2__control,
+.react-select-search-br-2__control.css-t3ipsp-control.react-select-search-br-2__control--is-focused,
+.react-select-search-br-2__control.css-t3ipsp-control.react-select-search-br-2__control--is-focused.react-select-search-br-2__control--menu-is-open,
+.css-13cymwt-control.react-select-search-br-2__control:hover {
+  width: 90%;
+  border: none;
+  padding: 0;
+  border-radius: 50px !important;
+  border: 2px solid var(--brown-1) !important;
+  padding-left: 2rem !important;
+  margin-right: 3rem;
+
+}
+
+.search-br-2 .css-i6dzq1.search-glasses {
+  position: absolute;
+  top: 50%;
+  right: 80px;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  color: var(--uniform-1);
+  transition: 0.2s;
+}
+
+.css-i6dzq1.search-glasses {
+  /* border: 1px solid red; */
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  color: var(--uniform-1);
+  transition: 0.2s;
+}
+
+.react-select__single-value.css-1dimb5e-singleValue {
+  font-weight: 500;
+  color: var(--uniform-1);
+}
+
+#react-select-53-listbox {
+
+  z-index: 100;
 }
 
 .searchbar-container h1 {

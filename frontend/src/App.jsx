@@ -124,6 +124,10 @@ function App() {
         {
           path: "/",
           element: <Home />,
+          id: "home",
+          loader: () => {
+            return getOnboardedProviders()
+          }
         },
         {
           path: "provider/settings/:id",
