@@ -106,7 +106,7 @@ const ProviderCard = (props) => {
                     </Col>
                   </Row>
                   <Row>
-                    <Col className="d-flex justify-content-between">
+                    <Col className="d-flex w-100 flex-column align-items-center flex-xl-row gap-4">
                       <div className="provider-attributes">
                         <div className="type-highlight">
                           {provider.provider_businessType}
@@ -120,7 +120,7 @@ const ProviderCard = (props) => {
                           </div>
                         ))}
                       </div>
-                      <div className="justify-content-end">
+                      <div className="">
                         <Button
                           className="viewprofile"
                           variant="warning"

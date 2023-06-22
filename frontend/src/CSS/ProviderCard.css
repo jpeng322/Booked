@@ -150,36 +150,44 @@ p {
 }
 
 .provider-attributes {
-  
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 
 .type-highlight {
   display: inline-block;
   border-radius: 9999px;
   background-color: var(--uniform-3);
-  padding: 0.5rem 1rem;
 
-  text-transform: capitalize;
-  /* font-weight: 500; */
-  color: #fff;
 }
 .skill-highlight {
   display: inline-block;
   border-radius: 9999px;
   background-color: #889263;
-  padding: 0.5rem 1rem;
-  text-align: center;
-  color: #fff;
-  text-transform: capitalize;
+
 }
 
+.type-highlight, .skill-highlight {
 
+  text-align: center;
+  text-transform: capitalize;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: .5rem 1rem;
+  min-height: 3rem;
+}
 .viewprofile {
   color: var(--uniform-1);
   background-color: var(--brown-4);
   border-color: var(--uniform-1);
   font-weight: 500;
   transition: 0.4s;
+  width: 120px;
+  height: 4rem;
+  
 }
 
 .viewprofile:hover {

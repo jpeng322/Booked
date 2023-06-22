@@ -162,7 +162,7 @@
 
   .additional-info {
     display: none;
-    border: 1px solid red;
+    /* border: 1px solid red; */
   }
 }
 

@@ -286,10 +286,15 @@
   color: var(--uniform-1);
 }
 
-#react-select-53-listbox {
+
+.react-select__menu.css-1nmdiq5-menu {
+
   z-index: 100;
 }
 
+.css-tr4s17-option {
+  background-color: var(--uniform-3) !important;
+}
 .searchbar-container h1 {
   color: var(--uniform-1);
 }
