@@ -3,10 +3,12 @@ import { Container, Row, Form, FormControl, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useNavigate } from "react-router-dom";
 import "../CSS/SearchBar.css";
 
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate()
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
@@ -16,7 +18,8 @@ function SearchBar() {
     event.preventDefault();
     console.log("Search term:", searchTerm);
     // window.location.href = `/search?query=${searchTerm}`
-    window.location.href = "/providers/all";
+    // window.location.href = "/providers/all";
+    return navigate("/providers/all")
 
   };
 

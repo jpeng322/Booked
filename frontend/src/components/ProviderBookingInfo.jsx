@@ -34,7 +34,7 @@ const ProviderBookingInfo = ({
   function sameOrAfterDateNow(date) {
     return moment().isAfter(date) || moment().isSame(date, "day");
   }
-
+console.log(booking)
   async function requestResponse(providerResponse, id) {
     console.log(id);
     const updatedStatus =
@@ -137,14 +137,14 @@ const ProviderBookingInfo = ({
               <button
                 className="accept-button"
                 onClick={() => {
-                  requestResponse("accept", booking.id);
+                  requestResponse("accept", booking.booking_id);
                 }}
               >
                 Accept
               </button>
               <button
                 className="decline-button"
-                onClick={() => requestResponse("decline", booking.id)}
+                onClick={() => requestResponse("decline", booking.booking_id)}
               >
                 Decline
               </button>
@@ -154,7 +154,7 @@ const ProviderBookingInfo = ({
             <button
               className="complete-button"
               onClick={() => {
-                requestResponse("completed", booking.id);
+                requestResponse("completed", booking.booking_id);
               }}
             >
               Completed
@@ -163,13 +163,13 @@ const ProviderBookingInfo = ({
           {booking.status === "scheduled" && beforeDateNow(booking.start_date) && (
             <button
               className="cancel-button"
-              onClick={() => requestResponse("decline", booking.id)}
+              onClick={() => requestResponse("decline", booking.booking_id)}
             >
               Cancel
             </button>
           )}
           {/* {status === "cancelled" && beforeDateNow(start_date) && (
-          <button onClick={() => requestResponse("pending", id)}>
+          <button onClick={() => requestResponse("pendingbooking.",_id)}>
             Request Uncancel
           </button>
         )} */}
@@ -192,14 +192,14 @@ const ProviderBookingInfo = ({
                 <button
                   className="accept-button"
                   onClick={() => {
-                    requestResponse("accept", booking.id);
+                    requestResponse("accept", booking.booking_id);
                   }}
                 >
                   Accept
                 </button>
                 <button
                   className="decline-button"
-                  onClick={() => requestResponse("decline", booking.id)}
+                  onClick={() => requestResponse("decline", booking.booking_id)}
                 >
                   Decline
                 </button>
@@ -209,7 +209,7 @@ const ProviderBookingInfo = ({
               <button
                 className="complete-button"
                 onClick={() => {
-                  requestResponse("completed", booking.id);
+                  requestResponse("completed", booking.booking_id);
                 }}
               >
                 Completed
@@ -218,7 +218,7 @@ const ProviderBookingInfo = ({
             {status === "scheduled" && beforeDateNow(booking.start_date) && (
               <button
                 className="cancel-button"
-                onClick={() => requestResponse("decline", booking.id)}
+                onClick={() => requestResponse("decline", booking.booking_id)}
               >
                 Cancel
               </button>
