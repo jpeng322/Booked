@@ -42,7 +42,7 @@ import {
   getProviderInfoAndServices,
   getOnboardedProviders,
   getCustomerBookings,
-  getCustomerInfo
+  getCustomerInfo,
 } from "./api";
 
 import NavComp from "./components/Navbar";
@@ -126,8 +126,8 @@ function App() {
           element: <Home />,
           id: "home",
           loader: () => {
-            return getOnboardedProviders()
-          }
+            return getOnboardedProviders();
+          },
         },
         {
           path: "provider/settings/:id",
@@ -298,7 +298,7 @@ function App() {
                 lastName,
                 phoneNumber,
                 preferredServices,
-                zipCode
+                zipCode,
               } = formData;
               return await fetchSignup(
                 email,
@@ -414,17 +414,16 @@ function App() {
             }
           },
         },
-        {
-          path: "customer/confirmation/:booking_id",
-          loader: ({ params }) => {
-            const booking_id = params.booking_id;
-            return getBooking(booking_id);
-          },
-          element: <ConfirmationPage />,
-        },
       ],
     },
-
+    {
+      path: "customer/confirmation/:booking_id",
+      loader: ({ params }) => {
+        const booking_id = params.booking_id;
+        return getBooking(booking_id);
+      },
+      element: <ConfirmationPage />,
+    },
     {
       path: "/preferences",
       element: <OnboardingSurvey />,
@@ -451,7 +450,6 @@ function App() {
     //   element: <ProviderBookings />,
     //   loader: getProviderBookings,
     // },
-   
 
     {
       path: "map/:address_id",
