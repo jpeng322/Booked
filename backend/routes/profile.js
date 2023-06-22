@@ -13,7 +13,7 @@ export default function profileRouter(passport) {
     router.post("/pic", passport.authenticate('jwt', { session: false }),
         // upload.single('image'), 
         async (req, res) => {
-            // console.log(req.body.data);
+            console.log(req.body.data);
 
             try {
                 const uploadToCloudinary = await cloudinary.uploader.upload(req.body.data, {
@@ -24,6 +24,7 @@ export default function profileRouter(passport) {
 
                 const url = uploadToCloudinary.secure_url;
                 const pictureID = uploadToCloudinary.public_id
+          
 
                 try {
                     const typeOFUser = req.body.type;
@@ -97,6 +98,7 @@ export default function profileRouter(passport) {
 
 
                 } catch (error) {
+                    // console.log(error)
                     res.status(500).json({
                         success: false,
                         message: 'Failed to upload'
@@ -105,7 +107,7 @@ export default function profileRouter(passport) {
 
 
             } catch (error) {
-                console.log(error);
+                // console.log(error);
                 res.status(500).json({
                     success: false,
                     message: 'Failed to send'

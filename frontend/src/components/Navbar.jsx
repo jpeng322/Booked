@@ -100,7 +100,11 @@ function NavComp() {
 
                   <NavLink
                     className=""
-                    to={`/customer/account/${localStorage.getItem("userId")}`}
+                    to={
+                      userType === "client"
+                        ? `/customer/account/${localStorage.getItem("userId")}`
+                        : `/provider/settings/${localStorage.getItem("userId")}`
+                    }
                   >
                     Settings
                   </NavLink>

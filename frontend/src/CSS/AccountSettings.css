@@ -11,6 +11,8 @@
   background-color: var(--brown-1);
   padding: 2rem 5%;
   gap: 2rem;
+  min-height: 100vh;
+  /* border: 1px solid red; */
 }
 
 .account-settings-header {
@@ -23,13 +25,14 @@
   background-color: #fff;
   border-radius: 1.25rem;
   padding: 2.5rem;
+  min-height: 700px;
 }
 
 .account-settings-top-row,
 .account-settings-bottom-row {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .account-settings-tabs-container {
@@ -37,6 +40,7 @@
   border-right: 1px solid black;
   display: flex;
   flex-direction: column;
+margin-left: 1rem;
   gap: 1rem;
 }
 .account-settings-tab-content {
@@ -193,6 +197,7 @@
   .account-settings-bottom-row {
     display: flex;
     flex-direction: row;
+
 
   }
 

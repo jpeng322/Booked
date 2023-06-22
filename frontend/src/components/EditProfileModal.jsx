@@ -43,18 +43,17 @@ export default function EditProfileModal({
   console.log(data, providerLoaderData);
   let submit = useSubmit();
   async function sendFormData() {
+    console.log("sending form data")
     try {
       const response = await axios({
         method: "put",
-        url: `${
-          import.meta.env.VITE_PORT
-        }/provider/providers/6`,
+        url: `${import.meta.env.VITE_PORT}/provider/providers/${localStorage.getItem("userId")}`,
         data: {
-          provider_email: data.business_email,
-          provider_password: data.password,
-          provider_fname: data.first_name,
-          provider_lname: data.last_name,
-          provider_phone: data.phone,
+          provider_email: data.business_email || providerLoaderData.provider_email,
+          provider_password: data.password || providerLoaderData.provider_password,
+          provider_fname: data.first_name || providerLoaderData.provider_fname,
+          provider_lname: data.last_name || providerLoaderData.provider_lname,
+          provider_phone: data.phone || providerLoaderData.provider_phone,
           // provider_business_name: data.business_name,
         },
       });
@@ -96,12 +95,12 @@ export default function EditProfileModal({
             </div>
           ) : (
             <Form
-              onChange={(event) => {
-                submit(event.currentTarget);
-              }}
-              className="d-flex flex-column gap-3"
-              method="put"
-              action="/settings/myprofile"
+                onChange={(event) => {
+                  submit(event.currentTarget);
+                }}
+                className="d-flex flex-column gap-3"
+                method="put"
+                action={`/provider/settings/${localStorage.getItem("userId")}/myprofile`}
             >
               {/* <div className="edit-input-div">
               <label htmlFor="">Business Name: </label>
@@ -136,7 +135,7 @@ export default function EditProfileModal({
                 <input
                   type="text"
                   name="password"
-                  defaultValue={providerLoaderData.provider_password}
+                  defaultValue="*********"
                 />
               </div>
               <div className="edit-input-div">
