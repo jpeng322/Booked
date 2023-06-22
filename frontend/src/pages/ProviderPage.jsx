@@ -85,7 +85,7 @@ const ProviderPage = () => {
 
   const [providerInfo, setProviderInfo] = useState(loaderData);
 
-  console.log(providerInfo);
+  
   const [checkedState, setCheckedState] = useState(
     new Array(providerInfo.services.length).fill(false)
   );
@@ -112,6 +112,8 @@ const ProviderPage = () => {
 
     setTotal(totalPrice);
   };
+
+
   const listOfServices = providerInfo.services.map((service, index) => (
     <div className="service-checkbox-container" key={service.service_id}>
       <label
@@ -168,12 +170,24 @@ const ProviderPage = () => {
     const selectedStartDate = new Date(date);
     return selectedStartDate.getTime() + 86400000 > initialDate.getTime();
   };
-  const arrayOfServiceTypes = providerInfo.services.map(
-    (service) => service.service_type
-  );
+  const arrayOfServiceTypes = providerInfo.services
+    .map((service, index) => {
+      if (checkedState[index] === true) {
+        return service.service_type;
+      } else {
+        return null;
+      }
+    })
+    .filter((service) => service !== null);
+
+  // const arrayOfServiceTypes = providerInfo.services.filter((service, index) => {
+  //   checkedState[index] === true ?  service : "";
+  // });
   const stringOfServiceTypes = JSON.stringify(arrayOfServiceTypes)
     .replace(/[\[\]"']+/g, "")
     .replaceAll(",", ", ");
+
+  console.log(stringOfServiceTypes);
   const data = useActionData();
   let submit = useSubmit();
   async function sendFormData() {
@@ -186,8 +200,6 @@ const ProviderPage = () => {
       //   method: "get",
       //   url: `${import.meta.env.VITE_PORT}/client/client/${localStorage.getItem("userId")}`
       // })
-
-      console.log(customerName);
       try {
         const response = await axios({
           method: "post",
@@ -204,7 +216,7 @@ const ProviderPage = () => {
             cost: total.toString(),
             address: address.label,
             address_id: address.value.place_id,
-            provider_address: providerInfo.provider.provider_areaServed
+            provider_address: providerInfo.provider.provider_areaServed,
           },
         });
 
