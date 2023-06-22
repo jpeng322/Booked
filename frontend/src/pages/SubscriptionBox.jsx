@@ -11,7 +11,7 @@ const SubscriptionBox = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center" style={{ padding: "20px" }}>
+    <div className="d-flex justify-content-center pt-5 pb-5" style={{ padding: "20px" }}>
       <Form onSubmit={handleSubmit} className="p-2 border rounded" style={{ width: '550px', height: '66px', backgroundColor:'white', bordeColor:'black'}}>
         <Form.Group controlId="formEmail" className="d-flex align-items-center">
           <Form.Control

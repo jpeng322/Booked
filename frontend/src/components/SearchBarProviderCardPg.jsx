@@ -23,7 +23,7 @@ function SearchBar() {
     event.preventDefault();
     console.log("Search term:", searchTerm);
     // window.location.href = `/search?query=${searchTerm}`
-    window.location.href = "/provider";
+    window.location.href = "/providers/all";
   };
 
   return (
