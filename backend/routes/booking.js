@@ -28,6 +28,28 @@ export default function bookingRouter(passport) {
     }
   });
 
+  router.delete("/", async (request, response) => {
+    try {
+      const deleteBookings = await prisma.booking.deleteMany({});
+
+      if (deleteBookings) {
+        response.status(204).json({
+          success: true,
+        });
+      } else {
+        response.status(400).json({
+          success: false,
+          message: "Bookings not found.",
+        });
+      }
+    } catch (e) {
+      console.log(e);
+      response.status(400).json({
+        message: "Something went wrong.",
+      });
+    }
+  });
+
   router.get("/:booking_id", async (request, response) => {
     const booking_id = request.params.booking_id;
     try {

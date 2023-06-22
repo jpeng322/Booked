@@ -29,7 +29,7 @@ function FooterComp(){
     }}
     >
         <Form.Control
-          placeholder="YourNameH3r3@gmail.com"
+          placeholder="example@gmail.com"
           aria-label="Recipient's username"
           aria-describedby="basic-addon2"
         />
