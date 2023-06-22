@@ -47,9 +47,6 @@ router.post("/signup/provider", async (request, response) => {
   }
 });
 
-
-
-
 router.post("/signup/client", async (request, response) => {
   console.log(request.body);
   try {
@@ -72,8 +69,8 @@ router.post("/signup/client", async (request, response) => {
           client_fname: request.body.fname,
           client_lname: request.body.lname,
           client_phone: request.body.phone,
-          preferred_services: request.body.services, 
-          client_zipcode: request.body.zipcode
+          preferred_services: request.body.services,
+          client_zipcode: request.body.zipcode,
         },
       });
       response.status(201).json({
@@ -120,7 +117,6 @@ router.post("/signup/client", async (request, response) => {
 //           },
 //           "showMeTheProvidersOrClients"
 //         );
-
 
 //         response.status(200).json({
 //           success: true,
@@ -177,7 +173,7 @@ router.post("/login/client", async (request, response) => {
           success: true,
           token,
           type: "client",
-          findClient
+          findClient,
         });
       } else {
         response.status(401).json({
@@ -200,25 +196,24 @@ router.post("/login/client", async (request, response) => {
   }
 });
 
-
 router.post("/login/provider", async (request, response) => {
-  console.log(request.body)
+  console.log(request.body);
 
-  console.log(request.body.email)
+  console.log(request.body.email);
   try {
     const findProvider = await prisma.provider.findFirst({
       where: {
         provider_email: request.body.email,
       },
     });
-    console.log(findProvider)
+    
 
     try {
       const verifiedPassword = await argon2.verify(
         findProvider.provider_password,
         request.body.password
       );
-
+      console.log(verifiedPassword);
       if (verifiedPassword) {
         const token = jwt.sign(
           {
@@ -250,6 +245,7 @@ router.post("/login/provider", async (request, response) => {
       });
     }
   } catch (e) {
+    console.log(e);
     response.status(401).json({
       success: false,
       message: "Incorrect email or password",

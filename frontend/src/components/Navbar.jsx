@@ -63,7 +63,7 @@ function NavComp() {
                 }}>{BookedCheck}</h1> */}
         {localStorage.getItem("token") ? (
           <div className="d-flex dropdown-container">
-            {userInfo.profile_pic ? (
+            {userInfo.profile_pic !== undefined ? (
               <img src={userInfo.profile_pic} alt="profile-pic" />
             ) : (
               <img src={AnonPfp} alt="" />
