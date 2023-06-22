@@ -100,7 +100,7 @@ function Map() {
   return (
     <>
       <GoogleMap
-        zoom={4}
+        zoom={10}
         center={{
           lat: (code.lat + providerCode.lat) / 2,
           lng: (code.lng + providerCode.lng) / 2,
@@ -110,11 +110,11 @@ function Map() {
         <MarkerF className="" position={code} />
         <MarkerF
           className=""
-          position={{ lat: 44, lng: -80 }}
+          position={{ lat: providerCode.lat, lng: providerCode.lng}}
           options={{
             icon: "https://img.icons8.com/?size=1x&id=12229&format=png",
           }}
-          scale={0.05}
+          scale={0.1}
         />
       </GoogleMap>
     </>
