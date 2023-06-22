@@ -223,7 +223,7 @@ const ProviderPage = () => {
         if (response) {
           const booking_id = response.data.booking_info.booking_id;
           window.open(
-            `/customer/confirmation/${booking_id}`,
+            `/confirmation/${booking_id}`,
             "_blank",
             "rel=noopener noreferrer"
           );
