@@ -16,7 +16,7 @@ const SubscriptionBox = () => {
         <Form.Group controlId="formEmail" className="d-flex align-items-center">
           <Form.Control
             type="email"
-            placeholder="YourNameH3r3@email.com"
+            placeholder="example@gmail.com"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             className="mr-2 border-0"
