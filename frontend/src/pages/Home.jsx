@@ -1,5 +1,5 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Carousel } from "react-bootstrap";
 import SubscriptionBox from "./SubscriptionBox";
 import Carouselandsub from "./Carouselandsubs.jsx";
@@ -13,8 +13,16 @@ import FooterComp from "../components/FooterComp";
 import HifiFooter from "../components/Footer/HifiFooter.jsx";
 
 import LoggedInNavbar from "../components/LoggedInNavbar";
+import Select from "react-select";
 
-const Home = () => {
+import "../CSS/SearchBar.css";
+
+const Home = (props) => {
+  const onboardedProviders = useLoaderData();
+
+  console.log(onboardedProviders);
+
+  const [selected, setSelected] = useState(null);
   async function checkout() {
     console.log("asdasd");
     try {
@@ -31,7 +39,6 @@ const Home = () => {
           // ],
         },
       });
-      console.log(response);
       if (response) {
         window.location = response.data.url;
       }
@@ -65,8 +72,20 @@ const Home = () => {
     // };
   }
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // console.log("Search term:", searchTerm);
+    // window.location.href = `/search?query=${searchTerm}`
+    // window.location.href = "/providers/all";
+    return navigate(`/providers/${selected.value}`);
+  };
+
   const navigate = useNavigate();
 
+  const handleChange = (selectedOption) => {
+    setSelected(selectedOption);
+    console.log(`Option selected:`, selectedOption);
+  };
   return (
     <div>
       <div className="App">
@@ -77,9 +96,9 @@ const Home = () => {
             backgroundColor: "#F9EDB4",
             border: "red",
           }}
-          className="m-0 p-0"
+          className="m-0 p-0 d-flex flex-column justify-content-center align-items-center"
         >
-          <SearchBar />
+          <SearchBar onboardedProviders={onboardedProviders} />
 
           <Carouselandsub />
         </div>
