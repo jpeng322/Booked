@@ -7,6 +7,8 @@ const MyProfile = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [providerInformation, setProviderInformation] =
     useState(providerLoaderData);
+  
+  console.log(providerInformation)
   return (
     <div className="myprofile-container">
       <div className="myprofile-header">
@@ -67,7 +69,8 @@ const MyProfile = () => {
           <div>
             <div>Password:</div>
             <div className="myprofile-row-info">
-              {providerInformation.provider_password}
+              {/* {providerInformation.provider_password} */}
+              *********
             </div>
           </div>
           {/* <div>
