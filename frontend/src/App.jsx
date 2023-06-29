@@ -273,10 +273,10 @@ function App() {
             }
           },
         },
-        {
-          path: "/customer/signup",
-          element: <CustomerSignup />,
-        },
+        // {
+        //   path: "/customer/signup",
+        //   element: <CustomerSignup />,
+        // },
         {
           path: "onboarding/:id",
           element: <ProviderOnboarding />,
@@ -310,41 +310,41 @@ function App() {
             }
           },
         },
-        {
-          path: "/customer/onboarding",
-          element: <CustomerOnboarding />,
-          action: async ({ request }) => {
-            try {
-              const formData = Object.fromEntries(await request.formData());
-              const {
-                email,
-                password,
-                firstName,
-                lastName,
-                phoneNumber,
-                preferredServices,
-              } = formData;
-              // console.log(
-              //   email,
-              //   password,
-              //   firstName,
-              //   lastName,
-              //   phoneNumber,
-              //   preferredServices
-              // );
-              return await fetchSignup(
-                email,
-                password,
-                firstName,
-                lastName,
-                phoneNumber,
-                preferredServices
-              );
-            } catch (error) {
-              return error;
-            }
-          },
-        },
+        // {
+        //   path: "/customer/onboarding",
+        //   element: <CustomerOnboarding />,
+        //   action: async ({ request }) => {
+        //     try {
+        //       const formData = Object.fromEntries(await request.formData());
+        //       const {
+        //         email,
+        //         password,
+        //         firstName,
+        //         lastName,
+        //         phoneNumber,
+        //         preferredServices,
+        //       } = formData;
+        //       // console.log(
+        //       //   email,
+        //       //   password,
+        //       //   firstName,
+        //       //   lastName,
+        //       //   phoneNumber,
+        //       //   preferredServices
+        //       // );
+        //       return await fetchSignup(
+        //         email,
+        //         password,
+        //         firstName,
+        //         lastName,
+        //         phoneNumber,
+        //         preferredServices
+        //       );
+        //     } catch (error) {
+        //       return error;
+        //     }
+        //   },
+        // },
         {
           path: "/provider/login",
           element: <ProviderLogin />,

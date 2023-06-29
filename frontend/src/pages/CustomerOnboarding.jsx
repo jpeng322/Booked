@@ -10,9 +10,13 @@ import { useStateMachine } from "little-state-machine";
 import updateSignupAction from "../updateSignupAction";
 import { useActionData, useNavigate, useSubmit } from "react-router-dom";
 import { Container } from "react-bootstrap";
+import Spinner from 'react-bootstrap/Spinner';
+import Alert from 'react-bootstrap/Alert';
 
 const CustomerOnboarding = () => {
     const [formCompleted, setFormCompleted] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
+    const [show, setShow] = useState(false);
 
     const submit = useSubmit();
     const actionData = useActionData();
@@ -41,16 +45,42 @@ const CustomerOnboarding = () => {
             navigate("/customer/login");
         }
 
+        if (actionData && actionData.response.data.success == false) {
+            setIsLoading(false);
+            setShow(true);
+
+        }
+
     }, [actionData])
 
     const onSubmit = (data) => {
         console.log(data);
+        setIsLoading(true);
+
         actions.updateSignupAction(data);
 
         // console.log(state);
         setFormCompleted(true);
 
     };
+
+    useEffect(() => {
+        let timer;
+
+        if (show) {
+            timer = setTimeout(() => {
+                setShow(false)
+            }, 3000);
+
+            setTimeout(() => {
+                navigate(-1);
+            }, 3000);
+        }
+
+        return () => {
+            clearTimeout(timer);
+        }
+    }, [show]);
 
 
     console.log(errors);
@@ -88,58 +118,88 @@ const CustomerOnboarding = () => {
                     <p>We will suggest services based on what you select below.</p>
 
                     {/* <Row> */}
-                        <Col>
-                            <Form onSubmit={handleSubmit(onSubmit)}>
-                                <Col
-                                    lg={{ span: 4, offset: 4 }} md={{ span: 4, offset: 4 }} sm={{ span: 6, offset: 3 }} xs={{ span: 8, offset: 2 }}
-                                    style={{
-                                        // border: '1px solid black'
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        gap: '10px',
-                                        margin: '1rem auto'
-                                    }}
-                                >
-                                    {/* <Stack 
+                    <Col>
+                        <Form onSubmit={handleSubmit(onSubmit)}>
+                            <Col
+                                lg={{ span: 4, offset: 4 }} md={{ span: 4, offset: 4 }} sm={{ span: 6, offset: 3 }} xs={{ span: 8, offset: 2 }}
+                                style={{
+                                    // border: '1px solid black'
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: '10px',
+                                    margin: '1rem auto'
+                                }}
+                            >
+                                {/* <Stack 
                                     gap={2}
                                     className="col-xxl-4 col-lg-4 col-md-6 col-sm-6  mx-auto"
                                     > */}
-                                        <Form.Check {...register("preferredServices")} label="Automotive" type="radio" value="Automotive" />
-                                        <Form.Check {...register("preferredServices")} label="Lawn or landscaping" type="radio" value="Lawn or landscaping" />
-                                        <Form.Check {...register("preferredServices")} label="Home improvement" type="radio" value="Home improvement" />
-                                        <Form.Check {...register("preferredServices")} label="Pet Care" type="radio" value="Pet Care" />
-                                        <Form.Check {...register("preferredServices")} label="Designer and artists" type="radio" value="Designer and artists" />
-                                        <Form.Check {...register("preferredServices")} label="Personal care" type="radio" value="Personal care" />
-                                        <Form.Check {...register("preferredServices")} label="Technology" type="radio" value="Technology" />
-                                        <Form.Check {...register("preferredServices")} label="Event planning" type="radio" value="Event planning" />
+                                <Form.Check {...register("preferredServices")} label="Automotive" type="radio" value="Automotive" />
+                                <Form.Check {...register("preferredServices")} label="Lawn or landscaping" type="radio" value="Lawn or landscaping" />
+                                <Form.Check {...register("preferredServices")} label="Home improvement" type="radio" value="Home improvement" />
+                                <Form.Check {...register("preferredServices")} label="Pet Care" type="radio" value="Pet Care" />
+                                <Form.Check {...register("preferredServices")} label="Designer and artists" type="radio" value="Designer and artists" />
+                                <Form.Check {...register("preferredServices")} label="Personal care" type="radio" value="Personal care" />
+                                <Form.Check {...register("preferredServices")} label="Technology" type="radio" value="Technology" />
+                                <Form.Check {...register("preferredServices")} label="Event planning" type="radio" value="Event planning" />
 
-                                    {/* </Stack> */}
+                                {/* </Stack> */}
 
-                                </Col>
+                            </Col>
 
 
-                                <Stack>
-                                    <Button
-                                        // variant="primary"
-                                        size="lg"
-                                        type="submit"
-                                        style={{
-                                            border: '1px solid black',
-                                            fontSize: '22px',
-                                            width: '100%',
-                                            color: 'black',
-                                            backgroundColor: '#F6C58E'
-                                        }}
-                                    >
-                                        Create Account
-                                    </Button>
-                                </Stack>
+                            <Stack>
+                                <Button
+                                    // variant="primary"
+                                    size="lg"
+                                    type="submit"
+                                    style={{
+                                        border: '1px solid black',
+                                        fontSize: '22px',
+                                        width: '100%',
+                                        color: 'black',
+                                        backgroundColor: '#F6C58E'
+                                    }}
+                                    disabled={isLoading}
+                                >
+                                    {
+                                        isLoading ? (
+                                            <Spinner
+                                                as="span"
+                                                animation="border"
+                                                size="sm"
+                                            />
+                                        )
+                                            :
+                                            ("Create Account")
+                                    }
+                                </Button>
+                            </Stack>
 
-                            </Form>
-                        </Col>
+                        </Form>
+                    </Col>
                     {/* </Row> */}
 
                 </Stack>
+
+                {
+                    show &&
+
+                    <Alert
+                    className="col-xxl-5 col-xl-6 col-lg-6 col-md-6 col-sm-6  "
+                        style={{
+                            position: 'absolute',
+                            zIndex: 1001,
+                            // top: '50%',
+                            left: '30%',
+                        }}
+                        variant="danger" onClose={() => setShow(false)} dismissible>
+                        <Alert.Heading>Login failed please try again. Redirecting you...</Alert.Heading>
+                    </Alert>
+
+                }
+
+
             </Container>
 
 

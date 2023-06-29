@@ -21,6 +21,7 @@ import { applyOnboarding } from "../api";
 import "../CSS/ProviderOnboarding.css";
 import { useNavigate, useParams } from "react-router-dom";
 import GooglePlacesComp from "../components/GooglePlacesAutocomplete";
+import Spinner from 'react-bootstrap/Spinner';
 // import { uploadProfileImages } from "../api";
 
 const Initial = () => {
@@ -451,6 +452,7 @@ const MoreInfo = ({ areaAddress, setAreaAddress }) => {
 const ProviderOnboarding = () => {
   const [areaAddress, setAreaAddress] = useState("");
   const [formStep, setFormStep] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
   const methods = useForm({
     defaultValues: {
       listOfServices: [
@@ -467,6 +469,7 @@ const ProviderOnboarding = () => {
 
   const submitProviderInfo = async (values, address = areaAddress) => {
     console.log(values, "VALUESVLUAES");
+    setIsLoading(true);
 
     const data = await applyOnboarding(values, areaAddress);
     if (data) {
@@ -483,37 +486,32 @@ const ProviderOnboarding = () => {
           <Row>
             <Col>
               <div
-                className={`step-pill ${
-                  formStep >= 1 ? "active-pill" : "not-active-pill"
-                }`}
+                className={`step-pill ${formStep >= 1 ? "active-pill" : "not-active-pill"
+                  }`}
               ></div>
             </Col>
             <Col>
               <div
-                className={`step-pill ${
-                  formStep >= 2 ? "active-pill" : "not-active-pill"
-                }`}
+                className={`step-pill ${formStep >= 2 ? "active-pill" : "not-active-pill"
+                  }`}
               ></div>
             </Col>
             <Col>
               <div
-                className={`step-pill ${
-                  formStep >= 3 ? "active-pill" : "not-active-pill"
-                }`}
+                className={`step-pill ${formStep >= 3 ? "active-pill" : "not-active-pill"
+                  }`}
               ></div>
             </Col>
             <Col>
               <div
-                className={`step-pill ${
-                  formStep >= 4 ? "active-pill" : "not-active-pill"
-                }`}
+                className={`step-pill ${formStep >= 4 ? "active-pill" : "not-active-pill"
+                  }`}
               ></div>
             </Col>
             <Col>
               <div
-                className={`step-pill ${
-                  formStep >= 5 ? "active-pill" : "not-active-pill"
-                }`}
+                className={`step-pill ${formStep >= 5 ? "active-pill" : "not-active-pill"
+                  }`}
               ></div>
             </Col>
           </Row>
@@ -574,8 +572,20 @@ const ProviderOnboarding = () => {
                             className="next-button"
                             size="lg"
                             type="submit"
+                            disabled={isLoading}
                           >
-                            Create Account
+                            {
+                              isLoading ? (
+                                <Spinner
+                                  as="span"
+                                  animation="border"
+                                  size="sm"
+                                />
+                              )
+                                :
+                                ("Create Account")
+                            }
+                            {/* Create Account */}
                           </Button>
                         )}
                       </div>

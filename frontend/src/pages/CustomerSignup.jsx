@@ -109,7 +109,7 @@ const CustomerSignup = () => {
 
                 <Form.Group className="mb-3" >
                   <Form.Label>Password</Form.Label>
-                  <Form.Control type="text" placeholder="Password" {...register("password", { required: true, maxLength: 72 })} />
+                  <Form.Control type="password" placeholder="Password" {...register("password", { required: true, maxLength: 72 })} />
                 </Form.Group>
 
                 <div

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useActionData, useNavigate, useSubmit, Link } from 'react-router-dom'
 import Form from 'react-bootstrap/Form';
@@ -8,14 +8,17 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 import Image from 'react-bootstrap/Image';
-import bgImg from '../images/login-background.png'
-import logo from '../images/logo.png'
-
+import bgImg from '../images/login-background.png';
+import logo from '../images/logo.png';
+import Spinner from 'react-bootstrap/Spinner';
+import Alert from 'react-bootstrap/Alert';
 
 
 // This will be the Client login. For now it only logs in provider.
 
 const CustomerLogin = () => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [show, setShow] = useState(false);
     const submit = useSubmit();
     const actionData = useActionData();
     const navigate = useNavigate();
@@ -27,12 +30,21 @@ const CustomerLogin = () => {
         if (actionData && actionData.status == 200 && actionData.data.success == true) {
             console.log("welcome back CLIENT user");
             navigate(`/customer/bookings/${localStorage.getItem("userId")}`)
-            
+
+        }
+
+        // console.log(actionData.response.data.success == false);
+
+        if(actionData && actionData.response.data.success == false) {
+            setIsLoading(false);
+            setShow(true);
+
         }
     }, [actionData])
 
     const onSubmit = (data) => {
         console.log(data);
+        setIsLoading(true);
 
         submit(data, {
             method: "post",
@@ -40,6 +52,20 @@ const CustomerLogin = () => {
         });
     }
 
+    //Alert timeout and cleanup
+    useEffect(() => {
+        let timer;
+
+        if(show){
+           timer = setTimeout(() => {
+                setShow(false)
+            }, 3000);
+        }
+
+        return () => {
+            clearTimeout(timer);
+        }
+    },[show]);
 
 
 
@@ -82,10 +108,12 @@ const CustomerLogin = () => {
                 backgroundAttachment: 'fixed',
                 backgroundPosition: "center center",
                 backgroundSize: "cover",
-                overflow: 'auto'
+                overflow: 'auto',
+                // position: 'relative',
             }}
         >
             <Container>
+                
                 <Stack
                     className="col-xxl-5 col-lg-5 col-md-8 col-sm-10  mx-auto fw-bold rounded-2"
                     style={{
@@ -192,9 +220,20 @@ const CustomerLogin = () => {
                                                 backgroundColor: '#F1A855',
                                                 border: '2px solid #263646'
                                             }}
-                                            
+                                            disabled={isLoading}
+
                                         >
-                                            Login
+                                            {
+                                                isLoading ? (
+                                                    <Spinner
+                                                        as="span"
+                                                        animation="border"
+                                                        size="sm"
+                                                    />
+                                                )
+                                                    :
+                                                    ("Login")
+                                            }
                                         </Button>
                                     </Stack>
 
@@ -207,12 +246,31 @@ const CustomerLogin = () => {
                                 </Col>
 
 
+
                             </Col>
                         </Row>
                     </Container>
 
 
                 </Stack>
+
+                {
+                    show &&
+                   
+                    <Alert
+                        style={{
+                            position: 'absolute',
+                            zIndex: 1001,
+                            // top: '50%',
+                            left: '37%',
+                        }}
+                        variant="danger" onClose={() => setShow(false)} dismissible>
+                        <Alert.Heading>Login failed please try again.</Alert.Heading>
+                    </Alert>
+
+                }
+
+
             </Container>
 
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Link, useActionData, useNavigate, useSubmit } from "react-router-dom";
@@ -11,8 +11,13 @@ import Stack from "react-bootstrap/Stack";
 import Image from "react-bootstrap/Image";
 import bgImg from "../images/login-background.png";
 import logo from "../images/logo.png";
+import Spinner from 'react-bootstrap/Spinner';
+import Alert from 'react-bootstrap/Alert';
+
 
 const ProviderLogin = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [show, setShow] = useState(false);
   const submit = useSubmit();
   const actionData = useActionData();
   const navigate = useNavigate();
@@ -22,10 +27,12 @@ const ProviderLogin = () => {
     formState: { errors },
   } = useForm();
 
+  console.log(actionData);
+
   useEffect(() => {
     if (
       actionData &&
-      actionData.status == 200 
+      actionData.status == 200
       // &&
       // actionData.data.success == true
     ) {
@@ -35,16 +42,41 @@ const ProviderLogin = () => {
       const provider_id = actionData.data.findProvider.provider_id
       onboardStatus === false ? navigate(`/onboarding/${provider_id}`) : navigate(`/provider/bookings/${provider_id}`)
     }
+
+    if (actionData && actionData.response.data.success == false) {
+      setIsLoading(false);
+      setShow(true);
+
+    }
   }, [actionData]);
 
   const onSubmit = (data) => {
     console.log(data);
+
+    setIsLoading(true);
 
     submit(data, {
       method: "post",
       action: "/provider/login",
     });
   };
+
+
+   //Alert timeout and cleanup
+   useEffect(() => {
+    let timer;
+
+    if(show){
+       timer = setTimeout(() => {
+            setShow(false)
+        }, 3000);
+    }
+
+    return () => {
+        clearTimeout(timer);
+    }
+},[show]);
+
 
   const style = {
     label: {
@@ -141,7 +173,7 @@ const ProviderLogin = () => {
               // lg={{ span: 4, offset: 4 }}
               // md={{ span: 0, offset: 0 }}
               >
-                <Form  onSubmit={handleSubmit(onSubmit)}>
+                <Form onSubmit={handleSubmit(onSubmit)}>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label style={style.label}>Username</Form.Label>
                     <Form.Control
@@ -193,7 +225,7 @@ const ProviderLogin = () => {
                     }}
                   >
                     <Link to={"/Provider/signup"} style={style.hypertextBottom}>Join our network</Link>
-                    
+
                   </div>
 
                   <Stack className="col-lg-12 col-md-12 col-sm-12">
@@ -209,8 +241,19 @@ const ProviderLogin = () => {
                         backgroundColor: "#F1A855",
                         border: "2px solid #B1660E",
                       }}
+                      disabled={isLoading}
                     >
-                      Login
+                      {
+                        isLoading ? (
+                          <Spinner
+                            as="span"
+                            animation="border"
+                            size="sm"
+                          />
+                        )
+                          :
+                          ("Login")
+                      }
                     </Button>
                   </Stack>
                 </Form>
@@ -225,6 +268,25 @@ const ProviderLogin = () => {
             </Row>
           </Container>
         </Stack>
+
+        {
+          show &&
+
+          <Alert
+            // className="col-xxl-3 col-lg-4 col-md-6 col-sm-6  "
+            style={{
+              position: 'absolute',
+              zIndex: 1001,
+              // top: '50%',
+              left: '37%',
+            }}
+            variant="danger" onClose={() => setShow(false)} dismissible>
+            <Alert.Heading>Login failed please try again.</Alert.Heading>
+          </Alert>
+
+        }
+
+
       </Container>
 
 

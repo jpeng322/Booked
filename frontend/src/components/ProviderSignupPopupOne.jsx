@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import bgImg from '../images/popup-img.png'
 import { Col, Container, Stack } from 'react-bootstrap'
 import Form from 'react-bootstrap/Form';
@@ -11,19 +11,24 @@ import { IoIosClose } from "react-icons/io";
 function ProviderSignupPopupOne({ open, setOpenPopupOne, setOpenPopupTwo }) {
 
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, formState: { errors, isSubmitSuccessful } } = useForm();
     const { actions } = useStateMachine({ updateSignupAction })
-    const onSubmit = data => {
+    const onSubmit = (data) => {
         console.log(data);
 
-        actions.updateSignupAction({...data});
+        actions.updateSignupAction({ ...data });
 
-        setOpenPopupTwo(true)
+        setOpenPopupTwo(true);
 
     }
-
-
     console.log(errors);
+
+    //Cleanup Form
+    useEffect(() => {
+        reset();
+    }, [isSubmitSuccessful, reset])
+
+
     return (
         <>
             {
@@ -83,9 +88,9 @@ function ProviderSignupPopupOne({ open, setOpenPopupOne, setOpenPopupTwo }) {
                                 className='col-lg-10 col-md-10 col-sm-10 mx-auto'
 
                             >
-                                <p style={{ fontSize: '24px' }}>Brandi, new customers are waiting</p>
+                                <p style={{ fontSize: '24px' }}>Hey, new customers are waiting</p>
                                 <br></br>
-                                <p>There were 562 Booked beautician jobs in near your last month.</p>
+                                <p>There were 562 Booked jobs in near your last month.</p>
 
                                 <Form onSubmit={handleSubmit(onSubmit)}>
                                     <Form.Group className="mb-3" controlId="formBasicEmail">

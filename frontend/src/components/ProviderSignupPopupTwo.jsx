@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import bgImg from "../images/popup-img.png";
-import { Col, Container, Stack } from "react-bootstrap";
+import { Col, Container, Spinner, Stack } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useForm } from "react-hook-form";
@@ -11,14 +11,16 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function ProviderSignupPopupTwo({ open, setOpenPopupTwo }) {
+function ProviderSignupPopupTwo({ open, setOpenPopupTwo, showAlert }) {
   const navigate = useNavigate();
-  const [formCompleted, setFormCompleted] = useState(false);
+  // const [formCompleted, setFormCompleted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [saveState, setSaveState] = useState(false);
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    reset,
+    formState: { errors, isSubmitSuccessful },
   } = useForm();
   const { actions, state } = useStateMachine({ updateSignupAction });
 
@@ -32,46 +34,53 @@ function ProviderSignupPopupTwo({ open, setOpenPopupTwo }) {
   // }, [])
 
   useEffect(() => {
-    // if(saveState){
-    //   actions.updateSignupAction(data);
-    // }
-    console.log(`${import.meta.env.VITE_PORT}/auth/signup/provider`);
+    if (saveState) {
+      console.log(`${import.meta.env.VITE_PORT}/auth/signup/provider`);
 
-    const fetchProviderSignup = async () => {
-      console.log(state);
-      try {
-        const providerSignupResponse = await axios({
-          method: "post",
-          url: `${import.meta.env.VITE_PORT}/auth/signup/provider`,
-          data: {
-            email: state.email,
-            password: state.password,
-            // fname: "request.body.fname",
-            // lname: "request.body.lname",
-            phone: state.phone,
-            // location: state.location,
-            // services: state.services,
-          },
-        });
 
-        if (providerSignupResponse) {
-          // const providerId = providerSignupResponse.data.newProvider.provider_id;
-          //   navigate(`/onboarding/${providerId}`);
 
-          navigate("/provider/login");
+      const fetchProviderSignup = async () => {
+        console.log(state);
+        try {
+          const providerSignupResponse = await axios({
+            method: "post",
+            url: `${import.meta.env.VITE_PORT}/auth/signup/provider`,
+            data: {
+              email: state.email,
+              password: state.password,
+              // fname: "request.body.fname",
+              // lname: "request.body.lname",
+              phone: state.phone,
+              location: state.location,
+              services: state.services,
+            },
+          });
 
-          // console.log(providerSignupResponse);
+          if (providerSignupResponse) {
+            // const providerId = providerSignupResponse.data.newProvider.provider_id;
+            //   navigate(`/onboarding/${providerId}`);
+
+            navigate("/provider/login");
+
+            // console.log(providerSignupResponse);
+          }
+        } catch (e) {
+          console.log(e);
+          setIsLoading(false)
+          setSaveState(false)
+          showAlert();
         }
-      } catch (e) {
-        console.log(e);
-      }
-    };
+      };
 
-    fetchProviderSignup();
+      fetchProviderSignup();
+    }
+
   }, [saveState]);
 
   const onSubmit = (data) => {
     console.log(data);
+
+    setIsLoading(true);
 
     actions.updateSignupAction(data);
 
@@ -106,6 +115,15 @@ function ProviderSignupPopupTwo({ open, setOpenPopupTwo }) {
     // }
   };
   console.log(state);
+
+  //Cleanup Form
+  useEffect(() => {
+    // console.log('isSubmitSuccessful: ', isSubmitSuccessful);
+    // if(isSubmitSuccessful || !isSubmitSuccessful){
+      reset();
+    // }
+  },[isSubmitSuccessful, reset])
+
 
   return (
     <>
@@ -158,11 +176,11 @@ function ProviderSignupPopupTwo({ open, setOpenPopupTwo }) {
           >
             <Stack className="col-lg-10 col-md-10 col-sm-10 mx-auto">
               <p style={{ fontSize: "24px" }}>
-                Brandi, new customers are waiting
+                Hey, new customers are waiting
               </p>
               <br></br>
               <p>
-                There were 562 Booked beautician jobs in near your last month.
+                There were 562 Booked jobs in near your last month.
               </p>
 
               <Form onSubmit={handleSubmit(onSubmit)}>
@@ -211,8 +229,20 @@ function ProviderSignupPopupTwo({ open, setOpenPopupTwo }) {
                     color: "#FCD19C",
                     padding: "10px",
                   }}
+                  disabled={isLoading}
                 >
-                  Sign up
+                  {
+                    isLoading ? (
+                      <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                      />
+                    )
+                      :
+                      ("Sign up")
+                  }
+                  {/* Sign up */}
                 </Button>
               </Form>
               <br></br>

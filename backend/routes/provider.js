@@ -183,6 +183,8 @@ export default function providerRouter(passport) {
             provider_id: req.user.Provider.provider_id,
           },
           data: {
+            provider_fname: req.body.firstName,
+            provider_lname: req.body.lastName,
             provider_response: req.body.responseTime,
             provider_payment_methods: req.body.paymentMethods,
             provider_standing: req.body.backgroundCertified,
